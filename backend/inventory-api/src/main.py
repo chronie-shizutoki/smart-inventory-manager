@@ -72,9 +72,12 @@ with app.app_context():
 def serve(path):
     static_folder_path = app.static_folder
     if static_folder_path is None:
-            return "Static folder not configured", 404
+        return "Static folder not configured", 404
 
-    if path != "" and os.path.exists(os.path.join(static_folder_path, path)):
+    # Normalize and validate the path to prevent path traversal
+    requested_path = os.path.normpath(os.path.join(static_folder_path, path))
+    if path != "" and requested_path.startswith(static_folder_path) and os.path.exists(requested_path):
+        # Only serve if the normalized path is within the static folder
         return send_from_directory(static_folder_path, path)
     else:
         index_path = os.path.join(static_folder_path, 'index.html')
