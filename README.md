@@ -90,6 +90,9 @@ cd smart-inventory-manager
 2. **设置后端环境**
 ```bash
 cd backend/inventory-api
+# 创建虚拟环境
+python -m venv venv
+# 激活虚拟环境
 source venv/bin/activate  # Linux/Mac
 # 或 venv\Scripts\activate  # Windows
 pip install -r requirements.txt
@@ -101,7 +104,12 @@ python src/main.py
 ```
 
 4. **访问应用**
-打开浏览器访问：http://localhost:5000
+- 本地访问：打开浏览器访问 http://localhost:5000
+- 局域网访问：在同一网络中的其他设备上，使用运行服务器的计算机IP地址访问，例如 http://192.168.1.100:5000
+
+  > 提示：可以通过以下方式查找本地IP地址
+  > - Windows：在命令提示符中输入 `ipconfig` 查找 IPv4 地址
+  > - Linux/Mac：在终端中输入 `ifconfig` 或 `ip addr` 查找 IPv4 地址
 
 ## 📊 数据库设计
 
