@@ -411,265 +411,249 @@
                     </div>
 
                     <!-- 库存统计卡片 -->
-                    <div class="grid grid-cols-1 md:grid-cols-4 mobile-stats-grid gap-4 mb-6"></div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center">
-                            <i class="fas fa-boxes text-blue-500 text-2xl mr-3"></i>
-                            <div>
-                                <p class="text-gray-600 text-sm">{{ $t('stats.totalItems') }}</p>
-                                <p class="text-2xl font-bold">{{ totalItems }}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 mobile-stats-grid gap-4 mb-6">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <div class="flex items-center">
+                                <i class="fas fa-boxes text-blue-500 text-2xl mr-3"></i>
+                                <div>
+                                    <p class="text-gray-600 text-sm">{{ $t('stats.totalItems') }}</p>
+                                    <p class="text-2xl font-bold">{{ totalItems }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl mr-3"></i>
+                                <div>
+                                    <p class="text-gray-600 text-sm">{{ $t('stats.lowStock') }}</p>
+                                    <p class="text-2xl font-bold">{{ lowStockItems }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-red-500 text-2xl mr-3"></i>
+                                <div>
+                                    <p class="text-gray-600 text-sm">{{ $t('stats.expiringSoon') }}</p>
+                                    <p class="text-2xl font-bold">{{ expiringSoonItems }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <div class="flex items-center">
+                                <i class="fas fa-tags text-green-500 text-2xl mr-3"></i>
+                                <div>
+                                    <p class="text-gray-600 text-sm">{{ $t('stats.categories') }}</p>
+                                    <p class="text-2xl font-bold">{{ categories.length }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center">
-                            <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl mr-3"></i>
-                            <div>
-                                <p class="text-gray-600 text-sm">{{ $t('stats.lowStock') }}</p>
-                                <p class="text-2xl font-bold">{{ lowStockItems }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center">
-                            <i class="fas fa-clock text-red-500 text-2xl mr-3"></i>
-                            <div>
-                                <p class="text-gray-600 text-sm">{{ $t('stats.expiringSoon') }}</p>
-                                <p class="text-2xl font-bold">{{ expiringSoonItems }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center">
-                            <i class="fas fa-tags text-green-500 text-2xl mr-3"></i>
-                            <div>
-                                <p class="text-gray-600 text-sm">{{ $t('stats.categories') }}</p>
-                                <p class="text-2xl font-bold">{{ categories.length }}</p>
-                            </div>
+
+                    <!-- 库存列表 -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="mobile-table-container overflow-x-auto">
+                            <table class="min-w-full mobile-table">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $t('inventory.name') }}
+                                        </th>
+                                        <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $t('inventory.category') }}
+                                        </th>
+                                        <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $t('inventory.quantity') }}
+                                        </th>
+                                        <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $t('inventory.expiryDate') }}
+                                        </th>
+                                        <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $t('inventory.status') }}
+                                        </th>
+                                        <th class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $t('inventory.actions') }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr v-for="item in filteredItems" :key="item.id" class="hover:bg-gray-50">
+                                        <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <i :class="getCategoryIcon(item.category)" class="text-gray-400 mr-2 md:mr-3"></i>
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">{{ item.name }}</div>
+                                                    <div class="text-xs md:text-sm text-gray-500">{{ item.description }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                {{ $t('categories.' + item.category) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <span :class="{'text-red-600': item.quantity <= item.minQuantity}">
+                                                {{ item.quantity }} {{ item.unit }}
+                                            </span>
+                                        </td>
+                                        <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            <span :class="getExpiryClass(item.expiryDate)">
+                                                {{ formatDate(item.expiryDate) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                                            <span :class="getStatusClass(item)" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                                                {{ getStatusText(item) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <div class="flex space-x-2">
+                                                <button @click="editItem(item)" class="text-indigo-600 hover:text-indigo-900 p-1">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button @click="deleteItem(item.id)" class="text-red-600 hover:text-red-900 p-1">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- 库存列表 -->
-                <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <div class="mobile-table-container overflow-x-auto">
-                        <table class="min-w-full mobile-table"></table>
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th
-                                    class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                </th>
-                                {{ $t('inventory.name') }}
-                                </th>
-                                <th
-                                    class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                </th>
-                                {{ $t('inventory.category') }}
-                                </th>
-                                <th
-                                    class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ $t('inventory.quantity') }}
-                                </th>
-                                <th
-                                    class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                </th>
-                                {{ $t('inventory.expiryDate') }}
-                                </th>
-                                <th
-                                    class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                </th>
-                                {{ $t('inventory.status') }}
-                                </th>
-                                <th
-                                    class="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                </th>
-                                {{ $t('inventory.actions') }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="item in filteredItems" :key="item.id" class="hover:bg-gray-50">
-                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
+                <!-- 添加/编辑物品视图 -->
+                <div v-else-if="currentView === 'add'" key="add">
+                    <div class="max-w-2xl mx-auto">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                            {{ editingItem ? $t('add.editTitle') : $t('add.title') }}
+                        </h2>
+
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <form @submit.prevent="saveItem">
+                                <div class="grid grid-cols-1 md:grid-cols-2 mobile-form-grid gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            {{ $t('add.name') }}
+                                        </label>
+                                        <input v-model="form.name" type="text" required
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            {{ $t('add.category') }}
+                                        </label>
+                                        <select v-model="form.category" required
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option value="">{{ $t('add.selectCategory') }}</option>
+                                            <option v-for="category in categories" :key="category" :value="category">
+                                                {{ $t('categories.' + category) }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            {{ $t('add.quantity') }}
+                                        </label>
+                                        <input v-model.number="form.quantity" type="number" min="0" required
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            {{ $t('add.unit') }}
+                                        </label>
+                                        <input v-model="form.unit" type="text" required
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            {{ $t('add.minQuantity') }}
+                                        </label>
+                                        <input v-model.number="form.minQuantity" type="number" min="0"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            {{ $t('add.expiryDate') }}
+                                        </label>
+                                        <input v-model="form.expiryDate" type="date"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                </div>
+
+                                <div class="mt-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        {{ $t('add.description') }}
+                                    </label>
+                                    <textarea v-model="form.description" rows="3"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                                </div>
+
+                                <div class="mt-6 flex justify-end space-x-3">
+                                    <button type="button" @click="cancelEdit"
+                                        class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                                        {{ $t('add.cancel') }}
+                                    </button>
+                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                        {{ editingItem ? $t('add.update') : $t('add.save') }}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分析视图 -->
+                <div v-else-if="currentView === 'analytics'" key="analytics">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ $t('analytics.title') }}</h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- 智能提醒 -->
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                <i class="fas fa-bell text-yellow-500 mr-2"></i>
+                                {{ $t('analytics.smartAlerts') }}
+                            </h3>
+                            <div class="space-y-3">
+                                <div v-for="alert in smartAlerts" :key="alert.id" :class="getAlertClass(alert.type)"
+                                    class="p-3 rounded-lg border-l-4">
                                     <div class="flex items-center">
-                                        <i :class="getCategoryIcon(item.category)"
-                                            class="text-gray-400 mr-2 md:mr-3"></i>
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">{{ item.name }}</div>
-                                            <div class="text-xs md:text-sm text-gray-500">{{ item.description }}</div>
-                                        </div>
+                                        <i :class="getAlertIcon(alert.type)" class="mr-2"></i>
+                                        <span class="font-medium">{{ alert.title }}</span>
                                     </div>
-                                </td>
-                                <td class="px-3 md:px-6 py-4 whitespace-nowrap"></td>
-                                <span
-                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                    {{ $t('categories.' + item.category) }}
-                                </span>
-                                </td>
-                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    <span :class="{'text-red-600': item.quantity <= item.minQuantity}">
-                                        {{ item.quantity }} {{ item.unit }}
-                                    </span>
-                                </td>
-                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm text-gray-900"></td>
-                                <span :class="getExpiryClass(item.expiryDate)">
-                                    {{ formatDate(item.expiryDate) }}
-                                </span>
-                                </td>
-                                <td class="px-3 md:px-6 py-4 whitespace-nowrap">
-                                    <span :class="getStatusClass(item)"
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                                        {{ getStatusText(item) }}
-                                    </span>
-                                </td>
-                                <td class="px-3 md:px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div class="flex space-x-2">
-                                        <button @click="editItem(item)"
-                                            class="text-indigo-600 hover:text-indigo-900 p-1">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button @click="deleteItem(item.id)"
-                                            class="text-red-600 hover:text-red-900 p-1">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                    <p class="text-sm mt-1">{{ alert.message }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 智能推荐 -->
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                                <i class="fas fa-lightbulb text-blue-500 mr-2"></i>
+                                {{ $t('analytics.smartRecommendations') }}
+                            </h3>
+                            <div class="space-y-3">
+                                <div v-for="recommendation in smartRecommendations" :key="recommendation.id"
+                                    class="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-shopping-cart text-blue-500 mr-2"></i>
+                                        <span class="font-medium">{{ recommendation.title }}</span>
                                     </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
-    </div>
-
-    <!-- 添加/编辑物品视图 -->
-    <div v-else-if="currentView === 'add'" key="add">
-        <div class="max-w-2xl mx-auto">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                {{ editingItem ? $t('add.editTitle') : $t('add.title') }}
-            </h2>
-
-            <div class="bg-white rounded-lg shadow p-6">
-                <form @submit.prevent="saveItem">
-                    <div class="grid grid-cols-1 md:grid-cols-2 mobile-form-grid gap-6"></div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ $t('add.name') }}
-                        </label>
-                        <input v-model="form.name" type="text" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ $t('add.category') }}
-                        </label>
-                        <select v-model="form.category" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="">{{ $t('add.selectCategory') }}</option>
-                            <option v-for="category in categories" :key="category" :value="category">
-                                {{ $t('categories.' + category) }}
-                            </option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ $t('add.quantity') }}
-                        </label>
-                        <input v-model.number="form.quantity" type="number" min="0" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ $t('add.unit') }}
-                        </label>
-                        <input v-model="form.unit" type="text" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ $t('add.minQuantity') }}
-                        </label>
-                        <input v-model.number="form.minQuantity" type="number" min="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            {{ $t('add.expiryDate') }}
-                        </label>
-                        <input v-model="form.expiryDate" type="date"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-            </div>
-
-            <div class="mt-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                    {{ $t('add.description') }}
-                </label>
-                <textarea v-model="form.description" rows="3"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
-            </div>
-
-            <div class="mt-6 flex justify-end space-x-3">
-                <button type="button" @click="cancelEdit"
-                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
-                    {{ $t('add.cancel') }}
-                </button>
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                    {{ editingItem ? $t('add.update') : $t('add.save') }}
-                </button>
-            </div>
-            </form>
-        </div>
-    </div>
-    </div>
-
-    <!-- 分析视图 -->
-    <div v-else-if="currentView === 'analytics'" key="analytics">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ $t('analytics.title') }}</h2>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- 智能提醒 -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                    <i class="fas fa-bell text-yellow-500 mr-2"></i>
-                    {{ $t('analytics.smartAlerts') }}
-                </h3>
-                <div class="space-y-3">
-                    <div v-for="alert in smartAlerts" :key="alert.id" :class="getAlertClass(alert.type)"
-                        class="p-3 rounded-lg border-l-4">
-                        <div class="flex items-center">
-                            <i :class="getAlertIcon(alert.type)" class="mr-2"></i>
-                            <span class="font-medium">{{ alert.title }}</span>
+                                    <p class="text-sm mt-1 text-gray-600">{{ recommendation.reason }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-sm mt-1">{{ alert.message }}</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- 智能推荐 -->
-            <div class="bg-white rounded-lg shadow p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                    <i class="fas fa-lightbulb text-blue-500 mr-2"></i>
-                    {{ $t('analytics.smartRecommendations') }}
-                </h3>
-                <div class="space-y-3">
-                    <div v-for="recommendation in smartRecommendations" :key="recommendation.id"
-                        class="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                        <div class="flex items-center">
-                            <i class="fas fa-shopping-cart text-blue-500 mr-2"></i>
-                            <span class="font-medium">{{ recommendation.title }}</span>
-                        </div>
-                        <p class="text-sm mt-1 text-gray-600">{{ recommendation.reason }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </transition>
-    </main>
+            </transition>
+        </main>
 
     <!-- 通知弹窗 -->
     <transition name="fade">
