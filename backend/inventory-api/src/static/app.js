@@ -7,7 +7,9 @@ const messages = {
         nav: {
             inventory: '库存管理',
             add: '添加物品',
-            analytics: '智能分析'
+            analytics: '智能分析',
+            menu: '菜单',
+            language: '语言'
         },
         inventory: {
             title: '库存列表',
@@ -74,7 +76,9 @@ const messages = {
         nav: {
             inventory: 'Inventory',
             add: 'Add Item',
-            analytics: 'Analytics'
+            analytics: 'Analytics',
+            menu: 'Menu',
+            language: 'Language'
         },
         inventory: {
             title: 'Inventory List',
@@ -141,7 +145,9 @@ const messages = {
         nav: {
             inventory: '在庫管理',
             add: 'アイテム追加',
-            analytics: 'スマート分析'
+            analytics: 'スマート分析',
+            menu: 'メニュー',
+            language: '言語'
         },
         inventory: {
             title: '在庫リスト',
@@ -223,6 +229,7 @@ const app = createApp({
             searchQuery: '',
             selectedCategory: '',
             editingItem: null,
+            showMobileNav: false,
             
             // 表单数据
             form: {
@@ -679,6 +686,12 @@ const app = createApp({
         // 保存数据到localStorage
         saveData() {
             localStorage.setItem('inventoryItems', JSON.stringify(this.items));
+        },
+        
+        // 移动端导航相关方法
+        navigateAndClose(view) {
+            this.currentView = view;
+            this.showMobileNav = false;
         }
     },
     

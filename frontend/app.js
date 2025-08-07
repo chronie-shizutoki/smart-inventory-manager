@@ -7,7 +7,9 @@ const messages = {
         nav: {
             inventory: '库存管理',
             add: '添加物品',
-            analytics: '智能分析'
+            analytics: '智能分析',
+            menu: '菜单',
+            language: '语言'
         },
         inventory: {
             title: '库存列表',
@@ -74,7 +76,9 @@ const messages = {
         nav: {
             inventory: 'Inventory',
             add: 'Add Item',
-            analytics: 'Analytics'
+            analytics: 'Analytics',
+            menu: 'Menu',
+            language: 'Language'
         },
         inventory: {
             title: 'Inventory List',
@@ -141,7 +145,9 @@ const messages = {
         nav: {
             inventory: '在庫管理',
             add: 'アイテム追加',
-            analytics: 'スマート分析'
+            analytics: 'スマート分析',
+            menu: 'メニュー',
+            language: '言語'
         },
         inventory: {
             title: '在庫リスト',
@@ -223,6 +229,7 @@ const app = createApp({
             searchQuery: '',
             selectedCategory: '',
             editingItem: null,
+            showMobileNav: false,
             
             // 表单数据
             form: {
@@ -325,6 +332,7 @@ const app = createApp({
         
         // 智能提醒
         smartAlerts() {
+            // 这里可以从API获取，但为了演示，我们保留本地计算
             const alerts = [];
             const today = new Date();
             
@@ -365,6 +373,7 @@ const app = createApp({
         
         // 智能推荐
         smartRecommendations() {
+            // 这里可以从API获取，但为了演示，我们保留本地计算
             const recommendations = [];
             
             // 基于库存不足的推荐
@@ -388,6 +397,34 @@ const app = createApp({
             }
             
             return recommendations;
+        },
+        
+        // 从API加载智能提醒
+        async loadAlertsFromAPI() {
+            try {
+                const response = await fetch('/api/inventory/alerts');
+                const result = await response.json();
+                if (result.success) {
+                    return result.data;
+                }
+            } catch (error) {
+                console.error('Failed to load alerts from API:', error);
+            }
+            return [];
+        },
+        
+        // 从API加载智能推荐
+        async loadRecommendationsFromAPI() {
+            try {
+                const response = await fetch('/api/inventory/recommendations');
+                const result = await response.json();
+                if (result.success) {
+                    return result.data;
+                }
+            } catch (error) {
+                console.error('Failed to load recommendations from API:', error);
+            }
+            return [];
         }
     },
     
@@ -483,36 +520,31 @@ const app = createApp({
         },
         
         // 删除物品
-        deleteItem(id) {
+        async deleteItem(id) {
             if (confirm('确定要删除这个物品吗？')) {
-                this.items = this.items.filter(item => item.id !== id);
-                this.showNotification(this.$t('notifications.itemDeleted'), 'success');
+                const success = await this.deleteItemFromAPI(id);
+                if (success) {
+                    this.showNotification(this.$t('notifications.itemDeleted'), 'success');
+                } else {
+                    this.showNotification(this.$t('notifications.error'), 'error');
+                }
             }
         },
         
         // 保存物品
-        saveItem() {
+        async saveItem() {
             try {
-                if (this.editingItem) {
-                    // 更新现有物品
-                    const index = this.items.findIndex(item => item.id === this.editingItem.id);
-                    if (index !== -1) {
-                        this.items[index] = { ...this.form, id: this.editingItem.id };
-                        this.showNotification(this.$t('notifications.itemUpdated'), 'success');
-                    }
+                const success = await this.saveItemToAPI(this.form);
+                if (success) {
+                    const message = this.editingItem ? 
+                        this.$t('notifications.itemUpdated') : 
+                        this.$t('notifications.itemAdded');
+                    this.showNotification(message, 'success');
+                    this.resetForm();
+                    this.currentView = 'inventory';
                 } else {
-                    // 添加新物品
-                    const newItem = {
-                        ...this.form,
-                        id: Date.now(),
-                        createdAt: new Date()
-                    };
-                    this.items.push(newItem);
-                    this.showNotification(this.$t('notifications.itemAdded'), 'success');
+                    this.showNotification(this.$t('notifications.error'), 'error');
                 }
-                
-                this.resetForm();
-                this.currentView = 'inventory';
             } catch (error) {
                 this.showNotification(this.$t('notifications.error'), 'error');
             }
@@ -552,11 +584,18 @@ const app = createApp({
         },
         
         // 初始化数据
-        initializeData() {
-            // 从localStorage加载数据
-            const savedItems = localStorage.getItem('inventoryItems');
-            if (savedItems) {
-                this.items = JSON.parse(savedItems);
+        async initializeData() {
+            try {
+                // 从API加载数据
+                await this.loadItemsFromAPI();
+                await this.loadStatsFromAPI();
+            } catch (error) {
+                console.error('Failed to load data from API:', error);
+                // 如果API失败，从localStorage加载数据
+                const savedItems = localStorage.getItem('inventoryItems');
+                if (savedItems) {
+                    this.items = JSON.parse(savedItems);
+                }
             }
             
             // 加载语言设置
@@ -567,9 +606,92 @@ const app = createApp({
             }
         },
         
+        // 从API加载物品
+        async loadItemsFromAPI() {
+            try {
+                const response = await fetch('/api/inventory/items');
+                const result = await response.json();
+                if (result.success) {
+                    this.items = result.data;
+                }
+            } catch (error) {
+                console.error('Failed to load items from API:', error);
+            }
+        },
+        
+        // 从API加载统计数据
+        async loadStatsFromAPI() {
+            try {
+                const response = await fetch('/api/inventory/stats');
+                const result = await response.json();
+                if (result.success) {
+                    // 更新统计数据（如果需要的话）
+                }
+            } catch (error) {
+                console.error('Failed to load stats from API:', error);
+            }
+        },
+        
+        // 保存物品到API
+        async saveItemToAPI(itemData) {
+            try {
+                const url = this.editingItem ? 
+                    `/api/inventory/items/${this.editingItem.id}` : 
+                    '/api/inventory/items';
+                const method = this.editingItem ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(itemData)
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    // 重新加载数据
+                    await this.loadItemsFromAPI();
+                    return true;
+                } else {
+                    throw new Error(result.error || 'Failed to save item');
+                }
+            } catch (error) {
+                console.error('Failed to save item to API:', error);
+                return false;
+            }
+        },
+        
+        // 从API删除物品
+        async deleteItemFromAPI(itemId) {
+            try {
+                const response = await fetch(`/api/inventory/items/${itemId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    // 重新加载数据
+                    await this.loadItemsFromAPI();
+                    return true;
+                } else {
+                    throw new Error(result.error || 'Failed to delete item');
+                }
+            } catch (error) {
+                console.error('Failed to delete item from API:', error);
+                return false;
+            }
+        },
+        
         // 保存数据到localStorage
         saveData() {
             localStorage.setItem('inventoryItems', JSON.stringify(this.items));
+        },
+        
+        // 移动端导航相关方法
+        navigateAndClose(view) {
+            this.currentView = view;
+            this.showMobileNav = false;
         }
     },
     
