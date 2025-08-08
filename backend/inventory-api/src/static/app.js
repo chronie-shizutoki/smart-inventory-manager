@@ -84,11 +84,21 @@ const messages = {
             itemAdded: '物品添加成功',
             itemUpdated: '物品更新成功',
             itemDeleted: '物品删除成功',
-            error: '操作失败，请重试'
-        }
+            error: '操作失败，请重试',
+            insufficientStock: '{itemName} 库存不足，无法使用',
+            itemUsedSuccessfully: '已使用 {itemName} 1 {unit}，剩余 {quantity} {unit}'
+        },
     },
     en: {
-        alerts: {
+            notifications: {
+                itemAdded: 'Item added successfully',
+                itemUpdated: 'Item updated successfully',
+                itemDeleted: 'Item deleted successfully',
+                error: 'Operation failed, please try again',
+                insufficientStock: '{itemName} is out of stock, cannot use',
+                itemUsedSuccessfully: 'Used one unit of {itemName}, remaining {quantity} {unit}'
+            },
+            alerts: {
             lowStock: 'Low Stock',
             lowStockMessage: '{item} only has {quantity} {unit} left',
             expired: 'Item Expired',
@@ -171,7 +181,9 @@ const messages = {
             itemAdded: 'Item added successfully',
             itemUpdated: 'Item updated successfully',
             itemDeleted: 'Item deleted successfully',
-            error: 'Operation failed, please try again'
+            error: 'Operation failed, please try again',
+            insufficientStock: '{itemName} is out of stock, cannot use',
+            itemUsedSuccessfully: 'Used one {unit} of {itemName}, remaining {quantity} {unit}',
         }
     },
     ja: {
@@ -258,10 +270,12 @@ const messages = {
             itemAdded: 'アイテムが正常に追加されました',
             itemUpdated: 'アイテムが正常に更新されました',
             itemDeleted: 'アイテムが正常に削除されました',
-            error: '操作に失敗しました。再試行してください'
+            error: '操作に失敗しました。再試行してください',
+            insufficientStock: '{itemName} の在庫が不足しています。',
+            itemUsedSuccessfully: '{itemName} を使用しました。残り {quantity} {unit} です。'
         }
     }
-};
+}
 
 // Vue应用配置
 const { createApp } = Vue;
@@ -492,14 +506,32 @@ const app = createApp({
                         this.items = [...this.items];
                     }
                     console.log('API Response:', result);
-                    // 确保消息存在，如果不存在则显示默认消息
-                    const message = result.message || '物品使用记录已更新';
+                    // 处理国际化消息
+                    let message;
+                    if (result.message_code) {
+                        message = this.$t(`notifications.${result.message_code}`, result.message_data);
+                    } else {
+                        message = result.message || this.$t('notifications.itemUpdated');
+                    }
                     this.showNotification(message, 'success');
                     return true;
+                } else {
+                    // 处理错误情况
+                    if (result.error_code === 'insufficientStock') {
+                        // 显示库存不足的国际化消息
+                        // 确保参数名称与后端返回的字段匹配
+                        const message = this.$t('notifications.insufficientStock', {
+                            itemName: result.error_data.item_name
+                        });
+                        this.showNotification(message, 'error');
+                    } else {
+                        // 显示通用错误消息
+                        this.showNotification(this.$t('notifications.error'), 'error');
+                    }
                 }
             } catch (error) {
                 console.error('Failed to record item usage:', error);
-                this.showNotification('error', '记录物品使用情况失败');
+                this.showNotification(this.$t('notifications.error'), 'error');
             }
             return false;
         },

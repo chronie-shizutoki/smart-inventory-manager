@@ -270,15 +270,25 @@ def record_item_usage(item_id):
             
             db.session.commit()
             
+            # 返回不带硬编码中文的成功响应
             return jsonify({
                 'success': True,
-                'message': f'已使用 {item.name} 一个单位，剩余 {item.quantity} {item.unit}',
+                'message_code': 'itemUsedSuccessfully',
+                'message_data': {
+                        'itemName': item.name,
+                        'quantity': item.quantity,
+                        'unit': item.unit
+                    },
                 'data': item.to_dict()
             })
         else:
+            # 返回库存不足错误，不包含硬编码中文
             return jsonify({
                 'success': False,
-                'error': f'{item.name} 库存不足'
+                'error_code': 'insufficientStock',
+                'error_data': {
+                        'itemName': item.name
+                    }
             }), 400
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
