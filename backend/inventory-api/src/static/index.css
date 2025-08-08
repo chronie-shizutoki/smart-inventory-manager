@@ -330,13 +330,70 @@ button {
                 background-color: #16213e;
                 color: #e6e6e6;
                 border-color: #404040;
+                transition: background-color 0.3s ease, border-color 0.3s ease; /* 明确指定过渡属性 */
             }
 
+            /* 增强聚焦状态样式特异性，确保覆盖浏览器默认样式 */
             input:focus,
             select:focus,
-            textarea:focus {
+            textarea:focus,
+            input:focus:hover,
+            select:focus:hover,
+            textarea:focus:hover,
+            input:focus:not(:hover),
+            select:focus:not(:hover),
+            textarea:focus:not(:hover) {
+                border-color: #1a936f !important; /* 使用!important确保样式优先级 */
+                outline: none !important;
+                background-color: #1a2a4a !important; /* 确保背景色一致 */
+                transition: background-color 0.3s ease, border-color 0.3s ease !important; /* 强制平滑过渡 */
+            }
+
+            /* 鼠标悬停样式 - 深色模式 */
+            input:hover,
+            select:hover,
+            textarea:hover {
+                background-color: #1a2a4a; /* 悬停时稍微变亮但不刺眼 */
                 border-color: #1a936f;
-                outline: none;
+            }
+
+            /* 失去焦点时的平滑过渡 - 合并规则 */
+            input:not(:focus),
+            select:not(:focus),
+            textarea:not(:focus),
+            input:not(:hover):not(:focus),
+            select:not(:hover):not(:focus),
+            textarea:not(:hover):not(:focus) {
+                background-color: #16213e !important;
+                border-color: #404040 !important;
+                transition: background-color 0.3s ease, border-color 0.3s ease !important;
+            }
+
+            /* 为选择框添加更明确的失去焦点样式 */
+            select:not(:focus) {
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23e6e6e6' viewBox='0 0 16 16'%3E%3Cpath d='M8 12a1 1 0 0 0 1-1V5.586l2.293 2.293a1 1 0 0 0 1.414-1.414l-4-4a1 1 0 0 0-1.414 0l-4 4a1 1 0 1 0 1.414 1.414L7 5.586V11a1 1 0 0 0 1 1z'/%3E%3C/svg%3E") !important;
+                background-repeat: no-repeat !important;
+                background-position: right 0.75rem center !important;
+                background-size: 1em !important;
+            }
+
+            /* 移除可能导致刺眼效果的默认浏览器样式 */
+
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            textarea:-webkit-autofill,
+            textarea:-webkit-autofill:hover,
+            textarea:-webkit-autofill:focus,
+            select:-webkit-autofill,
+            select:-webkit-autofill:hover,
+            select:-webkit-autofill:focus {
+                -webkit-text-fill-color: #e6e6e6;
+                -webkit-box-shadow: 0 0 0px 1000px #16213e inset;
+                transition: background-color 5000s ease-in-out 0s;
             }
 
             /* 按钮深色模式样式 */
