@@ -105,7 +105,7 @@
         <main class="container mx-auto px-4 py-8">
             <transition name="fade" mode="out-in">
                 <!-- 库存列表视图 -->
-                <div v-if="currentView === 'inventory'" key="inventory">
+                <div v-if="currentView === 'inventory'" key="inventory" class="max-w-4xl mx-auto">
                     <div class="mb-6">
                         <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ $t('inventory.title') }}</h2>
                         <!-- 桌面端搜索 -->
@@ -396,7 +396,7 @@
                 </div>
 
                 <!-- 分析视图 -->
-                <div v-else-if="currentView === 'analytics'" key="analytics">
+                <div v-else-if="currentView === 'analytics'" key="analytics" class="max-w-4xl mx-auto">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ $t('analytics.title') }}</h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
