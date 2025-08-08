@@ -268,18 +268,45 @@ const { createApp } = Vue;
 const { createI18n } = VueI18n;
 
 // 创建i18n实例
+// 检测系统语言
+const detectSystemLanguage = () => {
+    // 优先获取navigator.language
+    const browserLang = navigator.language || navigator.userLanguage;
+    // 提取语言代码的前两位(如'en-US' -> 'en')
+    const langCode = browserLang.split('-')[0];
+    // 检查是否在支持的语言列表中
+    return Object.keys(messages).includes(langCode) ? langCode : 'en';
+};
+
 const i18n = createI18n({
-    locale: 'zh',
+    locale: detectSystemLanguage(),
     fallbackLocale: 'en',
     messages
 });
 
+// 标题国际化更新函数
+function updateDocumentTitle() {
+    document.title = i18n.global.t('app.title');
+}
+
+// 初始设置标题
+updateDocumentTitle();
+
 // 创建Vue应用
 const app = createApp({
+
+    // 添加语言切换监听
+    watch: {
+        currentLocale(newLocale) {
+            i18n.global.locale = newLocale;
+            updateDocumentTitle();
+        }
+    },
+
     data() {
             return {
                 currentView: 'inventory',
-                currentLocale: 'zh',
+                currentLocale: i18n.global.locale,
                 searchQuery: '',
                 selectedCategory: '',
                 editingItem: null,
@@ -394,8 +421,11 @@ const app = createApp({
     methods: {
         // 切换语言
         changeLanguage() {
-            this.$i18n.locale = this.currentLocale;
+            // 使用全局i18n实例
+            i18n.global.locale = this.currentLocale;
             localStorage.setItem('language', this.currentLocale);
+            // 更新页面标题
+            document.title = i18n.global.t('app.title');
         },
         
         // 获取分类图标
