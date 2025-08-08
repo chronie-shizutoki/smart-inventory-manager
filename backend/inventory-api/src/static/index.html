@@ -512,6 +512,10 @@
                                                 <button @click="editItem(item)" class="text-indigo-600 hover:text-indigo-900 p-1">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
+                                                <button @click="recordItemUsage(item.id)"
+                                                    class="text-green-600 hover:text-green-900 p-1">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </button>
                                                 <button @click="deleteItem(item.id)" class="text-red-600 hover:text-red-900 p-1">
                                                     <i class="fas fa-trash"></i>
                                                 </button>

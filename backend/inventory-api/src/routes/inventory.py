@@ -231,13 +231,34 @@ def get_smart_alerts():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+# 记录物品使用
+@inventory_bp.route('/items/<int:item_id>/use', methods=['POST'])
+def record_item_usage(item_id):
+    try:
+        item = InventoryItem.query.get_or_404(item_id)
+        
+        # 增加使用计数
+        item.usage_count += 1
+        # 更新最后使用时间
+        item.last_used_at = datetime.utcnow()
+        
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': f'已记录 {item.name} 的使用情况',
+            'data': item.to_dict()
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 # 获取智能推荐
 @inventory_bp.route('/recommendations', methods=['GET'])
 def get_smart_recommendations():
     try:
         recommendations = []
         
-        # 基于库存不足的推荐
+        # 1. 基于库存不足的推荐
         low_stock_items = InventoryItem.query.filter(
             InventoryItem.quantity <= InventoryItem.min_quantity
         ).all()
@@ -250,14 +271,48 @@ def get_smart_recommendations():
                 'itemId': item.id
             })
         
-        # 基于使用频率的推荐（模拟数据）
+        # 2. 基于使用频率和最后使用时间的推荐
+        # 获取最近30天内有使用记录的物品
+        thirty_days_ago = datetime.utcnow() - timedelta(days=30)
+        frequently_used_items = InventoryItem.query.filter(
+            InventoryItem.last_used_at >= thirty_days_ago,
+            InventoryItem.quantity > 0  # 确保有库存
+        ).order_by(InventoryItem.usage_count.desc()).limit(5).all()
+        
+        # 找出使用频率高但库存不高的物品
+        for item in frequently_used_items:
+            # 计算库存充足率 = 当前库存 / 最低库存
+            stock_ratio = item.quantity / item.min_quantity if item.min_quantity > 0 else 0
+            
+            if stock_ratio < 2 and item.id not in [rec['itemId'] for rec in recommendations]:
+                recommendations.append({
+                    'id': f'freq-use-{item.id}',
+                    'title': f'建议关注 {item.name}',
+                    'reason': f'近30天内使用 {item.usage_count} 次，当前库存 {item.quantity} {item.unit}，建议及时补充',
+                    'itemId': item.id
+                })
+                
+        # 3. 基于分类的推荐
+        # 如果推荐数量仍然不足，根据分类添加一些推荐
         if len(recommendations) < 3:
-            recommendations.append({
-                'id': 'frequent-use',
-                'title': '建议补充常用物品',
-                'reason': '根据使用频率分析，建议提前采购牛奶和面包',
-                'itemId': None
-            })
+            categories = Category.query.all()
+            for category in categories:
+                # 找出每个分类中使用频率最高但不在推荐列表中的物品
+                top_item = InventoryItem.query.filter(
+                    InventoryItem.category == category.name,
+                    InventoryItem.id.notin_([rec['itemId'] for rec in recommendations if rec['itemId']])
+                ).order_by(InventoryItem.usage_count.desc()).first()
+                
+                if top_item and top_item.usage_count > 0:
+                    recommendations.append({
+                        'id': f'category-{category.name}-{top_item.id}',
+                        'title': f'考虑补充 {top_item.name}',
+                        'reason': f'作为 {category.name} 分类中常用物品，近30天内使用 {top_item.usage_count} 次',
+                        'itemId': top_item.id
+                    })
+                    
+                if len(recommendations) >= 3:
+                    break
         
         return jsonify({
             'success': True,

@@ -223,73 +223,77 @@ const i18n = createI18n({
 // 创建Vue应用
 const app = createApp({
     data() {
-        return {
-            currentView: 'inventory',
-            currentLocale: 'zh',
-            searchQuery: '',
-            selectedCategory: '',
-            editingItem: null,
-            showMobileNav: false,
-            
-            // 表单数据
-            form: {
-                name: '',
-                category: '',
-                quantity: 0,
-                unit: '',
-                minQuantity: 0,
-                expiryDate: '',
-                description: ''
-            },
-            
-            // 分类列表
-            categories: ['food', 'medicine', 'cleaning', 'personal', 'household', 'electronics'],
-            
-            // 库存数据
-            items: [
-                {
-                    id: 1,
-                    name: '牛奶',
-                    category: 'food',
-                    quantity: 2,
-                    unit: '瓶',
-                    minQuantity: 1,
-                    expiryDate: '2025-02-15',
-                    description: '全脂牛奶',
-                    createdAt: new Date()
+            return {
+                currentView: 'inventory',
+                currentLocale: 'zh',
+                searchQuery: '',
+                selectedCategory: '',
+                editingItem: null,
+                showMobileNav: false,
+                
+                // 表单数据
+                form: {
+                    name: '',
+                    category: '',
+                    quantity: 0,
+                    unit: '',
+                    minQuantity: 0,
+                    expiryDate: '',
+                    description: ''
                 },
-                {
-                    id: 2,
-                    name: '感冒药',
-                    category: 'medicine',
-                    quantity: 1,
-                    unit: '盒',
-                    minQuantity: 2,
-                    expiryDate: '2025-12-31',
-                    description: '治疗感冒症状',
-                    createdAt: new Date()
-                },
-                {
-                    id: 3,
-                    name: '洗洁精',
-                    category: 'cleaning',
-                    quantity: 1,
-                    unit: '瓶',
-                    minQuantity: 1,
-                    expiryDate: '2026-01-01',
-                    description: '厨房清洁用品',
-                    createdAt: new Date()
+                
+                // 分类列表
+                categories: ['food', 'medicine', 'cleaning', 'personal', 'household', 'electronics'],
+                
+                // 库存数据
+                items: [
+                    {
+                        id: 1,
+                        name: '牛奶',
+                        category: 'food',
+                        quantity: 2,
+                        unit: '瓶',
+                        minQuantity: 1,
+                        expiryDate: '2025-02-15',
+                        description: '全脂牛奶',
+                        createdAt: new Date()
+                    },
+                    {
+                        id: 2,
+                        name: '感冒药',
+                        category: 'medicine',
+                        quantity: 1,
+                        unit: '盒',
+                        minQuantity: 2,
+                        expiryDate: '2025-12-31',
+                        description: '治疗感冒症状',
+                        createdAt: new Date()
+                    },
+                    {
+                        id: 3,
+                        name: '洗洁精',
+                        category: 'cleaning',
+                        quantity: 1,
+                        unit: '瓶',
+                        minQuantity: 1,
+                        expiryDate: '2026-01-01',
+                        description: '厨房清洁用品',
+                        createdAt: new Date()
+                    }
+                ],
+                
+                // 智能分析数据
+                smartAlerts: [],
+                smartRecommendations: [],
+                
+                // 通知系统
+                notification: {
+                    show: false,
+                    message: '',
+                    type: 'success'
                 }
-            ],
-            
-            // 通知系统
-            notification: {
-                show: false,
-                message: '',
-                type: 'success'
-            }
-        };
-    },
+            };
+        },
     
     computed: {
         // 过滤后的物品列表
@@ -330,102 +334,7 @@ const app = createApp({
             }).length;
         },
         
-        // 智能提醒
-        smartAlerts() {
-            // 这里可以从API获取，但为了演示，我们保留本地计算
-            const alerts = [];
-            const today = new Date();
-            
-            // 检查过期物品
-            this.items.forEach(item => {
-                const expiryDate = new Date(item.expiryDate);
-                const daysUntilExpiry = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
-                
-                if (daysUntilExpiry < 0) {
-                    alerts.push({
-                        id: `expired-${item.id}`,
-                        type: 'error',
-                        title: '物品已过期',
-                        message: `${item.name} 已过期 ${Math.abs(daysUntilExpiry)} 天`
-                    });
-                } else if (daysUntilExpiry <= 3) {
-                    alerts.push({
-                        id: `expiring-${item.id}`,
-                        type: 'warning',
-                        title: '即将过期',
-                        message: `${item.name} 将在 ${daysUntilExpiry} 天后过期`
-                    });
-                }
-                
-                // 检查库存不足
-                if (item.quantity <= item.minQuantity) {
-                    alerts.push({
-                        id: `lowstock-${item.id}`,
-                        type: 'warning',
-                        title: '库存不足',
-                        message: `${item.name} 库存仅剩 ${item.quantity} ${item.unit}`
-                    });
-                }
-            });
-            
-            return alerts;
-        },
-        
-        // 智能推荐
-        smartRecommendations() {
-            // 这里可以从API获取，但为了演示，我们保留本地计算
-            const recommendations = [];
-            
-            // 基于库存不足的推荐
-            this.items.forEach(item => {
-                if (item.quantity <= item.minQuantity) {
-                    recommendations.push({
-                        id: `restock-${item.id}`,
-                        title: `建议补充 ${item.name}`,
-                        reason: `当前库存 ${item.quantity} ${item.unit}，低于最低库存 ${item.minQuantity} ${item.unit}`
-                    });
-                }
-            });
-            
-            // 基于使用频率的推荐（模拟数据）
-            if (recommendations.length < 3) {
-                recommendations.push({
-                    id: 'frequent-use',
-                    title: '建议补充常用物品',
-                    reason: '根据使用频率分析，建议提前采购牛奶和面包'
-                });
-            }
-            
-            return recommendations;
-        },
-        
-        // 从API加载智能提醒
-        async loadAlertsFromAPI() {
-            try {
-                const response = await fetch('/api/inventory/alerts');
-                const result = await response.json();
-                if (result.success) {
-                    return result.data;
-                }
-            } catch (error) {
-                console.error('Failed to load alerts from API:', error);
-            }
-            return [];
-        },
-        
-        // 从API加载智能推荐
-        async loadRecommendationsFromAPI() {
-            try {
-                const response = await fetch('/api/inventory/recommendations');
-                const result = await response.json();
-                if (result.success) {
-                    return result.data;
-                }
-            } catch (error) {
-                console.error('Failed to load recommendations from API:', error);
-            }
-            return [];
-        }
+
     },
     
     methods: {
@@ -448,6 +357,66 @@ const app = createApp({
             return icons[category] || 'fas fa-box';
         },
         
+        // 从API加载智能提醒
+        async loadAlertsFromAPI() {
+            try {
+                const response = await fetch('/api/inventory/alerts');
+                const result = await response.json();
+                if (result.success) {
+                    this.smartAlerts = result.data;
+                }
+            } catch (error) {
+                console.error('Failed to load alerts from API:', error);
+            }
+        },
+        
+        // 从API加载智能推荐
+        async loadRecommendationsFromAPI() {
+            try {
+                const response = await fetch('/api/inventory/recommendations');
+                const result = await response.json();
+                if (result.success) {
+                    this.smartRecommendations = result.data;
+                }
+            } catch (error) {
+                console.error('Failed to load recommendations from API:', error);
+            }
+        },
+        
+        // 当物品数据更新时，重新加载智能分析数据
+        async refreshAnalyticsData() {
+            await this.loadAlertsFromAPI();
+            await this.loadRecommendationsFromAPI();
+        },
+        
+        // 记录物品使用
+        async recordItemUsage(itemId) {
+            try {
+                const response = await fetch(`/api/inventory/items/${itemId}/use`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const result = await response.json();
+                if (result.success) {
+                    // 更新本地物品列表
+                    const index = this.items.findIndex(item => item.id === itemId);
+                    if (index !== -1) {
+                        this.items[index] = result.data;
+                        // 触发重新渲染
+                        this.items = [...this.items];
+                    }
+                    this.showNotification('success', result.message);
+                    return true;
+                }
+            } catch (error) {
+                console.error('Failed to record item usage:', error);
+                this.showNotification('error', '记录物品使用情况失败');
+            }
+            return false;
+        },
+
         // 格式化日期
         formatDate(dateString) {
             if (!dateString) return '-';
@@ -589,6 +558,8 @@ const app = createApp({
                 // 从API加载数据
                 await this.loadItemsFromAPI();
                 await this.loadStatsFromAPI();
+                // 加载智能分析数据
+                await this.refreshAnalyticsData();
             } catch (error) {
                 console.error('Failed to load data from API:', error);
                 // 如果API失败，从localStorage加载数据
@@ -652,6 +623,8 @@ const app = createApp({
                 if (result.success) {
                     // 重新加载数据
                     await this.loadItemsFromAPI();
+                    // 刷新智能分析数据
+                    await this.refreshAnalyticsData();
                     return true;
                 } else {
                     throw new Error(result.error || 'Failed to save item');
@@ -673,6 +646,8 @@ const app = createApp({
                 if (result.success) {
                     // 重新加载数据
                     await this.loadItemsFromAPI();
+                    // 刷新智能分析数据
+                    await this.refreshAnalyticsData();
                     return true;
                 } else {
                     throw new Error(result.error || 'Failed to delete item');
