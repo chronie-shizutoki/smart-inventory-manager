@@ -15,7 +15,7 @@
 <body class="bg-gray-50">
     <div id="app">
         <!-- 导航栏 -->
-        <nav class="bg-blue-600 text-white shadow-lg">
+        <nav class="bg-gradient-to-r from-blue-600/80 to-indigo-700/80 text-white shadow-lg gradient-animate glass-effect">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center py-4">
                     <div class="flex items-center space-x-2">
@@ -27,8 +27,7 @@
                     <!-- 桌面端导航 -->
                     <div class="hidden md:flex items-center space-x-4">
                         <!-- 语言切换 -->
-                        <select v-model="currentLocale" @change="changeLanguage"
-                            class="bg-blue-500 text-white border border-blue-400 rounded px-2 py-1">
+                        <select v-model="currentLocale" @change="changeLanguage" class="bg-blue-500 text-white border border-blue-400 rounded px-2 py-1 glass-effect">
                             <option value="zh">中文</option>
                             <option value="en">English</option>
                             <option value="ja">日本語</option>
@@ -58,8 +57,8 @@
 
         <!-- 移动端全屏导航弹窗 -->
         <transition name="fade">
-            <div v-if="showMobileNav" class="mobile-nav-menu md:hidden" @click.self="showMobileNav = false">
-                <div class="mobile-nav-content">
+            <div v-if="showMobileNav" class="mobile-nav-menu md:hidden glass-effect" @click.self="showMobileNav = false">
+                <div class="mobile-nav-content glass-card p-6 rounded-lg m-4">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold text-gray-800">{{ $t('nav.menu') }}</h2>
                         <button @click="showMobileNav = false" class="text-gray-500 hover:text-gray-700">
@@ -70,8 +69,7 @@
                     <!-- 语言切换 -->
                     <div class="mb-6">
                         <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('nav.language') }}</label>
-                        <select v-model="currentLocale" @change="changeLanguage"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <select v-model="currentLocale" @change="changeLanguage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 glass-effect">
                             <option value="zh">中文</option>
                             <option value="en">English</option>
                             <option value="ja">日本語</option>
@@ -114,13 +112,12 @@
                         <div class="hidden md:flex justify-end space-x-4">
                             <!-- 搜索框 -->
                             <div class="relative">
-                                <input v-model="searchQuery" :placeholder="$t('inventory.search')"
-                                    class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <input v-model="searchQuery" :placeholder="$t('inventory.search')" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                 <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                             </div>
                             <!-- 分类筛选 -->
                             <select v-model="selectedCategory"
-                                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 glass-effect">
                                 <option value="">{{ $t('inventory.allCategories') }}</option>
                                 <option v-for="category in categories" :key="category" :value="category">
                                     {{ $t('categories.' + category) }}
@@ -131,13 +128,12 @@
                         <div class="md:hidden mobile-search-container flex">
                             <!-- 搜索框 -->
                             <div class="relative flex-1">
-                                <input v-model="searchQuery" :placeholder="$t('inventory.search')"
-                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <input v-model="searchQuery" :placeholder="$t('inventory.search')" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                 <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                             </div>
                             <!-- 分类筛选 -->
                             <select v-model="selectedCategory"
-                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 glass-effect">
                                 <option value="">{{ $t('inventory.allCategories') }}</option>
                                 <option v-for="category in categories" :key="category" :value="category">
                                     {{ $t('categories.' + category) }}
@@ -148,46 +144,46 @@
 
                     <!-- 库存统计卡片 -->
                     <div class="grid grid-cols-1 md:grid-cols-4 mobile-stats-grid gap-4 mb-6">
-                        <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="p-4 rounded-lg shadow glass-card">
                             <div class="flex items-center">
                                 <i class="fas fa-boxes text-blue-500 text-2xl mr-3"></i>
                                 <div>
                                     <p class="text-gray-600 text-sm">{{ $t('stats.totalItems') }}</p>
-                                    <p class="text-2xl font-bold">{{ totalItems }}</p>
+                                    <p class="text-2xl font-bold number-change">{{ totalItems }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="p-4 rounded-lg shadow glass-card">
                             <div class="flex items-center">
                                 <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl mr-3"></i>
                                 <div>
                                     <p class="text-gray-600 text-sm">{{ $t('stats.lowStock') }}</p>
-                                    <p class="text-2xl font-bold">{{ lowStockItems }}</p>
+                                    <p class="text-2xl font-bold number-change">{{ lowStockItems }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="p-4 rounded-lg shadow glass-card">
                             <div class="flex items-center">
                                 <i class="fas fa-clock text-red-500 text-2xl mr-3"></i>
                                 <div>
                                     <p class="text-gray-600 text-sm">{{ $t('stats.expiringSoon') }}</p>
-                                    <p class="text-2xl font-bold">{{ expiringSoonItems }}</p>
+                                    <p class="text-2xl font-bold number-change">{{ expiringSoonItems }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="p-4 rounded-lg shadow glass-card">
                             <div class="flex items-center">
                                 <i class="fas fa-tags text-green-500 text-2xl mr-3"></i>
                                 <div>
                                     <p class="text-gray-600 text-sm">{{ $t('stats.categories') }}</p>
-                                    <p class="text-2xl font-bold">{{ categories.length }}</p>
+                                    <p class="text-2xl font-bold number-change">{{ categories.length }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- 库存列表 - 桌面端表格视图 -->
-                    <div class="hidden md:block bg-white rounded-lg shadow overflow-hidden">
+                    <div class="hidden md:block rounded-lg shadow overflow-hidden glass-card">
                         <div class="mobile-table-container overflow-x-auto">
                             <table class="min-w-full mobile-table">
                                 <thead class="bg-gray-50">
@@ -265,7 +261,7 @@
 
                     <!-- 库存列表 - 移动端卡片视图 -->
                     <div class="md:hidden space-y-4">
-                        <div v-for="item in filteredItems" :key="item.id" class="bg-white rounded-lg shadow overflow-hidden border border-gray-100 hover:shadow-md transition-shadow">
+                        <div v-for="item in filteredItems" :key="item.id" class="rounded-lg shadow overflow-hidden border border-gray-100 card-hover glass-card">
                             <div class="p-4">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center">
@@ -300,13 +296,13 @@
                                         {{ getStatusText(item) }}
                                     </span>
                                     <div class="flex space-x-3">
-                                        <button @click="editItem(item)" class="text-indigo-600 hover:text-indigo-900 p-2">
+                                        <button @click="editItem(item)" class="text-indigo-600 hover:text-indigo-900 p-2 btn-animate">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button @click="recordItemUsage(item.id)" class="text-green-600 hover:text-green-900 p-2">
+                                        <button @click="recordItemUsage(item.id)" class="text-green-600 hover:text-green-900 p-2 btn-animate">
                                             <i class="fas fa-check-circle"></i>
                                         </button>
-                                        <button @click="deleteItem(item.id)" class="text-red-600 hover:text-red-900 p-2">
+                                        <button @click="deleteItem(item.id)" class="text-red-600 hover:text-red-900 p-2 btn-animate">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -323,7 +319,7 @@
                             {{ editingItem ? $t('add.editTitle') : $t('add.title') }}
                         </h2>
 
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <div class="rounded-lg shadow p-6 glass-card">
                             <form @submit.prevent="saveItem">
                                 <div class="grid grid-cols-1 md:grid-cols-2 mobile-form-grid gap-6">
                                     <div>
@@ -331,7 +327,7 @@
                                             {{ $t('add.name') }}
                                         </label>
                                         <input v-model="form.name" type="text" required
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                     </div>
 
                                     <div>
@@ -339,7 +335,7 @@
                                             {{ $t('add.category') }}
                                         </label>
                                         <select v-model="form.category" required
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                             <option value="">{{ $t('add.selectCategory') }}</option>
                                             <option v-for="category in categories" :key="category" :value="category">
                                                 {{ $t('categories.' + category) }}
@@ -351,8 +347,7 @@
                                         <label class="block text-sm font-medium text-gray-700 mb-2">
                                             {{ $t('add.quantity') }}
                                         </label>
-                                        <input v-model.number="form.quantity" type="number" min="0" required
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <input v-model.number="form.quantity" type="number" min="0" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                     </div>
 
                                     <div>
@@ -360,15 +355,14 @@
                                             {{ $t('add.unit') }}
                                         </label>
                                         <input v-model="form.unit" type="text" required
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">
                                             {{ $t('add.minQuantity') }}
                                         </label>
-                                        <input v-model.number="form.minQuantity" type="number" min="0"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <input v-model.number="form.minQuantity" type="number" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                     </div>
 
                                     <div>
@@ -376,7 +370,7 @@
                                             {{ $t('add.expiryDate') }}
                                         </label>
                                         <input v-model="form.expiryDate" type="date"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect">
                                     </div>
                                 </div>
 
@@ -384,16 +378,15 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         {{ $t('add.description') }}
                                     </label>
-                                    <textarea v-model="form.description" rows="3"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                                    <textarea v-model="form.description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect"></textarea>
                                 </div>
 
                                 <div class="mt-6 flex justify-end space-x-3">
                                     <button type="button" @click="cancelEdit"
-                                        class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                                        class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 glass-button hover:bg-gray-50">
                                         {{ $t('add.cancel') }}
                                     </button>
-                                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                    <button type="submit" class="px-4 py-2 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 glass-button">
                                         {{ editingItem ? $t('add.update') : $t('add.save') }}
                                     </button>
                                 </div>
@@ -408,7 +401,7 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <!-- 智能提醒 -->
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <div class="rounded-lg shadow p-6 glass-card">
                             <h3 class="text-lg font-semibold text-gray-800 mb-4">
                                 <i class="fas fa-bell text-yellow-500 mr-2"></i>
                                 {{ $t('analytics.smartAlerts') }}
@@ -426,7 +419,7 @@
                         </div>
 
                         <!-- 智能推荐 -->
-                        <div class="bg-white rounded-lg shadow p-6">
+                        <div class="rounded-lg shadow p-6 glass-card">
                             <h3 class="text-lg font-semibold text-gray-800 mb-4">
                                 <i class="fas fa-lightbulb text-blue-500 mr-2"></i>
                                 {{ $t('analytics.smartRecommendations') }}
@@ -450,7 +443,7 @@
     <!-- 通知弹窗 -->
     <transition name="fade">
         <div v-if="notification.show"
-            class="fixed top-4 right-4 z-50 max-w-sm w-full bg-white rounded-lg shadow-lg border-l-4"
+            class="fixed top-4 right-4 z-50 max-w-sm w-full rounded-lg shadow-lg border-l-4 glass-card"
             :class="notification.type === 'success' ? 'border-green-500' : 'border-red-500'">
             <div class="p-4">
                 <div class="flex items-center">
