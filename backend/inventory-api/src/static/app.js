@@ -1,6 +1,24 @@
 // 多语言配置
 const messages = {
     zh: {
+        alerts: {
+            lowStock: '库存不足',
+            lowStockMessage: '{item} 库存仅剩 {quantity} {unit}',
+            expired: '物品已过期',
+            expiredMessage: '{item} 已过期 {days} 天',
+            expiringSoon: '即将过期',
+            expiringSoonMessage: '{item} 将在 {days} 天后过期'
+        },
+        recommendations: {
+            restock: '建议补充 {item}',
+            restockReason: '当前库存 {quantity} {unit}，低于最低库存 {minQuantity} {unit}',
+            popular: '热门物品推荐',
+            popularReason: '{item} 是当前最受欢迎的物品之一',
+            watch: '关注 {item}',
+            watchReason: '{item} 在过去 30 天内被使用了 {count} 次',
+            consider: '考虑补充 {item}',
+            considerReason: '{item} 是 {category} 类别中最常用的物品，已被使用 {count} 次'
+        },
         app: {
             title: '智能家庭库存管理'
         },
@@ -70,6 +88,24 @@ const messages = {
         }
     },
     en: {
+        alerts: {
+            lowStock: 'Low Stock',
+            lowStockMessage: '{item} only has {quantity} {unit} left',
+            expired: 'Item Expired',
+            expiredMessage: '{item} expired {days} days ago',
+            expiringSoon: 'Expiring Soon',
+            expiringSoonMessage: '{item} will expire in {days} days'
+        },
+        recommendations: {
+            restock: 'Recommend replenishing {item}',
+            restockReason: 'Current stock {quantity} {unit}, below minimum stock {minQuantity} {unit}',
+            popular: 'Popular Item Recommendation',
+            popularReason: '{item} is one of the most popular items currently',
+            watch: 'Watch {item}',
+            watchReason: '{item} has been used {count} times in the past 30 days',
+            consider: 'Consider replenishing {item}',
+            considerReason: '{item} is the most used item in {category} category, used {count} times'
+        },
         app: {
             title: 'Smart Home Inventory Manager'
         },
@@ -139,6 +175,24 @@ const messages = {
         }
     },
     ja: {
+        alerts: {
+            lowStock: '在庫不足',
+            lowStockMessage: '{item} の在庫は残り {quantity} {unit} です',
+            expired: 'アイテムの有効期限切れ',
+            expiredMessage: '{item} の有効期限が {days} 日前に切れました',
+            expiringSoon: '期限切れ間近',
+            expiringSoonMessage: '{item} の有効期限は {days} 日後に切れます'
+        },
+        recommendations: {
+            restock: '{item}の補充を推奨',
+            restockReason: '現在の在庫 {quantity} {unit}、最低在庫 {minQuantity} {unit} を下回っています',
+            popular: '人気アイテム推奨',
+            popularReason: '{item} は現在最も人気のあるアイテムの一つです',
+            watch: '{item}に注目',
+            watchReason: '{item} は過去30日間で {count} 回使用されました',
+            consider: '{item}の補充を検討',
+            considerReason: '{item} は {category} カテゴリで最もよく使用されているアイテムで、{count} 回使用されました'
+        },
         app: {
             title: 'スマート家庭在庫管理'
         },
@@ -360,7 +414,7 @@ const app = createApp({
         // 从API加载智能提醒
         async loadAlertsFromAPI() {
             try {
-                const response = await fetch('/api/inventory/alerts');
+                const response = await fetch(`/api/inventory/alerts?language=${this.currentLocale}`);
                 const result = await response.json();
                 if (result.success) {
                     this.smartAlerts = result.data;
@@ -373,7 +427,7 @@ const app = createApp({
         // 从API加载智能推荐
         async loadRecommendationsFromAPI() {
             try {
-                const response = await fetch('/api/inventory/recommendations');
+                const response = await fetch(`/api/inventory/recommendations?language=${this.currentLocale}`);
                 const result = await response.json();
                 if (result.success) {
                     this.smartRecommendations = result.data;

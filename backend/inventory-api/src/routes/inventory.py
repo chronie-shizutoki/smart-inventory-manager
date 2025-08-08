@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from src.models.inventory import db, InventoryItem, Category, SmartAlert
 from datetime import datetime, date, timedelta
 from sqlalchemy import or_
+from src.translations import get_translation
 
 inventory_bp = Blueprint('inventory', __name__)
 
@@ -184,7 +185,10 @@ def get_categories():
 
 # 获取智能提醒
 @inventory_bp.route('/alerts', methods=['GET'])
-def get_smart_alerts():
+def get_smart_alerts():    
+    # 获取语言参数，默认为英语
+    language = request.args.get('language', 'en')
+    print(f"Received language parameter: {language}")
     try:
         alerts = []
         today = date.today()
@@ -197,11 +201,17 @@ def get_smart_alerts():
                 
                 if days_until_expiry < 0:
                     # 已过期
+                    # 构建提醒对象
                     alerts.append({
                         'id': f'expired-{item.id}',
                         'type': 'error',
-                        'title': '物品已过期',
-                        'message': f'{item.name} 已过期 {abs(days_until_expiry)} 天',
+                        'titleKey': 'expired',
+                        'titleParams': {},
+                        'messageKey': 'expiredMessage',
+                        'messageParams': {
+                            'item': item.name,
+                            'days': abs(days_until_expiry)
+                        },
                         'itemId': item.id
                     })
                 elif days_until_expiry <= 3:
@@ -209,20 +219,32 @@ def get_smart_alerts():
                     alerts.append({
                         'id': f'expiring-{item.id}',
                         'type': 'warning',
-                        'title': '即将过期',
-                        'message': f'{item.name} 将在 {days_until_expiry} 天后过期',
+                        'titleKey': 'expiringSoon',
+                        'titleParams': {},
+                        'messageKey': 'expiringSoonMessage',
+                        'messageParams': {
+                            'item': item.name,
+                            'days': days_until_expiry
+                        },
                         'itemId': item.id
                     })
             
             # 检查库存不足
             if item.quantity <= item.min_quantity:
+                # 构建提醒对象
                 alerts.append({
-                    'id': f'lowstock-{item.id}',
-                    'type': 'warning',
-                    'title': '库存不足',
-                    'message': f'{item.name} 库存仅剩 {item.quantity} {item.unit}',
-                    'itemId': item.id
-                })
+                        'id': f'lowstock-{item.id}',
+                        'type': 'warning',
+                        'titleKey': 'lowStock',
+                        'titleParams': {},
+                        'messageKey': 'lowStockMessage',
+                        'messageParams': {
+                            'item': item.name,
+                            'quantity': item.quantity,
+                            'unit': item.unit
+                        },
+                        'itemId': item.id
+                    })
         
         return jsonify({
             'success': True,
@@ -254,7 +276,9 @@ def record_item_usage(item_id):
 
 # 获取智能推荐
 @inventory_bp.route('/recommendations', methods=['GET'])
-def get_smart_recommendations():
+def get_smart_recommendations():    
+    # 获取语言参数，默认为英语
+    language = request.args.get('language', 'en')
     try:
         recommendations = []
         
@@ -265,11 +289,18 @@ def get_smart_recommendations():
         
         for item in low_stock_items:
             recommendations.append({
-                'id': f'restock-{item.id}',
-                'title': f'建议补充 {item.name}',
-                'reason': f'当前库存 {item.quantity} {item.unit}，低于最低库存 {item.min_quantity} {item.unit}',
-                'itemId': item.id
-            })
+                    'id': f'restock-{item.id}',
+                    'type': 'suggestion',
+                    'titleKey': 'restock',
+                    'titleParams': {'item': item.name},
+                    'reasonKey': 'restockReason',
+                    'reasonParams': {
+                        'quantity': item.quantity,
+                        'unit': item.unit,
+                        'minQuantity': item.min_quantity
+                    },
+                    'itemId': item.id
+                })
         
         # 2. 基于使用频率和最后使用时间的推荐
         # 获取最近30天内有使用记录的物品
@@ -287,8 +318,15 @@ def get_smart_recommendations():
             if stock_ratio < 2 and item.id not in [rec['itemId'] for rec in recommendations]:
                 recommendations.append({
                     'id': f'freq-use-{item.id}',
-                    'title': f'建议关注 {item.name}',
-                    'reason': f'近30天内使用 {item.usage_count} 次，当前库存 {item.quantity} {item.unit}，建议及时补充',
+                    'type': 'suggestion',
+                    'titleKey': 'watch',
+                    'titleParams': {'item': item.name},
+                    'reasonKey': 'freqUseReason',
+                    'reasonParams': {
+                        'count': item.usage_count,
+                        'quantity': item.quantity,
+                        'unit': item.unit
+                    },
                     'itemId': item.id
                 })
                 
@@ -306,8 +344,14 @@ def get_smart_recommendations():
                 if top_item and top_item.usage_count > 0:
                     recommendations.append({
                         'id': f'category-{category.name}-{top_item.id}',
-                        'title': f'考虑补充 {top_item.name}',
-                        'reason': f'作为 {category.name} 分类中常用物品，近30天内使用 {top_item.usage_count} 次',
+                        'type': 'suggestion',
+                        'titleKey': 'consider',
+                        'titleParams': {'item': top_item.name},
+                        'reasonKey': 'categoryReason',
+                        'reasonParams': {
+                            'category': category.name,
+                            'count': top_item.usage_count
+                        },
                         'itemId': top_item.id
                     })
                     

@@ -630,9 +630,9 @@
                                     class="p-3 rounded-lg border-l-4">
                                     <div class="flex items-center">
                                         <i :class="getAlertIcon(alert.type)" class="mr-2"></i>
-                                        <span class="font-medium">{{ alert.title }}</span>
+                                        <span class="font-medium">{{ $t('alerts.' + alert.titleKey, alert.titleParams) }}</span>
                                     </div>
-                                    <p class="text-sm mt-1">{{ alert.message }}</p>
+                                    <p class="text-sm mt-1">{{ $t('alerts.' + alert.messageKey, alert.messageParams) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -648,9 +648,9 @@
                                     class="p-3 bg-blue-50 rounded-lg border border-blue-200">
                                     <div class="flex items-center">
                                         <i class="fas fa-shopping-cart text-blue-500 mr-2"></i>
-                                        <span class="font-medium">{{ recommendation.title }}</span>
+                                        <span class="font-medium">{{ $t('recommendations.' + recommendation.titleKey, recommendation.titleParams) }}</span>
                                     </div>
-                                    <p class="text-sm mt-1 text-gray-600">{{ recommendation.reason }}</p>
+                                    <p class="text-sm mt-1 text-gray-600">{{ $t('recommendations.' + recommendation.reasonKey, recommendation.reasonParams) }}</p>
                                 </div>
                             </div>
                         </div>
