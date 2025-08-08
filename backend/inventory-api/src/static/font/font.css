@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'LXGWWenKaiGB';
+    src: url('LXGWWenKaiGB-Regular.woff2') format('woff2');
+}
+
+* {
+    font-family: 'LXGWWenKaiGB', sans-serif;
+}
+
