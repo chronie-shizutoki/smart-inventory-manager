@@ -491,7 +491,10 @@ const app = createApp({
                         // 触发重新渲染
                         this.items = [...this.items];
                     }
-                    this.showNotification('success', result.message);
+                    console.log('API Response:', result);
+                    // 确保消息存在，如果不存在则显示默认消息
+                    const message = result.message || '物品使用记录已更新';
+                    this.showNotification(message, 'success');
                     return true;
                 }
             } catch (error) {

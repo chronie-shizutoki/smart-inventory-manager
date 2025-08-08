@@ -259,18 +259,27 @@ def record_item_usage(item_id):
     try:
         item = InventoryItem.query.get_or_404(item_id)
         
-        # 增加使用计数
-        item.usage_count += 1
-        # 更新最后使用时间
-        item.last_used_at = datetime.utcnow()
-        
-        db.session.commit()
-        
-        return jsonify({
-            'success': True,
-            'message': f'已记录 {item.name} 的使用情况',
-            'data': item.to_dict()
-        })
+        # 检查物品是否有足够库存
+        if item.quantity > 0:
+            # 减少物品数量
+            item.quantity -= 1
+            # 增加使用计数
+            item.usage_count += 1
+            # 更新最后使用时间
+            item.last_used_at = datetime.utcnow()
+            
+            db.session.commit()
+            
+            return jsonify({
+                'success': True,
+                'message': f'已使用 {item.name} 一个单位，剩余 {item.quantity} {item.unit}',
+                'data': item.to_dict()
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': f'{item.name} 库存不足'
+            }), 400
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
