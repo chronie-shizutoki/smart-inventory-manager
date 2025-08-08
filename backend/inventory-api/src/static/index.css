@@ -1,3 +1,22 @@
+/* 基础样式 - 浅色模式 */
+body {
+    color: #333333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #1a1a1a;
+}
+
+/* 玻璃效果文本颜色 - 浅色模式 */
+.glass-effect, .glass-card, .glass-button {
+    color: #1a1a2e;
+}
+
+/* 按钮文本颜色 - 浅色模式 */
+button {
+    color: #1a1a2e;
+}
+
 /* 基础过渡动画 */
         .fade-enter-active,
         .fade-leave-active {
@@ -180,6 +199,25 @@
         /* 深色模式支持 */
         /* 深色模式下的液态玻璃效果 */
         @media (prefers-color-scheme: dark) {
+            /* 基础样式 - 深色模式 */
+            body {
+                color: #e6e6e6;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: #f0f0f0;
+            }
+
+            /* 玻璃效果文本颜色 - 深色模式 */
+            .glass-effect, .glass-card, .glass-button {
+                color: #e6e6e6;
+            }
+
+            /* 按钮文本颜色 - 深色模式 */
+            button {
+                color: #e6e6e6;
+            }
+            
             .glass-effect {
                 background: rgba(15, 52, 96, 0.7);
                 backdrop-filter: blur(10px);
