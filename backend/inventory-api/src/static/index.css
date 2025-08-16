@@ -142,6 +142,14 @@ button {
             transform: translateY(0);
         }
 
+             /* 物品名称和描述自动换行样式 */
+            .text-sm.font-medium.text-gray-900,
+            .text-xs.md\:text-sm.text-gray-500 {
+                white-space: pre-wrap !important;
+                word-break: break-word !important;
+            }
+
+
         /* 移动端优化 */
         @media (max-width: 768px) {
             .mobile-nav-menu {
@@ -394,13 +402,6 @@ button {
                 -webkit-text-fill-color: #e6e6e6;
                 -webkit-box-shadow: 0 0 0px 1000px #16213e inset;
                 transition: background-color 5000s ease-in-out 0s;
-            }
-
-            /* 物品名称和描述自动换行样式 */
-            .text-sm.font-medium.text-gray-900,
-            .text-xs.md\:text-sm.text-gray-500 {
-                white-space: pre-wrap !important;
-                word-break: break-word !important;
             }
 
             /* 按钮深色模式样式 */

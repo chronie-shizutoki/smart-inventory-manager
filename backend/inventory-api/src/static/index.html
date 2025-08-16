@@ -269,11 +269,11 @@
                                     <div class="flex items-center">
                                         <i :class="getCategoryIcon(item.category)" class="text-gray-400 mr-3 text-lg"></i>
                                         <div>
-                                            <div class="text-lg font-medium text-gray-900">{{ item.name }}</div>
-                                            <div class="text-sm text-gray-500">{{ item.description }}</div>
+                                            <div class="text-lg font-medium text-gray-900 whitespace-pre-wrap">{{ item.name }}</div>
+                                            <div class="text-sm text-gray-500 whitespace-pre-wrap">{{ item.description }}</div>
                                         </div>
                                     </div>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 self-start ml-auto">
                                         {{ $t('categories.' + item.category) }}
                                     </span>
                                 </div>
