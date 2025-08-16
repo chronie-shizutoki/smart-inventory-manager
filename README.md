@@ -154,10 +154,6 @@ python src/main.py
 
 ## 🔮 Future Plans
 
-- [ ] Mobile APP development
-- [ ] Barcode scanning function
-- [ ] Data import/export
-- [ ] User permission management
 - [ ] Data visualization charts
 - [ ] Purchase list generation
 
