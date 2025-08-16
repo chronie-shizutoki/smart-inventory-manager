@@ -152,11 +152,6 @@ python src/main.py
 - Real-time data update
 - Intelligent status prompts
 
-## 🔮 Future Plans
-
-- [ ] Data visualization charts
-- [ ] Purchase list generation
-
 ## 👥 Contribution
 
 Welcome to submit Issues and Pull Requests to improve this project!
