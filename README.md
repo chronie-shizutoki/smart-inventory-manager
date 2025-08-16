@@ -1,7 +1,6 @@
 ## Languages
 - [English](README.md)
 - [日本語](README-ja.md)
-- [中文](README-zh.md)
 
 # Smart Home Inventory Management System
 
@@ -25,7 +24,6 @@ A modern web application for home inventory management, supporting multiple lang
   - Recommendations based on usage frequency analysis.
 
 ### Multi-language Support
-- Simplified Chinese
 - English
 - Japanese
 
@@ -155,10 +153,6 @@ python src/main.py
 ## 👥 Contribution
 
 Welcome to submit Issues and Pull Requests to improve this project!
-
-## 📄 License
-
-unknown License
 
 ## 🙏 Acknowledgments
 

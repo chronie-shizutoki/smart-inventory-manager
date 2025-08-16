@@ -1,24 +1,6 @@
 # 国际化翻译字典
 
 translations = {
-    'zh': {
-        'alerts': {
-            'expired': '物品已过期',
-            'expiringSoon': '即将过期',
-            'lowStock': '库存不足',
-            'expiredMessage': '{item} 已过期 {days} 天',
-            'expiringSoonMessage': '{item} 将在 {days} 天后过期',
-            'lowStockMessage': '{item} 库存仅剩 {quantity} {unit}'
-        },
-        'recommendations': {
-            'restock': '建议补充 {item}',
-            'watch': '建议关注 {item}',
-            'consider': '考虑补充 {item}',
-            'restockReason': '当前库存 {quantity} {unit}，低于最低库存 {minQuantity} {unit}',
-            'freqUseReason': '近30天内使用 {count} 次，当前库存 {quantity} {unit}，建议及时补充',
-            'categoryReason': '作为 {category} 分类中常用物品，近30天内使用 {count} 次'
-        }
-    },
     'en': {
         'alerts': {
             'expired': 'Item Expired',

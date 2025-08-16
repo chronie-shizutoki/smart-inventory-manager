@@ -1,106 +1,5 @@
 // 多语言配置
 const messages = {
-    zh: {
-        alerts: {
-    lowStock: '庫存不足',
-    lowStockMessage: '{item} 庫存僅剩 {quantity} {unit}',
-    expired: '物品已過期',
-    expiredMessage: '{item} 已過期 {days} 天',
-    expiringSoon: '即將過期',
-    expiringSoonMessage: '{item} 將在 {days} 天後過期'
-},
-recommendations: {
-    restock: '建議補貨 {item}',
-    restockReason: '當前庫存 {quantity} {unit}，低於安全庫存量 {minQuantity} {unit}',
-    popular: '熱門物品推薦',
-    popularReason: '{item} 是當前熱門品項',
-    watch: '注意 {item}',
-    watchReason: '{item} 過去 30 天使用次數達 {count} 次',
-    consider: '建議考慮補貨 {item}',
-    considerReason: '{item} 是 {category} 類別中最常用物品，使用次數達 {count} 次'
-},
-app: {
-    title: '智慧家庭存貨管理'
-},
-nav: {
-    inventory: '庫存管理',
-    add: '新增物品',
-    analytics: '智慧分析',
-    purchaseList: '採購清單',
-    menu: '選單',
-    language: '語言設定'
-},
-purchaseList: {
-    description: '以下為需採購物品清單（根據庫存不足品項自動產生）',
-    totalItems: '需採購物品總數',
-    currentQuantity: '現有數量',
-    minQuantity: '安全庫存量',
-    suggestedQuantity: '建議採購量',
-    unit: '單位',
-    lastUsed: '最後使用時間',
-    refresh: '產生/更新清單'
-},
-inventory: {
-    title: '庫存清單',
-    search: '搜尋物品...',
-    allCategories: '全部分類',
-    name: '物品名稱',
-    category: '分類',
-    quantity: '數量',
-    unit: '單位',
-    expiryDate: '有效期限',
-    status: '狀態',
-    actions: '操作功能'
-},
-categories: {
-    food: '食品',
-    medicine: '藥品',
-    cleaning: '清潔用品',
-    personal: '個人護理',
-    household: '家居用品',
-    electronics: '電子產品'
-},
-stats: {
-    totalItems: '物品總數',
-    lowStock: '低庫存品項',
-    expiringSoon: '即將到期品項',
-    categories: '分類數量'
-},
-add: {
-    title: '新增物品',
-    editTitle: '編輯物品資料',
-    name: '物品名稱',
-    category: '分類',
-    quantity: '數量',
-    unit: '單位',
-    minQuantity: '安全庫存量',
-    expiryDate: '有效期限',
-    description: '物品說明',
-    selectCategory: '選擇分類',
-    cancel: '取消',
-    save: '儲存',
-    update: '更新資料'
-},
-analytics: {
-    title: '智慧分析儀表板',
-    smartAlerts: '智慧警示',
-    smartRecommendations: '智慧建議'
-},
-status: {
-    normal: '正常',
-    lowStock: '庫存不足',
-    expiringSoon: '即將到期',
-    expired: '已過期'
-},
-notifications: {
-    itemAdded: '物品新增成功',
-    itemUpdated: '物品資料已更新',
-    itemDeleted: '物品已刪除',
-    error: '操作失敗，請重新嘗試',
-    insufficientStock: '無法使用 {itemName}（庫存不足）',
-    itemUsedSuccessfully: '已使用 {itemName} 1 {unit}，剩餘 {quantity} {unit}'
-},
-    },
     en: {
            notifications: {
     itemAdded: 'Item added',
@@ -591,7 +490,7 @@ const app = createApp({
         formatDate(dateString) {
             if (!dateString) return '-';
             const date = new Date(dateString);
-            return date.toLocaleDateString(this.currentLocale === 'zh' ? 'zh-CN' : this.currentLocale);
+            return date.toLocaleDateString(this.currentLocale === 'en' ? 'en-US' : this.currentLocale);
         },
         
         // 获取过期日期样式

@@ -1,7 +1,6 @@
 ## 言語
 - [日本語](README-ja.md)
 - [English](README.md)
-- [中文](README-zh.md)
 
 # スマートホームインベントリ管理システム
 
@@ -25,7 +24,6 @@
   - 使用頻度分析に基づく推奨
 
 ### 多言語対応
-- 簡体字中国語
 - 英語
 - 日本語
 
@@ -155,10 +153,6 @@ python src/main.py
 ## 👥 貢献
 
 IssueやPull Requestを送信して、このプロジェクトを改善することを歓迎します！
-
-## 📄 ライセンス
-
-unknown License
 
 ## 🙏 謝辞
 
