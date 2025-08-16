@@ -2,311 +2,306 @@
 const messages = {
     zh: {
         alerts: {
-            lowStock: '库存不足',
-            lowStockMessage: '{item} 库存仅剩 {quantity} {unit}',
-            expired: '物品已过期',
-            expiredMessage: '{item} 已过期 {days} 天',
-            expiringSoon: '即将过期',
-            expiringSoonMessage: '{item} 将在 {days} 天后过期'
-        },
-        recommendations: {
-            restock: '建议补充 {item}',
-            restockReason: '当前库存 {quantity} {unit}，低于最低库存 {minQuantity} {unit}',
-            popular: '热门物品推荐',
-            popularReason: '{item} 是当前最受欢迎的物品之一',
-            watch: '关注 {item}',
-            watchReason: '{item} 在过去 30 天内被使用了 {count} 次',
-            consider: '考虑补充 {item}',
-            considerReason: '{item} 是 {category} 类别中最常用的物品，已被使用 {count} 次'
-        },
-        app: {
-            title: '智能家庭库存管理'
-        },
-        nav: {
-            inventory: '库存管理',
-            add: '添加物品',
-            analytics: '智能分析',
-            purchaseList: '采购清单',
-            menu: '菜单',
-            language: '语言'
-        },
-        purchaseList: {
-            description: '以下是需要采购的物品清单，基于库存不足的物品生成',
-            totalItems: '需采购物品总数',
-            currentQuantity: '当前数量',
-            minQuantity: '最低库存',
-            suggestedQuantity: '建议采购数量',
-            unit: '单位',
-            lastUsed: '最后使用时间',
-            refresh: '生成/刷新清单'
-        },
-        inventory: {
-            title: '库存列表',
-            search: '搜索物品...',
-            allCategories: '所有分类',
-            name: '物品名称',
-            category: '分类',
-            quantity: '数量',
-            expiryDate: '过期日期',
-            status: '状态',
-            actions: '操作'
-        },
-        categories: {
-            food: '食品',
-            medicine: '药品',
-            cleaning: '清洁用品',
-            personal: '个人护理',
-            household: '家居用品',
-            electronics: '电子产品'
-        },
-        stats: {
-            totalItems: '总物品数',
-            lowStock: '库存不足',
-            expiringSoon: '即将过期',
-            categories: '分类数量'
-        },
-        add: {
-            title: '添加新物品',
-            editTitle: '编辑物品',
-            name: '物品名称',
-            category: '分类',
-            quantity: '数量',
-            unit: '单位',
-            minQuantity: '最低库存',
-            expiryDate: '过期日期',
-            description: '描述',
-            selectCategory: '请选择分类',
-            cancel: '取消',
-            save: '保存',
-            update: '更新'
-        },
-        analytics: {
-            title: '智能分析',
-            smartAlerts: '智能提醒',
-            smartRecommendations: '智能推荐'
-        },
-        status: {
-            normal: '正常',
-            lowStock: '库存不足',
-            expiringSoon: '即将过期',
-            expired: '已过期'
-        },
-        notifications: {
-            itemAdded: '物品添加成功',
-            itemUpdated: '物品更新成功',
-            itemDeleted: '物品删除成功',
-            error: '操作失败，请重试',
-            insufficientStock: '{itemName} 库存不足，无法使用',
-            itemUsedSuccessfully: '已使用 {itemName} 1 {unit}，剩余 {quantity} {unit}'
-        },
+    lowStock: '庫存不足',
+    lowStockMessage: '{item} 庫存僅剩 {quantity} {unit}',
+    expired: '物品已過期',
+    expiredMessage: '{item} 已過期 {days} 天',
+    expiringSoon: '即將過期',
+    expiringSoonMessage: '{item} 將在 {days} 天後過期'
+},
+recommendations: {
+    restock: '建議補貨 {item}',
+    restockReason: '當前庫存 {quantity} {unit}，低於安全庫存量 {minQuantity} {unit}',
+    popular: '熱門物品推薦',
+    popularReason: '{item} 是當前熱門品項',
+    watch: '注意 {item}',
+    watchReason: '{item} 過去 30 天使用次數達 {count} 次',
+    consider: '建議考慮補貨 {item}',
+    considerReason: '{item} 是 {category} 類別中最常用物品，使用次數達 {count} 次'
+},
+app: {
+    title: '智慧家庭存貨管理'
+},
+nav: {
+    inventory: '庫存管理',
+    add: '新增物品',
+    analytics: '智慧分析',
+    purchaseList: '採購清單',
+    menu: '選單',
+    language: '語言設定'
+},
+purchaseList: {
+    description: '以下為需採購物品清單（根據庫存不足品項自動產生）',
+    totalItems: '需採購物品總數',
+    currentQuantity: '現有數量',
+    minQuantity: '安全庫存量',
+    suggestedQuantity: '建議採購量',
+    unit: '單位',
+    lastUsed: '最後使用時間',
+    refresh: '產生/更新清單'
+},
+inventory: {
+    title: '庫存清單',
+    search: '搜尋物品...',
+    allCategories: '全部分類',
+    name: '物品名稱',
+    category: '分類',
+    quantity: '數量',
+    unit: '單位',
+    expiryDate: '有效期限',
+    status: '狀態',
+    actions: '操作功能'
+},
+categories: {
+    food: '食品',
+    medicine: '藥品',
+    cleaning: '清潔用品',
+    personal: '個人護理',
+    household: '家居用品',
+    electronics: '電子產品'
+},
+stats: {
+    totalItems: '物品總數',
+    lowStock: '低庫存品項',
+    expiringSoon: '即將到期品項',
+    categories: '分類數量'
+},
+add: {
+    title: '新增物品',
+    editTitle: '編輯物品資料',
+    name: '物品名稱',
+    category: '分類',
+    quantity: '數量',
+    unit: '單位',
+    minQuantity: '安全庫存量',
+    expiryDate: '有效期限',
+    description: '物品說明',
+    selectCategory: '選擇分類',
+    cancel: '取消',
+    save: '儲存',
+    update: '更新資料'
+},
+analytics: {
+    title: '智慧分析儀表板',
+    smartAlerts: '智慧警示',
+    smartRecommendations: '智慧建議'
+},
+status: {
+    normal: '正常',
+    lowStock: '庫存不足',
+    expiringSoon: '即將到期',
+    expired: '已過期'
+},
+notifications: {
+    itemAdded: '物品新增成功',
+    itemUpdated: '物品資料已更新',
+    itemDeleted: '物品已刪除',
+    error: '操作失敗，請重新嘗試',
+    insufficientStock: '無法使用 {itemName}（庫存不足）',
+    itemUsedSuccessfully: '已使用 {itemName} 1 {unit}，剩餘 {quantity} {unit}'
+},
     },
     en: {
-            notifications: {
-                itemAdded: 'Item added successfully',
-                itemUpdated: 'Item updated successfully',
-                itemDeleted: 'Item deleted successfully',
-                error: 'Operation failed, please try again',
-                insufficientStock: '{itemName} is out of stock, cannot use',
-                itemUsedSuccessfully: 'Used one unit of {itemName}, remaining {quantity} {unit}'
-            },
-            alerts: {
-            lowStock: 'Low Stock',
-            lowStockMessage: '{item} only has {quantity} {unit} left',
-            expired: 'Item Expired',
-            expiredMessage: '{item} expired {days} days ago',
-            expiringSoon: 'Expiring Soon',
-            expiringSoonMessage: '{item} will expire in {days} days'
-        },
-        recommendations: {
-            restock: 'Recommend replenishing {item}',
-            restockReason: 'Current stock {quantity} {unit}, below minimum stock {minQuantity} {unit}',
-            popular: 'Popular Item Recommendation',
-            popularReason: '{item} is one of the most popular items currently',
-            watch: 'Watch {item}',
-            watchReason: '{item} has been used {count} times in the past 30 days',
-            consider: 'Consider replenishing {item}',
-            considerReason: '{item} is the most used item in {category} category, used {count} times'
-        },
-        app: {
-            title: 'Smart Home Inventory Manager'
-        },
-        nav: {
-            inventory: 'Inventory',
-            add: 'Add Item',
-            analytics: 'Analytics',
-            purchaseList: 'Purchase List',
-            menu: 'Menu',
-            language: 'Language'
-        },
-        purchaseList: {
-            description: 'The following is a list of items that need to be purchased, based on items with low stock',
-            totalItems: 'Total Items to Purchase',
-            currentQuantity: 'Current Quantity',
-            minQuantity: 'Minimum Stock',
-            suggestedQuantity: 'Suggested Quantity',
-            unit: 'Unit',
-            lastUsed: 'Last Used',
-            refresh: 'Generate/Refresh List'
-        },
-        inventory: {
-            title: 'Inventory List',
-            search: 'Search items...',
-            allCategories: 'All Categories',
-            name: 'Item Name',
-            category: 'Category',
-            quantity: 'Quantity',
-            expiryDate: 'Expiry Date',
-            status: 'Status',
-            actions: 'Actions'
-        },
-        categories: {
-            food: 'Food',
-            medicine: 'Medicine',
-            cleaning: 'Cleaning Supplies',
-            personal: 'Personal Care',
-            household: 'Household Items',
-            electronics: 'Electronics'
-        },
-        stats: {
-            totalItems: 'Total Items',
-            lowStock: 'Low Stock',
-            expiringSoon: 'Expiring Soon',
-            categories: 'Categories'
-        },
-        add: {
-            title: 'Add New Item',
-            editTitle: 'Edit Item',
-            name: 'Item Name',
-            category: 'Category',
-            quantity: 'Quantity',
-            unit: 'Unit',
-            minQuantity: 'Minimum Stock',
-            expiryDate: 'Expiry Date',
-            description: 'Description',
-            selectCategory: 'Select Category',
-            cancel: 'Cancel',
-            save: 'Save',
-            update: 'Update'
-        },
-        analytics: {
-            title: 'Smart Analytics',
-            smartAlerts: 'Smart Alerts',
-            smartRecommendations: 'Smart Recommendations'
-        },
-        status: {
-            normal: 'Normal',
-            lowStock: 'Low Stock',
-            expiringSoon: 'Expiring Soon',
-            expired: 'Expired'
-        },
-        notifications: {
-            itemAdded: 'Item added successfully',
-            itemUpdated: 'Item updated successfully',
-            itemDeleted: 'Item deleted successfully',
-            error: 'Operation failed, please try again',
-            insufficientStock: '{itemName} is out of stock, cannot use',
-            itemUsedSuccessfully: 'Used one {unit} of {itemName}, remaining {quantity} {unit}',
-        }
+           notifications: {
+    itemAdded: 'Item added',
+    itemUpdated: 'Item updated',
+    itemDeleted: 'Item deleted',
+    error: 'Operation failed. Please try again',
+    insufficientStock: 'Out of stock: {itemName}',
+    itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} left)'
+},
+alerts: {
+    lowStock: 'Low Stock',
+    lowStockMessage: 'Only {quantity} {unit} of {item} left',
+    expired: 'Expired',
+    expiredMessage: '{item} expired {days} days ago',
+    expiringSoon: 'Expiring Soon',
+    expiringSoonMessage: '{item} expires in {days} days'
+},
+recommendations: {
+    restock: 'Restock {item}',
+    restockReason: 'Current stock: {quantity} {unit} (min: {minQuantity} {unit})',
+    popular: 'Popular Item',
+    popularReason: '{item} is frequently used',
+    watch: 'Monitor {item}',
+    watchReason: 'Used {count} times in past 30 days',
+    consider: 'Restock {item}',
+    considerReason: 'Most used in {category} ({count} times)'
+},
+app: {
+    title: 'Smart Home Inventory'
+},
+nav: {
+    inventory: 'Inventory',
+    add: 'Add Item',
+    analytics: 'Analytics',
+    purchaseList: 'Shopping List',
+    menu: 'Menu',
+    language: 'Language'
+},
+purchaseList: {
+    description: 'Items to restock based on low inventory',
+    totalItems: 'Items to Buy',
+    currentQuantity: 'Current Qty',
+    minQuantity: 'Min Stock',
+    suggestedQuantity: 'Suggested Qty',
+    unit: 'Unit',
+    lastUsed: 'Last Used',
+    refresh: 'Update List'
+},
+inventory: {
+    title: 'Inventory',
+    search: 'Search items...',
+    allCategories: 'All Categories',
+    name: 'Item',
+    category: 'Category',
+    quantity: 'Qty',
+    unit: 'Unit',
+    expiryDate: 'Expiry',
+    status: 'Status',
+    actions: 'Actions'
+},
+categories: { // (unchanged, already good)
+    food: 'Food',
+    medicine: 'Medicine',
+    cleaning: 'Cleaning Supplies',
+    personal: 'Personal Care',
+    household: 'Household Items',
+    electronics: 'Electronics'
+},
+stats: {
+    totalItems: 'Total Items',
+    lowStock: 'Low Stock',
+    expiringSoon: 'Expiring Soon',
+    categories: 'Categories'
+},
+add: {
+    title: 'Add Item',
+    editTitle: 'Edit Item',
+    name: 'Item Name',
+    category: 'Category',
+    quantity: 'Quantity',
+    unit: 'Unit',
+    minQuantity: 'Min Stock',
+    expiryDate: 'Expiry Date',
+    description: 'Description',
+    selectCategory: 'Select Category',
+    cancel: 'Cancel',
+    save: 'Save',
+    update: 'Update'
+},
+analytics: {
+    title: 'Analytics',
+    smartAlerts: 'Alerts',
+    smartRecommendations: 'Recommendations'
+},
+status: {
+    normal: 'Normal',
+    lowStock: 'Low Stock',
+    expiringSoon: 'Expiring Soon',
+    expired: 'Expired'
+}
     },
     ja: {
-        alerts: {
-            lowStock: '在庫不足',
-            lowStockMessage: '{item} の在庫は残り {quantity} {unit} です',
-            expired: 'アイテムの有効期限切れ',
-            expiredMessage: '{item} の有効期限が {days} 日前に切れました',
-            expiringSoon: '期限切れ間近',
-            expiringSoonMessage: '{item} の有効期限は {days} 日後に切れます'
-        },
-        recommendations: {
-            restock: '{item}の補充を推奨',
-            restockReason: '現在の在庫 {quantity} {unit}、最低在庫 {minQuantity} {unit} を下回っています',
-            popular: '人気アイテム推奨',
-            popularReason: '{item} は現在最も人気のあるアイテムの一つです',
-            watch: '{item}に注目',
-            watchReason: '{item} は過去30日間で {count} 回使用されました',
-            consider: '{item}の補充を検討',
-            considerReason: '{item} は {category} カテゴリで最もよく使用されているアイテムで、{count} 回使用されました'
-        },
-        app: {
-            title: 'スマート家庭在庫管理'
-        },
-        nav: {
-            inventory: '在庫管理',
-            add: 'アイテム追加',
-            analytics: 'スマート分析',
-            purchaseList: '購入リスト',
-            menu: 'メニュー',
-            language: '言語'
-        },
-        purchaseList: {
-            description: '以下は在庫が不足しているアイテムに基づいた購入リストです',
-            totalItems: '購入アイテム総数',
-            currentQuantity: '現在の数量',
-            minQuantity: '最低在庫',
-            suggestedQuantity: '推奨購入数量',
-            unit: '単位',
-            lastUsed: '最終使用日',
-            refresh: 'リストを生成/更新'
-        },
-        inventory: {
-            title: '在庫リスト',
-            search: 'アイテムを検索...',
-            allCategories: '全カテゴリ',
-            name: 'アイテム名',
-            category: 'カテゴリ',
-            quantity: '数量',
-            expiryDate: '有効期限',
-            status: 'ステータス',
-            actions: '操作'
-        },
-        categories: {
-            food: '食品',
-            medicine: '薬品',
-            cleaning: '清掃用品',
-            personal: 'パーソナルケア',
-            household: '家庭用品',
-            electronics: '電子機器'
-        },
-        stats: {
-            totalItems: '総アイテム数',
-            lowStock: '在庫不足',
-            expiringSoon: '期限切れ間近',
-            categories: 'カテゴリ数'
-        },
-        add: {
-            title: '新しいアイテムを追加',
-            editTitle: 'アイテムを編集',
-            name: 'アイテム名',
-            category: 'カテゴリ',
-            quantity: '数量',
-            unit: '単位',
-            minQuantity: '最小在庫',
-            expiryDate: '有効期限',
-            description: '説明',
-            selectCategory: 'カテゴリを選択',
-            cancel: 'キャンセル',
-            save: '保存',
-            update: '更新'
-        },
-        analytics: {
-            title: 'スマート分析',
-            smartAlerts: 'スマートアラート',
-            smartRecommendations: 'スマート推奨'
-        },
-        status: {
-            normal: '正常',
-            lowStock: '在庫不足',
-            expiringSoon: '期限切れ間近',
-            expired: '期限切れ'
-        },
-        notifications: {
-            itemAdded: 'アイテムが正常に追加されました',
-            itemUpdated: 'アイテムが正常に更新されました',
-            itemDeleted: 'アイテムが正常に削除されました',
-            error: '操作に失敗しました。再試行してください',
-            insufficientStock: '{itemName} の在庫が不足しています。',
-            itemUsedSuccessfully: '{itemName} を使用しました。残り {quantity} {unit} です。'
-        }
+  "alerts": {
+    "lowStock": "残少警告",
+    "lowStockMessage": "{item}の在庫が残り{quantity}{unit}です",
+    "expired": "期限切れ",
+    "expiredMessage": "{item}は{days}日前に期限切れとなりました",
+    "expiringSoon": "期限間近警告",
+    "expiringSoonMessage": "{item}の有効期限はあと{days}日です"
+  },
+  "recommendations": {
+    "restock": "{item}を補充してください",
+    "restockReason": "現在の在庫{quantity}{unit}（最低在庫{minQuantity}{unit}を下回っています）",
+    "popular": "人気アイテム",
+    "popularReason": "{item}は現在大人気アイテムです",
+    "watch": "{item}を要チェック",
+    "watchReason": "過去30日間で{count}回使用されています",
+    "consider": "{item}の補充を推奨",
+    "considerReason": "{category}カテゴリで最多使用（{count}回）"
+  },
+  "app": {
+    "title": "スマート家庭在庫管理"
+  },
+  "nav": {
+    "inventory": "在庫管理",
+    "add": "アイテム追加",
+    "analytics": "分析ダッシュボード",
+    "purchaseList": "買い物リスト",
+    "menu": "メニュー",
+    "language": "言語設定"
+  },
+  "purchaseList": {
+    "description": "在庫不足アイテムに基づく購入リスト",
+    "totalItems": "購入対象アイテム数",
+    "currentQuantity": "現在の数量",
+    "minQuantity": "最低在庫量",
+    "suggestedQuantity": "推奨購入量",
+    "unit": "単位",
+    "lastUsed": "最終使用日",
+    "refresh": "リスト更新"
+  },
+  "inventory": {
+    "title": "在庫一覧",
+    "search": "アイテム検索...",
+    "allCategories": "すべてのカテゴリ",
+    "name": "アイテム名",
+    "category": "カテゴリ",
+    "quantity": "数量",
+    "unit": "単位",
+    "expiryDate": "消費期限",
+    "status": "状態",
+    "actions": "操作"
+  },
+  "categories": {
+    "food": "食品",
+    "medicine": "医薬品",
+    "cleaning": "掃除用品",
+    "personal": "日用品",
+    "household": "家庭用品",
+    "electronics": "電化製品"
+  },
+  "stats": {
+    "totalItems": "登録アイテム数",
+    "lowStock": "残少アイテム",
+    "expiringSoon": "期限間近",
+    "categories": "カテゴリ数"
+  },
+  "add": {
+    "title": "新規アイテム登録",
+    "editTitle": "アイテム編集",
+    "name": "品名",
+    "category": "カテゴリ",
+    "quantity": "在庫数",
+    "unit": "単位（例：個、袋）",
+    "minQuantity": "最低在庫数",
+    "expiryDate": "消費期限",
+    "description": "備考",
+    "selectCategory": "選択してください",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "update": "更新"
+  },
+  "analytics": {
+    "title": "在庫分析",
+    "smartAlerts": "アラート一覧",
+    "smartRecommendations": "おすすめアクション"
+  },
+  "status": {
+    "normal": "正常",
+    "lowStock": "残少",
+    "expiringSoon": "期限間近",
+    "expired": "期限切れ"
+  },
+  "notifications": {
+    "itemAdded": "新規登録完了",
+    "itemUpdated": "更新完了",
+    "itemDeleted": "削除完了",
+    "error": "処理に失敗しました",
+    "insufficientStock": "{itemName}の在庫が不足しています",
+    "itemUsedSuccessfully": "{itemName}を使用しました（残り：{quantity}{unit}）"
+  }
     }
 }
 
