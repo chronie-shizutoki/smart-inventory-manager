@@ -384,6 +384,42 @@ def get_smart_recommendations():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+# 采购清单生成
+@inventory_bp.route('/items/generate-purchase-list', methods=['GET'])
+def generate_purchase_list():
+    try:
+        # 获取所有库存不足的物品
+        low_stock_items = InventoryItem.query.filter(
+            InventoryItem.quantity <= InventoryItem.min_quantity
+        ).all()
+
+        # 构建采购清单
+        purchase_list = []
+        for item in low_stock_items:
+            # 计算建议采购数量（最低库存的1.5倍减去当前库存）
+            suggested_quantity = max(1, int(item.min_quantity * 1.5 - item.quantity))
+            purchase_list.append({
+                'id': item.id,
+                'name': item.name,
+                'category': item.category,
+                'currentQuantity': item.quantity,
+                'minQuantity': item.min_quantity,
+                'suggestedQuantity': suggested_quantity,
+                'unit': item.unit,
+                'lastUsedAt': item.last_used_at.isoformat() if item.last_used_at else None
+            })
+
+        # 按分类排序
+        purchase_list.sort(key=lambda x: x['category'])
+
+        return jsonify({
+            'success': True,
+            'data': purchase_list
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 # 批量操作
 @inventory_bp.route('/items/batch', methods=['POST'])
 def batch_operations():

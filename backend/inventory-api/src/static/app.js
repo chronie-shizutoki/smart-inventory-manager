@@ -26,8 +26,19 @@ const messages = {
             inventory: '库存管理',
             add: '添加物品',
             analytics: '智能分析',
+            purchaseList: '采购清单',
             menu: '菜单',
             language: '语言'
+        },
+        purchaseList: {
+            description: '以下是需要采购的物品清单，基于库存不足的物品生成',
+            totalItems: '需采购物品总数',
+            currentQuantity: '当前数量',
+            minQuantity: '最低库存',
+            suggestedQuantity: '建议采购数量',
+            unit: '单位',
+            lastUsed: '最后使用时间',
+            refresh: '生成/刷新清单'
         },
         inventory: {
             title: '库存列表',
@@ -123,8 +134,19 @@ const messages = {
             inventory: 'Inventory',
             add: 'Add Item',
             analytics: 'Analytics',
+            purchaseList: 'Purchase List',
             menu: 'Menu',
             language: 'Language'
+        },
+        purchaseList: {
+            description: 'The following is a list of items that need to be purchased, based on items with low stock',
+            totalItems: 'Total Items to Purchase',
+            currentQuantity: 'Current Quantity',
+            minQuantity: 'Minimum Stock',
+            suggestedQuantity: 'Suggested Quantity',
+            unit: 'Unit',
+            lastUsed: 'Last Used',
+            refresh: 'Generate/Refresh List'
         },
         inventory: {
             title: 'Inventory List',
@@ -212,8 +234,19 @@ const messages = {
             inventory: '在庫管理',
             add: 'アイテム追加',
             analytics: 'スマート分析',
+            purchaseList: '購入リスト',
             menu: 'メニュー',
             language: '言語'
+        },
+        purchaseList: {
+            description: '以下は在庫が不足しているアイテムに基づいた購入リストです',
+            totalItems: '購入アイテム総数',
+            currentQuantity: '現在の数量',
+            minQuantity: '最低在庫',
+            suggestedQuantity: '推奨購入数量',
+            unit: '単位',
+            lastUsed: '最終使用日',
+            refresh: 'リストを生成/更新'
         },
         inventory: {
             title: '在庫リスト',
@@ -314,6 +347,14 @@ const app = createApp({
         currentLocale(newLocale) {
             i18n.global.locale = newLocale;
             updateDocumentTitle();
+        },
+        currentView(newView) {
+            if (newView === 'analytics') {
+                this.loadRecommendationsFromAPI();
+            }
+            if (newView === 'purchaseList') {
+                this.loadPurchaseListFromAPI();
+            }
         }
     },
 
@@ -380,6 +421,8 @@ const app = createApp({
                 // 智能分析数据
                 smartAlerts: [],
                 smartRecommendations: [],
+                // 采购清单数据
+                purchaseList: [],
                 
                 // 通知系统
                 notification: {
@@ -478,6 +521,19 @@ const app = createApp({
                 }
             } catch (error) {
                 console.error('Failed to load recommendations from API:', error);
+            }
+        },
+
+        // 从API加载采购清单
+        async loadPurchaseListFromAPI() {
+            try {
+                const response = await fetch('/api/inventory/items/generate-purchase-list');
+                const result = await response.json();
+                if (result.success) {
+                    this.purchaseList = result.data;
+                }
+            } catch (error) {
+                console.error('Failed to load purchase list from API:', error);
             }
         },
         
