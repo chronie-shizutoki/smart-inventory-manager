@@ -1,4 +1,4 @@
-window.zhTwMessages = {
+window.zhTWMessages = {
     notifications: {
         itemAdded: '物品已添加',
         itemUpdated: '物品已更新',

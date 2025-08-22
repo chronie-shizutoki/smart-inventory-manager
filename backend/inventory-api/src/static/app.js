@@ -3,7 +3,7 @@ const messages = {
     en: window.enMessages,
     'zh-CN': window.zhCNMessages,
     ja: window.jaMessages,
-    'zh-tw': window.zhTWMessages
+    'zh-TW': window.zhTWMessages
 
 }
 
