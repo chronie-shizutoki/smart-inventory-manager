@@ -2,7 +2,9 @@
 const messages = {
     en: window.enMessages,
     'zh-CN': window.zhCNMessages,
-    ja: window.jaMessages
+    ja: window.jaMessages,
+    'zh-tw': window.zhTWMessages
+
 }
 
 // Vue应用配置
