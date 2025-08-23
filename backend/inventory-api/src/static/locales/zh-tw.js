@@ -99,6 +99,7 @@ window.zhTWMessages = {
         ean13: 'EAN-13',
         upca: 'UPC-A',
         scanBarcodeMessage: '將條形碼對準掃描框',
+        positionBarcode: '將條形碼對準掃描區域',
         startScan: '開始掃描',
         stopScan: '停止掃描',
         browserNotSupported: '瀏覽器不支援攝像頭訪問',

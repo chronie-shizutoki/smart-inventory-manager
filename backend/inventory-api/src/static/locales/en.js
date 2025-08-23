@@ -99,6 +99,7 @@ window.enMessages = {
         ean13: 'EAN-13',
         upca: 'UPC-A',
         scanBarcodeMessage: 'Align barcode within the frame',
+        positionBarcode: 'Position barcode within the scan area',
         startScan: 'Start Scan',
         stopScan: 'Stop Scan',
         browserNotSupported: 'Browser does not support camera access',

@@ -99,6 +99,7 @@ window.zhCNMessages = {
         ean13: 'EAN-13',
         upca: 'UPC-A',
         scanBarcodeMessage: '将条形码对准扫描框',
+        positionBarcode: '将条形码对准扫描区域',
         startScan: '开始扫描',
         stopScan: '停止扫描',
         browserNotSupported: '浏览器不支持摄像头访问',

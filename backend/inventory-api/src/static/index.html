@@ -672,22 +672,28 @@
     </div>
 
     <!-- 条形码扫描模态框 -->
-    <div id="barcode-scanner-modal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+    <div id="barcode-scanner-modal" class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 flex items-center justify-center z-50 hidden">
         <div class="relative w-full max-w-md p-4">
-            <button id="close-scanner" class="absolute top-2 right-2 text-white bg-red-600 rounded-full p-2 z-10">
+            <button id="close-scanner" class="absolute top-2 right-2 text-white glass-button rounded-full p-2 z-10 hover:bg-red-600 transition-colors duration-300">
                 <i class="fas fa-times"></i>
             </button>
-            <div id="scanner-container" class="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
-                <div class="aspect-video w-full relative" id="scanner-view">
+            <div id="scanner-container" class="glass-card rounded-xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-md">
+                <div class="aspect-video w-full relative bg-black/30 rounded-t-xl" id="scanner-view">
                     <!-- 扫描线动画 -->
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="w-full h-1 bg-green-500 animate-scan"></div>
+                        <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-green-500 to-transparent animate-scan shadow-glow"></div>
                     </div>
                     <!-- 扫描框 -->
-                    <div class="absolute inset-4 border-2 border-green-500 rounded-md"></div>
+                    <div class="absolute inset-4 border-2 border-green-500/70 rounded-md shadow-glow pointer-events-none"></div>
+                    <!-- 扫描角标 -->
+                    <div class="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-green-500"></div>
+                    <div class="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-green-500"></div>
+                    <div class="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-green-500"></div>
+                    <div class="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-green-500"></div>
                 </div>
-                <div class="p-4 text-center text-white bg-gray-800">
-                    <p class="text-lg">{{ $t('add.scanBarcodeMessage') }}</p>
+                <div class="p-4 text-center text-white bg-black/30 rounded-b-xl">
+                    <p class="text-lg font-medium">{{ $t('add.scanBarcodeMessage') }}</p>
+                    <p class="text-sm mt-2 opacity-80">{{ $t('add.positionBarcode') }}</p>
                 </div>
             </div>
         </div>

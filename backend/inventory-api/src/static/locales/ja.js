@@ -87,6 +87,7 @@ window.jaMessages = {
         ean13: 'EAN-13',
         upca: 'UPC-A',
         scanBarcodeMessage: 'バーコードをフレーム内に合わせてください',
+        positionBarcode: 'バーコードをフレーム内に合わせてください',
         startScan: 'スキャン開始',
         stopScan: 'スキャン停止',
         browserNotSupported: 'ブラウザがカメラアクセスをサポートしていません',
