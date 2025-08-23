@@ -13,6 +13,11 @@ barcode_bp = Blueprint('barcode', __name__)
 @barcode_bp.route('/recognize', methods=['POST'])
 def recognize_barcode():
     logger.info('Received barcode recognition request')
+    logger.info(f'Request method: {request.method}')
+    logger.info(f'Request headers: {dict(request.headers)}')
+    logger.info(f'Request args: {dict(request.args)}')
+    logger.info(f'Request form: {dict(request.form)}')
+    logger.info(f'Request files: {list(request.files.keys())}')
     try:
         # 设置最大文件大小为10MB
         logger.info(f'Request content length: {request.content_length}')
@@ -48,6 +53,16 @@ def recognize_barcode():
         # 读取图片并识别条形码
         logger.info(f'Opening image file: {temp_file_path}')
         image = Image.open(temp_file_path)
+        
+        # 尝试基本图像处理以提高识别率
+        logger.info('Processing image for better barcode recognition...')
+        # 转换为灰度图
+        image = image.convert('L')
+        # 增强对比度
+        from PIL import ImageEnhance
+        enhancer = ImageEnhance.Contrast(image)
+        image = enhancer.enhance(2.0)
+        
         logger.info('Decoding barcode...')
         barcodes = pyzbar.decode(image)
 
