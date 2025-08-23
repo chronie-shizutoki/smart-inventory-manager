@@ -6,7 +6,10 @@ window.enMessages = {
         itemDeleted: 'Item deleted',
         error: 'Operation failed. Please try again',
         insufficientStock: 'Out of stock: {itemName}',
-        itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} left)'
+        itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} left)',
+        itemFound: 'Item found',
+        itemNotFound: 'Item not found',
+        barcodeScanned: 'Barcode scanned successfully'
     },
     alerts: {
         lowStock: 'Low Stock',

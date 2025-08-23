@@ -128,7 +128,10 @@ const app = createApp({
                     show: false,
                     message: '',
                     type: 'success'
-                }
+                },
+                
+                // 扫描目的
+                scanPurpose: 'locate' // 默认扫描目的为定位物品
             };
         },
     
@@ -503,6 +506,19 @@ const app = createApp({
             const modal = document.getElementById('barcode-scanner-modal');
             if (modal) {
                 modal.classList.remove('hidden');
+                // 设置扫描目的为定位物品
+                this.scanPurpose = 'locate';
+                this.startScanner();
+            }
+        },
+
+        // 打开编辑界面的条形码扫描
+        scanBarcodeForForm() {
+            const modal = document.getElementById('barcode-scanner-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                // 设置扫描目的为填充表单
+                this.scanPurpose = 'form';
                 this.startScanner();
             }
         },
@@ -620,12 +636,19 @@ const app = createApp({
         handleScanResult(result) {
             if (result && result.codeResult && result.codeResult.code) {
                 const barcodeValue = result.codeResult.code;
-                this.form.barcode = barcodeValue;
-                console.log('Barcode scanned and set to form:', barcodeValue);
-                this.renderBarcode();
+                console.log('Barcode scanned:', barcodeValue);
+                
+                if (this.scanPurpose === 'form') {
+                    // 表单扫描: 填充表单并渲染条形码
+                    this.form.barcode = barcodeValue;
+                    this.renderBarcode();
+                    this.showNotification(this.$t('notifications.barcodeScanned'), 'success');
+                } else if (this.scanPurpose === 'locate') {
+                    // 定位扫描: 直接定位物品
+                    this.locateItemByBarcode(barcodeValue);
+                }
+                
                 this.closeScanner();
-                this.locateItemByBarcode(barcodeValue);
-                this.showNotification(this.$t('notifications.barcodeScanned'), 'success');
             }
         },
 

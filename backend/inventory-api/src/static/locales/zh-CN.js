@@ -6,7 +6,10 @@ window.zhCNMessages = {
         itemDeleted: '物品已删除',
         error: '操作失败，请重试',
         insufficientStock: '库存不足：{itemName}',
-        itemUsedSuccessfully: '已使用 1 {unit} 的 {itemName}（剩余 {quantity} {unit}）'
+        itemUsedSuccessfully: '已使用 1 {unit} 的 {itemName}（剩余 {quantity} {unit}）',
+        itemFound: '找到物品',
+        itemNotFound: '未找到物品',
+        barcodeScanned: '条形码扫描成功'
     },
     alerts: {
         lowStock: '库存不足',

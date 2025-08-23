@@ -112,6 +112,9 @@ window.jaMessages = {
         error: '処理に失敗しました',
         insufficientStock: '{itemName}の在庫が不足しています',
         itemUsedSuccessfully: '{itemName}を使用しました（残り：{quantity}{unit}）',
-        barcodeError: 'バーコードの生成に失敗しました'
+        barcodeError: 'バーコードの生成に失敗しました',
+        itemFound: 'アイテムを見つけました',
+        itemNotFound: 'アイテムを見つけることができませんでした',
+        barcodeScanned: 'バーコードをスキャンしました'
     }
 };
