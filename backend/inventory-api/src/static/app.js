@@ -746,10 +746,6 @@ const app = createApp({
                             console.log('Error data:', errorData);
                             throw new Error(errorData.message || 'Server error');
                         })
-                        .catch(err => {
-                            console.error('Failed to parse error response:', err);
-                            throw new Error('Server error');
-                        });
                 }
                 return response.json();
             })
