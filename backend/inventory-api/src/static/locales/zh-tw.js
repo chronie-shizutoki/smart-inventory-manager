@@ -100,6 +100,7 @@ window.zhTWMessages = {
         upca: 'UPC-A',
         scanBarcodeMessage: '將條形碼對準掃描框',
         positionBarcode: '將條形碼對準掃描區域',
+        cameraInUse: '攝像頭正在被其他應用使用',
         startScan: '開始掃描',
         stopScan: '停止掃描',
         browserNotSupported: '瀏覽器不支援攝像頭訪問',

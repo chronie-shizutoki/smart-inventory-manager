@@ -105,6 +105,7 @@ window.zhCNMessages = {
         browserNotSupported: '浏览器不支持摄像头访问',
         cameraPermissionDenied: '摄像头权限被拒绝',
         noCameraFound: '未找到摄像头',
+        cameraInUse: '摄像头被其他应用占用',
         scan: '扫描'
     },
     analytics: {

@@ -105,6 +105,7 @@ window.enMessages = {
         browserNotSupported: 'Browser does not support camera access',
         cameraPermissionDenied: 'Camera permission denied',
         noCameraFound: 'No camera found',
+        cameraInUse: 'Camera is in use by another application',
         scan: 'Scan'
     },
     analytics: {

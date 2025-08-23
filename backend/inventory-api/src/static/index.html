@@ -677,8 +677,17 @@
             <button id="close-scanner" class="absolute top-2 right-2 text-white glass-button rounded-full p-2 z-10 hover:bg-red-600 transition-colors duration-300">
                 <i class="fas fa-times"></i>
             </button>
-            <div id="scanner-container" class="glass-card rounded-xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-md">
-                <div class="aspect-video w-full relative bg-black/30 rounded-t-xl" id="scanner-view">
+            <div id="scanner-container" class="glass-card rounded-xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-md max-h-[80vh] flex flex-col">
+                <div class="aspect-video w-full relative bg-black/30 rounded-t-xl flex-shrink-0" id="scanner-view">
+                    <!-- 响应式调整：在小屏幕上限制最大高度 -->
+                    <style scoped>
+                        @media (max-width: 768px) {
+                            #scanner-view {
+                                max-height: 50vh;
+                                height: auto;
+                            }
+                        }
+                    </style>
                     <!-- 扫描线动画 -->
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-green-500 to-transparent animate-scan shadow-glow"></div>

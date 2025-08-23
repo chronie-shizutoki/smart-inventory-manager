@@ -607,13 +607,15 @@ const app = createApp({
                 })
                 .catch(error => {
                     console.error('Camera permission error:', error);
-                    if (error.name === 'NotAllowedError') {
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraPermissionDenied'), 'error');
-                    } else if (error.name === 'NotFoundError') {
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.noCameraFound'), 'error');
-                    } else {
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
-                    }
+                        if (error.name === 'NotAllowedError') {
+                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraPermissionDenied'), 'error');
+                        } else if (error.name === 'NotFoundError') {
+                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.noCameraFound'), 'error');
+                        } else if (error.name === 'NotReadableError') {
+                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraInUse'), 'error');
+                        } else {
+                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
+                        }
                 });
 
             // 权限申请和初始化已在上方完成
