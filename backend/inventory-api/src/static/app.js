@@ -652,15 +652,15 @@ const app = createApp({
                 })
                 .catch(error => {
                     console.error('Camera permission error:', error);
-                        if (error.name === 'NotAllowedError') {
-                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraPermissionDenied'), 'error');
-                        } else if (error.name === 'NotFoundError') {
-                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.noCameraFound'), 'error');
-                        } else if (error.name === 'NotReadableError') {
-                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraInUse'), 'error');
-                        } else {
-                            this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
-                        }
+                    if (error.name === 'NotAllowedError') {
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraPermissionDenied'), 'error');
+                    } else if (error.name === 'NotFoundError') {
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.noCameraFound'), 'error');
+                    } else if (error.name === 'NotReadableError') {
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraInUse'), 'error');
+                    } else {
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
+                    }
                 });
 
             // 权限申请和初始化已在上方完成
@@ -699,8 +699,19 @@ const app = createApp({
             }
         },
 
+        // 初始化文件上传事件监听
+        initImageUploadListener() {
+            const fileInput = document.getElementById('barcode-image-upload');
+            if (fileInput) {
+                fileInput.addEventListener('change', this.handleImageUpload.bind(this));
+            }
+        },
+
         // 处理图像上传
         handleImageUpload(event) {
+            console.log('handleImageUpload function called');
+            console.log('Event:', event);
+            console.log('Image upload event triggered');
             const file = event.target.files[0];
             if (!file) return;
 
@@ -718,13 +729,27 @@ const app = createApp({
             formData.append('image', file);
 
             // 发送到服务器识别条形码
+            console.log('Sending barcode recognition request to /api/barcode/recognize');
+            console.log('File:', file);
+            console.log('Form data has image:', formData.has('image'));
+            console.log('Initiating fetch request to /api/barcode/recognize');
             fetch('/api/barcode/recognize', {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
+                console.log('Response status:', response.status);
                 if (!response.ok) {
-                    throw new Error('Server error');
+                    console.log('Response headers:', response.headers);
+                    return response.json()
+                        .then(errorData => {
+                            console.log('Error data:', errorData);
+                            throw new Error(errorData.message || 'Server error');
+                        })
+                        .catch(err => {
+                            console.error('Failed to parse error response:', err);
+                            throw new Error('Server error');
+                        });
                 }
                 return response.json();
             })
@@ -749,7 +774,7 @@ const app = createApp({
             })
             .catch(error => {
                 console.error('Error recognizing barcode from image:', error);
-                this.showNotification(this.$t('notifications.imageProcessingError'), 'error');
+                this.showNotification(error.message || this.$t('notifications.serverError'), 'error');
                 this.closeScanner();
             });
 
@@ -941,6 +966,10 @@ const app = createApp({
     mounted() {
         this.initializeData();
         this.initScannerEvents(); // 初始化扫描器事件
+        // 延迟初始化图像上传监听，确保DOM已经加载完成
+        setTimeout(() => {
+            this.initImageUploadListener(); // 初始化图像上传监听
+        }, 100);
         
         // 定期检查过期物品
         setInterval(() => {

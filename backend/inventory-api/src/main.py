@@ -8,6 +8,7 @@ from flask_cors import CORS
 from src.models.user import db
 from src.routes.user import user_bp
 from src.routes.inventory import inventory_bp
+from src.routes.barcode import barcode_bp
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
 app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
@@ -17,6 +18,7 @@ CORS(app)
 
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(inventory_bp, url_prefix='/api/inventory')
+app.register_blueprint(barcode_bp, url_prefix='/api/barcode')
 
 # 确保数据库目录存在
 db_dir = os.path.join(os.path.dirname(__file__), 'database')
