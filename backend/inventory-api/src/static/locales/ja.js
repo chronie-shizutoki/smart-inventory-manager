@@ -77,7 +77,21 @@ window.jaMessages = {
         selectCategory: '選択してください',
         cancel: 'キャンセル',
         save: '保存',
-        update: '更新'
+        update: '更新',
+        barcode: 'バーコード',
+        barcodeType: 'バーコードタイプ',
+        enterBarcode: 'バーコードを入力または生成',
+        generateBarcode: '生成',
+        barcodePreview: 'バーコードプレビュー',
+        ean13: 'EAN-13',
+        upca: 'UPC-A',
+        scanBarcodeMessage: 'バーコードをフレーム内に合わせてください',
+        startScan: 'スキャン開始',
+        stopScan: 'スキャン停止',
+        browserNotSupported: 'ブラウザがカメラアクセスをサポートしていません',
+        cameraPermissionDenied: 'カメラアクセス権限が拒否されました',
+        noCameraFound: 'カメラが見つかりません',
+        scan: 'スキャン'
     },
     analytics: {
         title: '在庫分析',
@@ -96,6 +110,7 @@ window.jaMessages = {
         itemDeleted: '削除完了',
         error: '処理に失敗しました',
         insufficientStock: '{itemName}の在庫が不足しています',
-        itemUsedSuccessfully: '{itemName}を使用しました（残り：{quantity}{unit}）'
+        itemUsedSuccessfully: '{itemName}を使用しました（残り：{quantity}{unit}）',
+        barcodeError: 'バーコードの生成に失敗しました'
     }
 };

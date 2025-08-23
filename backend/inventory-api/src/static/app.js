@@ -72,8 +72,10 @@ const app = createApp({
                     unit: '',
                     minQuantity: 0,
                     expiryDate: '',
-                    description: ''
+                    description: '',
+                    barcode: ''
                 },
+                barcodeType: 'ean13', // 默认条形码类型
                 
                 // 分类列表
                 categories: ['food', 'medicine', 'cleaning', 'personal', 'household', 'electronics'],
@@ -406,9 +408,224 @@ const app = createApp({
                 unit: '',
                 minQuantity: 0,
                 expiryDate: '',
-                description: ''
+                description: '',
+                barcode: ''
             };
             this.editingItem = null;
+            // 清除条形码预览
+            const barcodeElement = document.getElementById('barcode');
+            if (barcodeElement) {
+                barcodeElement.innerHTML = '';
+            }
+        },
+
+        // 生成条形码
+        generateBarcode() {
+            // 根据不同类型生成条形码
+            let barcodeValue;
+            if (this.barcodeType === 'ean13') {
+                barcodeValue = this.generateEAN13();
+            } else if (this.barcodeType === 'upca') {
+                barcodeValue = this.generateUPCA();
+            } else {
+                barcodeValue = this.generateEAN13(); // 默认生成EAN13
+            }
+
+            this.form.barcode = barcodeValue;
+            this.renderBarcode();
+        },
+
+        // 生成EAN-13条形码
+        generateEAN13() {
+            // 生成12位随机数字
+            let code = '';
+            for (let i = 0; i < 12; i++) {
+                code += Math.floor(Math.random() * 10);
+            }
+
+            // 计算校验位
+            let sum = 0;
+            for (let i = 0; i < 12; i++) {
+                if (i % 2 === 0) {
+                    sum += parseInt(code.charAt(i)) * 1;
+                } else {
+                    sum += parseInt(code.charAt(i)) * 3;
+                }
+            }
+            const checkDigit = (10 - (sum % 10)) % 10;
+            return code + checkDigit;
+        },
+
+        // 生成UPC-A条形码
+        generateUPCA() {
+            // 生成11位随机数字
+            let code = '';
+            for (let i = 0; i < 11; i++) {
+                code += Math.floor(Math.random() * 10);
+            }
+
+            // 计算校验位
+            let sum = 0;
+            for (let i = 0; i < 11; i++) {
+                if (i % 2 === 0) {
+                    sum += parseInt(code.charAt(i)) * 3;
+                } else {
+                    sum += parseInt(code.charAt(i)) * 1;
+                }
+            }
+            const checkDigit = (10 - (sum % 10)) % 10;
+            return code + checkDigit;
+        },
+
+        // 渲染条形码
+        renderBarcode() {
+            if (this.form.barcode) {
+                try {
+                    const barcodeElement = document.getElementById('barcode');
+                    if (barcodeElement) {
+                        barcodeElement.innerHTML = '';
+                        JsBarcode(barcodeElement, this.form.barcode, {
+                            format: this.barcodeType === 'ean13' ? 'EAN13' : 'UPC',
+                            width: 2,
+                            height: 100,
+                            displayValue: true
+                        });
+                    }
+                } catch (error) {
+                    console.error('Failed to render barcode:', error);
+                    this.showNotification(this.$t('notifications.barcodeError'), 'error');
+                }
+            }
+        },
+
+        // 打开条形码扫描模态框
+        scanBarcode() {
+            const modal = document.getElementById('barcode-scanner-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                this.startScanner();
+            }
+        },
+
+        // 关闭条形码扫描模态框
+        closeScanner() {
+            const modal = document.getElementById('barcode-scanner-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                this.stopScanner();
+            }
+        },
+
+        // 初始化扫描器事件
+        initScannerEvents() {
+            const closeBtn = document.getElementById('close-scanner');
+
+            if (closeBtn) {
+                closeBtn.onclick = () => this.closeScanner();
+            }
+        },
+
+        // 启动扫描器
+        startScanner() {
+            const scannerView = document.getElementById('scanner-view');
+
+            if (!scannerView) return;
+
+            // 检查浏览器兼容性
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                console.error('getUserMedia is not supported in this browser');
+                this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.browserNotSupported'), 'error');
+                return;
+            }
+
+            // 申请摄像头权限
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                .then(stream => {
+                    try {
+                        Quagga.init({
+                            inputStream: {
+                                name: 'Live',
+                                type: 'LiveStream',
+                                target: scannerView,
+                                constraints: {
+                                    facingMode: 'environment'
+                                }
+                            },
+                            decoder: {
+                                readers: ['code_128_reader', 'ean_reader', 'ean_8_reader', 'code_39_reader', 'upc_reader', 'upc_e_reader'],
+                                debug: {
+                                    showCanvas: false,
+                                    showPatches: false,
+                                    showFoundPatches: false,
+                                    showSkeleton: false,
+                                    showLabels: false,
+                                    showPatchLabels: false,
+                                    showRemainingPatchLabels: false,
+                                    boxFromPatches: { x: 0, y: 0, width: 0, height: 0 }
+                                }
+                            },
+                            locate: true
+                        }, (err) => {
+                            if (err) {
+                                console.error('Failed to initialize Quagga:', err);
+                                this.showNotification(this.$t('notifications.barcodeError') + ': ' + err.message, 'error');
+                                return;
+                            }
+
+                            Quagga.start();
+
+                            // 设置结果事件监听器
+                            Quagga.onDetected(this.handleScanResult.bind(this));
+                        });
+                    } catch (error) {
+                        console.error('Error initializing scanner:', error);
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Camera permission error:', error);
+                    if (error.name === 'NotAllowedError') {
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraPermissionDenied'), 'error');
+                    } else if (error.name === 'NotFoundError') {
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.noCameraFound'), 'error');
+                    } else {
+                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
+                    }
+                });
+
+            // 权限申请和初始化已在上方完成
+            // 此处代码已被移至权限申请成功的回调函数中
+                  // 所有初始化代码已移至权限申请成功的回调函数中
+        },
+
+        // 停止扫描器
+        stopScanner() {
+            if (Quagga && Quagga.stop) {
+                try {
+                    Quagga.stop();
+                } catch (error) {
+                    console.error('Failed to stop scanner:', error);
+                }
+            }
+        },
+
+        // 处理扫描结果
+        handleScanResult(result) {
+            if (result && result.codeResult && result.codeResult.code) {
+                this.form.barcode = result.codeResult.code;
+                this.renderBarcode();
+                this.closeScanner();
+                this.showNotification(this.$t('notifications.itemUpdated'), 'success');
+            }
+        },
+
+        // 初始化扫描器事件（页面加载时）
+        initScanModal() {
+            // 为关闭按钮添加事件监听
+            const closeBtn = document.getElementById('close-scanner');
+            if (closeBtn) {
+                closeBtn.onclick = () => this.closeScanner();
+            }
         },
         
         // 显示通知

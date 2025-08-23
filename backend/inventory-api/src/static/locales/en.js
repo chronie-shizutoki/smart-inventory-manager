@@ -1,5 +1,6 @@
 window.enMessages = {
     notifications: {
+        barcodeError: 'Failed to generate barcode',
         itemAdded: 'Item added',
         itemUpdated: 'Item updated',
         itemDeleted: 'Item deleted',
@@ -85,7 +86,21 @@ window.enMessages = {
         selectCategory: 'Select Category',
         cancel: 'Cancel',
         save: 'Save',
-        update: 'Update'
+        update: 'Update',
+        barcode: 'Barcode',
+        barcodeType: 'Barcode Type',
+        enterBarcode: 'Enter barcode or generate one',
+        generateBarcode: 'Generate',
+        barcodePreview: 'Barcode Preview',
+        ean13: 'EAN-13',
+        upca: 'UPC-A',
+        scanBarcodeMessage: 'Align barcode within the frame',
+        startScan: 'Start Scan',
+        stopScan: 'Stop Scan',
+        browserNotSupported: 'Browser does not support camera access',
+        cameraPermissionDenied: 'Camera permission denied',
+        noCameraFound: 'No camera found',
+        scan: 'Scan'
     },
     analytics: {
         title: 'Analytics',

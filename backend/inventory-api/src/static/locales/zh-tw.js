@@ -1,5 +1,6 @@
 window.zhTWMessages = {
     notifications: {
+        barcodeError: '生成條形碼失敗',
         itemAdded: '物品已添加',
         itemUpdated: '物品已更新',
         itemDeleted: '物品已刪除',
@@ -85,7 +86,21 @@ window.zhTWMessages = {
         selectCategory: '選擇類別',
         cancel: '取消',
         save: '保存',
-        update: '更新'
+        update: '更新',
+        barcode: '條形碼',
+        barcodeType: '條形碼類型',
+        enterBarcode: '輸入條形碼或生成一個',
+        generateBarcode: '生成',
+        barcodePreview: '條形碼預覽',
+        ean13: 'EAN-13',
+        upca: 'UPC-A',
+        scanBarcodeMessage: '將條形碼對準掃描框',
+        startScan: '開始掃描',
+        stopScan: '停止掃描',
+        browserNotSupported: '瀏覽器不支援攝像頭訪問',
+        cameraPermissionDenied: '攝像頭權限被拒絕',
+        noCameraFound: '未找到攝像頭',
+        scan: '掃描'
     },
     analytics: {
         title: '分析',

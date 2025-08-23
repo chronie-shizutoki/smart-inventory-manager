@@ -1,5 +1,6 @@
 window.zhCNMessages = {
     notifications: {
+        barcodeError: '生成条形码失败',
         itemAdded: '物品已添加',
         itemUpdated: '物品已更新',
         itemDeleted: '物品已删除',
@@ -85,7 +86,21 @@ window.zhCNMessages = {
         selectCategory: '选择类别',
         cancel: '取消',
         save: '保存',
-        update: '更新'
+        update: '更新',
+        barcode: '条形码',
+        barcodeType: '条形码类型',
+        enterBarcode: '输入条形码或生成一个',
+        generateBarcode: '生成',
+        barcodePreview: '条形码预览',
+        ean13: 'EAN-13',
+        upca: 'UPC-A',
+        scanBarcodeMessage: '将条形码对准扫描框',
+        startScan: '开始扫描',
+        stopScan: '停止扫描',
+        browserNotSupported: '浏览器不支持摄像头访问',
+        cameraPermissionDenied: '摄像头权限被拒绝',
+        noCameraFound: '未找到摄像头',
+        scan: '扫描'
     },
     analytics: {
         title: '分析',
