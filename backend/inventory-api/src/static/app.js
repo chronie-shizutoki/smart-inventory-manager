@@ -835,6 +835,7 @@ const app = createApp({
     
     mounted() {
         this.initializeData();
+        this.initScannerEvents(); // 初始化扫描器事件
         
         // 定期检查过期物品
         setInterval(() => {
