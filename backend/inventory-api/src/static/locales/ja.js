@@ -94,7 +94,10 @@ window.jaMessages = {
         browserNotSupported: 'ブラウザがカメラアクセスをサポートしていません',
         cameraPermissionDenied: 'カメラアクセス権限が拒否されました',
         noCameraFound: 'カメラが見つかりません',
-        scan: 'スキャン'
+        scan: 'スキャン',
+        orUploadImage: 'または画像をアップロード',
+        uploadImage: '画像をアップロード',
+        selectImage: '画像を選択'
     },
     analytics: {
         title: '在庫分析',
@@ -117,6 +120,11 @@ window.jaMessages = {
         barcodeError: 'バーコードの生成に失敗しました',
         itemFound: 'アイテムを見つけました',
         itemNotFound: 'アイテムを見つけることができませんでした',
-        barcodeScanned: 'バーコードをスキャンしました'
+        barcodeScanned: 'バーコードをスキャンしました',
+        invalidImageType: '無効な画像ファイルです',
+        processingImage: '画像を処理中です',
+        noBarcodeFound: '画像内にバーコードが見つかりませんでした',
+        imageProcessingError: '画像処理中にエラーが発生しました',
+        orUploadImage: 'または画像をアップロード'
     }
 };

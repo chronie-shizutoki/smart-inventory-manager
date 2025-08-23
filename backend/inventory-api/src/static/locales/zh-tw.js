@@ -6,7 +6,16 @@ window.zhTWMessages = {
         itemDeleted: '物品已刪除',
         error: '操作失敗，請重試',
         insufficientStock: '庫存不足：{itemName}',
-        itemUsedSuccessfully: '已使用 1 {unit} 的 {itemName}（剩餘 {quantity} {unit}）'
+        itemUsedSuccessfully: '已使用 1 {unit} 的 {itemName}（剩餘 {quantity} {unit}）',
+        itemFound: '找到物品',
+        itemNotFound: '未找到物品',
+        barcodeScanned: '條形碼掃描成功',
+        invalidImageType: '無效的圖像類型，請選擇圖像文件。',
+        processingImage: '處理圖像中...',
+        noBarcodeFound: '圖像中未找到條形碼',
+        imageProcessingError: '處理圖像時出錯',
+        scan: '掃描',
+        orUploadImage: '或上傳圖像'
     },
     alerts: {
         lowStock: '庫存不足',
@@ -106,7 +115,10 @@ window.zhTWMessages = {
         browserNotSupported: '瀏覽器不支援攝像頭訪問',
         cameraPermissionDenied: '攝像頭權限被拒絕',
         noCameraFound: '未找到攝像頭',
-        scan: '掃描'
+        scan: '掃描',
+        orUploadImage: '或上傳圖像',
+        uploadImage: '上傳圖像',
+        selectImage: '選擇圖像'
     },
     analytics: {
         title: '分析',

@@ -33,8 +33,48 @@ function updateDocumentTitle() {
     document.title = i18n.global.t('app.title');
 }
 
+// 更新条形码扫描模态框的翻译
+function updateScannerModalTranslations() {
+    const modal = document.getElementById('barcode-scanner-modal');
+    if (!modal) return;
+
+    // 更新模态框中的翻译文本
+    const scanMessage = modal.querySelector('.text-lg.font-medium');
+    if (scanMessage) scanMessage.textContent = i18n.global.t('add.scanBarcodeMessage');
+
+    const positionMessage = modal.querySelector('.text-sm.mt-2.opacity-80');
+    if (positionMessage) positionMessage.textContent = i18n.global.t('add.positionBarcode');
+
+    const orUploadText = modal.querySelector('.text-sm.mb-2');
+    if (orUploadText) orUploadText.textContent = i18n.global.t('add.orUploadImage');
+
+    const uploadButton = modal.querySelector('.glass-button');
+    if (uploadButton) {
+        const icon = uploadButton.querySelector('i');
+        uploadButton.textContent = i18n.global.t('add.uploadImage');
+        if (icon) uploadButton.prepend(icon);
+    }
+
+    // 更新输入框的placeholder翻译
+    const inputElements = document.querySelectorAll('input[aria-label*="输入条形码或生成一个"]');
+    inputElements.forEach(input => {
+        input.placeholder = i18n.global.t('add.enterBarcode');
+        input.setAttribute('aria-label', i18n.global.t('add.enterBarcodeAriaLabel'));
+    });
+
+    // 确保label元素的翻译正确
+    const labelElement = document.querySelector('label[for="barcode-image-upload"]');
+    if (labelElement) {
+        const icon = labelElement.querySelector('i');
+        labelElement.textContent = i18n.global.t('add.uploadImage');
+        if (icon) labelElement.prepend(icon);
+    }
+}
+
 // 初始设置标题
 updateDocumentTitle();
+// 初始更新模态框翻译
+updateScannerModalTranslations();
 
 // 创建Vue应用
 const app = createApp({
@@ -44,6 +84,7 @@ const app = createApp({
         currentLocale(newLocale) {
             i18n.global.locale = newLocale;
             updateDocumentTitle();
+            updateScannerModalTranslations(); // 语言切换时更新模态框翻译
         },
         currentView(newView) {
             if (newView === 'analytics') {
@@ -508,6 +549,8 @@ const app = createApp({
                 modal.classList.remove('hidden');
                 // 设置扫描目的为定位物品
                 this.scanPurpose = 'locate';
+                // 打开时更新翻译
+                updateScannerModalTranslations();
                 this.startScanner();
             }
         },
@@ -519,6 +562,8 @@ const app = createApp({
                 modal.classList.remove('hidden');
                 // 设置扫描目的为填充表单
                 this.scanPurpose = 'form';
+                // 打开时更新翻译
+                updateScannerModalTranslations();
                 this.startScanner();
             }
         },
@@ -652,6 +697,64 @@ const app = createApp({
                 
                 this.closeScanner();
             }
+        },
+
+        // 处理图像上传
+        handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // 检查文件类型
+            if (!file.type.startsWith('image/')) {
+                this.showNotification(this.$t('notifications.invalidImageType'), 'error');
+                return;
+            }
+
+            // 显示加载通知
+            this.showNotification(this.$t('notifications.processingImage'), 'info');
+
+            // 创建FormData对象
+            const formData = new FormData();
+            formData.append('image', file);
+
+            // 发送到服务器识别条形码
+            fetch('/api/barcode/recognize', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Server error');
+                }
+                return response.json();
+            })
+            .then(result => {
+                if (result.success && result.barcode) {
+                    const barcodeValue = result.barcode;
+                    console.log('Barcode recognized from image:', barcodeValue);
+
+                    if (this.scanPurpose === 'form') {
+                        // 表单扫描: 填充表单并渲染条形码
+                        this.form.barcode = barcodeValue;
+                        this.renderBarcode();
+                        this.showNotification(this.$t('notifications.barcodeScanned'), 'success');
+                    } else if (this.scanPurpose === 'locate') {
+                        // 定位扫描: 直接定位物品
+                        this.locateItemByBarcode(barcodeValue);
+                    }
+                } else {
+                    this.showNotification(this.$t('notifications.noBarcodeFound'), 'error');
+                }
+                this.closeScanner();
+            })
+            .catch(error => {
+                console.error('Error recognizing barcode from image:', error);
+                this.showNotification(this.$t('notifications.imageProcessingError'), 'error');
+                this.closeScanner();
+            });
+
+            // 重置文件输入
+            event.target.value = '';
         },
 
         // 通过条形码定位物品

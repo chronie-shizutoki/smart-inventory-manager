@@ -9,7 +9,11 @@ window.enMessages = {
         itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} left)',
         itemFound: 'Item found',
         itemNotFound: 'Item not found',
-        barcodeScanned: 'Barcode scanned successfully'
+        barcodeScanned: 'Barcode scanned successfully',
+        invalidImageType: 'Invalid image type. Please select an image file.',
+        processingImage: 'Processing image...',
+        noBarcodeFound: 'No barcode found in image',
+        imageProcessingError: 'Error processing image'
     },
     alerts: {
         lowStock: 'Low Stock',
@@ -106,7 +110,9 @@ window.enMessages = {
         cameraPermissionDenied: 'Camera permission denied',
         noCameraFound: 'No camera found',
         cameraInUse: 'Camera is in use by another application',
-        scan: 'Scan'
+        scan: 'Scan',
+        orUploadImage: 'Or upload image',
+        uploadImage: 'Upload Image'
     },
     analytics: {
         title: 'Analytics',

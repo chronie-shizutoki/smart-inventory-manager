@@ -9,7 +9,11 @@ window.zhCNMessages = {
         itemUsedSuccessfully: '已使用 1 {unit} 的 {itemName}（剩余 {quantity} {unit}）',
         itemFound: '找到物品',
         itemNotFound: '未找到物品',
-        barcodeScanned: '条形码扫描成功'
+        barcodeScanned: '条形码扫描成功',
+        invalidImageType: '无效的图片类型，请选择图片文件。',
+        processingImage: '正在处理图片...',
+        noBarcodeFound: '图片中未找到条形码',
+        imageProcessingError: '处理图片时出错'
     },
     alerts: {
         lowStock: '库存不足',
@@ -106,7 +110,9 @@ window.zhCNMessages = {
         cameraPermissionDenied: '摄像头权限被拒绝',
         noCameraFound: '未找到摄像头',
         cameraInUse: '摄像头被其他应用占用',
-        scan: '扫描'
+        scan: '扫描',
+        orUploadImage: '或上传图片',
+        uploadImage: '上传图片'
     },
     analytics: {
         title: '分析',

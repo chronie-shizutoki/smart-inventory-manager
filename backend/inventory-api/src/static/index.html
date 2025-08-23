@@ -700,9 +700,16 @@
                     <div class="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-green-500"></div>
                     <div class="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-green-500"></div>
                 </div>
-                <div class="p-4 text-center text-white bg-black/30 rounded-b-xl">
+                <div class="p-4 text-center text-white bg-black/30 rounded-b-xl flex flex-col gap-4">
                     <p class="text-lg font-medium">{{ $t('add.scanBarcodeMessage') }}</p>
                     <p class="text-sm mt-2 opacity-80">{{ $t('add.positionBarcode') }}</p>
+                    <div class="mt-4 pt-4 border-t border-white/20">
+                        <p class="text-sm mb-2">{{ $t('add.orUploadImage') }}</p>
+                        <label for="barcode-image-upload" class="glass-button px-4 py-2 rounded-lg cursor-pointer hover:bg-white/20 transition-colors duration-300 inline-block">
+                            <i class="fas fa-upload mr-2"></i>{{ $t('add.uploadImage') }}
+                        </label>
+                        <input type="file" id="barcode-image-upload" accept="image/*" class="hidden" @change="handleImageUpload">
+                    </div>
                 </div>
             </div>
         </div>
