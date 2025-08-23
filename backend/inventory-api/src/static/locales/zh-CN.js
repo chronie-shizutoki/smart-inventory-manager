@@ -57,7 +57,8 @@ window.zhCNMessages = {
         unit: '单位',
         expiryDate: '过期日期',
         status: '状态',
-        actions: '操作'
+        actions: '操作',
+        scanBarcode: '扫描条形码'
     },
     categories: {
         food: '食品',

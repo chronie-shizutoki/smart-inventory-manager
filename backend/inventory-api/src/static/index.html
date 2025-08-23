@@ -145,6 +145,12 @@
                                     {{ $t('categories.' + category) }}
                                 </option>
                             </select>
+                            <!-- 桌面端条形码扫描按钮 -->
+                            <button @click="scanBarcode"
+                                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors glass-button flex items-center">
+                                <i class="fas fa-barcode mr-2"></i>
+                                <span>{{ $t('inventory.scanBarcode') }}</span>
+                            </button>
                         </div>
                         <!-- 移动端搜索 -->
                         <div class="md:hidden mobile-search-container flex">
@@ -161,6 +167,11 @@
                                     {{ $t('categories.' + category) }}
                                 </option>
                             </select>
+                            <!-- 移动端条形码扫描按钮 -->
+                            <button @click="scanBarcode"
+                                class="ml-2 p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors glass-button">
+                                <i class="fas fa-barcode"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -231,7 +242,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr v-for="item in filteredItems" :key="item.id" class="hover:bg-gray-50">
+                                    <tr v-for="item in filteredItems" :key="item.id" :id="'item-' + item.id" class="hover:bg-gray-50">
                                         <td class="px-3 md:px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <i :class="getCategoryIcon(item.category)" class="text-gray-400 mr-2 md:mr-3"></i>
@@ -283,7 +294,7 @@
 
                     <!-- 库存列表 - 移动端卡片视图 -->
                     <div class="md:hidden space-y-4">
-                        <div v-for="item in filteredItems" :key="item.id" class="rounded-lg shadow overflow-hidden border border-gray-100 card-hover glass-card">
+                        <div v-for="item in filteredItems" :key="item.id" :id="'item-' + item.id" class="rounded-lg shadow overflow-hidden border border-gray-100 card-hover glass-card">
                             <div class="p-4">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center">

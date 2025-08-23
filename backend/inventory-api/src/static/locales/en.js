@@ -57,7 +57,8 @@ window.enMessages = {
         unit: 'Unit',
         expiryDate: 'Expiry',
         status: 'Status',
-        actions: 'Actions'
+        actions: 'Actions',
+        scanBarcode: 'Scan Barcode'
     },
     categories: {
         food: 'Food',

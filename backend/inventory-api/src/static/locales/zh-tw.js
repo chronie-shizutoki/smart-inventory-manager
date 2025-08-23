@@ -57,7 +57,8 @@ window.zhTWMessages = {
         unit: '單位',
         expiryDate: '過期日期',
         status: '狀態',
-        actions: '操作'
+        actions: '操作',
+        scanBarcode: '掃描條形碼'
     },
     categories: {
         food: '食品',

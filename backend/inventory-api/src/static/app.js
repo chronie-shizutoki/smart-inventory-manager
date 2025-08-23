@@ -624,7 +624,38 @@ const app = createApp({
                 console.log('Barcode scanned and set to form:', barcodeValue);
                 this.renderBarcode();
                 this.closeScanner();
+                this.locateItemByBarcode(barcodeValue);
                 this.showNotification(this.$t('notifications.barcodeScanned'), 'success');
+            }
+        },
+
+        // 通过条形码定位物品
+        locateItemByBarcode(barcode) {
+            // 切换到库存列表视图
+            this.currentView = 'inventory';
+            
+            // 查找匹配的物品
+            const matchedItem = this.items.find(item => item.barcode === barcode);
+            
+            if (matchedItem) {
+                // 滚动到匹配的物品
+                setTimeout(() => {
+                    const element = document.getElementById(`item-${matchedItem.id}`);
+                    if (element) {
+                        // 添加高亮效果
+                        element.classList.add('bg-yellow-100');
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        
+                        // 3秒后移除高亮效果
+                        setTimeout(() => {
+                            element.classList.remove('bg-yellow-100');
+                        }, 3000);
+                    }
+                }, 500);
+                
+                this.showNotification(`${this.$t('notifications.itemFound')}: ${matchedItem.name}`, 'success');
+            } else {
+                this.showNotification(`${this.$t('notifications.itemNotFound')}: ${barcode}`, 'warning');
             }
         },
 

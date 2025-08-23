@@ -48,7 +48,8 @@ window.jaMessages = {
         unit: '単位',
         expiryDate: '消費期限',
         status: '状態',
-        actions: '操作'
+        actions: '操作',
+        scanBarcode: 'バーコードスキャン'
     },
     categories: {
         food: '食品',
