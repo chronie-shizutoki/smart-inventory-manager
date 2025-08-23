@@ -538,6 +538,13 @@ const app = createApp({
                 return;
             }
 
+            // 额外检查以确保getUserMedia可用
+            if (typeof navigator.mediaDevices.getUserMedia !== 'function') {
+                console.error('getUserMedia is not a function');
+                this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.browserNotSupported'), 'error');
+                return;
+            }
+
             // 申请摄像头权限
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
                 .then(stream => {
@@ -612,10 +619,12 @@ const app = createApp({
         // 处理扫描结果
         handleScanResult(result) {
             if (result && result.codeResult && result.codeResult.code) {
-                this.form.barcode = result.codeResult.code;
+                const barcodeValue = result.codeResult.code;
+                this.form.barcode = barcodeValue;
+                console.log('Barcode scanned and set to form:', barcodeValue);
                 this.renderBarcode();
                 this.closeScanner();
-                this.showNotification(this.$t('notifications.itemUpdated'), 'success');
+                this.showNotification(this.$t('notifications.barcodeScanned'), 'success');
             }
         },
 
@@ -714,6 +723,7 @@ const app = createApp({
                     await this.loadItemsFromAPI();
                     // 刷新智能分析数据
                     await this.refreshAnalyticsData();
+                    console.log('Item saved successfully with barcode:', itemData.barcode);
                     return true;
                 } else {
                     throw new Error(result.error || 'Failed to save item');
