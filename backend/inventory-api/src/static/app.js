@@ -1,6 +1,7 @@
 // 多语言配置
 const messages = {
     ar: window.arMessages,
+    bn: window.bnMessages,
     de: window.deMessages,
     en: window.enMessages,
     es: window.esMessages,
@@ -10,7 +11,10 @@ const messages = {
     ja: window.jaMessages,
     pt: window.ptMessages,
     ru: window.ruMessages,
+    ta: window.taMessages,
+    th: window.thMessages,
     tr: window.trMessages,
+    vi: window.viMessages,
     'zh-CN': window.zhCNMessages,
     'zh-TW': window.zhTWMessages
 }
