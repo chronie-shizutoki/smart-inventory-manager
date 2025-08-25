@@ -19,7 +19,7 @@ A modern web application for home inventory management, supporting multiple lang
   - Purchase suggestions based on inventory status.
   - Recommendations based on usage frequency analysis.
 
-### Multi-language Support
+### Multi-language Support (21 languages)
 - Arabic (ar)
 - Bengali (bn)
 - German (de)
