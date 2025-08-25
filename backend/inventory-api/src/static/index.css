@@ -563,7 +563,6 @@ input[type="date"] {
         .rtl {
             text-align: right !important;
             direction: rtl !important;
-            font-family: 'Arial', 'Tahoma', 'sans-serif'; /* Common Arabic fonts */
         }
 
         /* All text containers should be right-aligned for RTL */
@@ -591,7 +590,6 @@ input[type="date"] {
         .rtl body {
             text-align: right !important;
             direction: rtl !important;
-            font-family: 'Arial', 'Tahoma', 'sans-serif';
         }
 
         /* Ensure main content area is properly aligned */
@@ -722,7 +720,6 @@ input[type="date"] {
             .rtl body {
                 text-align: right !important;
                 direction: rtl !important;
-                font-family: 'Arial', 'Tahoma', 'sans-serif' !important;
             }
         }
 
