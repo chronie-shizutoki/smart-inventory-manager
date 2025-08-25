@@ -1,21 +1,18 @@
 // 多语言配置
 const messages = {
+    ar: window.arMessages,
+    de: window.deMessages,
     en: window.enMessages,
-    'zh-CN': window.cnMessages,
-    'zh-TW': window.twMessages,
-    ja: window.jaMessages,
     es: window.esMessages,
     fr: window.frMessages,
-    de: window.deMessages,
-    ru: window.ruMessages,
-    ar: window.arMessages,
+    hi: window.hiMessages,
+    id: window.idMessages,
+    ja: window.jaMessages,
     pt: window.ptMessages,
-    hi: window.hiMessages,
-    id: window.idMessages,
+    ru: window.ruMessages,
     tr: window.trMessages,
-    hi: window.hiMessages,
-    id: window.idMessages,
-    tr: window.trMessages
+    'zh-CN': window.zhCNMessages,
+    'zh-TW': window.zhTWMessages
 }
 
 // Vue应用配置
@@ -25,12 +22,37 @@ const { createI18n } = VueI18n;
 // 创建i18n实例
 // 检测系统语言
 const detectSystemLanguage = () => {
-    // 优先获取navigator.language
+    // First check if a language is saved in localStorage
+    const savedLang = localStorage.getItem('language');
+    if (savedLang && Object.keys(messages).includes(savedLang)) {
+        return savedLang;
+    }
+
+    // Then get the browser language
     const browserLang = navigator.language || navigator.userLanguage;
-    // 提取语言代码的前两位(如'en-US' -> 'en')
+    
+    // Check if the full browser language is in the supported list
+    if (Object.keys(messages).includes(browserLang)) {
+        return browserLang;
+    }
+
+    // Extract the first two characters of the language code (e.g., 'en-US' -> 'en')
     const langCode = browserLang.split('-')[0];
-    // 检查是否在支持的语言列表中
-    return Object.keys(messages).includes(langCode) ? langCode : 'en';
+    // Check if it's in the supported language list
+    if (Object.keys(messages).includes(langCode)) {
+        return langCode;
+    }
+
+    // Try to find language variants in the supported list
+    const supportedLanguages = Object.keys(messages);
+    for (const supportedLang of supportedLanguages) {
+        if (supportedLang.startsWith(`${langCode}-`)) {
+            return supportedLang;
+        }
+    }
+
+    // Fall back to English if no match is found
+    return 'en';
 };
 
 const i18n = createI18n({
