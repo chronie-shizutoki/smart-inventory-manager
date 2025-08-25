@@ -1,7 +1,3 @@
-## Languages
-- [English](README.md)
-- [日本語](README-ja.md)
-
 # Smart Home Inventory Management System
 
 A modern web application for home inventory management, supporting multiple languages and intelligent features.
@@ -26,6 +22,21 @@ A modern web application for home inventory management, supporting multiple lang
 ### Multi-language Support
 - English
 - Japanese
+- Spanish
+- French
+- German
+- Russian
+- Arabic
+- Portuguese
+- Hindi
+- Indonesian
+- Turkish
+- Bengali
+- Tamil
+- Vietnamese
+- Thai
+- Chinese (Simplified)
+- Chinese (Traditional)
 
 ### Technical Features
 - **Responsive Design**: Support for desktop and mobile devices.
@@ -52,24 +63,26 @@ A modern web application for home inventory management, supporting multiple lang
 
 ```
 smart-inventory-manager/
-├── frontend/                 # Frontend source code
-│   ├── index.html           # Main page
-│   └── app.js              # Vue.js application logic
+├── .gitignore
+├── README.md               # Project description
+├── todo.md                # Development task list
 ├── backend/                 # Backend source code
 │   └── inventory-api/       # Flask API service
-│       ├── src/
-│       │   ├── main.py     # Flask application entry point
-│       │   ├── models/     # Data models
-│       │   │   ├── user.py
-│       │   │   └── inventory.py
-│       │   ├── routes/     # API routes
-│       │   │   ├── user.py
-│       │   │   └── inventory.py
-│       │   └── static/     # Static files (frontend deployment)
+│       ├── requirements.txt # Python dependencies
 │       ├── venv/           # Python virtual environment
-│       └── requirements.txt # Python dependencies
-├── README.md               # Project description
-└── todo.md                # Development task list
+│       └── src/
+│           ├── main.py     # Flask application entry point
+│           ├── models/     # Data models
+│           │   ├── user.py
+│           │   └── inventory.py
+│           ├── routes/     # API routes
+│           │   ├── user.py
+│           │   └── inventory.py
+│           └── static/     # Frontend source code and static files
+│               ├── index.html           # Main page
+│               ├── app.js              # Vue.js application logic
+│               └── locales/            # Language files
+└── start.bat                # Startup script for Windows
 ```
 
 ## 🔧 Local Development
