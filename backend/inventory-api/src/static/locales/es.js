@@ -1,40 +1,40 @@
 window.esMessages = {
     notifications: {
-        barcodeError: 'Error al generar código de barras',
-        itemAdded: 'Artículo añadido',
-        itemUpdated: 'Artículo actualizado',
-        itemDeleted: 'Artículo eliminado',
-        error: 'Operación fallida. Inténtelo de nuevo',
-        insufficientStock: 'Sin existencias: {itemName}',
-        itemUsedSuccessfully: 'Usado 1 {unit} de {itemName} (quedan {quantity} {unit})',
+        barcodeError: 'Error al generar el código de barras',
+        itemAdded: '¡Artículo añadido!',
+        itemUpdated: '¡Artículo actualizado!',
+        itemDeleted: '¡Artículo eliminado!',
+        error: 'Error en la operación. Por favor, inténtelo de nuevo.',
+        insufficientStock: 'Stock insuficiente: {itemName}',
+        itemUsedSuccessfully: 'Se usó 1 {unit} de {itemName} ({quantity} {unit} restantes)',
         itemFound: 'Artículo encontrado',
         itemNotFound: 'Artículo no encontrado',
-        barcodeScanned: 'Código de barras escaneado con éxito',
-        invalidImageType: 'Tipo de imagen inválido. Seleccione un archivo de imagen.',
+        barcodeScanned: 'Código de barras escaneado correctamente',
+        invalidImageType: 'Tipo de imagen no válido. Por favor, seleccione un archivo de imagen.',
         processingImage: 'Procesando imagen...',
-        noBarcodeFound: 'No se encontró código de barras en la imagen',
+        noBarcodeFound: 'No se encontró ningún código de barras en la imagen',
         imageProcessingError: 'Error al procesar la imagen'
     },
     alerts: {
         lowStock: 'Stock bajo',
-        lowStockMessage: 'Quedan solo {quantity} {unit} de {item}',
-        expired: 'Vencido',
-        expiredMessage: '{item} venció hace {days} días',
-        expiringSoon: 'Próximo a vencer',
-        expiringSoonMessage: '{item} vence en {days} días'
+        lowStockMessage: 'Solo quedan {quantity} {unit} de {item}',
+        expired: 'Caducado',
+        expiredMessage: '{item} caducó hace {days} días',
+        expiringSoon: 'Próximo a caducar',
+        expiringSoonMessage: '{item} caduca en {days} días'
     },
     recommendations: {
         restock: 'Reabastecer {item}',
         restockReason: 'Stock actual: {quantity} {unit} (mínimo: {minQuantity} {unit})',
         popular: 'Artículo popular',
-        popularReason: '{item} se usa con frecuencia',
-        watch: 'Monitorizar {item}',
+        popularReason: '{item} se utiliza frecuentemente',
+        watch: 'Vigilar {item}',
         watchReason: 'Usado {count} veces en los últimos 30 días',
-        consider: 'Reabastecer {item}',
-        considerReason: 'Más usado en {category} ({count} veces)'
+        consider: 'Considere reabastecer {item}',
+        considerReason: 'El más usado en {category} ({count} veces)'
     },
     app: {
-        title: 'Inventario Inteligente para el Hogar'
+        title: 'Inventario Inteligente para el Hogar' // (Perfecto)
     },
     nav: {
         inventory: 'Inventario',
@@ -45,84 +45,84 @@ window.esMessages = {
         language: 'Idioma'
     },
     purchaseList: {
-        description: 'Artículos para reabastecer basados en el inventario bajo',
-        totalItems: 'Artículos para Comprar',
-        currentQuantity: 'Cantidad Actual',
-        minQuantity: 'Stock Mínimo',
-        suggestedQuantity: 'Cantidad Sugerida',
+        description: 'Artículos para reabastecer basados en el stock bajo',
+        totalItems: 'Artículos para comprar',
+        currentQuantity: 'Cantidad actual',
+        minQuantity: 'Stock mínimo',
+        suggestedQuantity: 'Cantidad sugerida',
         unit: 'Unidad',
-        lastUsed: 'Último Uso',
-        refresh: 'Actualizar Lista'
+        lastUsed: 'Último uso',
+        refresh: 'Actualizar lista'
     },
     inventory: {
         title: 'Inventario',
         search: 'Buscar artículos...',
-        allCategories: 'Todas las Categorías',
+        allCategories: 'Todas las categorías',
         name: 'Artículo',
         category: 'Categoría',
         quantity: 'Cant.',
         unit: 'Unidad',
-        expiryDate: 'Vencimiento',
+        expiryDate: 'Caducidad', // Más común para productos
         status: 'Estado',
         actions: 'Acciones',
-        scanBarcode: 'Escanear Código de Barras'
+        scanBarcode: 'Escanear código de barras'
     },
     categories: {
         food: 'Alimentos',
         medicine: 'Medicamentos',
-        cleaning: 'Productos de Limpieza',
-        personal: 'Cuidado Personal',
-        household: 'Artículos del Hogar',
-        electronics: 'Electrónicos'
+        cleaning: 'Productos de limpieza',
+        personal: 'Cuidado personal',
+        household: 'Artículos del hogar',
+        electronics: 'Electrónica' // Forma más común para la categoría
     },
     stats: {
-        totalItems: 'Total de Artículos',
-        lowStock: 'Stock Bajo',
-        expiringSoon: 'Próximo a Vencer',
+        totalItems: 'Total de artículos',
+        lowStock: 'Stock bajo',
+        expiringSoon: 'Próximo a caducar',
         categories: 'Categorías'
     },
     add: {
-        title: 'Añadir Artículo',
-        editTitle: 'Editar Artículo',
-        name: 'Nombre del Artículo',
+        title: 'Añadir artículo',
+        editTitle: 'Editar artículo',
+        name: 'Nombre del artículo',
         category: 'Categoría',
         quantity: 'Cantidad',
         unit: 'Unidad',
-        minQuantity: 'Stock Mínimo',
-        expiryDate: 'Fecha de Vencimiento',
-        description: 'Descripción',
-        selectCategory: 'Seleccionar Categoría',
+        minQuantity: 'Stock mínimo',
+        expiryDate: 'Fecha de caducidad',
+        description: 'Descripción (opcional)', // Añadido "(opcional)" si no es obligatorio
+        selectCategory: 'Seleccionar categoría',
         cancel: 'Cancelar',
         save: 'Guardar',
         update: 'Actualizar',
-        barcode: 'Código de Barras',
-        barcodeType: 'Tipo de Código de Barras',
-        enterBarcode: 'Introducir código de barras o generar uno',
+        barcode: 'Código de barras',
+        barcodeType: 'Tipo de código de barras',
+        enterBarcode: 'Introduzca el código de barras o genere uno',
         generateBarcode: 'Generar',
-        barcodePreview: 'Vista Previa del Código de Barras',
-        ean13: 'EAN-13',
-        upca: 'UPC-A',
-        scanBarcodeMessage: 'Alinear el código de barras dentro del marco',
-        positionBarcode: 'Posicionar el código de barras dentro del área de escaneo',
-        startScan: 'Iniciar Escaneo',
-        stopScan: 'Detener Escaneo',
-        browserNotSupported: 'El navegador no admite el acceso a la cámara',
+        barcodePreview: 'Vista previa del código de barras',
+        ean13: 'EAN-13', // Los estándares de código de barras no se traducen
+        upca: 'UPC-A', // Los estándares de código de barras no se traducen
+        scanBarcodeMessage: 'Alinee el código de barras dentro del marco',
+        positionBarcode: 'Coloque el código de barras dentro del área de escaneo',
+        startScan: 'Comenzar escaneo',
+        stopScan: 'Detener escaneo',
+        browserNotSupported: 'Su navegador no admite el acceso a la cámara',
         cameraPermissionDenied: 'Permiso de cámara denegado',
-        noCameraFound: 'No se encontró cámara',
-        cameraInUse: 'La cámara está en uso por otra aplicación',
+        noCameraFound: 'No se encontró ninguna cámara',
+        cameraInUse: 'La cámara está siendo utilizada por otra aplicación',
         scan: 'Escanear',
-        orUploadImage: 'O subir imagen',
-        uploadImage: 'Subir Imagen'
+        orUploadImage: 'O subir una imagen',
+        uploadImage: 'Subir imagen'
     },
     analytics: {
         title: 'Análisis',
-        smartAlerts: 'Alertas',
+        smartAlerts: 'Alertas Inteligentes',
         smartRecommendations: 'Recomendaciones'
     },
     status: {
         normal: 'Normal',
-        lowStock: 'Stock Bajo',
-        expiringSoon: 'Próximo a Vencer',
-        expired: 'Vencido'
+        lowStock: 'Stock bajo',
+        expiringSoon: 'Próximo a caducar',
+        expired: 'Caducado'
     }
 };
