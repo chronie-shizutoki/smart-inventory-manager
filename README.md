@@ -20,23 +20,23 @@ A modern web application for home inventory management, supporting multiple lang
   - Recommendations based on usage frequency analysis.
 
 ### Multi-language Support
-- English
-- Japanese
-- Spanish
-- French
-- German
-- Russian
-- Arabic
-- Portuguese
-- Hindi
-- Indonesian
-- Turkish
-- Bengali
-- Tamil
-- Vietnamese
-- Thai
-- Chinese (Simplified)
-- Chinese (Traditional)
+- Arabic (ar)
+- Bengali (bn)
+- German (de)
+- English (en)
+- Spanish (es)
+- French (fr)
+- Hindi (hi)
+- Indonesian (id)
+- Japanese (ja)
+- Portuguese (pt)
+- Russian (ru)
+- Tamil (ta)
+- Thai (th)
+- Turkish (tr)
+- Vietnamese (vi)
+- Chinese (Simplified) (zh-CN)
+- Chinese (Traditional) (zh-TW)
 
 ### Technical Features
 - **Responsive Design**: Support for desktop and mobile devices.
