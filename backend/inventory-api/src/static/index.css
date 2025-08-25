@@ -115,22 +115,201 @@ button {
         #barcode-scanner-modal {
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
+            background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.1) 0%, transparent 60%);
         }
 
         /* 扫描容器悬停效果 */
-        #scanner-container:hover {
-            box-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.2);
-            transform: translateY(-5px);
+        #scanner-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
-        /* 关闭按钮过渡效果 */
+        #scanner-container:hover {
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.25);
+            transform: translateY(-5px);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        /* 扫描区域增强 */
+        #scanner-view {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 关闭按钮效果优化 */
         #close-scanner {
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
         #close-scanner:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.7);
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+            background-color: rgba(239, 68, 68, 0.6);
+        }
+
+        /* 扫描框增强 */
+        .animate-pulse-slow {
+            position: relative;
+        }
+
+        .animate-pulse-slow::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        /* 上传按钮效果优化 */
+        #barcode-image-upload + label {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        #barcode-image-upload + label:hover {
+            background-color: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        #barcode-image-upload + label:active {
+            transform: translateY(0);
+        }
+
+        /* 扫描线增强 */
+        .animate-scan {
+            position: relative;
+        }
+
+        /* 浅色模式样式支持 */
+        @media (prefers-color-scheme: light) {
+            /* 条形码扫描模态框 - 浅色模式 */
+            #barcode-scanner-modal {
+                background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, transparent 60%);
+                background-color: rgba(255, 255, 255, 0.7);
+            }
+
+            /* 扫描容器 - 浅色模式 */
+            #scanner-container {
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid rgba(16, 185, 129, 0.3);
+                color: #1a202c;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            }
+
+            #scanner-container:hover {
+                box-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
+                border-color: rgba(16, 185, 129, 0.5);
+            }
+
+            /* 扫描视图 - 浅色模式 */
+            #scanner-view {
+                background: rgba(243, 244, 246, 0.8);
+            }
+
+            /* 关闭按钮 - 浅色模式 */
+            #close-scanner {
+                background-color: rgba(239, 68, 68, 0.15);
+                border: 1px solid rgba(239, 68, 68, 0.2);
+                color: #e11d48;
+            }
+
+            #close-scanner:hover {
+                background-color: rgba(239, 68, 68, 0.8);
+                color: white;
+            }
+
+            /* 扫描框 - 浅色模式 */
+            .animate-pulse-slow::before {
+                background: linear-gradient(45deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+            }
+
+            /* 上传按钮 - 浅色模式 */
+            #barcode-image-upload + label {
+                color: #0f766e;
+                background-color: rgba(16, 185, 129, 0.1);
+                border: 1px solid rgba(16, 185, 129, 0.2);
+            }
+
+            #barcode-image-upload + label:hover {
+                background-color: rgba(16, 185, 129, 0.2);
+                border-color: rgba(16, 185, 129, 0.4);
+                color: #065f46;
+            }
+
+            /* 模态框文本 - 浅色模式 */
+            #barcode-scanner-modal h3 {
+                color: #065f46;
+            }
+
+            #barcode-scanner-modal p {
+                color: #374151;
+            }
+
+            /* 扫描角标 - 浅色模式 */
+            #scanner-view .border-green-500 {
+                border-color: #059669;
+            }
+
+            /* 扫描框边框 - 浅色模式 */
+            #scanner-view .border-green-500\/70 {
+                border-color: rgba(5, 150, 105, 0.7);
+            }
+
+            /* 扫描线 - 浅色模式 */
+            .animate-scan {
+                background: linear-gradient(to right, transparent, #059669, transparent);
+            }
+
+            /* 扫描线光晕 - 浅色模式 */
+            .animate-scan::before {
+                background: linear-gradient(to bottom, transparent, rgba(5, 150, 105, 0.05), transparent);
+            }
+
+            /* 扫描线阴影效果 - 浅色模式 */
+            .shadow-glow {
+                box-shadow: 0 0 15px rgba(5, 150, 105, 0.3);
+            }
+
+            /* 模态框底部区域 - 浅色模式 */
+            #scanner-container > div:last-child {
+                background-color: rgba(249, 250, 251, 0.9);
+                border-top: 1px solid rgba(229, 231, 235, 0.8);
+            }
+
+            /* 模态框内边框 - 浅色模式 */
+            #scanner-container > div:last-child .border-t {
+                border-top-color: rgba(229, 231, 235, 0.8);
+            }
+        }
+
+        .animate-scan::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to bottom, transparent, rgba(16, 185, 129, 0.1), transparent);
+            filter: blur(8px);
         }
 
         /* 数字变化动画 */

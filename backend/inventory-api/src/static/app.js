@@ -80,16 +80,16 @@ function updateScannerModalTranslations() {
     if (!modal) return;
 
     // 更新模态框中的翻译文本
-    const scanMessage = modal.querySelector('.text-lg.font-medium');
+    const scanMessage = modal.querySelector('h3');
     if (scanMessage) scanMessage.textContent = i18n.global.t('add.scanBarcodeMessage');
 
-    const positionMessage = modal.querySelector('.text-sm.mt-2.opacity-80');
+    const positionMessage = modal.querySelector('.text-sm.opacity-90');
     if (positionMessage) positionMessage.textContent = i18n.global.t('add.positionBarcode');
 
-    const orUploadText = modal.querySelector('.text-sm.mb-2');
+    const orUploadText = modal.querySelector('.text-sm.mb-3.opacity-80');
     if (orUploadText) orUploadText.textContent = i18n.global.t('add.orUploadImage');
 
-    const uploadButton = modal.querySelector('.glass-button');
+    const uploadButton = modal.querySelector('#barcode-image-upload + label');
     if (uploadButton) {
         const icon = uploadButton.querySelector('i');
         uploadButton.textContent = i18n.global.t('add.uploadImage');
@@ -592,7 +592,7 @@ const app = createApp({
         scanBarcode() {
             const modal = document.getElementById('barcode-scanner-modal');
             if (modal) {
-                modal.classList.remove('hidden');
+                modal.classList.add('show');
                 // 设置扫描目的为定位物品
                 this.scanPurpose = 'locate';
                 // 打开时更新翻译
@@ -605,7 +605,7 @@ const app = createApp({
         scanBarcodeForForm() {
             const modal = document.getElementById('barcode-scanner-modal');
             if (modal) {
-                modal.classList.remove('hidden');
+                modal.classList.add('show');
                 // 设置扫描目的为填充表单
                 this.scanPurpose = 'form';
                 // 打开时更新翻译
@@ -618,7 +618,7 @@ const app = createApp({
         closeScanner() {
             const modal = document.getElementById('barcode-scanner-modal');
             if (modal) {
-                modal.classList.add('hidden');
+                modal.classList.remove('show');
                 this.stopScanner();
             }
         },

@@ -720,12 +720,12 @@
     </div>
 
     <!-- 条形码扫描模态框 -->
-    <div id="barcode-scanner-modal" class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 flex items-center justify-center z-50 hidden">
-        <div class="relative w-full max-w-md p-4">
-            <button id="close-scanner" class="absolute top-2 right-2 text-white glass-button rounded-full p-2 z-10 hover:bg-red-600 transition-colors duration-300">
+    <div id="barcode-scanner-modal" class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-500">
+        <div class="relative w-full max-w-md p-4 transform scale-95 transition-transform duration-300">
+            <button id="close-scanner" class="absolute top-2 right-2 text-white bg-red-600/30 hover:bg-red-600/80 rounded-full p-2 z-10 transition-all duration-300 shadow-lg">
                 <i class="fas fa-times"></i>
             </button>
-            <div id="scanner-container" class="glass-card rounded-xl overflow-hidden shadow-2xl border border-white/10 backdrop-blur-md max-h-[80vh] flex flex-col">
+            <div id="scanner-container" class="glass-card rounded-xl overflow-hidden shadow-2xl border border-green-500/20 backdrop-blur-md max-h-[80vh] flex flex-col">
                 <div class="aspect-video w-full relative bg-black/30 rounded-t-xl flex-shrink-0" id="scanner-view">
                     <!-- 响应式调整：在小屏幕上限制最大高度 -->
                     <style scoped>
@@ -736,24 +736,31 @@
                             }
                         }
                     </style>
+                    
+                    <!-- 扫描网格背景 -->
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+
+                        <MjAgMjAgMCAyMC0yMCAwIC0yMCAwIDAgMjAgMjAgMCAyMCAwIDAgMCAyMC0yMCIgLz48L3N2Zz4=')] opacity-10"></div>
+                    
                     <!-- 扫描线动画 -->
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-green-500 to-transparent animate-scan shadow-glow"></div>
                     </div>
+                    
                     <!-- 扫描框 -->
-                    <div class="absolute inset-4 border-2 border-green-500/70 rounded-md shadow-glow pointer-events-none"></div>
-                    <!-- 扫描角标 -->
-                    <div class="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-green-500"></div>
-                    <div class="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-green-500"></div>
-                    <div class="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-green-500"></div>
-                    <div class="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-green-500"></div>
+                    <div class="absolute inset-4 border-2 border-green-500/70 rounded-md shadow-glow pointer-events-none animate-pulse-slow"></div>
+                    
+                    <!-- 扫描角标 - 改进版 -->
+                    <div class="absolute top-4 left-4 w-10 h-10 border-t-4 border-l-4 border-green-500"></div>
+                    <div class="absolute top-4 right-4 w-10 h-10 border-t-4 border-r-4 border-green-500"></div>
+                    <div class="absolute bottom-4 left-4 w-10 h-10 border-b-4 border-l-4 border-green-500"></div>
+                    <div class="absolute bottom-4 right-4 w-10 h-10 border-b-4 border-r-4 border-green-500"></div>
                 </div>
-                <div class="p-4 text-center text-white bg-black/30 rounded-b-xl flex flex-col gap-4">
-                    <p class="text-lg font-medium">{{ $t('add.scanBarcodeMessage') }}</p>
-                    <p class="text-sm mt-2 opacity-80">{{ $t('add.positionBarcode') }}</p>
+                <div class="p-6 text-center text-white bg-black/30 rounded-b-xl flex flex-col gap-4 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-green-400 tracking-wide transition-opacity duration-300">{{ $t('add.scanBarcodeMessage') }}</h3>
+                    <p class="text-sm opacity-90 transition-opacity duration-300">{{ $t('add.positionBarcode') }}</p>
                     <div class="mt-4 pt-4 border-t border-white/20">
-                        <p class="text-sm mb-2">{{ $t('add.orUploadImage') }}</p>
-                        <label for="barcode-image-upload" class="glass-button px-4 py-2 rounded-lg cursor-pointer hover:bg-white/20 transition-colors duration-300 inline-block">
+                        <p class="text-sm mb-3 opacity-80 transition-opacity duration-300">{{ $t('add.orUploadImage') }}</p>
+                        <label for="barcode-image-upload" class="glass-button px-5 py-2.5 rounded-lg cursor-pointer hover:bg-white/20 hover:shadow-lg hover:shadow-green-500/10 transition-all duration-300 inline-block">
                             <i class="fas fa-upload mr-2"></i>{{ $t('add.uploadImage') }}
                         </label>
                         <input type="file" id="barcode-image-upload" accept="image/*" class="hidden">
@@ -770,8 +777,39 @@
         80% { opacity: 1; }
         100% { transform: translateY(100%); opacity: 0; }
     }
+    
+    @keyframes pulse-slow {
+        0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+        50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.8); }
+    }
+    
+    @keyframes modal-fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes modal-scale-in {
+        from { transform: scale(0.95); }
+        to { transform: scale(1); }
+    }
+    
     .animate-scan {
         animation: scan 2s linear infinite;
+    }
+    
+    .animate-pulse-slow {
+        animation: pulse-slow 2s ease-in-out infinite;
+    }
+    
+    #barcode-scanner-modal.show {
+        opacity: 1;
+        pointer-events: auto;
+        animation: modal-fade-in 0.3s ease-out;
+    }
+    
+    #barcode-scanner-modal.show > div {
+        transform: scale(1);
+        animation: modal-scale-in 0.3s ease-out;
     }
     </style>
 
