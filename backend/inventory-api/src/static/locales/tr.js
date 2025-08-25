@@ -4,33 +4,33 @@ window.trMessages = {
         itemAdded: 'Ürün eklendi',
         itemUpdated: 'Ürün güncellendi',
         itemDeleted: 'Ürün silindi',
-        error: 'İşlem başarısız oldu. Lütfen tekrar deneyin',
-        insufficientStock: 'Stok tükeniyor: {itemName}',
-        itemUsedSuccessfully: '{itemName} 1 {unit} kullanıldı ({quantity} {unit} kaldı)',
+        error: 'İşlem başarısız oldu. Lütfen tekrar deneyiniz',
+        insufficientStock: 'Yetersiz Stok: {itemName}',
+        itemUsedSuccessfully: '{itemName} ürününden 1 {unit} kullanıldı ({quantity} {unit} kaldı)',
         itemFound: 'Ürün bulundu',
         itemNotFound: 'Ürün bulunamadı',
-        barcodeScanned: 'Barkod başarıyla tarandı',
-        invalidImageType: 'Geçersiz resim türü. Lütfen bir resim dosyası seçin.',
+        barcodeScanned: 'Barkod başarıyla taranıldı',
+        invalidImageType: 'Geçersiz resim formatı. Lütfen bir resim dosyası seçiniz.',
         processingImage: 'Resim işleniyor...',
         noBarcodeFound: 'Resimde barkod bulunamadı',
-        imageProcessingError: 'Resim işlenirken hata oluştu'
+        imageProcessingError: 'Resim işleme sırasında hata oluştu'
     },
     alerts: {
         lowStock: 'Düşük Stok',
-        lowStockMessage: '{item} stokundan sadece {quantity} {unit} kaldı',
-        expired: 'Süresi Dolmuş',
-        expiredMessage: '{item} {days} gün önce son kullanma tarihini geçti',
-        expiringSoon: 'Yakında Son Kullanma Tarihi Geliyor',
-        expiringSoonMessage: '{item} {days} gün içinde son kullanma tarihine ulaşacak'
+        lowStockMessage: '{item} stokunda yalnızca {quantity} {unit} kaldı',
+        expired: 'Süresi Doldu',
+        expiredMessage: '{item} ürününün son kullanma tarihi {days} gün önce geçti',
+        expiringSoon: 'Son Kullanma Tarihi Yaklaşıyor',
+        expiringSoonMessage: '{item} ürününün son kullanma tarihine {days} gün kaldı'
     },
     recommendations: {
-        restock: '{item} yeniden tedarik edin',
-        restockReason: 'Mevcut stok: {quantity} {unit} (minimum: {minQuantity} {unit})',
+        restock: '{item} ürününü tedarik edin',
+        restockReason: 'Mevcut stok: {quantity} {unit} (Minimum: {minQuantity} {unit})',
         popular: 'Popüler Ürün',
-        popularReason: '{item} sık kullanılıyor',
-        watch: '{item} takip edin',
+        popularReason: '{item} sıklıkla kullanılıyor',
+        watch: '{item} ürününü izleyin',
         watchReason: 'Son 30 günde {count} kez kullanıldı',
-        consider: '{item} yeniden tedarik etmek için düşünün',
+        consider: '{item} ürününü tedarik etmeyi değerlendirin',
         considerReason: '{category} kategorisinde en çok kullanılan ürün ({count} kez)'
     },
     app: {
@@ -45,7 +45,7 @@ window.trMessages = {
         language: 'Dil'
     },
     purchaseList: {
-        description: 'Düşük stok durumuna göre yenilenmesi gereken ürünler',
+        description: 'Düşük stok seviyesine göre yenilenmesi önerilen ürünler',
         totalItems: 'Satın Alınacak Ürünler',
         currentQuantity: 'Mevcut Miktar',
         minQuantity: 'Minimum Stok',
@@ -64,7 +64,7 @@ window.trMessages = {
         unit: 'Birim',
         expiryDate: 'Son Kullanma Tarihi',
         status: 'Durum',
-        actions: 'Eylemler',
+        actions: 'İşlemler',
         scanBarcode: 'Barkod Tara'
     },
     categories: {
@@ -72,13 +72,13 @@ window.trMessages = {
         medicine: 'İlaç',
         cleaning: 'Temizlik Malzemesi',
         personal: 'Kişisel Bakım',
-        household: 'Ev Aletleri',
+        household: 'Ev Eşyaları',
         electronics: 'Elektronik'
     },
     stats: {
         totalItems: 'Toplam Ürün',
         lowStock: 'Düşük Stok',
-        expiringSoon: 'Yakında Son Kullanma Tarihi',
+        expiringSoon: 'Yaklaşan Son Kullanma Tarihi',
         categories: 'Kategoriler'
     },
     add: {
@@ -91,21 +91,21 @@ window.trMessages = {
         minQuantity: 'Minimum Stok',
         expiryDate: 'Son Kullanma Tarihi',
         description: 'Açıklama',
-        selectCategory: 'Kategori Seç',
+        selectCategory: 'Kategori Seçiniz',
         cancel: 'İptal',
         save: 'Kaydet',
         update: 'Güncelle',
         barcode: 'Barkod',
         barcodeType: 'Barkod Türü',
-        enterBarcode: 'Barkodu girin veya yeni bir tane oluşturun',
+        enterBarcode: 'Barkodu girin veya yeni oluşturun',
         generateBarcode: 'Oluştur',
-        barcodePreview: 'Barkod Önizlemesi',
+        barcodePreview: 'Barkod Önizleme',
         ean13: 'EAN-13',
         upca: 'UPC-A',
-        scanBarcodeMessage: 'Barkodu çerçevenin içine yerleştirin',
-        positionBarcode: 'Barkodu tarama alanının içine yerleştirin',
-        startScan: 'Tarama Başlat',
-        stopScan: 'Tarama Durdur',
+        scanBarcodeMessage: 'Barkodu çerçeve içine yerleştirin',
+        positionBarcode: 'Barkodu tarayıcı alanına yerleştirin',
+        startScan: 'Tarayıcıyı Başlat',
+        stopScan: 'Tarayıcıyı Durdur',
         browserNotSupported: 'Tarayıcı kamera erişimini desteklemiyor',
         cameraPermissionDenied: 'Kamera izni reddedildi',
         noCameraFound: 'Kamera bulunamadı',
@@ -116,13 +116,13 @@ window.trMessages = {
     },
     analytics: {
         title: 'Analitik',
-        smartAlerts: 'Uyarılar',
-        smartRecommendations: 'Öneriler'
+        smartAlerts: 'Akıllı Uyarılar',
+        smartRecommendations: 'Akıllı Öneriler'
     },
     status: {
         normal: 'Normal',
         lowStock: 'Düşük Stok',
-        expiringSoon: 'Yakında Son Kullanma Tarihi',
+        expiringSoon: 'Yaklaşan Son Kullanma Tarihi',
         expired: 'Süresi Dolmuş'
     }
 };
