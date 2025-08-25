@@ -1,14 +1,21 @@
 // 多语言配置
 const messages = {
     en: window.enMessages,
-    'zh-CN': window.zhCNMessages,
+    'zh-CN': window.cnMessages,
+    'zh-TW': window.twMessages,
     ja: window.jaMessages,
-    'zh-TW': window.zhTWMessages,
     es: window.esMessages,
     fr: window.frMessages,
     de: window.deMessages,
     ru: window.ruMessages,
-    ar: window.arMessages
+    ar: window.arMessages,
+    pt: window.ptMessages,
+    hi: window.hiMessages,
+    id: window.idMessages,
+    tr: window.trMessages,
+    hi: window.hiMessages,
+    id: window.idMessages,
+    tr: window.trMessages
 }
 
 // Vue应用配置
