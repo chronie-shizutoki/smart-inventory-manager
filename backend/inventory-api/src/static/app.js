@@ -3,8 +3,12 @@ const messages = {
     en: window.enMessages,
     'zh-CN': window.zhCNMessages,
     ja: window.jaMessages,
-    'zh-TW': window.zhTWMessages
-
+    'zh-TW': window.zhTWMessages,
+    es: window.esMessages,
+    fr: window.frMessages,
+    de: window.deMessages,
+    ru: window.ruMessages,
+    ar: window.arMessages
 }
 
 // Vue应用配置
@@ -76,25 +80,27 @@ updateDocumentTitle();
 // 初始更新模态框翻译
 updateScannerModalTranslations();
 
+// RTL语言列表
+const rtlLanguages = ['ar'];
+
+// 更新文档的文本方向
+function updateDocumentDirection(locale) {
+    const isRtl = rtlLanguages.includes(locale);
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    
+    // 添加或移除RTL类，方便CSS选择器
+    if (isRtl) {
+        document.documentElement.classList.add('rtl');
+    } else {
+        document.documentElement.classList.remove('rtl');
+    }
+}
+
+// 初始设置文本方向
+updateDocumentDirection(i18n.global.locale);
+
 // 创建Vue应用
 const app = createApp({
-
-    // 添加语言切换监听
-    watch: {
-        currentLocale(newLocale) {
-            i18n.global.locale = newLocale;
-            updateDocumentTitle();
-            updateScannerModalTranslations(); // 语言切换时更新模态框翻译
-        },
-        currentView(newView) {
-            if (newView === 'analytics') {
-                this.loadRecommendationsFromAPI();
-            }
-            if (newView === 'purchaseList') {
-                this.loadPurchaseListFromAPI();
-            }
-        }
-    },
 
     data() {
             return {
@@ -223,9 +229,12 @@ const app = createApp({
         changeLanguage() {
             // 使用全局i18n实例
             i18n.global.locale = this.currentLocale;
+            this.$i18n.locale = this.currentLocale;
             localStorage.setItem('language', this.currentLocale);
             // 更新页面标题
             document.title = i18n.global.t('app.title');
+            // 手动调用updateDocumentDirection确保RTL设置正确应用
+            updateDocumentDirection(this.currentLocale);
         },
         
         // 获取分类图标
@@ -950,6 +959,21 @@ const app = createApp({
     },
     
     watch: {
+        // 添加语言切换监听
+        currentLocale(newLocale) {
+            i18n.global.locale = newLocale;
+            updateDocumentTitle();
+            updateScannerModalTranslations(); // 语言切换时更新模态框翻译
+            updateDocumentDirection(newLocale); // 更新文本方向
+        },
+        currentView(newView) {
+            if (newView === 'analytics') {
+                this.loadRecommendationsFromAPI();
+            }
+            if (newView === 'purchaseList') {
+                this.loadPurchaseListFromAPI();
+            }
+        },
         // 监听items变化，自动保存
         items: {
             handler() {

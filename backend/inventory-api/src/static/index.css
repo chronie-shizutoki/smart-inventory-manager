@@ -556,3 +556,244 @@ input[type="date"] {
                 color: #e6e6e6;
             }
         }
+
+        /* RTL support styles */
+        /* Global RTL styles with proper Arabic font support */
+        [dir="rtl"],
+        .rtl {
+            text-align: right !important;
+            direction: rtl !important;
+            font-family: 'Arial', 'Tahoma', 'sans-serif'; /* Common Arabic fonts */
+        }
+
+        /* All text containers should be right-aligned for RTL */
+        [dir="rtl"] p,
+        [dir="rtl"] h1,
+        [dir="rtl"] h2,
+        [dir="rtl"] h3,
+        [dir="rtl"] h4,
+        [dir="rtl"] h5,
+        [dir="rtl"] h6,
+        [dir="rtl"] span,
+        [dir="rtl"] label,
+        [dir="rtl"] div,
+        [dir="rtl"] body,
+        .rtl p,
+        .rtl h1,
+        .rtl h2,
+        .rtl h3,
+        .rtl h4,
+        .rtl h5,
+        .rtl h6,
+        .rtl span,
+        .rtl label,
+        .rtl div,
+        .rtl body {
+            text-align: right !important;
+            direction: rtl !important;
+            font-family: 'Arial', 'Tahoma', 'sans-serif';
+        }
+
+        /* Ensure main content area is properly aligned */
+        [dir="rtl"] main,
+        .rtl main {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust navigation bar layout */
+        [dir="rtl"] nav .flex.justify-between,
+        .rtl nav .flex.justify-between {
+            flex-direction: row-reverse !important;
+        }
+
+        [dir="rtl"] nav .hidden.md\:flex.items-center.space-x-4,
+        .rtl nav .hidden.md\:flex.items-center.space-x-4 {
+            flex-direction: row-reverse !important;
+        }
+
+        /* Adjust flex layout for RTL */
+        [dir="rtl"] .flex,
+        .rtl .flex {
+            flex-direction: row-reverse !important;
+        }
+
+        [dir="rtl"] .flex.items-center.space-x-2,
+        .rtl .flex.items-center.space-x-2 {
+            flex-direction: row-reverse !important;
+        }
+
+        /* Adjust space between elements for RTL */
+        [dir="rtl"] .space-x-2 > * + *,
+        .rtl .space-x-2 > * + * {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+
+        /* Adjust form elements for RTL */
+        [dir="rtl"] input,
+        [dir="rtl"] select,
+        [dir="rtl"] textarea,
+        [dir="rtl"] form input,
+        [dir="rtl"] form select,
+        [dir="rtl"] form textarea,
+        .rtl input,
+        .rtl select,
+        .rtl textarea,
+        .rtl form input,
+        .rtl form select,
+        .rtl form textarea {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust table styles for RTL */
+        [dir="rtl"] table,
+        .rtl table {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        [dir="rtl"] table th,
+        [dir="rtl"] table td,
+        .rtl table th,
+        .rtl table td {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        [dir="rtl"] table th:first-child,
+        [dir="rtl"] table td:first-child,
+        .rtl table th:first-child,
+        .rtl table td:first-child {
+            border-right: none !important;
+            border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Adjust button styles for RTL */
+        [dir="rtl"] button,
+        .rtl button {
+            text-align: right !important;
+        }
+
+        /* Adjust button icon positioning for RTL */
+        [dir="rtl"] button i,
+        .rtl button i {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+
+        /* Adjust modal and navigation content */
+        [dir="rtl"] .mobile-nav-content,
+        [dir="rtl"] .modal-content,
+        .rtl .mobile-nav-content,
+        .rtl .modal-content {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust dropdown menu for RTL */
+        [dir="rtl"] select,
+        .rtl select {
+            background-position: left 0.75rem center !important;
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust card layout for RTL */
+        [dir="rtl"] .glass-card,
+        .rtl .glass-card {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust grid layouts for RTL */
+        [dir="rtl"] .stats-grid,
+        [dir="rtl"] .mobile-stats-grid,
+        .rtl .stats-grid,
+        .rtl .mobile-stats-grid {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Ensure Arabic displays correctly on all devices */
+        @media (max-width: 768px) {
+            [dir="rtl"] body,
+            .rtl body {
+                text-align: right !important;
+                direction: rtl !important;
+                font-family: 'Arial', 'Tahoma', 'sans-serif' !important;
+            }
+        }
+
+        /* Enhanced RTL styles specifically for the main element and its children */
+        [dir="rtl"] main,
+        .rtl main {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* All elements inside main should be right-aligned for RTL */
+        [dir="rtl"] main *,
+        .rtl main * {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust flex layout within the main content area */
+        [dir="rtl"] main .flex,
+        .rtl main .flex {
+            flex-direction: row-reverse !important;
+        }
+
+        /* Ensure main content text alignment */
+        [dir="rtl"] main p,
+        [dir="rtl"] main h2,
+        [dir="rtl"] main h3,
+        [dir="rtl"] main h4,
+        [dir="rtl"] main span,
+        .rtl main p,
+        .rtl main h2,
+        .rtl main h3,
+        .rtl main h4,
+        .rtl main span {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust cards and statistical areas within main */
+        [dir="rtl"] main .glass-card,
+        .rtl main .glass-card {
+            text-align: right !important;
+            direction: rtl !important;
+        }
+
+        /* Adjust table layout within main */
+        [dir="rtl"] main table,
+        .rtl main table {
+            direction: rtl !important;
+        }
+
+        /* Adjust list items within main */
+        [dir="rtl"] main ul,
+        .rtl main ul {
+            padding-right: 1.5rem !important;
+            padding-left: 0 !important;
+            direction: rtl !important;
+        }
+
+        /* Ensure button icon positions are correct */
+        [dir="rtl"] main button i,
+        .rtl main button i {
+            margin-right: 0 !important;
+            margin-left: 0.5rem !important;
+        }
+
+        /* Final override to ensure all RTL styles are applied */
+        [dir="rtl"],
+        [dir="rtl"] *,
+        .rtl,
+        .rtl * {
+            text-align: right !important;
+            direction: rtl !important;
+        }
