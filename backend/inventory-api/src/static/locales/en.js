@@ -1,37 +1,37 @@
 window.enMessages = {
     notifications: {
-        barcodeError: 'Failed to generate barcode',
-        itemAdded: 'Item added',
-        itemUpdated: 'Item updated',
-        itemDeleted: 'Item deleted',
+        barcodeError: 'Barcode generation failed',
+        itemAdded: 'Item added successfully',
+        itemUpdated: 'Item updated successfully',
+        itemDeleted: 'Item deleted successfully',
         error: 'Operation failed. Please try again',
-        insufficientStock: 'Out of stock: {itemName}',
-        itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} left)',
+        insufficientStock: 'Insufficient stock: {itemName}',
+        itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} remaining)',
         itemFound: 'Item found',
         itemNotFound: 'Item not found',
         barcodeScanned: 'Barcode scanned successfully',
-        invalidImageType: 'Invalid image type. Please select an image file.',
+        invalidImageType: 'Invalid image format. Please select a valid image file.',
         processingImage: 'Processing image...',
-        noBarcodeFound: 'No barcode found in image',
-        imageProcessingError: 'Error processing image'
+        noBarcodeFound: 'No barcode detected in the image',
+        imageProcessingError: 'Failed to process image'
     },
     alerts: {
-        lowStock: 'Low Stock',
-        lowStockMessage: 'Only {quantity} {unit} of {item} left',
-        expired: 'Expired',
+        lowStock: 'Low Stock Alert',
+        lowStockMessage: 'Only {quantity} {unit} of {item} remaining',
+        expired: 'Expired Item',
         expiredMessage: '{item} expired {days} days ago',
         expiringSoon: 'Expiring Soon',
-        expiringSoonMessage: '{item} expires in {days} days'
+        expiringSoonMessage: '{item} will expire in {days} days'
     },
     recommendations: {
         restock: 'Restock {item}',
-        restockReason: 'Current stock: {quantity} {unit} (min: {minQuantity} {unit})',
+        restockReason: 'Current stock: {quantity} {unit} (minimum: {minQuantity} {unit})',
         popular: 'Popular Item',
         popularReason: '{item} is frequently used',
         watch: 'Monitor {item}',
-        watchReason: 'Used {count} times in past 30 days',
+        watchReason: 'Used {count} times in the past 30 days',
         consider: 'Restock {item}',
-        considerReason: 'Most used in {category} ({count} times)'
+        considerReason: 'Most used item in {category} ({count} times)'
     },
     app: {
         title: 'Smart Home Inventory'
@@ -45,24 +45,24 @@ window.enMessages = {
         language: 'Language'
     },
     purchaseList: {
-        description: 'Items to restock based on low inventory',
-        totalItems: 'Items to Buy',
+        description: 'Items to restock based on current inventory levels',
+        totalItems: 'Items to Purchase',
         currentQuantity: 'Current Qty',
         minQuantity: 'Min Stock',
         suggestedQuantity: 'Suggested Qty',
         unit: 'Unit',
         lastUsed: 'Last Used',
-        refresh: 'Update List'
+        refresh: 'Refresh List'
     },
     inventory: {
         title: 'Inventory',
         search: 'Search items...',
         allCategories: 'All Categories',
-        name: 'Item',
+        name: 'Item Name',
         category: 'Category',
-        quantity: 'Qty',
+        quantity: 'Quantity',
         unit: 'Unit',
-        expiryDate: 'Expiry',
+        expiryDate: 'Expiry Date',
         status: 'Status',
         actions: 'Actions',
         scanBarcode: 'Scan Barcode'
@@ -82,13 +82,13 @@ window.enMessages = {
         categories: 'Categories'
     },
     add: {
-        title: 'Add Item',
+        title: 'Add New Item',
         editTitle: 'Edit Item',
         name: 'Item Name',
         category: 'Category',
         quantity: 'Quantity',
         unit: 'Unit',
-        minQuantity: 'Min Stock',
+        minQuantity: 'Minimum Stock',
         expiryDate: 'Expiry Date',
         description: 'Description',
         selectCategory: 'Select Category',
@@ -108,10 +108,10 @@ window.enMessages = {
         stopScan: 'Stop Scan',
         browserNotSupported: 'Browser does not support camera access',
         cameraPermissionDenied: 'Camera permission denied',
-        noCameraFound: 'No camera found',
-        cameraInUse: 'Camera is in use by another application',
+        noCameraFound: 'No camera detected',
+        cameraInUse: 'Camera is currently in use by another application',
         scan: 'Scan',
-        orUploadImage: 'Or upload image',
+        orUploadImage: 'Or upload an image',
         uploadImage: 'Upload Image'
     },
     analytics: {
