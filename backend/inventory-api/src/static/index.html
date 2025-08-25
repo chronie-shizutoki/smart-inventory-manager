@@ -473,7 +473,7 @@
                                             {{ $t('add.barcode') }}
                                         </label>
                                         <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <input v-model="form.barcode" type="text" placeholder="{{ $t('add.enterBarcode') }}" class="col-span-1 md:col-span-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect" :aria-label="$t('add.enterBarcode')">
+                                            <input v-model="form.barcode" type="text" :placeholder="$t('add.enterBarcode')" class="col-span-1 md:col-span-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect" :aria-label="$t('add.enterBarcode')">
                                             <button type="button" @click="generateBarcode" class="col-span-1 md:col-span-1 px-3 py-2 bg-green-600/90 text-white rounded-md hover:bg-green-700 glass-button text-sm md:text-base flex items-center justify-center">
                                                 {{ $t('add.generateBarcode') }}
                                             </button>

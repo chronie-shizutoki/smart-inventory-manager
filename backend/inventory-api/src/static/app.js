@@ -100,7 +100,7 @@ function updateScannerModalTranslations() {
     const inputElements = document.querySelectorAll('input[aria-label*="输入条形码或生成一个"]');
     inputElements.forEach(input => {
         input.placeholder = i18n.global.t('add.enterBarcode');
-        input.setAttribute('aria-label', i18n.global.t('add.enterBarcodeAriaLabel'));
+        input.setAttribute('aria-label', i18n.global.t('add.enterBarcode'));
     });
 
     // 确保label元素的翻译正确
