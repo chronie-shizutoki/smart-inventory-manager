@@ -6,14 +6,18 @@ const messages = {
     en: window.enMessages,
     es: window.esMessages,
     fr: window.frMessages,
+    fa: window.faMessages,
     hi: window.hiMessages,
     id: window.idMessages,
+    it: window.itMessages,
     ja: window.jaMessages,
+    ko: window.koMessages,
     pt: window.ptMessages,
     ru: window.ruMessages,
     ta: window.taMessages,
     th: window.thMessages,
     tr: window.trMessages,
+    ur: window.urMessages,
     vi: window.viMessages,
     'zh-CN': window.zhCNMessages,
     'zh-TW': window.zhTWMessages
@@ -114,7 +118,7 @@ updateDocumentTitle();
 updateScannerModalTranslations();
 
 // RTL语言列表
-const rtlLanguages = ['ar'];
+const rtlLanguages = ['ar', 'fa', 'ur'];
 
 // 更新文档的文本方向
 function updateDocumentDirection(locale) {
