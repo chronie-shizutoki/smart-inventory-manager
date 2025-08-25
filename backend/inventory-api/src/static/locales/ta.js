@@ -1,118 +1,118 @@
 window.taMessages = {
     notifications: {
-        barcodeError: 'பார்கோடு உருவாக்கத்தில் குற்றம்',
-        itemAdded: 'உருப்படி சேர்க்கப்பட்டது',
-        itemUpdated: 'உருப்படி புதுப்பிக்கப்பட்டது',
-        itemDeleted: 'உருப்படி நீக்கப்பட்டது',
-        error: 'செயல் தோல்வியடைந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்',
-        insufficientStock: 'சங்கிலியை முடிந்துவிட்டது: {itemName}',
-        itemUsedSuccessfully: '{itemName} 1 {unit} பயன்படுத்தப்பட்டது ({quantity} {unit} மீதமுள்ளவை)',
-        itemFound: 'உருப்படி கண்டறியப்பட்டது',
-        itemNotFound: 'உருப்படி கண்டறிய முடியவில்லை',
-        barcodeScanned: 'பார்கோடு வெற்றிகரமாக ஸ்கேன் செய்யப்பட்டது',
-        invalidImageType: 'செல்லுபடியற்ற பட வகை. தயவுசெய்து ஒரு பட கோப்பைத் தேர்வுசெய்க.',
-        processingImage: 'பட செயலாக்கம் நடைபெறுகிறது...',
-        noBarcodeFound: 'படத்தில் பார்கோடு எதுவும் கண்டறியப்படவில்லை',
+        barcodeError: 'பார்கோடு உருவாக்கத்தில் பிழை', // More common word for "Error"
+        itemAdded: 'பொருள் சேர்க்கப்பட்டது', // "Item" is more commonly translated as பொருள்
+        itemUpdated: 'பொருள் புதுப்பிக்கப்பட்டது',
+        itemDeleted: ' பொருள் நீக்கப்பட்டது',
+        error: 'செயல் தோல்வியடைந்தது. தயவு செய்து மீண்டும் முயற்சிக்கவும்.', // Added punctuation
+        insufficientStock: 'போதிய பங்கு இல்லை: {itemName}', // More accurate translation for "Insufficient Stock"
+        itemUsedSuccessfully: '{itemName} 1 {unit} பயன்படுத்தப்பட்டது (மீதம் {quantity} {unit})', // More natural phrasing
+        itemFound: 'பொருள் கண்டறியப்பட்டது',
+        itemNotFound: 'பொருள் கண்டறியப்படவில்லை',
+        barcodeScanned: 'பார்கோடு வெற்றிகரமாக ஸ்கேன் செய்யப்பட்டது', // Corrected spelling
+        invalidImageType: 'செல்லாத பட வகை. தயவு செய்து ஒரு படக் கோப்பைத் தேர்ந்தெடுக்கவும்.', // More natural phrasing
+        processingImage: 'படம் செயலாக்கப்படுகிறது...', // More natural phrasing
+        noBarcodeFound: 'படத்தில் பார்கோடு எதுவும் காணப்படவில்லை', // More natural phrasing
         imageProcessingError: 'பட செயலாக்கத்தில் பிழை'
     },
     alerts: {
-        lowStock: 'குறைந்த ஸ்டாக்',
-        lowStockMessage: '{item} இலிருந்து மাত్రమ் {quantity} {unit} மீதமுள்ளவை',
-        expired: 'காலம் நிறைந்துவிட்டது',
-        expiredMessage: '{item} {days} நாட்களுக்கு முன்பு காலம் நிறைந்துவிட்டது',
-        expiringSoon: '곧 காலம் நிறையும்',
-        expiringSoonMessage: '{item} {days} நாட்களுக்குள் காலம் நிறையும்'
+        lowStock: 'குறைந்த பங்கு', // Using consistent term for "Stock"
+        lowStockMessage: '{item} இல் {quantity} {unit} மட்டுமே மீதம் உள்ளது', // More natural phrasing
+        expired: 'காலாவதியானது',
+        expiredMessage: '{item} {days} நாட்களுக்கு முன்பு காலாவதியானது', // More natural phrasing
+        expiringSoon: 'விரைவில் காலாவதியாகும்',
+        expiringSoonMessage: '{item} {days} நாட்களில் காலாவதியாகும்' // More natural phrasing
     },
     recommendations: {
-        restock: '{item} மீட்டெடுக்கவும்',
-        restockReason: 'தற்போதைய ஸ்டாக்: {quantity} {unit} (சிறிய அளவு: {minQuantity} {unit})',
-        popular: 'பிரபலமான உருப்படி',
-        popularReason: '{item} அடிக்கடி பயன்படுத்தப்படுகிறது',
-        watch: '{item} கண்காணிக்கவும்',
+        restock: '{item} - மீள் சேமிப்பு செய்ய பரிந்துரைக்கப்படுகிறது', // Clearer recommendation
+        restockReason: 'தற்போதைய பங்கு: {quantity} {unit} (குறைந்தபட்ச அளவு: {minQuantity} {unit})', // Using consistent term for "Stock"
+        popular: 'பிரபலமான பொருள்',
+        popularReason: 'இந்த {item} அடிக்கடி பயன்படுத்தப்படுகிறது', // Slightly more natural
+        watch: '{item} - கண்காணிக்க பரிந்துரைக்கப்படுகிறது', // Clearer recommendation
         watchReason: 'கடந்த 30 நாட்களில் {count} முறை பயன்படுத்தப்பட்டது',
-        consider: '{item} மீட்டெடுக்க பரிந்துரைக்கப்படுகிறது',
-        considerReason: '{category} வகையில் மிகவும் பயன்படுத்தப்படுகிறது ({count} முறை)'
+        consider: '{item} - மீள் சேமிப்பு செய்ய பரிந்துரைக்கப்படுகிறது', // Reused restock translation for consistency
+        considerReason: '{category} வகையில் அதிகமாக பயன்படுத்தப்படும் பொருள் ({count} முறை)' // More natural phrasing
     },
     app: {
-        title: 'ஸ்மார்ட் ஹோம் சரக்கு நிலக்கை'
+        title: 'ஸ்மார்ட் வீட்டு இருப்பு மேலாண்மை' // "Inventory Management" is more accurate
     },
     nav: {
-        inventory: 'சரக்கு நிலக்கை',
-        add: 'உருப்படி சேர்க்க',
-        analytics: ' பகுப்பாய்வு',
-        purchaseList: 'கொள்முதல் பட்டியல்',
-        menu: 'மெனு',
+        inventory: 'இருப்பு', // Short and common for "Inventory"
+        add: 'பொருள் சேர்',
+        analytics: 'பகுப்பாய்வு',
+        purchaseList: 'வாங்கும் பட்டியல்', // More common term for "Purchase"
+        menu: 'பட்டி',
         language: 'மொழி'
     },
     purchaseList: {
-        description: 'குறைந்த ஸ்டாக்கின் அடிப்படையில் மீட்டெடுக்க வேண்டிய உருப்படிகள்',
-        totalItems: '采購할 항목',
+        description: 'குறைந்த பங்கு அடிப்படையில் மீள் சேமிப்பு செய்ய வேண்டிய பொருட்கள்', // More accurate
+        totalItems: 'வாங்க வேண்டிய மொத்த பொருட்கள்', // Corrected translation
         currentQuantity: 'தற்போதைய அளவு',
-        minQuantity: 'சிறிய அளவு ஸ்டாக்',
-        suggestedQuantity: ' பரிந்துரைக்கப்பட்ட அளவு',
+        minQuantity: 'குறைந்தபட்ச அளவு',
+        suggestedQuantity: 'பரிந்துரைக்கப்பட்ட அளவு',
         unit: 'அலகு',
-        lastUsed: 'கடைசி பயன்பாடு',
-        refresh: 'பட்டியலை புதுப்பிக்கவும்'
+        lastUsed: 'கடைசியாக பயன்படுத்திய தேதி', // Added "Date" for clarity
+        refresh: 'பட்டியலைப் புதுப்பிக்கவும்'
     },
     inventory: {
-        title: 'சரக்கு நிலக்கை',
-        search: 'உருப்படிகளை தேடுங்கள்...',
+        title: 'இருப்பு',
+        search: 'பொருட்களை தேடு...',
         allCategories: 'அனைத்து வகைகளும்',
-        name: 'உருப்படி',
+        name: 'பொருள்',
         category: 'வகை',
         quantity: 'அளவு',
         unit: 'அலகு',
         expiryDate: 'காலாவதி தேதி',
         status: 'நிலை',
         actions: 'செயல்கள்',
-        scanBarcode: 'பார்கோடு ஸ்கேன் செய்யுங்கள்'
+        scanBarcode: 'பார்கோடு ஸ்கேன் செய்'
     },
     categories: {
         food: 'உணவு',
         medicine: 'மருந்து',
         cleaning: 'சுத்தம் செய்யும் பொருட்கள்',
         personal: 'தனிப்பட்ட பராமரிப்பு',
-        household: 'வீட்டு உபகரணங்கள்',
-        electronics: 'எலெக்ட்ரானிக்ஸ்'
+        household: 'வீட்டு உபயோக பொருட்கள்', // More common term
+        electronics: 'மின்னணு பொருட்கள்' // More common term
     },
     stats: {
-        totalItems: 'மொத்த உருப்படிகள்',
-        lowStock: 'குறைந்த ஸ்டாக்',
-        expiringSoon: '곧 காலம் நிறையும்',
+        totalItems: 'மொத்த பொருட்கள்',
+        lowStock: 'குறைந்த பங்கு',
+        expiringSoon: 'விரைவில் காலாவதியாகும்',
         categories: 'வகைகள்'
     },
     add: {
-        title: 'உருப்படி சேர்க்க',
-        editTitle: 'உருப்படி சửa chữaு செய்யுங்கள்',
-        name: 'உருப்படியின் பெயர்',
+        title: 'பொருள் சேர்',
+        editTitle: 'பொருளை திருத்து', // More common word for "Edit"
+        name: 'பொருளின் பெயர்',
         category: 'வகை',
         quantity: 'அளவு',
         unit: 'அலகு',
-        minQuantity: 'சிறிய அளவு ஸ்டாக்',
+        minQuantity: 'குறைந்தபட்ச அளவு',
         expiryDate: 'காலாவதி தேதி',
         description: 'விளக்கம்',
-        selectCategory: 'வகையைத் தேர்வுசெய்க',
-        cancel: 'ரத்து செய்யுங்கள்',
-        save: 'சேமிக்கவும்',
+        selectCategory: 'வகையை தேர்ந்தெடுக்கவும்',
+        cancel: 'ரத்து செய்',
+        save: 'சேமி',
         update: 'புதுப்பிக்கவும்',
         barcode: 'பார்கோடு',
         barcodeType: 'பார்கோடு வகை',
         enterBarcode: 'பார்கோடு உள்ளிடவும் அல்லது புதிதாக உருவாக்கவும்',
-        generateBarcode: 'உருவாக்கவும்',
-        barcodePreview: 'பார்கோடு முன்னோட்டம்',
+        generateBarcode: 'பார்கோடு உருவாக்கு',
+        barcodePreview: 'பார்கோடு தோரணை',
         ean13: 'EAN-13',
         upca: 'UPC-A',
-        scanBarcodeMessage: 'பிரேமின் உள்ளே பார்கோட்டை சீரமைக்கவும்',
-        positionBarcode: 'ஸ்கேன் பகுதியின் உள்ளே பார்கோட்டை நிலைநிறுத்தவும்',
-        startScan: 'ஸ்கேன் தொடங்கவும்',
-        stopScan: 'ஸ்கேன் நிறுத்தவும்',
-        browserNotSupported: 'உலாவி கேமரா அணுகலை ஆதரிக்கவில்லை',
+        scanBarcodeMessage: 'பார்கோடை சட்டத்திற்குள் வைக்கவும்', // More intuitive instruction
+        positionBarcode: 'ஸ்கேன் பகுதிக்குள் பார்கோட்டை நிலைநிறுத்தவும்',
+        startScan: 'ஸ்கேன் தொடங்கு',
+        stopScan: 'ஸ்கேன் நிறுத்து',
+        browserNotSupported: 'உலாவி கேமரா அணுகலை ஆதரிக்காது',
         cameraPermissionDenied: 'கேமரா அனுமதி மறுக்கப்பட்டது',
-        noCameraFound: 'கேமரா எதுவும் கண்டறியப்படவில்லை',
-        cameraInUse: 'கேமரா மற்ற பயன்பாடுகளால் பயன்படுத்தப்படுகிறது',
-        scan: 'ஸ்கேன் செய்யுங்கள்',
-        orUploadImage: 'அல்லது பட আপ్లோடு செய்யுங்கள்',
-        uploadImage: 'பட আপ్లோடு செய்யுங்கள்'
+        noCameraFound: 'கேமரா எதுவும் காணப்படவில்லை',
+        cameraInUse: 'கேமரா பிற செயலிகளால் பயன்படுத்தப்படுகிறது', // Slightly more natural
+        scan: 'ஸ்கேன் செய்',
+        orUploadImage: 'அல்லது படத்தை பதிவேற்று', // Corrected word
+        uploadImage: 'படத்தை பதிவேற்று' // Corrected word
     },
     analytics: {
         title: 'பகுப்பாய்வு',
@@ -120,9 +120,9 @@ window.taMessages = {
         smartRecommendations: 'ஸ்மார்ட் பரிந்துரைகள்'
     },
     status: {
-        normal: 'சாதாரணமானது',
-        lowStock: 'குறைந்த ஸ்டாக்',
-        expiringSoon: '곧 காலம் நிறையும்',
-        expired: 'காலம் நிறைந்துவிட்டது'
+        normal: 'இயல்பான', // More natural adjective
+        lowStock: 'குறைந்த பங்கு',
+        expiringSoon: 'விரைவில் காலாவதியாகும்',
+        expired: 'காலாவதியானது'
     }
 };

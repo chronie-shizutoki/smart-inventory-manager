@@ -4,40 +4,40 @@ window.ptMessages = {
         itemAdded: 'Item adicionado',
         itemUpdated: 'Item atualizado',
         itemDeleted: 'Item excluído',
-        error: 'Operação falhou. Por favor, tente novamente',
-        insufficientStock: 'Sem estoque: {itemName}',
-        itemUsedSuccessfully: 'Usado 1 {unit} de {itemName} ({quantity} {unit} restantes)',
+        error: 'Falha na operação. Tente novamente',
+        insufficientStock: 'Estoque insuficiente: {itemName}',
+        itemUsedSuccessfully: 'Utilizado 1 {unit} de {itemName} ({quantity} {unit} restantes)',
         itemFound: 'Item encontrado',
         itemNotFound: 'Item não encontrado',
-        barcodeScanned: 'Código de barras escaneado com sucesso',
+        barcodeScanned: 'Código de barras escaneado',
         invalidImageType: 'Tipo de imagem inválido. Selecione um arquivo de imagem.',
         processingImage: 'Processando imagem...',
         noBarcodeFound: 'Nenhum código de barras encontrado na imagem',
-        imageProcessingError: 'Erro ao processar imagem'
+        imageProcessingError: 'Erro no processamento da imagem'
     },
     alerts: {
         lowStock: 'Estoque baixo',
         lowStockMessage: 'Apenas {quantity} {unit} de {item} restantes',
         expired: 'Expirado',
         expiredMessage: '{item} expirou há {days} dias',
-        expiringSoon: 'Expirando em breve',
+        expiringSoon: 'A expirar em breve',
         expiringSoonMessage: '{item} expira em {days} dias'
     },
     recommendations: {
         restock: 'Reabastecer {item}',
         restockReason: 'Estoque atual: {quantity} {unit} (mín: {minQuantity} {unit})',
         popular: 'Item popular',
-        popularReason: '{item} é frequentemente usado',
-        watch: 'Monitorar {item}',
-        watchReason: 'Usado {count} vezes nos últimos 30 dias',
+        popularReason: '{item} é utilizado frequentemente',
+        watch: 'Monitorizar {item}',
+        watchReason: 'Utilizado {count} vezes nos últimos 30 dias',
         consider: 'Reabastecer {item}',
-        considerReason: 'Mais usado em {category} ({count} vezes)'
+        considerReason: 'Mais utilizado em {category} ({count} vezes)'
     },
     app: {
-        title: 'Controle de Estoque Inteligente'
+        title: 'Gestão Inteligente de Stock'
     },
     nav: {
-        inventory: 'Estoque',
+        inventory: 'Inventário',
         add: 'Adicionar Item',
         analytics: 'Análises',
         purchaseList: 'Lista de Compras',
@@ -45,40 +45,40 @@ window.ptMessages = {
         language: 'Idioma'
     },
     purchaseList: {
-        description: 'Itens para reabastecer com base no baixo estoque',
+        description: 'Itens para reabastecer com base no stock baixo',
         totalItems: 'Itens para Comprar',
-        currentQuantity: 'Qtde Atual',
-        minQuantity: 'Estoque Mínimo',
-        suggestedQuantity: 'Qtde Sugerida',
+        currentQuantity: 'Quantidade Atual',
+        minQuantity: 'Stock Mínimo',
+        suggestedQuantity: 'Quantidade Sugerida',
         unit: 'Unidade',
-        lastUsed: 'Último Uso',
+        lastUsed: 'Última Utilização',
         refresh: 'Atualizar Lista'
     },
     inventory: {
-        title: 'Estoque',
+        title: 'Inventário',
         search: 'Pesquisar itens...',
         allCategories: 'Todas as Categorias',
         name: 'Item',
         category: 'Categoria',
-        quantity: 'Qtde',
+        quantity: 'Quantidade',
         unit: 'Unidade',
         expiryDate: 'Validade',
-        status: 'Status',
+        status: 'Estado',
         actions: 'Ações',
-        scanBarcode: 'Escanear Código de Barras'
+        scanBarcode: 'Ler Código de Barras'
     },
     categories: {
-        food: 'Alimentos',
+        food: 'Alimentação',
         medicine: 'Medicamentos',
-        cleaning: 'Produtos de Limpeza',
-        personal: 'Cuidados Pessoais',
-        household: 'Itens Domésticos',
-        electronics: 'Eletrônicos'
+        cleaning: 'Limpeza',
+        personal: 'Higiene Pessoal',
+        household: 'Artigos Domésticos',
+        electronics: 'Eletrónicos'
     },
     stats: {
         totalItems: 'Total de Itens',
-        lowStock: 'Estoque Baixo',
-        expiringSoon: 'Expirando em Breve',
+        lowStock: 'Stock Baixo',
+        expiringSoon: 'A Expirar Brevemente',
         categories: 'Categorias'
     },
     add: {
@@ -88,31 +88,31 @@ window.ptMessages = {
         category: 'Categoria',
         quantity: 'Quantidade',
         unit: 'Unidade',
-        minQuantity: 'Estoque Mínimo',
+        minQuantity: 'Stock Mínimo',
         expiryDate: 'Data de Validade',
         description: 'Descrição',
         selectCategory: 'Selecionar Categoria',
         cancel: 'Cancelar',
-        save: 'Salvar',
+        save: 'Guardar',
         update: 'Atualizar',
         barcode: 'Código de Barras',
         barcodeType: 'Tipo de Código de Barras',
-        enterBarcode: 'Digite o código de barras ou gere um',
+        enterBarcode: 'Introduza o código de barras ou gere um',
         generateBarcode: 'Gerar',
         barcodePreview: 'Pré-visualização do Código de Barras',
         ean13: 'EAN-13',
         upca: 'UPC-A',
-        scanBarcodeMessage: 'Alinhe o código de barras dentro do quadro',
-        positionBarcode: 'Posicione o código de barras dentro da área de varredura',
-        startScan: 'Iniciar Varredura',
-        stopScan: 'Parar Varredura',
-        browserNotSupported: 'Navegador não suporta acesso à câmera',
-        cameraPermissionDenied: 'Permissão de câmera negada',
-        noCameraFound: 'Nenhuma câmera encontrada',
-        cameraInUse: 'Câmera está em uso por outro aplicativo',
-        scan: 'Escanear',
-        orUploadImage: 'Ou faça upload de imagem',
-        uploadImage: 'Enviar Imagem'
+        scanBarcodeMessage: 'Posicione o código de barras no quadro',
+        positionBarcode: 'Posicione o código de barras na área de leitura',
+        startScan: 'Iniciar Leitura',
+        stopScan: 'Parar Leitura',
+        browserNotSupported: 'Navegador não suporta acesso à câmara',
+        cameraPermissionDenied: 'Permissão de câmara negada',
+        noCameraFound: 'Nenhuma câmara encontrada',
+        cameraInUse: 'Câmara está a ser utilizada por outra aplicação',
+        scan: 'Ler',
+        orUploadImage: 'Ou carregue uma imagem',
+        uploadImage: 'Carregar Imagem'
     },
     analytics: {
         title: 'Análises',
@@ -121,8 +121,8 @@ window.ptMessages = {
     },
     status: {
         normal: 'Normal',
-        lowStock: 'Estoque Baixo',
-        expiringSoon: 'Expirando em Breve',
+        lowStock: 'Stock Baixo',
+        expiringSoon: 'A Expirar Brevemente',
         expired: 'Expirado'
     }
 };

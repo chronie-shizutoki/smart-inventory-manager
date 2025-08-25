@@ -1,43 +1,43 @@
 window.ruMessages = {
     notifications: {
-        barcodeError: 'Ошибка при генерации штрих-кода',
+        barcodeError: 'Ошибка генерации штрих-кода',
         itemAdded: 'Товар добавлен',
-        itemUpdated: 'Товар обновлен',
-        itemDeleted: 'Товар удален',
-        error: 'Операция не удалась. Пожалуйста, повторите попытку',
+        itemUpdated: 'Товар обновлён',
+        itemDeleted: 'Товар удалён',
+        error: 'Не удалось выполнить операцию. Пожалуйста, попробуйте ещё раз',
         insufficientStock: 'Нет в наличии: {itemName}',
-        itemUsedSuccessfully: 'Использовано 1 {unit} из {itemName} (осталось {quantity} {unit})',
+        itemUsedSuccessfully: 'Использовано 1 {unit} {itemName} (осталось {quantity} {unit})',
         itemFound: 'Товар найден',
         itemNotFound: 'Товар не найден',
-        barcodeScanned: 'Штрих-код успешно просканирован',
-        invalidImageType: 'Неверный тип изображения. Пожалуйста, выберите файл изображения.',
-        processingImage: 'Обработка изображения...',
-        noBarcodeFound: 'Штрих-код не найден на изображении',
-        imageProcessingError: 'Ошибка при обработке изображения'
+        barcodeScanned: 'Штрих-код успешно отсканирован',
+        invalidImageType: 'Недопустимый формат изображения. Выберите файл изображения.',
+        processingImage: 'Обрабатываем изображение...',
+        noBarcodeFound: 'На изображении не найден штрих-код',
+        imageProcessingError: 'Ошибка обработки изображения'
     },
     alerts: {
         lowStock: 'Низкий запас',
-        lowStockMessage: 'Осталось только {quantity} {unit} из {item}',
-        expired: 'Срок годности истек',
-        expiredMessage: '{item} истек {days} дней назад',
-        expiringSoon: 'Срок годности истекает скоро',
-        expiringSoonMessage: '{item} истекает через {days} дней'
+        lowStockMessage: 'Осталось всего {quantity} {unit} {item}',
+        expired: 'Срок годности истёк',
+        expiredMessage: 'Срок годности {item} истёк {days} дней назад',
+        expiringSoon: 'Скоро истечёт срок годности',
+        expiringSoonMessage: 'Срок годности {item} истечёт через {days} дней'
     },
     recommendations: {
-        restock: 'Пополнить запас {item}',
+        restock: 'Пополните запасы {item}',
         restockReason: 'Текущий запас: {quantity} {unit} (минимум: {minQuantity} {unit})',
         popular: 'Популярный товар',
         popularReason: '{item} часто используется',
-        watch: 'Отслеживать {item}',
+        watch: 'Следите за {item}',
         watchReason: 'Использовался {count} раз за последние 30 дней',
-        consider: 'Пополнить запас {item}',
-        considerReason: 'Самый часто используемый в категории {category} ({count} раз)'
+        consider: 'Рекомендуем пополнить {item}',
+        considerReason: 'Самый используемый в категории «{category}» ({count} раз)'
     },
     app: {
-        title: 'Умное домашнее хранение'
+        title: 'Умный домашний склад'
     },
     nav: {
-        inventory: 'Склад',
+        inventory: 'Инвентарь',
         add: 'Добавить товар',
         analytics: 'Аналитика',
         purchaseList: 'Список покупок',
@@ -45,8 +45,8 @@ window.ruMessages = {
         language: 'Язык'
     },
     purchaseList: {
-        description: 'Товары для пополнения запасов на основе низких запасов',
-        totalItems: 'Товары для покупки',
+        description: 'Товары для пополнения запасов на основе низкого остатка',
+        totalItems: 'Товаров к покупке',
         currentQuantity: 'Текущее количество',
         minQuantity: 'Минимальный запас',
         suggestedQuantity: 'Рекомендуемое количество',
@@ -55,30 +55,30 @@ window.ruMessages = {
         refresh: 'Обновить список'
     },
     inventory: {
-        title: 'Склад',
+        title: 'Инвентарь',
         search: 'Поиск товаров...',
         allCategories: 'Все категории',
-        name: 'Товар',
+        name: 'Название',
         category: 'Категория',
         quantity: 'Кол-во',
         unit: 'Ед.',
-        expiryDate: 'Срок годности',
+        expiryDate: 'Годен до',
         status: 'Статус',
         actions: 'Действия',
         scanBarcode: 'Сканировать штрих-код'
     },
     categories: {
-        food: 'Еда',
-        medicine: 'Медикаменты',
-        cleaning: 'Моющие средства',
-        personal: 'Личная гигиена',
-        household: 'Домашние товары',
+        food: 'Продукты',
+        medicine: 'Лекарства',
+        cleaning: 'Чистящие средства',
+        personal: 'Гигиена',
+        household: 'Для дома',
         electronics: 'Электроника'
     },
     stats: {
-        totalItems: 'Общее количество товаров',
+        totalItems: 'Всего товаров',
         lowStock: 'Низкий запас',
-        expiringSoon: 'Срок годности истекает скоро',
+        expiringSoon: 'Скоро истечёт',
         categories: 'Категории'
     },
     add: {
@@ -97,21 +97,21 @@ window.ruMessages = {
         update: 'Обновить',
         barcode: 'Штрих-код',
         barcodeType: 'Тип штрих-кода',
-        enterBarcode: 'Введите штрих-код или сгенерируйте его',
+        enterBarcode: 'Введите или сгенерируйте штрих-код',
         generateBarcode: 'Сгенерировать',
         barcodePreview: 'Предпросмотр штрих-кода',
         ean13: 'EAN-13',
         upca: 'UPC-A',
-        scanBarcodeMessage: 'Выровняйте штрих-код в рамке',
+        scanBarcodeMessage: 'Расположите штрих-код в рамке',
         positionBarcode: 'Поместите штрих-код в область сканирования',
         startScan: 'Начать сканирование',
         stopScan: 'Остановить сканирование',
-        browserNotSupported: 'Браузер не поддерживает доступ к камере',
-        cameraPermissionDenied: 'Доступ к камере запрещен',
-        noCameraFound: 'Камера не найдена',
-        cameraInUse: 'Камера используется другой программой',
+        browserNotSupported: 'Браузер не поддерживает камеру',
+        cameraPermissionDenied: 'Доступ к камере запрещён',
+        noCameraFound: 'Камера не обнаружена',
+        cameraInUse: 'Камера используется другим приложением',
         scan: 'Сканировать',
-        orUploadImage: 'Или загрузить изображение',
+        orUploadImage: 'Или загрузите изображение',
         uploadImage: 'Загрузить изображение'
     },
     analytics: {
@@ -120,9 +120,9 @@ window.ruMessages = {
         smartRecommendations: 'Рекомендации'
     },
     status: {
-        normal: 'Нормальный',
-        lowStock: 'Низкий запас',
-        expiringSoon: 'Срок годности истекает скоро',
-        expired: 'Срок годности истек'
+        normal: 'В норме',
+        lowStock: 'Мало осталось',
+        expiringSoon: 'Скоро истечёт',
+        expired: 'Просрочен'
     }
 };
