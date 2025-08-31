@@ -574,12 +574,44 @@ const app = createApp({
                     const barcodeElement = document.getElementById('barcode');
                     if (barcodeElement) {
                         barcodeElement.innerHTML = '';
+                        
+                        // 检测是否为深色模式
+                        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                        
+                        // 根据模式设置不同的颜色
+                        const barcodeColor = isDarkMode ? '#ffffff' : '#000000';
+                        const textColor = isDarkMode ? '#ffffff' : '#000000';
+                        
+                        // 渲染条形码
                         JsBarcode(barcodeElement, this.form.barcode, {
                             format: this.barcodeType === 'ean13' ? 'EAN13' : 'UPC',
                             width: 2,
                             height: 100,
-                            displayValue: true
+                            displayValue: true,
+                            lineColor: barcodeColor,
+                            textColor: textColor,
+                            margin: 0,
+                            background: undefined // 不设置背景色，使其真正透明
                         });
+                        
+                        // 确保SVG元素本身没有fill属性或设置为none
+                        const svgElement = barcodeElement.querySelector('svg');
+                        if (svgElement) {
+                            svgElement.setAttribute('fill', 'none');
+                            svgElement.style.backgroundColor = 'transparent';
+                        }
+                        
+                        // 动态设置容器背景颜色以匹配深色模式
+                        const barcodeContainer = barcodeElement.parentElement;
+                        if (barcodeContainer) {
+                            if (isDarkMode) {
+                                barcodeContainer.classList.remove('bg-white');
+                                barcodeContainer.classList.add('bg-gray-800');
+                            } else {
+                                barcodeContainer.classList.remove('bg-gray-800');
+                                barcodeContainer.classList.add('bg-white');
+                            }
+                        }
                     }
                 } catch (error) {
                     console.error('Failed to render barcode:', error);
