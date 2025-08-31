@@ -1,0 +1,70 @@
+name: Deploy to GitHub Pages
+
+on:
+  # 在推送到main分支时触发部署
+  push:
+    branches: [ main ]
+  # 允许手动触发工作流
+  workflow_dispatch:
+
+# 设置GITHUB_TOKEN的权限，使其能够部署到GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 配置部署环境
+environment:
+  name: github-pages
+  url: ${{ steps.deployment.outputs.page_url }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 检出代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 设置Python环境
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # 安装依赖
+      - name: Install dependencies
+        run: |
+          cd backend/inventory-api
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 构建项目（如有必要）
+      - name: Build project
+        run: |
+          cd backend/inventory-api
+          # 这里可以添加构建命令，如果有的话
+          # 例如：python build.py
+
+      # 设置GitHub Pages部署
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 复制静态文件到部署目录
+      - name: Prepare static files
+        run: |
+          mkdir -p _site
+          cp -r backend/inventory-api/src/static/* _site/
+          # 如果有其他需要部署的文件，也可以复制过来
+
+      # 上传构建产物
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 上传整个_site目录
+          path: './_site'
+
+      # 部署到GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
