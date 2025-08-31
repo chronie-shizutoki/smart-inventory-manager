@@ -13,14 +13,13 @@ permissions:
   pages: write
   id-token: write
 
-# 配置部署环境
-environment:
-  name: github-pages
-  url: ${{ steps.deployment.outputs.page_url }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # 配置部署环境
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       # 检出代码
       - name: Checkout
