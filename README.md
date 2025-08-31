@@ -147,9 +147,14 @@ python src/main.py
 
 ### Inventory Management Interfaces
 - `GET /api/inventory/items` - Get the list of items
+- `GET /api/inventory/items/<int:item_id>` - Get details of a single item
 - `POST /api/inventory/items` - Create a new item
 - `PUT /api/inventory/items/{id}` - Update an item
 - `DELETE /api/inventory/items/{id}` - Delete an item
+- `GET /api/inventory/categories` - Get the list of categories
+- `POST /api/inventory/items/<int:item_id>/use` - Record item usage
+- `GET /api/inventory/items/generate-purchase-list` - Generate a purchase list
+- `POST /api/inventory/items/batch` - Batch operations (delete, update categories)
 - `GET /api/inventory/stats` - Get statistical data
 - `GET /api/inventory/alerts` - Get intelligent reminders
 - `GET /api/inventory/recommendations` - Get intelligent recommendations
