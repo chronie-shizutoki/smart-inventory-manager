@@ -606,9 +606,9 @@ const app = createApp({
                         if (barcodeContainer) {
                             if (isDarkMode) {
                                 barcodeContainer.classList.remove('bg-white');
-                                barcodeContainer.classList.add('bg-gray-800');
+                                barcodeContainer.classList.add('bg-gray-800', 'bg-opacity-70');
                             } else {
-                                barcodeContainer.classList.remove('bg-gray-800');
+                                barcodeContainer.classList.remove('bg-gray-800', 'bg-opacity-70');
                                 barcodeContainer.classList.add('bg-white');
                             }
                         }
