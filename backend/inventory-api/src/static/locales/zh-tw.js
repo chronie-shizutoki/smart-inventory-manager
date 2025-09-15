@@ -24,13 +24,14 @@ window.zhTWMessages = {
         expiringSoonMessage: '{item} 將在 {days} 天後過期'
     },
     recommendations: {
-        restock: '建議補充 {item}',
-        restockReason: '目前庫存：{quantity} {unit}（安全存量：{minQuantity} {unit}）',
-        popular: '常用物品',
-        popularReason: '{item} 使用頻率較高',
+        restock: '補貨 {item}',
+        restockReason: '目前庫存：{quantity} {unit}（最低：{minQuantity} {unit}）',
+        popular: '熱門物品',
+        popularReason: '{item} 使用頻率高',
         watch: '關注 {item}',
-        watchReason: '近 30 天使用 {count} 次',
-        consider: '建議考慮補充 {item}',
+        watchReason: '過去30天使用了 {count} 次',
+        freqUseReason: '過去30天使用了 {count} 次（目前庫存：{quantity} {unit}）',
+        consider: '建議補貨 {item}',
         considerReason: '在「{category}」類別中使用最多（{count} 次）'
     },
     app: {

@@ -142,80 +142,89 @@ const app = createApp({
     data() {
             return {
                 currentView: 'inventory',
-                currentLocale: i18n.global.locale,
-                searchQuery: '',
-                selectedCategory: '',
-                editingItem: null,
-                showMobileNav: false,
-                
-                // 表单数据
-                form: {
-                    name: '',
-                    category: '',
-                    quantity: 0,
-                    unit: '',
-                    minQuantity: 0,
-                    expiryDate: '',
-                    description: '',
-                    barcode: ''
-                },
-                barcodeType: 'ean13', // 默认条形码类型
-                
-                // 分类列表
-                categories: ['food', 'medicine', 'cleaning', 'personal', 'household', 'electronics'],
-                
-                // 库存数据
-                items: [
-                    {
-                        id: 1,
-                        name: '牛奶',
-                        category: 'food',
-                        quantity: 2,
-                        unit: '瓶',
-                        minQuantity: 1,
-                        expiryDate: '2025-02-15',
-                        description: '全脂牛奶',
-                        createdAt: new Date()
-                    },
-                    {
-                        id: 2,
-                        name: '感冒药',
-                        category: 'medicine',
-                        quantity: 1,
-                        unit: '盒',
-                        minQuantity: 2,
-                        expiryDate: '2025-12-31',
-                        description: '治疗感冒症状',
-                        createdAt: new Date()
-                    },
-                    {
-                        id: 3,
-                        name: '洗洁精',
-                        category: 'cleaning',
-                        quantity: 1,
-                        unit: '瓶',
-                        minQuantity: 1,
-                        expiryDate: '2026-01-01',
-                        description: '厨房清洁用品',
-                        createdAt: new Date()
-                    }
-                ],
-                
-                // 智能分析数据
-                smartAlerts: [],
-                smartRecommendations: [],
-                // 采购清单数据
-                purchaseList: [],
-                
-                // 通知系统
-                notification: {
-                    show: false,
-                    message: '',
-                    type: 'success'
-                },
-                
-                // 扫描目的
-                scanPurpose: 'locate' // 默认扫描目的为定位物品
+        currentLocale: i18n.global.locale,
+        searchQuery: '',
+        selectedCategory: '',
+        editingItem: null,
+        showMobileNav: false,
+        
+        // 表单数据
+        form: {
+            name: '',
+            category: '',
+            quantity: 0,
+            unit: '',
+            minQuantity: 0,
+            expiryDate: '',
+            description: '',
+            barcode: ''
+        },
+        barcodeType: 'ean13', // 默认条形码类型
+        
+        // AI表单数据
+        aiForm: {
+            apiKey: '',
+            images: []
+        },
+        
+        // 控制AI记录模态框显示
+        showAiRecordModal: false,
+        
+        // 分类列表
+        categories: ['food', 'medicine', 'cleaning', 'personal', 'household', 'electronics'],
+        
+        // 库存数据
+        items: [
+            {
+                id: 1,
+                name: '牛奶',
+                category: 'food',
+                quantity: 2,
+                unit: '瓶',
+                minQuantity: 1,
+                expiryDate: '2025-02-15',
+                description: '全脂牛奶',
+                createdAt: new Date()
+            },
+            {
+                id: 2,
+                name: '感冒药',
+                category: 'medicine',
+                quantity: 1,
+                unit: '盒',
+                minQuantity: 2,
+                expiryDate: '2025-12-31',
+                description: '治疗感冒症状',
+                createdAt: new Date()
+            },
+            {
+                id: 3,
+                name: '洗洁精',
+                category: 'cleaning',
+                quantity: 1,
+                unit: '瓶',
+                minQuantity: 1,
+                expiryDate: '2026-01-01',
+                description: '厨房清洁用品',
+                createdAt: new Date()
+            }
+        ],
+        
+        // 智能分析数据
+        smartAlerts: [],
+        smartRecommendations: [],
+        // 采购清单数据
+        purchaseList: [],
+        
+        // 通知系统
+        notification: {
+            show: false,
+            message: '',
+            type: 'success'
+        },
+        
+        // 扫描目的
+        scanPurpose: 'locate' // 默认扫描目的为定位物品
             };
         },
     
@@ -1024,6 +1033,151 @@ const app = createApp({
         navigateAndClose(view) {
             this.currentView = view;
             this.showMobileNav = false;
+        },
+
+        // AI记录功能相关方法
+        // 打开AI记录模态框
+        openAiRecordModal() {
+            this.showAiRecordModal = true;
+        },
+
+        // 关闭AI记录模态框
+        closeAiRecordModal() {
+            this.showAiRecordModal = false;
+        },
+
+        // 触发图片上传
+        triggerImageUpload() {
+            document.getElementById('ai-image-upload').click();
+        },
+
+        // 处理图片上传
+        handleAiImageUpload(event) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                // 检查文件类型
+                if (!file.type.startsWith('image/')) {
+                    this.showNotification(this.$t('notifications.invalidImageType'), 'error');
+                    continue;
+                }
+
+                // 创建图片预览
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.aiForm.images.push({
+                        id: Date.now() + i, // 生成唯一ID
+                        file: file,
+                        preview: e.target.result
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+            // 重置文件输入
+            event.target.value = '';
+        },
+
+        // 移除已上传的图片
+        removeAiImage(index) {
+            this.aiForm.images.splice(index, 1);
+        },
+
+        // 调用AI API生成记录
+        async generateRecordsFromAI() {
+            // 验证API Key和图片
+            if (!this.aiForm.apiKey) {
+                this.showNotification(this.$t('aiRecord.apiKeyRequired'), 'error');
+                return;
+            }
+
+            if (this.aiForm.images.length === 0) {
+                this.showNotification(this.$t('aiRecord.noImagesSelected'), 'error');
+                return;
+            }
+
+            // 显示加载通知
+            this.showNotification(this.$t('aiRecord.generatingRecords'), 'info');
+
+            // 创建FormData对象
+            const formData = new FormData();
+            formData.append('api_key', this.aiForm.apiKey);
+            
+            // 添加所有图片
+            this.aiForm.images.forEach((image) => {
+                formData.append('images', image.file);
+            });
+
+            try {
+                // 发送到服务器进行AI分析
+                console.log('Sending AI record generation request to /api/ai/generate-records');
+                const response = await fetch('/api/ai/generate-records', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.success && result.records && result.records.length > 0) {
+                    // 成功生成记录，添加到物品列表
+                    for (const record of result.records) {
+                        // 检查是否存在相同名称的物品
+                        const existingItem = this.items.find(item => 
+                            item.name.toLowerCase() === record.name.toLowerCase() && 
+                            item.category === record.category
+                        );
+
+                        if (existingItem) {
+                            // 更新现有物品的数量
+                            existingItem.quantity += record.quantity;
+                        } else {
+                            // 添加新物品
+                            this.items.push({
+                                id: Date.now() + Math.floor(Math.random() * 1000),
+                                name: record.name,
+                                category: record.category,
+                                quantity: record.quantity,
+                                unit: record.unit || '个',
+                                minQuantity: record.minQuantity || 1,
+                                expiryDate: record.expiryDate,
+                                barcode: record.barcode,
+                                description: record.description,
+                                created: new Date().toISOString(),
+                                updated: new Date().toISOString()
+                            });
+                        }
+                    }
+
+                    // 保存到API
+                    await this.saveData();
+                    
+                    // 清空表单
+                    this.aiForm.images = [];
+                    
+                    // 关闭模态框
+                    this.closeAiRecordModal();
+                    
+                    // 显示成功通知
+                    this.showNotification(
+                        `${this.$t('aiRecord.recordsGenerated')}: ${result.records.length}`, 
+                        'success'
+                    );
+                } else {
+                    this.showNotification(
+                        result.message || this.$t('aiRecord.failedToGenerate'), 
+                        'error'
+                    );
+                }
+            } catch (error) {
+                console.error('Error generating records from AI:', error);
+                this.showNotification(
+                    error.message || this.$t('notifications.serverError'), 
+                    'error'
+                );
+            }
         }
     },
     

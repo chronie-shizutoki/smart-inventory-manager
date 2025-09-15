@@ -24,13 +24,14 @@ window.zhCNMessages = {
         expiringSoonMessage: '{item} 将在 {days} 天后过期'
     },
     recommendations: {
-        restock: '建议补充 {item}',
-        restockReason: '当前库存：{quantity} {unit}（最低存量：{minQuantity} {unit}）',
-        popular: '常用物品',
-        popularReason: '{item} 使用频率较高',
+        restock: '补货 {item}',
+        restockReason: '当前库存：{quantity} {unit}（最低：{minQuantity} {unit}）',
+        popular: '热门物品',
+        popularReason: '{item} 使用频率高',
         watch: '关注 {item}',
-        watchReason: '近 30 天使用 {count} 次',
-        consider: '建议考虑补充 {item}',
+        watchReason: '过去30天使用了 {count} 次',
+        freqUseReason: '过去30天使用了 {count} 次（当前库存：{quantity} {unit}）',
+        consider: '建议补货 {item}',
         considerReason: '在「{category}」类别中使用最多（{count} 次）'
     },
     app: {
@@ -124,5 +125,20 @@ window.zhCNMessages = {
         lowStock: '库存不足',
         expiringSoon: '即将过期',
         expired: '已过期'
+    },
+    aiRecord: {
+        title: 'AI记录生成器',
+        description: '使用AI从图片快速生成库存记录',
+        apiKey: 'SiliconFlow API密钥',
+        apiKeyHint: '您可以从SiliconFlow控制台获取API密钥',
+        uploadImages: '上传图片',
+        dragDropOrClick: '拖拽文件至此处或点击上传',
+        supportedFormats: '支持JPG、PNG、WebP格式（最多10张）',
+        uploadedImages: '已上传图片',
+        generateRecords: '生成记录',
+        aiRecordButton: 'AI记录',
+        generating: '正在生成记录...',
+        success: '记录生成成功',
+        error: '记录生成失败'
     }
 };

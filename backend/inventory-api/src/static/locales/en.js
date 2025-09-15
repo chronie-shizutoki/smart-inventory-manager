@@ -30,6 +30,7 @@ window.enMessages = {
         popularReason: '{item} is frequently used',
         watch: 'Monitor {item}',
         watchReason: 'Used {count} times in the past 30 days',
+        freqUseReason: 'Used {count} times in the past 30 days (current stock: {quantity} {unit})',
         consider: 'Restock {item}',
         considerReason: 'Most used item in {category} ({count} times)'
     },
@@ -124,5 +125,20 @@ window.enMessages = {
         lowStock: 'Low Stock',
         expiringSoon: 'Expiring Soon',
         expired: 'Expired'
+    },
+    aiRecord: {
+        title: 'AI Record Generator',
+        description: 'Generate inventory records from images using AI',
+        apiKey: 'SiliconFlow API Key',
+        apiKeyHint: 'You can get your API key from SiliconFlow console',
+        uploadImages: 'Upload Images',
+        dragDropOrClick: 'Drag & drop files or click to upload',
+        supportedFormats: 'Supports JPG, PNG, WebP (max 10 images)',
+        uploadedImages: 'Uploaded Images',
+        generateRecords: 'Generate Records',
+        aiRecordButton: 'AI Record',
+        generating: 'Generating records...',
+        success: 'Records generated successfully',
+        error: 'Failed to generate records'
     }
 };

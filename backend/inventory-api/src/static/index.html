@@ -513,14 +513,20 @@
                                     <textarea v-model="form.description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect"></textarea>
                                 </div>
 
-                                <div class="mt-6 flex justify-end space-x-3">
-                                    <button type="button" @click="cancelEdit"
-                                        class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 glass-button hover:bg-gray-50">
-                                        {{ $t('add.cancel') }}
+                                <div class="mt-6 flex justify-between space-x-3">
+                                    <button type="button" @click="openAiRecordModal"
+                                        class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 glass-button">
+                                        <i class="fas fa-robot mr-2"></i>{{ $t('aiRecord.aiRecordButton') }}
                                     </button>
-                                    <button type="submit" class="px-4 py-2 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 glass-button">
-                                        {{ editingItem ? $t('add.update') : $t('add.save') }}
-                                    </button>
+                                    <div class="space-x-3">
+                                        <button type="button" @click="cancelEdit"
+                                            class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 glass-button hover:bg-gray-50">
+                                            {{ $t('add.cancel') }}
+                                        </button>
+                                        <button type="submit" class="px-4 py-2 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 glass-button">
+                                            {{ editingItem ? $t('add.update') : $t('add.save') }}
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -729,6 +735,67 @@
             </div>
         </div>
     </transition>
+    
+    <!-- AI记录模态框 -->
+    <div id="ai-record-modal" v-if="showAiRecordModal" class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 flex items-center justify-center z-50 opacity-100 pointer-events-auto transition-all duration-500">
+        <div class="relative w-full max-w-md p-4 transform scale-95 transition-transform duration-300">
+            <button id="close-ai-modal" class="absolute top-2 right-2 text-white bg-red-600/30 hover:bg-red-600/80 rounded-full p-2 z-10 transition-all duration-300 shadow-lg">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="glass-card rounded-xl overflow-hidden shadow-2xl border border-blue-500/20 backdrop-blur-md max-h-[80vh] flex flex-col">
+                <div class="p-6 bg-black/30 rounded-t-xl">
+                    <h3 class="text-xl font-semibold text-blue-400 tracking-wide text-center mb-2">{{ $t('aiRecord.title') }}</h3>
+                    <p class="text-sm opacity-90 text-center mb-4">{{ $t('aiRecord.description') }}</p>
+                </div>
+                <div class="p-6 bg-white/5 rounded-b-xl flex flex-col gap-4 overflow-y-auto">
+                    <form action="#" method="post" @submit.prevent>
+                        <!-- 隐藏的用户名字段，用于可访问性 -->
+                        <input type="text" name="username" value="api-user" class="sr-only" autocomplete="username">
+                        <!-- API Key 输入 -->
+                        <div class="mb-4">
+                            <label for="siliconflow-api-key" class="block text-sm font-medium text-gray-200 mb-2">{{ $t('aiRecord.apiKey') }}</label>
+                            <input type="password" id="siliconflow-api-key" v-model="aiForm.apiKey" 
+                                autocomplete="new-password"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white placeholder-gray-400"
+                                placeholder="sk-...">
+                            <p class="mt-1 text-xs text-gray-400">{{ $t('aiRecord.apiKeyHint') }}</p>
+                        </div>
+                        
+                        <!-- 图片上传区域 -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('aiRecord.uploadImages') }}</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-md p-4 text-center hover:border-blue-500 transition-colors cursor-pointer bg-black/20"
+                                @click="triggerImageUpload">
+                                <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-2"></i>
+                                <p class="text-sm text-gray-300">{{ $t('aiRecord.dragDropOrClick') }}</p>
+                                <p class="text-xs text-gray-400 mt-1">{{ $t('aiRecord.supportedFormats') }}</p>
+                                <input type="file" id="ai-image-upload" multiple accept="image/*" class="hidden" @change="handleAiImageUpload">
+                            </div>
+                            <!-- 已上传图片预览 -->
+                            <div v-if="aiForm.images.length > 0" class="mt-4">
+                                <p class="text-sm text-gray-200 mb-2">{{ $t('aiRecord.uploadedImages') }} ({{ aiForm.images.length }})</p>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <div v-for="(image, index) in aiForm.images" :key="index" class="relative group">
+                                        <img :src="image.preview" class="w-full h-16 object-cover rounded-md" alt="Preview">
+                                        <button type="button" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                                            @click="removeAiImage(index)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 生成记录按钮 -->
+                        <button type="button" @click="generateRecordsFromAI" :disabled="!aiForm.apiKey || aiForm.images.length === 0" 
+                            class="w-full px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed glass-button transition-all duration-300">
+                            <i class="fas fa-magic mr-2"></i>{{ $t('aiRecord.generateRecords') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <!-- 条形码扫描模态框 -->
