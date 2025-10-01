@@ -173,6 +173,19 @@ const app = createApp({
         // 分类列表
         categories: ['food', 'medicine', 'cleaning', 'personal', 'household', 'electronics'],
         
+        // 生成的记录（临时存储）
+        generatedRecords: [],
+        
+        // 控制生成记录确认模态框
+        showConfirmGeneratedModal: false,
+        
+        // 控制编辑生成记录模态框
+        showEditGeneratedRecordModal: false,
+        
+        // 当前正在编辑的生成记录
+        editingGeneratedRecord: null,
+        editingGeneratedRecordIndex: -1,
+        
         // 库存数据
         items: [
             {
@@ -1038,7 +1051,19 @@ const app = createApp({
         // AI记录功能相关方法
         // 打开AI记录模态框
         openAiRecordModal() {
+            // 从localStorage加载保存的API Key
+            const savedApiKey = localStorage.getItem('siliconflowApiKey');
+            if (savedApiKey) {
+                this.aiForm.apiKey = savedApiKey;
+            }
             this.showAiRecordModal = true;
+            // 为关闭按钮添加事件监听
+            setTimeout(() => {
+                const closeBtn = document.getElementById('close-ai-modal');
+                if (closeBtn) {
+                    closeBtn.onclick = () => this.closeAiRecordModal();
+                }
+            }, 100);
         },
 
         // 关闭AI记录模态框
@@ -1095,6 +1120,9 @@ const app = createApp({
                 return;
             }
 
+            // 保存API Key到localStorage
+            localStorage.setItem('siliconflowApiKey', this.aiForm.apiKey);
+
             // 显示加载通知
             this.showNotification(this.$t('aiRecord.generatingRecords'), 'info');
 
@@ -1122,49 +1150,17 @@ const app = createApp({
                 const result = await response.json();
                 
                 if (result.success && result.records && result.records.length > 0) {
-                    // 成功生成记录，添加到物品列表
-                    for (const record of result.records) {
-                        // 检查是否存在相同名称的物品
-                        const existingItem = this.items.find(item => 
-                            item.name.toLowerCase() === record.name.toLowerCase() && 
-                            item.category === record.category
-                        );
-
-                        if (existingItem) {
-                            // 更新现有物品的数量
-                            existingItem.quantity += record.quantity;
-                        } else {
-                            // 添加新物品
-                            this.items.push({
-                                id: Date.now() + Math.floor(Math.random() * 1000),
-                                name: record.name,
-                                category: record.category,
-                                quantity: record.quantity,
-                                unit: record.unit || '个',
-                                minQuantity: record.minQuantity || 1,
-                                expiryDate: record.expiryDate,
-                                barcode: record.barcode,
-                                description: record.description,
-                                created: new Date().toISOString(),
-                                updated: new Date().toISOString()
-                            });
-                        }
-                    }
-
-                    // 保存到API
-                    await this.saveData();
+                    // 保存生成的记录到临时变量，用于确认弹窗
+                    this.generatedRecords = result.records;
+                    
+                    // 打开确认弹窗
+                    this.showConfirmGeneratedModal = true;
                     
                     // 清空表单
                     this.aiForm.images = [];
                     
                     // 关闭模态框
                     this.closeAiRecordModal();
-                    
-                    // 显示成功通知
-                    this.showNotification(
-                        `${this.$t('aiRecord.recordsGenerated')}: ${result.records.length}`, 
-                        'success'
-                    );
                 } else {
                     this.showNotification(
                         result.message || this.$t('aiRecord.failedToGenerate'), 
@@ -1177,6 +1173,106 @@ const app = createApp({
                     error.message || this.$t('notifications.serverError'), 
                     'error'
                 );
+            }
+        },
+        
+        // 确认并添加生成的记录
+        async confirmAndAddGeneratedRecords() {
+            try {
+                // 遍历所有生成的记录
+                for (const record of this.generatedRecords) {
+                    // 检查是否存在相同名称的物品
+                    const existingItem = this.items.find(item => 
+                        item.name.toLowerCase() === record.name.toLowerCase() && 
+                        item.category === record.category
+                    );
+
+                    if (existingItem) {
+                        // 更新现有物品的数量
+                        existingItem.quantity += record.quantity;
+                        // 保存更新到API
+                        await this.saveItemToAPI(existingItem);
+                    } else {
+                        // 创建新物品对象
+                        const newItem = {
+                            id: Date.now() + Math.floor(Math.random() * 1000),
+                            name: record.name,
+                            category: record.category,
+                            quantity: record.quantity,
+                            unit: record.unit || '个',
+                            minQuantity: record.minQuantity || 1,
+                            expiryDate: record.expiryDate,
+                            barcode: record.barcode,
+                            description: record.description,
+                            created: new Date().toISOString(),
+                            updated: new Date().toISOString()
+                        };
+                        // 添加到本地列表
+                        this.items.push(newItem);
+                        // 保存到API
+                        await this.saveItemToAPI(newItem);
+                    }
+                }
+                
+                // 保存到localStorage
+                await this.saveData();
+                
+                // 关闭确认弹窗
+                this.showConfirmGeneratedModal = false;
+                
+                // 显示成功通知
+                this.showNotification(
+                    `${this.$t('aiRecord.recordsGenerated')}: ${this.generatedRecords.length}`, 
+                    'success'
+                );
+                
+                // 清空生成的记录
+                this.generatedRecords = [];
+            } catch (error) {
+                console.error('Error saving generated records:', error);
+                this.showNotification(
+                    error.message || this.$t('notifications.serverError'), 
+                    'error'
+                );
+            }
+        },
+        
+        // 取消添加生成的记录
+        cancelAddGeneratedRecords() {
+            this.showConfirmGeneratedModal = false;
+            this.generatedRecords = [];
+        },
+        
+        // 编辑生成的记录
+        editGeneratedRecord(index) {
+            // 深拷贝要编辑的记录，避免直接修改原数据
+            this.editingGeneratedRecord = JSON.parse(JSON.stringify(this.generatedRecords[index]));
+            this.editingGeneratedRecordIndex = index;
+            
+            // 打开编辑模态框
+            this.showEditGeneratedRecordModal = true;
+        },
+        
+        // 关闭编辑生成记录模态框
+        closeEditGeneratedRecordModal() {
+            this.showEditGeneratedRecordModal = false;
+            this.editingGeneratedRecord = null;
+            this.editingGeneratedRecordIndex = -1;
+        },
+        
+        // 保存编辑后的生成记录
+        saveEditedRecord() {
+            if (this.editingGeneratedRecordIndex !== -1) {
+                // 更新生成的记录列表中的数据
+                this.generatedRecords[this.editingGeneratedRecordIndex] = {
+                    ...this.editingGeneratedRecord
+                };
+                
+                // 关闭编辑模态框
+                this.closeEditGeneratedRecordModal();
+                
+                // 显示成功通知
+                this.showNotification(this.$t('notifications.saveSuccess'), 'success');
             }
         }
     },

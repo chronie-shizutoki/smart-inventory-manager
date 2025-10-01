@@ -130,6 +130,8 @@ window.zhCNMessages = {
         title: 'AI记录生成器',
         description: '使用AI从图片快速生成库存记录',
         apiKey: 'SiliconFlow API密钥',
+        apiKeyRequired: '请输入API密钥',
+        noImagesSelected: '请至少选择一张图片',
         apiKeyHint: '您可以从SiliconFlow控制台获取API密钥',
         uploadImages: '上传图片',
         dragDropOrClick: '拖拽文件至此处或点击上传',
@@ -138,7 +140,14 @@ window.zhCNMessages = {
         generateRecords: '生成记录',
         aiRecordButton: 'AI记录',
         generating: '正在生成记录...',
+        generatingRecords: '正在生成记录，请稍候...',
         success: '记录生成成功',
-        error: '记录生成失败'
+        error: '记录生成失败',
+        failedToGenerate: '未能生成记录，请检查您的图片和API密钥',
+        recordsGenerated: '记录已生成',
+        reviewAndConfirm: '请检查并确认以下生成的记录',
+        noRecordsGenerated: '没有生成任何记录',
+        confirmAdd: '确认添加',
+        editRecord: '编辑记录'
     }
 };

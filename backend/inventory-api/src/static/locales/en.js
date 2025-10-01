@@ -130,6 +130,8 @@ window.enMessages = {
         title: 'AI Record Generator',
         description: 'Generate inventory records from images using AI',
         apiKey: 'SiliconFlow API Key',
+        apiKeyRequired: 'Please enter API key',
+        noImagesSelected: 'Please select at least one image',
         apiKeyHint: 'You can get your API key from SiliconFlow console',
         uploadImages: 'Upload Images',
         dragDropOrClick: 'Drag & drop files or click to upload',
@@ -138,7 +140,14 @@ window.enMessages = {
         generateRecords: 'Generate Records',
         aiRecordButton: 'AI Record',
         generating: 'Generating records...',
+        generatingRecords: 'Generating records, please wait...',
         success: 'Records generated successfully',
-        error: 'Failed to generate records'
+        error: 'Failed to generate records',
+        failedToGenerate: 'Failed to generate records, please check your images and API key',
+        recordsGenerated: 'Records Generated',
+        reviewAndConfirm: 'Please review and confirm the following generated records',
+        noRecordsGenerated: 'No records generated',
+        confirmAdd: 'Confirm Add',
+        editRecord: 'Edit Record'
     }
 };
