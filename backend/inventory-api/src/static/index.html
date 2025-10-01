@@ -805,9 +805,9 @@
                     <h3 class="text-xl font-semibold text-green-400 tracking-wide text-center mb-2">{{ $t('aiRecord.recordsGenerated') }}</h3>
                     <p class="text-sm opacity-90 text-center mb-4">{{ $t('aiRecord.reviewAndConfirm') }}</p>
                 </div>
-                <div class="p-4 bg-white/5 rounded-b-xl flex flex-1 flex-col gap-4 overflow-y-auto">
+                <div style="padding: 1rem; background-color: rgba(255, 255, 255, 0.05); border-bottom-left-radius: 1.5rem; border-bottom-right-radius: 1.5rem; display: flex; flex: 1; flex-direction: column; gap: 1rem; overflow-y: auto;">
                     <!-- 生成的记录列表 -->
-                    <div v-if="generatedRecords.length > 0" class="space-y-4 overflow-y-auto !max-h-[300px]">
+                    <div v-if="generatedRecords.length > 0" style="display: flex; flex-direction: column; gap: 16px; overflow-y: auto; max-height: 300px; scroll-behavior: smooth;">
                         <div v-for="(record, index) in generatedRecords" :key="index" class="bg-white/10 p-4 rounded-lg shadow border border-white/20">
                             <div class="flex justify-between items-start mb-2">
                                 <h4 class="font-medium text-white">{{ record.name }}</h4>
