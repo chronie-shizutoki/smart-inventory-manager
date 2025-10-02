@@ -1,0 +1,72 @@
+name: Code Lines of Code (CLOC) Statistics
+
+on:
+  # 在推送到任何分支时触发
+  push:
+    branches: [ "**" ]
+  # 在Pull Request创建或更新时触发
+  pull_request:
+    branches: [ main ]
+  # 允许手动触发工作流
+  workflow_dispatch:
+
+jobs:
+  cloc-statistics:
+    runs-on: ubuntu-latest
+    name: Generate CLOC Statistics
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 使用cloc-action工具计算代码行数
+      - name: Calculate lines of code
+        uses: SubZtep/cloc-action@v2
+        with:
+          args: >
+            --exclude-dir=.git,.github,__pycache__,venv,node_modules
+            --exclude-ext=md,yml,yaml,json,gitignore,txt
+            --by-file-by-lang
+            --report-file=cloc-report.txt
+            .
+
+      # 格式化统计结果
+      - name: Format CLOC results
+        run: |
+          echo "# Code Line Statistics" > cloc-summary.md
+          echo "\n## Overall Summary" >> cloc-summary.md
+          echo "```" >> cloc-summary.md
+          grep -A 6 "SUM:" cloc-report.txt >> cloc-summary.md
+          echo "```" >> cloc-summary.md
+          
+          echo "\n## Detailed Language Breakdown" >> cloc-summary.md
+          echo "```" >> cloc-summary.md
+          head -n -1 cloc-report.txt | tail -n +5 | grep -v "SUM:" >> cloc-summary.md
+          echo "```" >> cloc-summary.md
+          
+          echo "\n## Generated on $(date)" >> cloc-summary.md
+
+      # 将统计结果作为工作流输出
+      - name: Output CLOC results
+        run: cat cloc-summary.md
+
+      # 将报告保存为artifact，方便下载查看
+      - name: Upload CLOC report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloc-reports
+          path: |
+            cloc-report.txt
+            cloc-summary.md
+
+      # 可选：如果是推送到main分支，可以将报告提交回仓库
+      - name: Commit CLOC report to repository (main branch only)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add cloc-summary.md
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update CLOC statistics"
+          git push
+        continue-on-error: true
