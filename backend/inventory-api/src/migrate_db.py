@@ -17,13 +17,6 @@ try:
     except sqlite3.OperationalError as e:
         print(f"添加usage_count列错误: {e}")
 
-    # 添加barcode列
-    try:
-        cursor.execute("ALTER TABLE inventory_items ADD COLUMN barcode TEXT")
-        print("添加barcode列成功")
-    except sqlite3.OperationalError as e:
-        print(f"添加barcode列错误: {e}")
-
     # 添加last_used_at列
     try:
         cursor.execute("ALTER TABLE inventory_items ADD COLUMN last_used_at TIMESTAMP")
