@@ -74,48 +74,8 @@ function updateDocumentTitle() {
     document.title = i18n.global.t('app.title');
 }
 
-// 更新条形码扫描模态框的翻译
-function updateScannerModalTranslations() {
-    const modal = document.getElementById('barcode-scanner-modal');
-    if (!modal) return;
-
-    // 更新模态框中的翻译文本
-    const scanMessage = modal.querySelector('h3');
-    if (scanMessage) scanMessage.textContent = i18n.global.t('add.scanBarcodeMessage');
-
-    const positionMessage = modal.querySelector('.text-sm.opacity-90');
-    if (positionMessage) positionMessage.textContent = i18n.global.t('add.positionBarcode');
-
-    const orUploadText = modal.querySelector('.text-sm.mb-3.opacity-80');
-    if (orUploadText) orUploadText.textContent = i18n.global.t('add.orUploadImage');
-
-    const uploadButton = modal.querySelector('#barcode-image-upload + label');
-    if (uploadButton) {
-        const icon = uploadButton.querySelector('i');
-        uploadButton.textContent = i18n.global.t('add.uploadImage');
-        if (icon) uploadButton.prepend(icon);
-    }
-
-    // 更新输入框的placeholder翻译
-    const inputElements = document.querySelectorAll('input[aria-label*="输入条形码或生成一个"]');
-    inputElements.forEach(input => {
-        input.placeholder = i18n.global.t('add.enterBarcode');
-        input.setAttribute('aria-label', i18n.global.t('add.enterBarcode'));
-    });
-
-    // 确保label元素的翻译正确
-    const labelElement = document.querySelector('label[for="barcode-image-upload"]');
-    if (labelElement) {
-        const icon = labelElement.querySelector('i');
-        labelElement.textContent = i18n.global.t('add.uploadImage');
-        if (icon) labelElement.prepend(icon);
-    }
-}
-
 // 初始设置标题
 updateDocumentTitle();
-// 初始更新模态框翻译
-updateScannerModalTranslations();
 
 // RTL语言列表
 const rtlLanguages = ['ar', 'fa', 'ur'];
@@ -149,17 +109,16 @@ const app = createApp({
         showMobileNav: false,
         
         // 表单数据
-        form: {
-            name: '',
-            category: '',
-            quantity: 0,
-            unit: '',
-            minQuantity: 0,
-            expiryDate: '',
-            description: '',
-            barcode: ''
-        },
-        barcodeType: 'ean13', // 默认条形码类型
+            form: {
+                name: '',
+                category: '',
+                quantity: 0,
+                unit: '',
+                minQuantity: 0,
+                expiryDate: '',
+                description: '',
+                barcode: ''
+            },
         
         // AI表单数据
         aiForm: {
@@ -230,14 +189,11 @@ const app = createApp({
         purchaseList: [],
         
         // 通知系统
-        notification: {
-            show: false,
-            message: '',
-            type: 'success'
-        },
-        
-        // 扫描目的
-        scanPurpose: 'locate' // 默认扫描目的为定位物品
+            notification: {
+                show: false,
+                message: '',
+                type: 'success'
+            }
             };
         },
     
@@ -524,397 +480,6 @@ const app = createApp({
                 barcode: ''
             };
             this.editingItem = null;
-            // 清除条形码预览
-            const barcodeElement = document.getElementById('barcode');
-            if (barcodeElement) {
-                barcodeElement.innerHTML = '';
-            }
-        },
-
-        // 生成条形码
-        generateBarcode() {
-            // 根据不同类型生成条形码
-            let barcodeValue;
-            if (this.barcodeType === 'ean13') {
-                barcodeValue = this.generateEAN13();
-            } else if (this.barcodeType === 'upca') {
-                barcodeValue = this.generateUPCA();
-            } else {
-                barcodeValue = this.generateEAN13(); // 默认生成EAN13
-            }
-
-            this.form.barcode = barcodeValue;
-            this.renderBarcode();
-        },
-
-        // 生成EAN-13条形码
-        generateEAN13() {
-            // 生成12位随机数字
-            let code = '';
-            for (let i = 0; i < 12; i++) {
-                code += Math.floor(Math.random() * 10);
-            }
-
-            // 计算校验位
-            let sum = 0;
-            for (let i = 0; i < 12; i++) {
-                if (i % 2 === 0) {
-                    sum += parseInt(code.charAt(i)) * 1;
-                } else {
-                    sum += parseInt(code.charAt(i)) * 3;
-                }
-            }
-            const checkDigit = (10 - (sum % 10)) % 10;
-            return code + checkDigit;
-        },
-
-        // 生成UPC-A条形码
-        generateUPCA() {
-            // 生成11位随机数字
-            let code = '';
-            for (let i = 0; i < 11; i++) {
-                code += Math.floor(Math.random() * 10);
-            }
-
-            // 计算校验位
-            let sum = 0;
-            for (let i = 0; i < 11; i++) {
-                if (i % 2 === 0) {
-                    sum += parseInt(code.charAt(i)) * 3;
-                } else {
-                    sum += parseInt(code.charAt(i)) * 1;
-                }
-            }
-            const checkDigit = (10 - (sum % 10)) % 10;
-            return code + checkDigit;
-        },
-
-        // 渲染条形码
-        renderBarcode() {
-            if (this.form.barcode) {
-                try {
-                    const barcodeElement = document.getElementById('barcode');
-                    if (barcodeElement) {
-                        barcodeElement.innerHTML = '';
-                        
-                        // 检测是否为深色模式
-                        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                        
-                        // 根据模式设置不同的颜色
-                        const barcodeColor = isDarkMode ? '#ffffff' : '#000000';
-                        const textColor = isDarkMode ? '#ffffff' : '#000000';
-                        
-                        // 渲染条形码
-                        JsBarcode(barcodeElement, this.form.barcode, {
-                            format: this.barcodeType === 'ean13' ? 'EAN13' : 'UPC',
-                            width: 2,
-                            height: 100,
-                            displayValue: true,
-                            lineColor: barcodeColor,
-                            textColor: textColor,
-                            margin: 0,
-                            background: undefined // 不设置背景色，使其真正透明
-                        });
-                        
-                        // 确保SVG元素本身没有fill属性或设置为none
-                        const svgElement = barcodeElement.querySelector('svg');
-                        if (svgElement) {
-                            svgElement.setAttribute('fill', 'none');
-                            svgElement.style.backgroundColor = 'transparent';
-                        }
-                        
-                        // 动态设置容器背景颜色以匹配深色模式
-                        const barcodeContainer = barcodeElement.parentElement;
-                        if (barcodeContainer) {
-                            if (isDarkMode) {
-                                barcodeContainer.classList.remove('bg-white');
-                                barcodeContainer.classList.add('bg-gray-800', 'bg-opacity-70');
-                            } else {
-                                barcodeContainer.classList.remove('bg-gray-800', 'bg-opacity-70');
-                                barcodeContainer.classList.add('bg-white');
-                            }
-                        }
-                    }
-                } catch (error) {
-                    console.error('Failed to render barcode:', error);
-                    this.showNotification(this.$t('notifications.barcodeError'), 'error');
-                }
-            }
-        },
-
-        // 打开条形码扫描模态框
-        scanBarcode() {
-            const modal = document.getElementById('barcode-scanner-modal');
-            if (modal) {
-                modal.classList.add('show');
-                // 设置扫描目的为定位物品
-                this.scanPurpose = 'locate';
-                // 打开时更新翻译
-                updateScannerModalTranslations();
-                this.startScanner();
-            }
-        },
-
-        // 打开编辑界面的条形码扫描
-        scanBarcodeForForm() {
-            const modal = document.getElementById('barcode-scanner-modal');
-            if (modal) {
-                modal.classList.add('show');
-                // 设置扫描目的为填充表单
-                this.scanPurpose = 'form';
-                // 打开时更新翻译
-                updateScannerModalTranslations();
-                this.startScanner();
-            }
-        },
-
-        // 关闭条形码扫描模态框
-        closeScanner() {
-            const modal = document.getElementById('barcode-scanner-modal');
-            if (modal) {
-                modal.classList.remove('show');
-                this.stopScanner();
-            }
-        },
-
-        // 初始化扫描器事件
-        initScannerEvents() {
-            const closeBtn = document.getElementById('close-scanner');
-
-            if (closeBtn) {
-                closeBtn.onclick = () => this.closeScanner();
-            }
-        },
-
-        // 启动扫描器
-        startScanner() {
-            const scannerView = document.getElementById('scanner-view');
-
-            if (!scannerView) return;
-
-            // 检查浏览器兼容性
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                console.error('getUserMedia is not supported in this browser');
-                this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.browserNotSupported'), 'error');
-                return;
-            }
-
-            // 额外检查以确保getUserMedia可用
-            if (typeof navigator.mediaDevices.getUserMedia !== 'function') {
-                console.error('getUserMedia is not a function');
-                this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.browserNotSupported'), 'error');
-                return;
-            }
-
-            // 申请摄像头权限
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-                .then(stream => {
-                    try {
-                        Quagga.init({
-                            inputStream: {
-                                name: 'Live',
-                                type: 'LiveStream',
-                                target: scannerView,
-                                constraints: {
-                                    facingMode: 'environment'
-                                }
-                            },
-                            decoder: {
-                                readers: ['code_128_reader', 'ean_reader', 'ean_8_reader', 'code_39_reader', 'upc_reader', 'upc_e_reader'],
-                                debug: {
-                                    showCanvas: false,
-                                    showPatches: false,
-                                    showFoundPatches: false,
-                                    showSkeleton: false,
-                                    showLabels: false,
-                                    showPatchLabels: false,
-                                    showRemainingPatchLabels: false,
-                                    boxFromPatches: { x: 0, y: 0, width: 0, height: 0 }
-                                }
-                            },
-                            locate: true
-                        }, (err) => {
-                            if (err) {
-                                console.error('Failed to initialize Quagga:', err);
-                                this.showNotification(this.$t('notifications.barcodeError') + ': ' + err.message, 'error');
-                                return;
-                            }
-
-                            Quagga.start();
-
-                            // 设置结果事件监听器
-                            Quagga.onDetected(this.handleScanResult.bind(this));
-                        });
-                    } catch (error) {
-                        console.error('Error initializing scanner:', error);
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Camera permission error:', error);
-                    if (error.name === 'NotAllowedError') {
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraPermissionDenied'), 'error');
-                    } else if (error.name === 'NotFoundError') {
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.noCameraFound'), 'error');
-                    } else if (error.name === 'NotReadableError') {
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + this.$t('add.cameraInUse'), 'error');
-                    } else {
-                        this.showNotification(this.$t('notifications.barcodeError') + ': ' + error.message, 'error');
-                    }
-                });
-
-            // 权限申请和初始化已在上方完成
-            // 此处代码已被移至权限申请成功的回调函数中
-                  // 所有初始化代码已移至权限申请成功的回调函数中
-        },
-
-        // 停止扫描器
-        stopScanner() {
-            if (Quagga && Quagga.stop) {
-                try {
-                    Quagga.stop();
-                } catch (error) {
-                    console.error('Failed to stop scanner:', error);
-                }
-            }
-        },
-
-        // 处理扫描结果
-        handleScanResult(result) {
-            if (result && result.codeResult && result.codeResult.code) {
-                const barcodeValue = result.codeResult.code;
-                console.log('Barcode scanned:', barcodeValue);
-                
-                if (this.scanPurpose === 'form') {
-                    // 表单扫描: 填充表单并渲染条形码
-                    this.form.barcode = barcodeValue;
-                    this.renderBarcode();
-                    this.showNotification(this.$t('notifications.barcodeScanned'), 'success');
-                } else if (this.scanPurpose === 'locate') {
-                    // 定位扫描: 直接定位物品
-                    this.locateItemByBarcode(barcodeValue);
-                }
-                
-                this.closeScanner();
-            }
-        },
-
-        // 初始化文件上传事件监听
-        initImageUploadListener() {
-            const fileInput = document.getElementById('barcode-image-upload');
-            if (fileInput) {
-                fileInput.addEventListener('change', this.handleImageUpload.bind(this));
-            }
-        },
-
-        // 处理图像上传
-        handleImageUpload(event) {
-            console.log('handleImageUpload function called');
-            console.log('Event:', event);
-            console.log('Image upload event triggered');
-            const file = event.target.files[0];
-            if (!file) return;
-
-            // 检查文件类型
-            if (!file.type.startsWith('image/')) {
-                this.showNotification(this.$t('notifications.invalidImageType'), 'error');
-                return;
-            }
-
-            // 显示加载通知
-            this.showNotification(this.$t('notifications.processingImage'), 'info');
-
-            // 创建FormData对象
-            const formData = new FormData();
-            formData.append('image', file);
-
-            // 发送到服务器识别条形码
-            console.log('Sending barcode recognition request to /api/barcode/recognize');
-            console.log('File:', file);
-            console.log('Form data has image:', formData.has('image'));
-            console.log('Initiating fetch request to /api/barcode/recognize');
-            fetch('/api/barcode/recognize', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                console.log('Response status:', response.status);
-                if (!response.ok) {
-                    console.log('Response headers:', response.headers);
-                    return response.json()
-                        .then(errorData => {
-                            console.log('Error data:', errorData);
-                            throw new Error(errorData.message || 'Server error');
-                        })
-                }
-                return response.json();
-            })
-            .then(result => {
-                if (result.success && result.barcode) {
-                    const barcodeValue = result.barcode;
-                    console.log('Barcode recognized from image:', barcodeValue);
-
-                    if (this.scanPurpose === 'form') {
-                        // 表单扫描: 填充表单并渲染条形码
-                        this.form.barcode = barcodeValue;
-                        this.renderBarcode();
-                        this.showNotification(this.$t('notifications.barcodeScanned'), 'success');
-                    } else if (this.scanPurpose === 'locate') {
-                        // 定位扫描: 直接定位物品
-                        this.locateItemByBarcode(barcodeValue);
-                    }
-                } else {
-                    this.showNotification(this.$t('notifications.noBarcodeFound'), 'error');
-                }
-                this.closeScanner();
-            })
-            .catch(error => {
-                console.error('Error recognizing barcode from image:', error);
-                this.showNotification(error.message || this.$t('notifications.serverError'), 'error');
-                this.closeScanner();
-            });
-
-            // 重置文件输入
-            event.target.value = '';
-        },
-
-        // 通过条形码定位物品
-        locateItemByBarcode(barcode) {
-            // 切换到库存列表视图
-            this.currentView = 'inventory';
-            
-            // 查找匹配的物品
-            const matchedItem = this.items.find(item => item.barcode === barcode);
-            
-            if (matchedItem) {
-                // 滚动到匹配的物品
-                setTimeout(() => {
-                    const element = document.getElementById(`item-${matchedItem.id}`);
-                    if (element) {
-                        // 添加高亮效果
-                        element.classList.add('bg-yellow-100');
-                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        
-                        // 3秒后移除高亮效果
-                        setTimeout(() => {
-                            element.classList.remove('bg-yellow-100');
-                        }, 3000);
-                    }
-                }, 500);
-                
-                this.showNotification(`${this.$t('notifications.itemFound')}: ${matchedItem.name}`, 'success');
-            } else {
-                this.showNotification(`${this.$t('notifications.itemNotFound')}: ${barcode}`, 'warning');
-            }
-        },
-
-        // 初始化扫描器事件（页面加载时）
-        initScanModal() {
-            // 为关闭按钮添加事件监听
-            const closeBtn = document.getElementById('close-scanner');
-            if (closeBtn) {
-                closeBtn.onclick = () => this.closeScanner();
-            }
         },
         
         // 显示通知
@@ -1003,7 +568,7 @@ const app = createApp({
                     await this.loadItemsFromAPI();
                     // 刷新智能分析数据
                     await this.refreshAnalyticsData();
-                    console.log('Item saved successfully with barcode:', itemData.barcode);
+                    console.log('Item saved successfully');
                     return true;
                 } else {
                     throw new Error(result.error || 'Failed to save item');
@@ -1202,7 +767,6 @@ const app = createApp({
                             unit: record.unit || '个',
                             minQuantity: record.minQuantity || 1,
                             expiryDate: record.expiryDate,
-                            barcode: record.barcode,
                             description: record.description,
                             created: new Date().toISOString(),
                             updated: new Date().toISOString()
@@ -1282,7 +846,6 @@ const app = createApp({
         currentLocale(newLocale) {
             i18n.global.locale = newLocale;
             updateDocumentTitle();
-            updateScannerModalTranslations(); // 语言切换时更新模态框翻译
             updateDocumentDirection(newLocale); // 更新文本方向
         },
         currentView(newView) {
@@ -1304,11 +867,6 @@ const app = createApp({
     
     mounted() {
         this.initializeData();
-        this.initScannerEvents(); // 初始化扫描器事件
-        // 延迟初始化图像上传监听，确保DOM已经加载完成
-        setTimeout(() => {
-            this.initImageUploadListener(); // 初始化图像上传监听
-        }, 100);
         
         // 定期检查过期物品
         setInterval(() => {
@@ -1322,4 +880,3 @@ app.use(i18n);
 
 // 挂载应用
 app.mount('#app');
-
