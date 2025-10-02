@@ -20,16 +20,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 使用cloc-action工具计算代码行数
+      # 安装cloc工具
+      - name: Install cloc
+        run: sudo apt-get install -y cloc
+
+      # 计算代码行数
       - name: Calculate lines of code
-        uses: SubZtep/cloc-action@v2
-        with:
-          args: >
-            --exclude-dir=.git,.github,__pycache__,venv,node_modules
-            --exclude-ext=md,yml,yaml,json,gitignore,txt
-            --by-file-by-lang
-            --report-file=cloc-report.txt
-            .
+        run: |
+          cloc --exclude-dir=.git,.github,__pycache__,venv,node_modules \
+               --exclude-ext=md,yml,yaml,json,gitignore,txt \
+               --by-file-by-lang \
+               --report-file=cloc-report.txt \
+               .
 
       # 格式化统计结果
       - name: Format CLOC results
