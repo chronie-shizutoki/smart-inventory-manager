@@ -107,6 +107,9 @@ const app = createApp({
         selectedCategory: '',
         editingItem: null,
         showMobileNav: false,
+        // 语言选择弹窗（桌面端）
+        showLocaleModal: false,
+        tempLocale: i18n.global.locale,
         
         // 表单数据
             form: {
@@ -250,6 +253,19 @@ const app = createApp({
             document.title = i18n.global.t('app.title');
             // 手动调用updateDocumentDirection确保RTL设置正确应用
             updateDocumentDirection(this.currentLocale);
+        },
+        // 打开/关闭语言弹窗
+        openLocaleModal() {
+            this.tempLocale = this.currentLocale;
+            this.showLocaleModal = true;
+        },
+        closeLocaleModal() {
+            this.showLocaleModal = false;
+        },
+        confirmLocaleChange() {
+            this.currentLocale = this.tempLocale;
+            this.changeLanguage();
+            this.closeLocaleModal();
         },
         
         // 获取分类图标
@@ -875,8 +891,172 @@ const app = createApp({
     }
 });
 
-// 使用i18n插件
+// 自定义液态玻璃下拉组件（全局注册）
+const GlassSelect = {
+    name: 'GlassSelect',
+    props: {
+        modelValue: { type: [String, Number, Array], default: '' },
+        options: { type: Array, required: true }, // [{ value, label }]
+        placeholder: { type: String, default: '' },
+        disabled: { type: Boolean, default: false },
+        multiple: { type: Boolean, default: false }
+    },
+    emits: ['update:modelValue', 'change'],
+    data() {
+        return {
+            isOpen: false,
+            highlightedIndex: -1,
+            internalValue: this.modelValue
+        };
+    },
+    watch: {
+        modelValue(newVal) {
+            this.internalValue = newVal;
+        }
+    },
+    computed: {
+        selectedLabel() {
+            if (this.multiple && Array.isArray(this.internalValue)) {
+                const map = new Map(this.options.map(o => [o.value, o.label]));
+                const labels = this.internalValue.map(v => map.get(v)).filter(Boolean);
+                return labels.length ? labels.join(', ') : '';
+            }
+            const found = this.options.find(o => o.value === this.internalValue);
+            return found ? found.label : '';
+        }
+    },
+    mounted() {
+        this._onClickOutside = (e) => {
+            if (!this.$el.contains(e.target)) {
+                this.isOpen = false;
+            }
+        };
+        document.addEventListener('click', this._onClickOutside);
+    },
+    beforeUnmount() {
+        document.removeEventListener('click', this._onClickOutside);
+    },
+    methods: {
+        toggleDropdown() {
+            if (this.disabled) return;
+            this.isOpen = !this.isOpen;
+            if (this.isOpen) {
+                this.$nextTick(() => {
+                    this.highlightedIndex = this.options.findIndex(o => o.value === this.internalValue);
+                });
+            }
+        },
+        onKeydown(e) {
+            if (this.disabled) return;
+            if (!this.isOpen && (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                this.toggleDropdown();
+                return;
+            }
+            switch (e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    this.highlightedIndex = Math.min(this.options.length - 1, this.highlightedIndex + 1);
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    this.highlightedIndex = Math.max(0, this.highlightedIndex - 1);
+                    break;
+                case 'Enter':
+                case ' ': // Space
+                    e.preventDefault();
+                    if (this.isOpen && this.highlightedIndex >= 0) {
+                        const opt = this.options[this.highlightedIndex];
+                        this.selectOption(opt);
+                    } else {
+                        this.toggleDropdown();
+                    }
+                    break;
+                case 'Escape':
+                    this.isOpen = false;
+                    break;
+                default:
+                    break;
+            }
+        },
+        selectOption(option) {
+            if (this.multiple) {
+                const set = new Set(Array.isArray(this.internalValue) ? this.internalValue : []);
+                if (set.has(option.value)) set.delete(option.value); else set.add(option.value);
+                const newVal = Array.from(set);
+                this.internalValue = newVal;
+                this.$emit('update:modelValue', newVal);
+                this.$emit('change', newVal);
+            } else {
+                this.internalValue = option.value;
+                this.$emit('update:modelValue', option.value);
+                this.$emit('change', option.value);
+                this.isOpen = false;
+            }
+        },
+        isSelected(option) {
+            if (this.multiple && Array.isArray(this.internalValue)) {
+                return this.internalValue.includes(option.value);
+            }
+            return this.internalValue === option.value;
+        }
+    },
+    template: `
+    <div class="glass-select-wrapper" :class="[disabled ? 'opacity-60 pointer-events-none' : '']">
+        <div class="glass-select-trigger glass-effect" tabindex="0" role="combobox" aria-haspopup="listbox" :aria-expanded="isOpen.toString()" @click="toggleDropdown" @keydown="onKeydown">
+            <span class="glass-select-value" v-text="selectedLabel || placeholder"></span>
+            <i class="fas fa-chevron-down glass-select-caret"></i>
+        </div>
+        <transition name="fade">
+            <ul v-if="isOpen" class="glass-select-menu glass-card" role="listbox">
+                <li v-for="(option, index) in options" :key="option.value" class="glass-select-option" :class="{ 'is-selected': isSelected(option), 'is-highlighted': index === highlightedIndex }" role="option" :aria-selected="isSelected(option)" @mouseenter="highlightedIndex = index" @mousedown.prevent @click="selectOption(option)">
+                    <span v-text="option.label"></span>
+                    <i v-if="isSelected(option)" class="fas fa-check"></i>
+                </li>
+            </ul>
+        </transition>
+    </div>
+    `
+};
+
+// 追加：为应用补充选项源（语言/分类）
+app.mixin({
+    computed: {
+        localeOptions() {
+            return [
+                { value: 'ar', label: 'العربية' },
+                { value: 'bn', label: 'বাংলা' },
+                { value: 'de', label: 'Deutsch' },
+                { value: 'en', label: 'English' },
+                { value: 'es', label: 'Español' },
+                { value: 'fr', label: 'Français' },
+                { value: 'hi', label: 'हिन्दी' },
+                { value: 'id', label: 'Bahasa Indonesia' },
+                { value: 'it', label: 'Italiano' },
+                { value: 'ja', label: '日本語' },
+                { value: 'ko', label: '한국어' },
+                { value: 'fa', label: 'فارسی' },
+                { value: 'pt', label: 'Português' },
+                { value: 'ru', label: 'Русский' },
+                { value: 'ur', label: 'اردو' },
+                { value: 'ta', label: 'தமிழ்' },
+                { value: 'th', label: 'ไทย' },
+                { value: 'tr', label: 'Türkçe' },
+                { value: 'vi', label: 'Tiếng Việt' },
+                { value: 'zh-CN', label: '简体中文' },
+                { value: 'zh-TW', label: '繁體中文' }
+            ];
+        },
+        categoryOptions() {
+            if (!this.categories) return [];
+            return this.categories.map(c => ({ value: c, label: this.$t('categories.' + c) }));
+        }
+    }
+});
+
+// 使用i18n插件与全局组件
 app.use(i18n);
+app.component('GlassSelect', GlassSelect);
 
 // 挂载应用
 app.mount('#app');

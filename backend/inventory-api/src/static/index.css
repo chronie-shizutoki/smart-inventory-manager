@@ -362,6 +362,29 @@ button {
             transform: translateY(0);
         }
 
+        /* 液态玻璃下拉选择器 */
+        .glass-select-wrapper { position: relative; min-width: 10rem; }
+        .glass-select-trigger {
+            display: flex; align-items: center; justify-content: space-between;
+            width: 100%; padding: 0.5rem 0.75rem; border-radius: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.18);
+            cursor: pointer; user-select: none;
+        }
+        .glass-select-trigger:focus { outline: none; box-shadow: 0 0 0 2px rgba(59,130,246,0.5); }
+        .glass-select-value { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .glass-select-caret { margin-left: 0.5rem; opacity: 0.8; }
+        .glass-select-menu {
+            position: absolute; left: 0; right: 0; top: calc(100% + 0.25rem);
+            z-index: 20; border-radius: 0.75rem; padding: 0.25rem; max-height: 16rem;
+            overflow: auto; border: 1px solid rgba(255,255,255,0.18);
+        }
+        .glass-select-option {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.5rem 0.75rem; border-radius: 0.5rem; cursor: pointer;
+        }
+        .glass-select-option:hover, .glass-select-option.is-highlighted { background: rgba(255,255,255,0.3); }
+        .glass-select-option.is-selected { font-weight: 600; }
+
              /* 物品名称和描述自动换行样式 */
             .text-sm.font-medium.text-gray-900,
             .text-xs.md\:text-sm.text-gray-500 {
