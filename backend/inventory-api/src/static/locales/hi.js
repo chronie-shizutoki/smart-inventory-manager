@@ -1,37 +1,11 @@
 window.hiMessages = {
     notifications: {
-        barcodeError: 'बारकोड जेनरेट नहीं हो पाया',
         itemAdded: 'आइटम जोड़ा गया',
         itemUpdated: 'आइटम अपडेट किया गया',
         itemDeleted: 'आइटम हटाया गया',
         error: 'ऑपरेशन विफल। कृपया पुनः प्रयास करें',
         insufficientStock: 'स्टॉक खत्म: {itemName}',
         itemUsedSuccessfully: '{itemName} का 1 {unit} इस्तेमाल किया गया ({quantity} {unit} बाकी)',
-        itemFound: 'आइटम मिल गया',
-        itemNotFound: 'आइटम नहीं मिला',
-        barcodeScanned: 'बारकोड स्कैन सफल रहा',
-        invalidImageType: 'अमान्य इमेज प्रकार। कृपया कोई इमेज फाइल चुनें।',
-        processingImage: 'इमेज प्रोसेस हो रही है...',
-        noBarcodeFound: 'इमेज में कोई बारकोड नहीं मिला',
-        imageProcessingError: 'इमेज प्रोसेसिंग में त्रुटि'
-    },
-    alerts: {
-        lowStock: 'स्टॉक कम',
-        lowStockMessage: '{item} का सिर्फ {quantity} {unit} बचा है',
-        expired: 'एक्सपायर्ड',
-        expiredMessage: '{item} {days} दिन पहले एक्सपायर हो गया',
-        expiringSoon: 'जल्द एक्सपायर होने वाला',
-        expiringSoonMessage: '{item} {days} दिनों में एक्सपायर हो जाएगा'
-    },
-    recommendations: {
-        restock: '{item} रिस्टॉक करें',
-        restockReason: 'मौजूदा स्टॉक: {quantity} {unit} (न्यूनतम: {minQuantity} {unit})',
-        popular: 'लोकप्रिय आइटम',
-        popularReason: '{item} का अक्सर इस्तेमाल होता है',
-        watch: '{item} पर नज़र रखें',
-        watchReason: 'पिछले 30 दिनों में {count} बार इस्तेमाल किया गया',
-        consider: '{item} रिस्टॉक करने पर विचार करें',
-        considerReason: '{category} में सबसे ज़्यादा इस्तेमाल ({count} बार)'
     },
     app: {
         title: 'स्मार्ट होम इन्वेंटरी'
@@ -39,7 +13,6 @@ window.hiMessages = {
     nav: {
         inventory: 'इन्वेंटरी',
         add: 'आइटम जोड़ें',
-        analytics: 'एनालिटिक्स',
         purchaseList: 'खरीदारी सूची',
         menu: 'मेन्यू',
         language: 'भाषा'
@@ -64,8 +37,7 @@ window.hiMessages = {
         unit: 'यूनिट',
         expiryDate: 'एक्सपायरी डेट',
         status: 'स्थिति',
-        actions: 'एक्शन्स',
-        scanBarcode: 'बारकोड स्कैन करें'
+        actions: 'एक्शन्स'
     },
     categories: {
         food: 'खाना',
@@ -94,30 +66,7 @@ window.hiMessages = {
         selectCategory: 'कैटेगरी चुनें',
         cancel: 'कैंसल',
         save: 'सेव',
-        update: 'अपडेट',
-        barcode: 'बारकोड',
-        barcodeType: 'बारकोड टाइप',
-        enterBarcode: 'बारकोड डालें या जेनरेट करें',
-        generateBarcode: 'जेनरेट करें',
-        barcodePreview: 'बारकोड प्रीव्यू',
-        ean13: 'EAN-13',
-        upca: 'UPC-A',
-        scanBarcodeMessage: 'बारकोड को फ्रेम के अंदर रखें',
-        positionBarcode: 'बारकोड को स्कैन एरिया के अंदर रखें',
-        startScan: 'स्कैन शुरू करें',
-        stopScan: 'स्कैन रोकें',
-        browserNotSupported: 'ब्राउज़र कैमरा एक्सेस सपोर्ट नहीं करता',
-        cameraPermissionDenied: 'कैमरा परमिशन डिनाइड',
-        noCameraFound: 'कोई कैमरा नहीं मिला',
-        cameraInUse: 'कैमरा दूसरे ऐप्लिकेशन द्वारा इस्तेमाल में है',
-        scan: 'स्कैन',
-        orUploadImage: 'या इमेज अपलोड करें',
-        uploadImage: 'इमेज अपलोड करें'
-    },
-    analytics: {
-        title: 'एनालिटिक्स',
-        smartAlerts: 'स्मार्ट अलर्ट्स',
-        smartRecommendations: 'स्मार्ट सिफारिशें'
+        update: 'अपडेट'
     },
     status: {
         normal: 'नॉर्मल',

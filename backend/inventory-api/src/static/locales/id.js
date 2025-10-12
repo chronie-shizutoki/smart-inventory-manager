@@ -1,37 +1,11 @@
 window.idMessages = {
     notifications: {
-        barcodeError: 'Gagal menghasilkan barcode',
         itemAdded: 'Item berhasil ditambahkan',
         itemUpdated: 'Item berhasil diperbarui',
         itemDeleted: 'Item berhasil dihapus',
         error: 'Operasi gagal. Silakan coba lagi',
         insufficientStock: 'Stok tidak mencukupi: {itemName}',
-        itemUsedSuccessfully: '{itemName} 1 {unit} digunakan ({quantity} {unit} tersisa)',
-        itemFound: 'Item ditemukan',
-        itemNotFound: 'Item tidak ditemukan',
-        barcodeScanned: 'Barcode berhasil dipindai',
-        invalidImageType: 'Jenis file tidak valid. Harap pilih file gambar.',
-        processingImage: 'Memproses gambar...',
-        noBarcodeFound: 'Tidak ada barcode yang ditemukan pada gambar',
-        imageProcessingError: 'Terjadi kesalahan saat memproses gambar'
-    },
-    alerts: {
-        lowStock: 'Stok Rendah',
-        lowStockMessage: 'Stok {item} tinggal {quantity} {unit}',
-        expired: 'Kedaluwarsa',
-        expiredMessage: '{item} telah kedaluwarsa sejak {days} hari yang lalu',
-        expiringSoon: 'Akan Kedaluwarsa',
-        expiringSoonMessage: '{item} akan kedaluwarsa dalam {days} hari'
-    },
-    recommendations: {
-        restock: 'Restok {item}',
-        restockReason: 'Stok saat ini: {quantity} {unit} (minimum: {minQuantity} {unit})',
-        popular: 'Item Populer',
-        popularReason: '{item} sering digunakan',
-        watch: 'Pantau {item}',
-        watchReason: 'Telah digunakan {count} kali dalam 30 hari terakhir',
-        consider: 'Pertimbangkan untuk merestok {item}',
-        considerReason: 'Paling sering digunakan dalam kategori {category} ({count} kali)'
+        itemUsedSuccessfully: '{itemName} 1 {unit} digunakan ({quantity} {unit} tersisa)'
     },
     app: {
         title: 'Smart Home Inventory'
@@ -39,7 +13,6 @@ window.idMessages = {
     nav: {
         inventory: 'Inventaris',
         add: 'Tambah Item',
-        analytics: 'Analitik',
         purchaseList: 'Daftar Belanja',
         menu: 'Menu',
         language: 'Bahasa'
@@ -64,8 +37,7 @@ window.idMessages = {
         unit: 'Satuan',
         expiryDate: 'Tanggal Kedaluwarsa',
         status: 'Status',
-        actions: 'Aksi',
-        scanBarcode: 'Pindai Barcode'
+        actions: 'Aksi'
     },
     categories: {
         food: 'Makanan',
@@ -94,30 +66,7 @@ window.idMessages = {
         selectCategory: 'Pilih Kategori',
         cancel: 'Batal',
         save: 'Simpan',
-        update: 'Perbarui',
-        barcode: 'Barcode',
-        barcodeType: 'Jenis Barcode',
-        enterBarcode: 'Masukkan barcode atau buat yang baru',
-        generateBarcode: 'Buat Barcode',
-        barcodePreview: 'Pratinjau Barcode',
-        ean13: 'EAN-13',
-        upca: 'UPC-A',
-        scanBarcodeMessage: 'Arahkan barcode ke dalam frame',
-        positionBarcode: 'Posisikan barcode di area pemindaian',
-        startScan: 'Mulai Memindai',
-        stopScan: 'Hentikan Pemindaian',
-        browserNotSupported: 'Browser tidak mendukung akses kamera',
-        cameraPermissionDenied: 'Izin akses kamera ditolak',
-        noCameraFound: 'Kamera tidak ditemukan',
-        cameraInUse: 'Kamera sedang digunakan oleh aplikasi lain',
-        scan: 'Pindai',
-        orUploadImage: 'atau unggah gambar',
-        uploadImage: 'Unggah Gambar'
-    },
-    analytics: {
-        title: 'Analitik',
-        smartAlerts: 'Notifikasi Cerdas',
-        smartRecommendations: 'Rekomendasi Cerdas'
+        update: 'Perbarui'
     },
     status: {
         normal: 'Normal',

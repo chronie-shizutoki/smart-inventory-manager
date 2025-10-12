@@ -1,38 +1,11 @@
 window.zhTWMessages = {
     notifications: {
-        barcodeError: '條碼產生失敗',
         itemAdded: '物品新增成功',
         itemUpdated: '物品更新成功',
         itemDeleted: '物品刪除成功',
         error: '操作失敗，請稍後重試',
         insufficientStock: '庫存不足：{itemName}',
-        itemUsedSuccessfully: '已使用 1 {unit} {itemName}（剩餘 {quantity} {unit}）',
-        itemFound: '物品尋找成功',
-        itemNotFound: '未找到該物品',
-        barcodeScanned: '條碼掃描成功',
-        invalidImageType: '圖片格式無效，請選擇圖片檔案',
-        processingImage: '圖片處理中...',
-        noBarcodeFound: '未識別到圖片中的條碼',
-        imageProcessingError: '圖片處理出錯'
-    },
-    alerts: {
-        lowStock: '庫存預警',
-        lowStockMessage: '{item} 庫存僅剩 {quantity} {unit}',
-        expired: '物品已過期',
-        expiredMessage: '{item} 已過期 {days} 天',
-        expiringSoon: '即將過期',
-        expiringSoonMessage: '{item} 將在 {days} 天後過期'
-    },
-    recommendations: {
-        restock: '補貨 {item}',
-        restockReason: '目前庫存：{quantity} {unit}（最低：{minQuantity} {unit}）',
-        popular: '熱門物品',
-        popularReason: '{item} 使用頻率高',
-        watch: '關注 {item}',
-        watchReason: '過去30天使用了 {count} 次',
-        freqUseReason: '過去30天使用了 {count} 次（目前庫存：{quantity} {unit}）',
-        consider: '建議補貨 {item}',
-        considerReason: '在「{category}」類別中使用最多（{count} 次）'
+        itemUsedSuccessfully: '已使用 1 {unit} {itemName}（剩餘 {quantity} {unit}）'
     },
     app: {
         title: '智慧家居庫存管理系統'
@@ -40,7 +13,6 @@ window.zhTWMessages = {
     nav: {
         inventory: '庫存管理',
         add: '新增物品',
-        analytics: '數據分析',
         purchaseList: '採購清單',
         menu: '選單',
         language: '語言設定'
@@ -65,8 +37,7 @@ window.zhTWMessages = {
         unit: '單位',
         expiryDate: '有效期限',
         status: '狀態',
-        actions: '操作',
-        scanBarcode: '掃碼辨識'
+        actions: '操作'
     },
     categories: {
         food: '食品',
@@ -95,35 +66,36 @@ window.zhTWMessages = {
         selectCategory: '選擇類別',
         cancel: '取消',
         save: '儲存',
-        update: '更新',
-        barcode: '條碼',
-        barcodeType: '條碼類型',
-        enterBarcode: '輸入或產生條碼',
-        generateBarcode: '產生條碼',
-        barcodePreview: '條碼預覽',
-        ean13: 'EAN-13',
-        upca: 'UPC-A',
-        scanBarcodeMessage: '請將條碼置於掃描框內',
-        positionBarcode: '對準條碼至掃描區域',
-        startScan: '開始掃描',
-        stopScan: '停止掃描',
-        browserNotSupported: '目前瀏覽器不支援相機存取',
-        cameraPermissionDenied: '相機權限未開啟',
-        noCameraFound: '未偵測到相機裝置',
-        cameraInUse: '相機被其他程式占用',
-        scan: '掃描辨識',
-        orUploadImage: '或上傳圖片',
-        uploadImage: '上傳圖片'
-    },
-    analytics: {
-        title: '數據分析',
-        smartAlerts: '智能提醒',
-        smartRecommendations: '個人化推薦'
+        update: '更新'
     },
     status: {
         normal: '庫存正常',
         lowStock: '庫存不足',
         expiringSoon: '即將到期',
         expired: '已過期'
+    },
+    aiRecord: {
+        title: 'AI紀錄生成器',
+        description: '使用AI從圖片快速生成庫存紀錄',
+        apiKey: 'SiliconFlow API金鑰',
+        apiKeyRequired: '請輸入API金鑰',
+        noImagesSelected: '請至少選擇一張圖片',
+        apiKeyHint: '您可以從SiliconFlow控制台取得API金鑰',
+        uploadImages: '上傳圖片',
+        dragDropOrClick: '拖拽檔案至此處或點擊上傳',
+        supportedFormats: '支援JPG、PNG、WebP格式（最多10張）',
+        uploadedImages: '已上傳圖片',
+        generateRecords: '生成紀錄',
+        aiRecordButton: 'AI紀錄',
+        generating: '正在生成紀錄...',
+        generatingRecords: '正在生成紀錄，請稍候...',
+        success: '紀錄生成成功',
+        error: '紀錄生成失敗',
+        failedToGenerate: '未能生成紀錄，請檢查您的圖片和API金鑰',
+        recordsGenerated: '紀錄已生成',
+        reviewAndConfirm: '請檢查並確認以下生成的紀錄',
+        noRecordsGenerated: '沒有生成任何紀錄',
+        confirmAdd: '確認添加',
+        editRecord: '編輯紀錄'
     }
 };

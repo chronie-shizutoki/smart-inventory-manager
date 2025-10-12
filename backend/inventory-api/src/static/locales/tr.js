@@ -1,37 +1,11 @@
 window.trMessages = {
     notifications: {
-        barcodeError: 'Barkod oluşturulamadı',
         itemAdded: 'Ürün eklendi',
         itemUpdated: 'Ürün güncellendi',
         itemDeleted: 'Ürün silindi',
         error: 'İşlem başarısız oldu. Lütfen tekrar deneyiniz',
         insufficientStock: 'Yetersiz Stok: {itemName}',
-        itemUsedSuccessfully: '{itemName} ürününden 1 {unit} kullanıldı ({quantity} {unit} kaldı)',
-        itemFound: 'Ürün bulundu',
-        itemNotFound: 'Ürün bulunamadı',
-        barcodeScanned: 'Barkod başarıyla taranıldı',
-        invalidImageType: 'Geçersiz resim formatı. Lütfen bir resim dosyası seçiniz.',
-        processingImage: 'Resim işleniyor...',
-        noBarcodeFound: 'Resimde barkod bulunamadı',
-        imageProcessingError: 'Resim işleme sırasında hata oluştu'
-    },
-    alerts: {
-        lowStock: 'Düşük Stok',
-        lowStockMessage: '{item} stokunda yalnızca {quantity} {unit} kaldı',
-        expired: 'Süresi Doldu',
-        expiredMessage: '{item} ürününün son kullanma tarihi {days} gün önce geçti',
-        expiringSoon: 'Son Kullanma Tarihi Yaklaşıyor',
-        expiringSoonMessage: '{item} ürününün son kullanma tarihine {days} gün kaldı'
-    },
-    recommendations: {
-        restock: '{item} ürününü tedarik edin',
-        restockReason: 'Mevcut stok: {quantity} {unit} (Minimum: {minQuantity} {unit})',
-        popular: 'Popüler Ürün',
-        popularReason: '{item} sıklıkla kullanılıyor',
-        watch: '{item} ürününü izleyin',
-        watchReason: 'Son 30 günde {count} kez kullanıldı',
-        consider: '{item} ürününü tedarik etmeyi değerlendirin',
-        considerReason: '{category} kategorisinde en çok kullanılan ürün ({count} kez)'
+        itemUsedSuccessfully: '{itemName} ürününden 1 {unit} kullanıldı ({quantity} {unit} kaldı)'
     },
     app: {
         title: 'Akıllı Ev Envanteri'
@@ -39,7 +13,6 @@ window.trMessages = {
     nav: {
         inventory: 'Envanter',
         add: 'Ürün Ekle',
-        analytics: 'Analitik',
         purchaseList: 'Alışveriş Listesi',
         menu: 'Menü',
         language: 'Dil'
@@ -64,8 +37,7 @@ window.trMessages = {
         unit: 'Birim',
         expiryDate: 'Son Kullanma Tarihi',
         status: 'Durum',
-        actions: 'İşlemler',
-        scanBarcode: 'Barkod Tara'
+        actions: 'İşlemler'
     },
     categories: {
         food: 'Yiyecek',
@@ -94,30 +66,7 @@ window.trMessages = {
         selectCategory: 'Kategori Seçiniz',
         cancel: 'İptal',
         save: 'Kaydet',
-        update: 'Güncelle',
-        barcode: 'Barkod',
-        barcodeType: 'Barkod Türü',
-        enterBarcode: 'Barkodu girin veya yeni oluşturun',
-        generateBarcode: 'Oluştur',
-        barcodePreview: 'Barkod Önizleme',
-        ean13: 'EAN-13',
-        upca: 'UPC-A',
-        scanBarcodeMessage: 'Barkodu çerçeve içine yerleştirin',
-        positionBarcode: 'Barkodu tarayıcı alanına yerleştirin',
-        startScan: 'Tarayıcıyı Başlat',
-        stopScan: 'Tarayıcıyı Durdur',
-        browserNotSupported: 'Tarayıcı kamera erişimini desteklemiyor',
-        cameraPermissionDenied: 'Kamera izni reddedildi',
-        noCameraFound: 'Kamera bulunamadı',
-        cameraInUse: 'Kamera başka bir uygulama tarafından kullanılıyor',
-        scan: 'Tara',
-        orUploadImage: 'veya resim yükleyin',
-        uploadImage: 'Resim Yükle'
-    },
-    analytics: {
-        title: 'Analitik',
-        smartAlerts: 'Akıllı Uyarılar',
-        smartRecommendations: 'Akıllı Öneriler'
+        update: 'Güncelle'
     },
     status: {
         normal: 'Normal',
