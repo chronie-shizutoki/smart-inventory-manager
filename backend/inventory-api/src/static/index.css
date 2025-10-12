@@ -389,6 +389,32 @@ button {
         }
         .glass-select-option:hover, .glass-select-option.is-highlighted { background: rgba(255,255,255,0.3); }
         .glass-select-option.is-selected { font-weight: 600; }
+        
+        /* 自定义下拉菜单滚动条样式 - 浅色模式 */
+        .glass-select-menu::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .glass-select-menu::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .glass-select-menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .glass-select-menu::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 兼容Firefox的滚动条样式 */
+        .glass-select-menu {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+        }
 
              /* 物品名称和描述自动换行样式 */
             .text-sm.font-medium.text-gray-900,
@@ -746,6 +772,32 @@ input[type="date"] {
 
             .border-yellow-500 {
                 border-color: #d97706;
+            }
+            
+            /* 深色模式下的自定义滚动条样式 */
+            .glass-select-menu::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            .glass-select-menu::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 4px;
+            }
+            
+            .glass-select-menu::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+                transition: background-color 0.2s ease;
+            }
+            
+            .glass-select-menu::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+            
+            /* 深色模式下兼容Firefox的滚动条样式 */
+            .glass-select-menu {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
             }
 
             /* 标签背景色 */
