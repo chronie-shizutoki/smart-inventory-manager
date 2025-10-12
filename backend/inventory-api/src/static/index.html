@@ -70,13 +70,6 @@
                                 {{ $t('nav.add') }}
                             </span>
                         </button>
-                        <button @click="currentView = 'analytics'" :class="{'bg-blue-500': currentView === 'analytics'}"
-                            class="p-2 rounded hover:bg-blue-500 transition-colors relative group">
-                            <i class="fas fa-chart-bar"></i>
-                            <span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                                {{ $t('nav.analytics') }}
-                            </span>
-                        </button>
                         <button @click="currentView = 'purchaseList'" :class="{'bg-blue-500': currentView === 'purchaseList'}"
                             class="p-2 rounded hover:bg-blue-500 transition-colors relative group">
                             <i class="fas fa-shopping-cart"></i>
@@ -124,12 +117,6 @@
                             class="w-full flex items-center px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors">
                             <i class="fas fa-plus mr-3 text-lg"></i>
                             <span class="font-medium">{{ $t('nav.add') }}</span>
-                        </button>
-                        <button @click="navigateAndClose('analytics')"
-                            :class="{'bg-blue-100 text-blue-700': currentView === 'analytics'}"
-                            class="w-full flex items-center px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors">
-                            <i class="fas fa-chart-bar mr-3 text-lg"></i>
-                            <span class="font-medium">{{ $t('nav.analytics') }}</span>
                         </button>
                         <button @click="navigateAndClose('purchaseList')"
                             :class="{'bg-blue-100 text-blue-700': currentView === 'purchaseList'}"
@@ -566,48 +553,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- 智能分析视图 -->
-                <div v-else-if="currentView === 'analytics'" key="analytics" class="max-w-4xl mx-auto">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ $t('analytics.title') }}</h2>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- 智能提醒 -->
-                        <div class="rounded-lg shadow p-6 glass-card">
-                            <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                                <i class="fas fa-bell text-yellow-500 mr-2"></i>
-                                {{ $t('analytics.smartAlerts') }}
-                            </h3>
-                            <div class="space-y-3">
-                                <div v-for="alert in smartAlerts" :key="alert.id" :class="getAlertClass(alert.type)"
-                                    class="p-3 rounded-lg border-l-4">
-                                    <div class="flex items-center">
-                                        <i :class="getAlertIcon(alert.type)" class="mr-2"></i>
-                                        <span class="font-medium">{{ $t('alerts.' + alert.titleKey, alert.titleParams) }}</span>
-                                    </div>
-                                    <p class="text-sm mt-1">{{ $t('alerts.' + alert.messageKey, alert.messageParams) }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 智能推荐 -->
-                        <div class="rounded-lg shadow p-6 glass-card">
-                            <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                                <i class="fas fa-lightbulb text-blue-500 mr-2"></i>
-                                {{ $t('analytics.smartRecommendations') }}
-                            </h3>
-                            <div class="space-y-3">
-                                <div v-for="recommendation in smartRecommendations" :key="recommendation.id"
-                                    class="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-shopping-cart text-blue-500 mr-2"></i>
-                                        <span class="font-medium">{{ $t('recommendations.' + recommendation.titleKey, recommendation.titleParams) }}</span>
-                                    </div>
-                                    <p class="text-sm mt-1 text-gray-600">{{ $t('recommendations.' + recommendation.reasonKey, recommendation.reasonParams) }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </transition>
         </main>
 

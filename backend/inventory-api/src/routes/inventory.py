@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.models.inventory import db, InventoryItem, Category, SmartAlert
+from src.models.inventory import db, InventoryItem, Category
 from datetime import datetime, date, timedelta
 from sqlalchemy import or_
 from src.translations import get_translation
@@ -183,75 +183,7 @@ def get_categories():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 获取智能提醒
-@inventory_bp.route('/alerts', methods=['GET'])
-def get_smart_alerts():    
-    # 获取语言参数，默认为英语
-    language = request.args.get('language', 'en')
-    print(f"Received language parameter: {language}")
-    try:
-        alerts = []
-        today = date.today()
-        
-        # 检查过期和即将过期的物品
-        items = InventoryItem.query.all()
-        for item in items:
-            if item.expiry_date:
-                days_until_expiry = (item.expiry_date - today).days
-                
-                if days_until_expiry < 0:
-                    # 已过期
-                    # 构建提醒对象
-                    alerts.append({
-                        'id': f'expired-{item.id}',
-                        'type': 'error',
-                        'titleKey': 'expired',
-                        'titleParams': {},
-                        'messageKey': 'expiredMessage',
-                        'messageParams': {
-                            'item': item.name,
-                            'days': abs(days_until_expiry)
-                        },
-                        'itemId': item.id
-                    })
-                elif days_until_expiry <= 3:
-                    # 即将过期
-                    alerts.append({
-                        'id': f'expiring-{item.id}',
-                        'type': 'warning',
-                        'titleKey': 'expiringSoon',
-                        'titleParams': {},
-                        'messageKey': 'expiringSoonMessage',
-                        'messageParams': {
-                            'item': item.name,
-                            'days': days_until_expiry
-                        },
-                        'itemId': item.id
-                    })
-            
-            # 检查库存不足
-            if item.quantity <= item.min_quantity:
-                # 构建提醒对象
-                alerts.append({
-                        'id': f'lowstock-{item.id}',
-                        'type': 'warning',
-                        'titleKey': 'lowStock',
-                        'titleParams': {},
-                        'messageKey': 'lowStockMessage',
-                        'messageParams': {
-                            'item': item.name,
-                            'quantity': item.quantity,
-                            'unit': item.unit
-                        },
-                        'itemId': item.id
-                    })
-        
-        return jsonify({
-            'success': True,
-            'data': alerts
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+
 
 # 记录物品使用
 @inventory_bp.route('/items/<int:item_id>/use', methods=['POST'])
@@ -293,96 +225,7 @@ def record_item_usage(item_id):
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 获取智能推荐
-@inventory_bp.route('/recommendations', methods=['GET'])
-def get_smart_recommendations():    
-    # 获取语言参数，默认为英语
-    language = request.args.get('language', 'en')
-    try:
-        recommendations = []
-        
-        # 1. 基于库存不足的推荐
-        low_stock_items = InventoryItem.query.filter(
-            InventoryItem.quantity <= InventoryItem.min_quantity
-        ).all()
-        
-        for item in low_stock_items:
-            recommendations.append({
-                    'id': f'restock-{item.id}',
-                    'type': 'suggestion',
-                    'titleKey': 'restock',
-                    'titleParams': {'item': item.name},
-                    'reasonKey': 'restockReason',
-                    'reasonParams': {
-                        'quantity': item.quantity,
-                        'unit': item.unit,
-                        'minQuantity': item.min_quantity
-                    },
-                    'itemId': item.id
-                })
-        
-        # 2. 基于使用频率和最后使用时间的推荐
-        # 获取最近30天内有使用记录的物品
-        thirty_days_ago = datetime.utcnow() - timedelta(days=30)
-        frequently_used_items = InventoryItem.query.filter(
-            InventoryItem.last_used_at >= thirty_days_ago,
-            InventoryItem.quantity > 0  # 确保有库存
-        ).order_by(InventoryItem.usage_count.desc()).limit(5).all()
-        
-        # 找出使用频率高但库存不高的物品
-        for item in frequently_used_items:
-            # 计算库存充足率 = 当前库存 / 最低库存
-            stock_ratio = item.quantity / item.min_quantity if item.min_quantity > 0 else 0
-            
-            if stock_ratio < 2 and item.id not in [rec['itemId'] for rec in recommendations]:
-                recommendations.append({
-                    'id': f'freq-use-{item.id}',
-                    'type': 'suggestion',
-                    'titleKey': 'watch',
-                    'titleParams': {'item': item.name},
-                    'reasonKey': 'freqUseReason',
-                    'reasonParams': {
-                        'count': item.usage_count,
-                        'quantity': item.quantity,
-                        'unit': item.unit
-                    },
-                    'itemId': item.id
-                })
-                
-        # 3. 基于分类的推荐
-        # 如果推荐数量仍然不足，根据分类添加一些推荐
-        if len(recommendations) < 3:
-            categories = Category.query.all()
-            for category in categories:
-                # 找出每个分类中使用频率最高但不在推荐列表中的物品
-                top_item = InventoryItem.query.filter(
-                    InventoryItem.category == category.name,
-                    InventoryItem.id.notin_([rec['itemId'] for rec in recommendations if rec['itemId']])
-                ).order_by(InventoryItem.usage_count.desc()).first()
-                
-                if top_item and top_item.usage_count > 0:
-                    recommendations.append({
-                        'id': f'category-{category.name}-{top_item.id}',
-                        'type': 'suggestion',
-                        'titleKey': 'consider',
-                        'titleParams': {'item': top_item.name},
-                        'reasonKey': 'categoryReason',
-                        'reasonParams': {
-                            'category': category.name,
-                            'count': top_item.usage_count
-                        },
-                        'itemId': top_item.id
-                    })
-                    
-                if len(recommendations) >= 3:
-                    break
-        
-        return jsonify({
-            'success': True,
-            'data': recommendations
-        })
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+
 
 # 采购清单生成
 @inventory_bp.route('/items/generate-purchase-list', methods=['GET'])

@@ -185,9 +185,7 @@ const app = createApp({
             }
         ],
         
-        // 智能分析数据
-        smartAlerts: [],
-        smartRecommendations: [],
+
         // 采购清单数据
         purchaseList: [],
         
@@ -281,32 +279,6 @@ const app = createApp({
             return icons[category] || 'fas fa-box';
         },
         
-        // 从API加载智能提醒
-        async loadAlertsFromAPI() {
-            try {
-                const response = await fetch(`/api/inventory/alerts?language=${this.currentLocale}`);
-                const result = await response.json();
-                if (result.success) {
-                    this.smartAlerts = result.data;
-                }
-            } catch (error) {
-                console.error('Failed to load alerts from API:', error);
-            }
-        },
-        
-        // 从API加载智能推荐
-        async loadRecommendationsFromAPI() {
-            try {
-                const response = await fetch(`/api/inventory/recommendations?language=${this.currentLocale}`);
-                const result = await response.json();
-                if (result.success) {
-                    this.smartRecommendations = result.data;
-                }
-            } catch (error) {
-                console.error('Failed to load recommendations from API:', error);
-            }
-        },
-
         // 从API加载采购清单
         async loadPurchaseListFromAPI() {
             try {
@@ -318,12 +290,6 @@ const app = createApp({
             } catch (error) {
                 console.error('Failed to load purchase list from API:', error);
             }
-        },
-        
-        // 当物品数据更新时，重新加载智能分析数据
-        async refreshAnalyticsData() {
-            await this.loadAlertsFromAPI();
-            await this.loadRecommendationsFromAPI();
         },
         
         // 记录物品使用
@@ -419,25 +385,7 @@ const app = createApp({
             return this.$t('status.normal');
         },
         
-        // 获取提醒样式
-        getAlertClass(type) {
-            const classes = {
-                error: 'bg-red-50 border-red-500',
-                warning: 'bg-yellow-50 border-yellow-500',
-                info: 'bg-blue-50 border-blue-500'
-            };
-            return classes[type] || classes.info;
-        },
-        
-        // 获取提醒图标
-        getAlertIcon(type) {
-            const icons = {
-                error: 'fas fa-exclamation-triangle text-red-500',
-                warning: 'fas fa-exclamation-circle text-yellow-500',
-                info: 'fas fa-info-circle text-blue-500'
-            };
-            return icons[type] || icons.info;
-        },
+
         
         // 编辑物品
         editItem(item) {
@@ -517,8 +465,6 @@ const app = createApp({
                 // 从API加载数据
                 await this.loadItemsFromAPI();
                 await this.loadStatsFromAPI();
-                // 加载智能分析数据
-                await this.refreshAnalyticsData();
             } catch (error) {
                 console.error('Failed to load data from API:', error);
                 // 如果API失败，从localStorage加载数据
@@ -582,8 +528,6 @@ const app = createApp({
                 if (result.success) {
                     // 重新加载数据
                     await this.loadItemsFromAPI();
-                    // 刷新智能分析数据
-                    await this.refreshAnalyticsData();
                     console.log('Item saved successfully');
                     return true;
                 } else {
@@ -606,8 +550,6 @@ const app = createApp({
                 if (result.success) {
                     // 重新加载数据
                     await this.loadItemsFromAPI();
-                    // 刷新智能分析数据
-                    await this.refreshAnalyticsData();
                     return true;
                 } else {
                     throw new Error(result.error || 'Failed to delete item');
@@ -865,9 +807,6 @@ const app = createApp({
             updateDocumentDirection(newLocale); // 更新文本方向
         },
         currentView(newView) {
-            if (newView === 'analytics') {
-                this.loadRecommendationsFromAPI();
-            }
             if (newView === 'purchaseList') {
                 this.loadPurchaseListFromAPI();
             }

@@ -33,7 +33,7 @@ with app.app_context():
     db.create_all()
     
     # 导入库存模型
-    from src.models.inventory import InventoryItem, Category, SmartAlert
+    from src.models.inventory import InventoryItem, Category
     
     # 初始化示例数据
     if InventoryItem.query.count() == 0:

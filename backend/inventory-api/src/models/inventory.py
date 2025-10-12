@@ -112,27 +112,3 @@ class Category(db.Model):
             'createdAt': self.created_at.isoformat()
         }
 
-class SmartAlert(db.Model):
-    __tablename__ = 'smart_alerts'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('inventory_items.id'), nullable=False)
-    alert_type = db.Column(db.String(20), nullable=False)  # 'expiry', 'low_stock', 'expired'
-    title = db.Column(db.String(100), nullable=False)
-    message = db.Column(db.Text, nullable=False)
-    is_read = db.Column(db.Boolean, nullable=False, default=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    
-    item = db.relationship('InventoryItem', backref=db.backref('alerts', lazy=True))
-    
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'itemId': self.item_id,
-            'type': self.alert_type,
-            'title': self.title,
-            'message': self.message,
-            'isRead': self.is_read,
-            'createdAt': self.created_at.isoformat()
-        }
-
