@@ -37,7 +37,8 @@ window.zhTWMessages = {
         unit: '單位',
         expiryDate: '有效期限',
         status: '狀態',
-        actions: '操作'
+        actions: '操作',
+        showExpired: '顯示所有物品'
     },
     categories: {
         food: '食品',

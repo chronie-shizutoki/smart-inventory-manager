@@ -145,6 +145,12 @@
                             </div>
                             <!-- 分类筛选 -->
                             <glass-select :options="[{ value: '', label: $t('inventory.allCategories') }, ...categoryOptions]" v-model="selectedCategory" class="px-0"></glass-select>
+                            
+                            <!-- 显示已过期物品开关 -->
+                            <div class="flex items-center space-x-2">
+                                <span>{{ $t('inventory.showExpired') }}</span>
+                                <input type="checkbox" v-model="showExpiredItems" class="form-checkbox h-4 w-4 text-blue-500 transition duration-150 ease-in-out">
+                            </div>
 
                         </div>
                         <!-- 移动端搜索 -->
@@ -155,8 +161,12 @@
                                 <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                             </div>
                             <!-- 分类筛选 -->
-                            <glass-select :options="[{ value: '', label: $t('inventory.allCategories') }, ...categoryOptions]" v-model="selectedCategory" class="w-full"></glass-select>
-
+                            <glass-select :options="[{ value: '', label: $t('inventory.allCategories') }, ...categoryOptions]" v-model="selectedCategory"></glass-select>
+                        </div>
+                        <!-- 移动端显示已过期物品开关 -->
+                        <div class="md:hidden flex items-center justify-between mt-3 px-2">
+                            <span>{{ $t('inventory.showExpired') }}</span>
+                            <input type="checkbox" v-model="showExpiredItems" class="form-checkbox h-4 w-4 text-blue-500 transition duration-150 ease-in-out">
                         </div>
                     </div>
 
@@ -191,10 +201,10 @@
                         </div>
                         <div class="p-4 rounded-lg shadow glass-card">
                             <div class="flex items-center">
-                                <i class="fas fa-tags text-green-500 text-2xl mr-3"></i>
+                                <i class="fas fa-exclamation-circle text-red-500 text-2xl mr-3"></i>
                                 <div>
-                                    <p class="text-gray-600 text-sm">{{ $t('stats.categories') }}</p>
-                                    <p class="text-2xl font-bold number-change">{{ categories.length }}</p>
+                                    <p class="text-gray-600 text-sm">{{ $t('status.expired') }}</p>
+                                    <p class="text-2xl font-bold number-change">{{ expiredItems }}</p>
                                 </div>
                             </div>
                         </div>

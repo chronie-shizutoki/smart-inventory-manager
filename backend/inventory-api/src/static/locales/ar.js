@@ -37,7 +37,8 @@ window.arMessages = {
         unit: 'الوحدة',
         expiryDate: 'تاريخ الانتهاء',
         status: 'الحالة',
-        actions: 'الإجراءات'
+        actions: 'الإجراءات',
+        showExpired: 'عرض جميع العناصر'
     },
     categories: {
         food: 'أغذية',

@@ -37,7 +37,8 @@ window.koMessages = {
         unit: '단위',
         expiryDate: '유통기한',
         status: '상태',
-        actions: '관리'
+        actions: '관리',
+        showExpired: '모든 품목 표시'
     },
     categories: {
         food: '식품',

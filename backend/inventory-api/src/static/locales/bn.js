@@ -37,7 +37,8 @@ window.bnMessages = {
         unit: 'একক',
         expiryDate: 'মেয়াদ শেষের তারিখ',
         status: 'স্থিতি',
-        actions: 'ক্রিয়া'
+        actions: 'ক্রিয়া',
+        showExpired: 'সব আইটেম প্রদর্শন করুন'
     },
     categories: {
         food: 'খাদ্য',

@@ -37,7 +37,8 @@ window.enMessages = {
         unit: 'Unit',
         expiryDate: 'Expiry Date',
         status: 'Status',
-        actions: 'Actions'
+        actions: 'Actions',
+        showExpired: 'Show All Items'
     },
     categories: {
         food: 'Food',

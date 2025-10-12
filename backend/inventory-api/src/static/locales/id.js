@@ -37,7 +37,8 @@ window.idMessages = {
         unit: 'Satuan',
         expiryDate: 'Tanggal Kedaluwarsa',
         status: 'Status',
-        actions: 'Aksi'
+        actions: 'Aksi',
+        showExpired: 'Tampilkan semua item'
     },
     categories: {
         food: 'Makanan',

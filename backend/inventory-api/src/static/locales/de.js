@@ -37,7 +37,8 @@ window.deMessages = {
         unit: 'Einheit',
         expiryDate: 'Haltbarkeit',
         status: 'Status',
-        actions: 'Aktionen'
+        actions: 'Aktionen',
+        showExpired: 'Alle Artikel anzeigen'
     },
     categories: {
         food: 'Lebensmittel',

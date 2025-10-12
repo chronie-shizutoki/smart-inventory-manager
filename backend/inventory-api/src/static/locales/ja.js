@@ -29,7 +29,8 @@ window.jaMessages = {
         unit: '単位',
         expiryDate: '賞味期限',
         status: 'ステータス',
-        actions: '操作'
+        actions: '操作',
+        showExpired: 'すべてのアイテムを表示'
     },
     categories: {
         food: '食品',

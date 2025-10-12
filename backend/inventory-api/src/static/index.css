@@ -206,6 +206,28 @@ button {
 
         /* 浅色模式样式支持 */
         @media (prefers-color-scheme: light) {
+            /* 自定义复选框样式 - 浅色模式 */
+            .form-checkbox {
+                border-color: #2c5f52;
+                background-color: rgba(255, 255, 255, 0.9);
+            }
+            
+            /* 复选框悬停效果 - 浅色模式 */
+            .form-checkbox:hover {
+                border-color: #059669;
+                background-color: rgba(5, 150, 105, 0.05);
+            }
+            
+            /* 复选框选中状态 - 浅色模式 */
+            .form-checkbox:checked {
+                background-color: #2c5f52;
+                border-color: #2c5f52;
+            }
+            
+            /* 复选框聚焦效果 - 浅色模式 */
+            .form-checkbox:focus {
+                box-shadow: 0 0 0 2px rgba(44, 95, 82, 0.3);
+            }
             /* 条形码扫描模态框 - 浅色模式 */
             #barcode-scanner-modal {
                 background-image: radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, transparent 60%);
@@ -731,6 +753,73 @@ input[type="date"] {
             /* 标签样式 */
             .text-blue-800 {
                 color: #a5f3fc;
+            }
+            
+            /* 自定义复选框样式 */
+            .form-checkbox {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #1a936f;
+                border-radius: 4px;
+                background-color: rgba(255, 255, 255, 0.1);
+                position: relative;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* 复选框悬停效果 */
+            .form-checkbox:hover {
+                border-color: #22c55e;
+                background-color: rgba(34, 197, 94, 0.1);
+            }
+            
+            /* 复选框选中状态 */
+            .form-checkbox:checked {
+                background-color: #1a936f;
+                border-color: #1a936f;
+            }
+            
+            /* 复选框选中状态图标 */
+            .form-checkbox:checked::after {
+                content: '✓';
+                color: white;
+                font-size: 12px;
+                font-weight: bold;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            
+            /* 复选框聚焦效果 */
+            .form-checkbox:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(26, 147, 111, 0.3);
+            }
+            
+            /* 复选框动画效果 */
+            @keyframes checkAnimation {
+                0% {
+                    transform: scale(0);
+                    opacity: 0;
+                }
+                80% {
+                    transform: scale(1.2);
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+            
+            .form-checkbox:checked::after {
+                animation: checkAnimation 0.3s ease;
             }
             
             /* text-blue-700 深色模式适配 */

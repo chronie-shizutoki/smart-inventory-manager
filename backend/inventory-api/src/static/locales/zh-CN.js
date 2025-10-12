@@ -37,7 +37,8 @@ window.zhCNMessages = {
         unit: '单位',
         expiryDate: '过期日期',
         status: '状态',
-        actions: '操作'
+        actions: '操作',
+        showExpired: '显示所有物品'
     },
     categories: {
         food: '食品',

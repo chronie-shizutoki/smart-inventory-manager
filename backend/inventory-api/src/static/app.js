@@ -100,13 +100,14 @@ updateDocumentDirection(i18n.global.locale);
 const app = createApp({
 
     data() {
-            return {
-                currentView: 'inventory',
+    return {
+        currentView: 'inventory',
         currentLocale: i18n.global.locale,
         searchQuery: '',
         selectedCategory: '',
         editingItem: null,
         showMobileNav: false,
+        showExpiredItems: true, // 控制是否显示全部物品
         // 语言选择弹窗（桌面端）
         showLocaleModal: false,
         tempLocale: i18n.global.locale,
@@ -216,6 +217,15 @@ const app = createApp({
                 filtered = filtered.filter(item => item.category === this.selectedCategory);
             }
             
+            // 按是否显示已过期物品过滤
+            if (!this.showExpiredItems) {
+                const today = new Date();
+                filtered = filtered.filter(item => {
+                    // 没有过期日期或者未过期的物品不显示
+                    return !item.expiryDate || new Date(item.expiryDate) - today <= 0;
+                });
+            }
+            
             return filtered;
         },
         
@@ -234,6 +244,15 @@ const app = createApp({
             return this.items.filter(item => {
                 const expiryDate = new Date(item.expiryDate);
                 return expiryDate <= sevenDaysLater && expiryDate >= today;
+            }).length;
+        },
+        
+        // 已过期物品数量
+        expiredItems() {
+            const today = new Date();
+            return this.items.filter(item => {
+                const expiryDate = new Date(item.expiryDate);
+                return expiryDate < today;
             }).length;
         },
         

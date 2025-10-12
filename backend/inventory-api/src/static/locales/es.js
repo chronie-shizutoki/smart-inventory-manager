@@ -37,7 +37,8 @@ window.esMessages = {
         unit: 'Unidad',
         expiryDate: 'Caducidad',
         status: 'Estado',
-        actions: 'Acciones'
+        actions: 'Acciones',
+        showExpired: 'Mostrar todos los artículos'
     },
     categories: {
         food: 'Alimentos',

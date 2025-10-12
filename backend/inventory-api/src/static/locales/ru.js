@@ -37,7 +37,8 @@ window.ruMessages = {
         unit: 'Ед.',
         expiryDate: 'Годен до',
         status: 'Статус',
-        actions: 'Действия'
+        actions: 'Действия',
+        showExpired: 'Показать все товары'
     },
     categories: {
         food: 'Продукты',

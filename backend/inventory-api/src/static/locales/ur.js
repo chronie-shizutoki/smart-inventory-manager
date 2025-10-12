@@ -37,7 +37,8 @@ window.urMessages = {
         unit: 'اکائی',
         expiryDate: 'ختم ہونے کی تاریخ',
         status: 'حالت',
-        actions: 'اعمال'
+        actions: 'اعمال',
+        showExpired: 'تمام ختم ہونے والے آئٹمز کو نمایش کریں'
     },
     categories: {
         food: 'کھانا',

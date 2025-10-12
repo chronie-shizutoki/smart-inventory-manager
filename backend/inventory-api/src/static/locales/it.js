@@ -37,7 +37,8 @@ window.itMessages = {
         unit: 'Unità',
         expiryDate: 'Data di scadenza',
         status: 'Stato',
-        actions: 'Azioni'
+        actions: 'Azioni',
+        showExpired: 'Mostra tutti gli articoli'
     },
     categories: {
         food: 'Alimentari',

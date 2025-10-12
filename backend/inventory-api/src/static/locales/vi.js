@@ -37,7 +37,8 @@ window.viMessages = {
         unit: 'Đơn vị',
         expiryDate: 'Ngày hết hạn',
         status: 'Trạng thái',
-        actions: 'Thao tác'
+        actions: 'Thao tác',
+        showExpired: 'Hiển thị tất cả mặt hàng hết hạn'
     },
     categories: {
         food: 'Thực phẩm',
