@@ -219,10 +219,18 @@ const app = createApp({
             
             // 按是否显示已过期物品过滤
             if (!this.showExpiredItems) {
+                // 创建仅包含日期部分的比较（忽略时区差异）
                 const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
                 filtered = filtered.filter(item => {
-                    // 没有过期日期或者未过期的物品不显示
-                    return !item.expiryDate || new Date(item.expiryDate) - today <= 0;
+                    // 没有过期日期或者已过期的物品显示
+                    if (!item.expiryDate) return true;
+                    
+                    const expiryDate = new Date(item.expiryDate);
+                    expiryDate.setHours(0, 0, 0, 0);
+                    
+                    return expiryDate < today;
                 });
             }
             
@@ -239,19 +247,36 @@ const app = createApp({
         },
         
         expiringSoonItems() {
+            // 创建仅包含日期部分的比较（忽略时区差异）
             const today = new Date();
-            const sevenDaysLater = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+            today.setHours(0, 0, 0, 0);
+            
+            const sevenDaysLater = new Date(today);
+            sevenDaysLater.setDate(today.getDate() + 7);
+            sevenDaysLater.setHours(0, 0, 0, 0);
+            
             return this.items.filter(item => {
+                if (!item.expiryDate) return false;
+                
                 const expiryDate = new Date(item.expiryDate);
+                expiryDate.setHours(0, 0, 0, 0);
+                
                 return expiryDate <= sevenDaysLater && expiryDate >= today;
             }).length;
         },
         
         // 已过期物品数量
         expiredItems() {
+            // 创建仅包含日期部分的比较（忽略时区差异）
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
             return this.items.filter(item => {
+                if (!item.expiryDate) return false;
+                
                 const expiryDate = new Date(item.expiryDate);
+                expiryDate.setHours(0, 0, 0, 0);
+                
                 return expiryDate < today;
             }).length;
         },
@@ -370,9 +395,16 @@ const app = createApp({
         // 获取过期日期样式
         getExpiryClass(expiryDate) {
             if (!expiryDate) return '';
+            // 创建仅包含日期部分的比较（忽略时区差异）
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
             const expiry = new Date(expiryDate);
-            const daysUntilExpiry = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+            expiry.setHours(0, 0, 0, 0);
+            
+            // 计算天数差异
+            const diffTime = expiry - today;
+            const daysUntilExpiry = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (daysUntilExpiry < 0) return 'text-red-600 font-bold';
             if (daysUntilExpiry <= 3) return 'text-orange-600 font-medium';
@@ -382,9 +414,21 @@ const app = createApp({
         
         // 获取状态样式
         getStatusClass(item) {
+            if (!item.expiryDate) {
+                if (item.quantity <= item.minQuantity) return 'bg-yellow-100 text-yellow-800';
+                return 'bg-green-100 text-green-800';
+            }
+            
+            // 创建仅包含日期部分的比较（忽略时区差异）
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
             const expiryDate = new Date(item.expiryDate);
-            const daysUntilExpiry = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+            expiryDate.setHours(0, 0, 0, 0);
+            
+            // 计算天数差异
+            const diffTime = expiryDate - today;
+            const daysUntilExpiry = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (daysUntilExpiry < 0) return 'bg-red-100 text-red-800';
             if (daysUntilExpiry <= 3) return 'bg-orange-100 text-orange-800';
@@ -394,9 +438,21 @@ const app = createApp({
         
         // 获取状态文本
         getStatusText(item) {
+            if (!item.expiryDate) {
+                if (item.quantity <= item.minQuantity) return this.$t('status.lowStock');
+                return this.$t('status.normal');
+            }
+            
+            // 创建仅包含日期部分的比较（忽略时区差异）
             const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
             const expiryDate = new Date(item.expiryDate);
-            const daysUntilExpiry = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+            expiryDate.setHours(0, 0, 0, 0);
+            
+            // 计算天数差异
+            const diffTime = expiryDate - today;
+            const daysUntilExpiry = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (daysUntilExpiry < 0) return this.$t('status.expired');
             if (daysUntilExpiry <= 3) return this.$t('status.expiringSoon');
