@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $t('app.title') }}</title>
-    <script src="./libs/vue.global.js"></script>
-    <script src="./libs/vue-i18n.global.js"></script>
+    <!-- 引入Vue和Vue I18n -->
+     <!-- 如果在开发环境中使用，则引入本地Vue和Vue I18n 
+     <script src="./libs/vue.global.js"></script>
+     <script src="./libs/vue-i18n.global.js"></script> -->
+     <!-- 如果在生产环境中使用，则CDN引入Vue和Vue I18n -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-i18n@9/dist/vue-i18n.global.prod.js"></script>
     <script src="./locales/ar.js"></script>
     <script src="./locales/bn.js"></script>
     <script src="./locales/de.js"></script>
