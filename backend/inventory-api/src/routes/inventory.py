@@ -116,9 +116,6 @@ def delete_item(item_id):
     try:
         item = InventoryItem.query.get_or_404(item_id)
         
-        # 删除相关的智能提醒
-        SmartAlert.query.filter_by(item_id=item_id).delete()
-        
         db.session.delete(item)
         db.session.commit()
         

@@ -92,7 +92,11 @@ def serve(path):
         else:
             return "index.html not found", 404
 
+# 生产环境应该使用WSGI服务器如Gunicorn或uWSGI来运行应用
+# 例如: gunicorn -w 4 -b 0.0.0.0:5000 src.main:app
 
+# 仅在直接运行脚本时启动开发服务器（用于开发测试）
 if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_DEBUG', '0').lower() in ('1', 'true', 'yes')
+    print("警告：这是开发服务器，仅用于开发和测试。生产环境请使用WSGI服务器。")
     app.run(host='0.0.0.0', port=5000, debug=debug_mode)
