@@ -1,9 +1,11 @@
 import os
 import sys
+import psutil
 # DON'T CHANGE THIS !!!
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from flask import Flask, send_from_directory
+from sqlalchemy import text
 from flask_cors import CORS
 from src.models.user import db
 from src.routes.user import user_bp
@@ -96,6 +98,40 @@ def serve(path):
 # 例如: gunicorn -w 4 -b 0.0.0.0:5000 src.main:app
 
 # 仅在直接运行脚本时启动开发服务器（用于开发测试）
+@app.route('/api/health')
+def health_check():
+    """
+    健康检查端点，返回应用状态信息
+    """
+    try:
+        # 检查数据库连接
+        with app.app_context():
+            db.session.execute(text('SELECT 1'))
+        db_status = 'healthy'
+    except Exception as e:
+        db_status = f'error: {str(e)}'
+    
+    # 获取内存使用情况
+    try:
+        process = psutil.Process()
+        memory_info = process.memory_info()
+        memory_usage = {
+            'rss': memory_info.rss,  # 物理内存使用量(字节)
+            'rss_mb': round(memory_info.rss / (1024 * 1024), 2),  # 转换为MB
+            'vms': memory_info.vms,  # 虚拟内存使用量(字节)
+            'vms_mb': round(memory_info.vms / (1024 * 1024), 2)  # 转换为MB
+        }
+    except Exception as e:
+        memory_usage = f'error: {str(e)}'
+    
+    return {
+        'status': 'healthy',
+        'database': db_status,
+        'memory_usage': memory_usage,
+        'service': 'smart-inventory-manager',
+        'version': '1.0.0'
+    }
+
 if __name__ == '__main__':
     debug_mode = os.environ.get('FLASK_DEBUG', '0').lower() in ('1', 'true', 'yes')
     print("警告：这是开发服务器，仅用于开发和测试。生产环境请使用WSGI服务器。")
