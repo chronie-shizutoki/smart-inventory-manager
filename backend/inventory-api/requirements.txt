@@ -15,4 +15,4 @@ pyzbar==0.1.9
 requests==2.32.4
 psutil==5.9.8  # 用于系统监控，获取内存使用情况
 gunicorn==22.0.0  # 生产环境WSGI服务器(Unix/Linux)
-waitress==3.0.0  # 生产环境WSGI服务器(Windows兼容)
+waitress==3.0.1  # 生产环境WSGI服务器(Windows兼容)
