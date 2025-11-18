@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">আইটেম যোগ করা হয়েছে</string>
     <string name="notifications_itemdeleted">আইটেম মুছে ফেলা হয়েছে</string>
     <string name="notifications_itemupdated">আইটেম হালনাগাদ করা হয়েছে</string>
-    <string name="notifications_itemusedsuccessfully">%s এর ১ %s ব্যবহার করা হয়েছে (%s %s অবশিষ্ট আছে)</string>
+    <string name="notifications_itemusedsuccessfully">%1$s এর ১ %2$s ব্যবহার করা হয়েছে (%3$s %4$s অবশিষ্ট আছে)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AddShoppingCart
-import androidx.compose.material.icons.filled.Inventory
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -47,9 +47,15 @@ import com.chronie.inventorymanager.ui.theme.SmartInventoryManagerTheme
 import com.kyant.backdrop.Backdrop
 import com.kyant.backdrop.BackdropEffectScope
 import com.kyant.backdrop.backdrops.LayerBackdrop
+import com.kyant.backdrop.backdrops.rememberBackdrop
+import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.kyant.backdrop.drawBackdrop
 import com.kyant.backdrop.effects.blur
 import com.kyant.backdrop.effects.lens
+import com.kyant.backdrop.backdrops.layerBackdrop
 import androidx.compose.ui.unit.dp
+import com.kyant.capsule.ContinuousCapsule
+import androidx.compose.material.icons.filled.Inventory2
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,129 +127,6 @@ fun SmartInventoryManagerApp() {
     }
 }
 
-@Composable
-fun LiquidGlassBottomNavigation(
-    selectedIndex: Int,
-    onItemSelected: (Int) -> Unit
-) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(80.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        shape = RoundedCornerShape(24.dp),
-    ) {
-        // 使用LayerBackdrop和毛玻璃效果
-        Backdrop(
-            backdrop = LayerBackdrop {
-                // 透镜折射效果，模拟真实玻璃
-                lens(
-                    refractionHeight = 20f,
-                    refractionAmount = 0.3f,
-                    depthEffect = true,
-                    chromaticAberration = true
-                )
-                // 适度模糊背景
-                blur(radius = 8f)
-            },
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.1f),
-                            Color.White.copy(alpha = 0.05f)
-                        )
-                    )
-                )
-        ) {
-            NavigationBar {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    // 库存页面
-                    NavigationBarItem(
-                        icon = { 
-                            Icon(
-                                Icons.Default.Inventory,
-                                contentDescription = "库存",
-                                tint = if (selectedIndex == 0) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        label = { 
-                            Text(
-                                "库存",
-                                color = if (selectedIndex == 0) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        selected = selectedIndex == 0,
-                        onClick = { onItemSelected(0) }
-                    )
-                    
-                    // 添加物品页面
-                    NavigationBarItem(
-                        icon = { 
-                            Icon(
-                                Icons.Default.Add,
-                                contentDescription = "添加",
-                                tint = if (selectedIndex == 1) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        label = { 
-                            Text(
-                                "添加",
-                                color = if (selectedIndex == 1) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        selected = selectedIndex == 1,
-                        onClick = { onItemSelected(1) }
-                    )
-                    
-                    // 采购清单页面
-                    NavigationBarItem(
-                        icon = { 
-                            Icon(
-                                Icons.Default.AddShoppingCart,
-                                contentDescription = "采购清单",
-                                tint = if (selectedIndex == 2) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        label = { 
-                            Text(
-                                "采购清单",
-                                color = if (selectedIndex == 2) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        selected = selectedIndex == 2,
-                        onClick = { onItemSelected(2) }
-                    )
-                    
-                    // 菜单页面
-                    NavigationBarItem(
-                        icon = { 
-                            Icon(
-                                Icons.Default.Menu,
-                                contentDescription = "菜单",
-                                tint = if (selectedIndex == 3) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        label = { 
-                            Text(
-                                "菜单",
-                                color = if (selectedIndex == 3) MaterialTheme.colorScheme.primary else Color.White
-                            ) 
-                        },
-                        selected = selectedIndex == 3,
-                        onClick = { onItemSelected(3) }
-                    )
-                }
-            }
-        }
-    }
-}
-
 // 库存页面
 @Composable
 fun InventoryScreen() {
@@ -305,6 +188,127 @@ fun MenuScreen() {
         ) {
             Text("菜单页面")
         }
+    }
+}
+
+@Composable
+fun LiquidGlassBottomNavigation(
+    selectedIndex: Int,
+    onItemSelected: (Int) -> Unit
+) {
+    // 创建backdrop和layer实例
+    val tabsBackdrop = rememberLayerBackdrop()
+    
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .layerBackdrop(tabsBackdrop)
+            .drawBackdrop(
+                backdrop = tabsBackdrop,
+                shape = { ContinuousCapsule },
+                effects = {
+                    // 透镜折射效果，模拟真实玻璃
+                    lens(
+                        refractionHeight = 24f,
+                        refractionAmount = 0.3f,
+                        depthEffect = true,
+                        chromaticAberration = true
+                    )
+                    // 适度模糊背景
+                    blur(radius = 8f)
+                },
+                onDrawSurface = {
+                    // 背景渐变
+                    drawRect(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.1f),
+                                Color.White.copy(alpha = 0.05f)
+                            )
+                        )
+                    )
+                }
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        // 库存页面
+        NavigationBarItem(
+            icon = { 
+                Icon(
+                    Icons.Default.Inventory2,
+                    contentDescription = "库存",
+                    tint = if (selectedIndex == 0) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            label = { 
+                Text(
+                    "库存",
+                    color = if (selectedIndex == 0) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            selected = selectedIndex == 0,
+            onClick = { onItemSelected(0) }
+        )
+        
+        // 添加物品页面
+        NavigationBarItem(
+            icon = { 
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "添加",
+                    tint = if (selectedIndex == 1) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            label = { 
+                Text(
+                    "添加",
+                    color = if (selectedIndex == 1) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            selected = selectedIndex == 1,
+            onClick = { onItemSelected(1) }
+        )
+        
+        // 采购清单页面
+        NavigationBarItem(
+            icon = { 
+                Icon(
+                    Icons.Default.ShoppingCart,
+                    contentDescription = "采购清单",
+                    tint = if (selectedIndex == 2) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            label = { 
+                Text(
+                    "采购清单",
+                    color = if (selectedIndex == 2) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            selected = selectedIndex == 2,
+            onClick = { onItemSelected(2) }
+        )
+        
+        // 菜单页面
+        NavigationBarItem(
+            icon = { 
+                Icon(
+                    Icons.Default.Menu,
+                    contentDescription = "菜单",
+                    tint = if (selectedIndex == 3) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            label = { 
+                Text(
+                    "菜单",
+                    color = if (selectedIndex == 3) MaterialTheme.colorScheme.primary else Color.White
+                ) 
+            },
+            selected = selectedIndex == 3,
+            onClick = { onItemSelected(3) }
+        )
     }
 }
 

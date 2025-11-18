@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.hilt.android)
+    // alias(libs.plugins.kotlin.kapt) // 暂时禁用Kapt
+    // alias(libs.plugins.hilt.android) // 暂时禁用Hilt
 }
 
 android {
@@ -36,8 +36,8 @@ android {
     }
     
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     
     buildFeatures {
@@ -74,10 +74,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     
-    // Room数据库
+    // Room数据库 (暂时禁用Kapt)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    // kapt(libs.androidx.room.compiler)
     
     // 网络依赖
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
@@ -85,10 +85,10 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     
-    // 依赖注入
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    implementation(libs.hilt.navigation.compose)
+    // 依赖注入 (暂时禁用Hilt)
+    // implementation(libs.hilt.android)
+    // kapt(libs.hilt.compiler)
+    // implementation(libs.hilt.navigation.compose)
     
     // 协程
     implementation(libs.kotlinx.coroutines.android)
@@ -110,4 +110,8 @@ dependencies {
     
     // 可选：临时数据存储
     implementation(libs.androidx.datastore)
+    
+    // AndroidLiquidGlass毛玻璃效果库
+    implementation(project(":AndroidLiquidGlass"))
+    implementation("io.github.kyant0:capsule:2.1.1")
 }
