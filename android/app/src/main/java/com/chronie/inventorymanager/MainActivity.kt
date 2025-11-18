@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+
+import androidx.compose.ui.res.stringResource
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -25,10 +27,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,14 +44,22 @@ import com.chronie.inventorymanager.ui.theme.SmartInventoryManagerTheme
 import com.chronie.inventorymanager.liquidglass.LiquidBottomTabs
 import com.chronie.inventorymanager.liquidglass.TabItemData
 import androidx.compose.ui.unit.dp
+import com.chronie.inventorymanager.SettingsScreen
+import com.chronie.inventorymanager.data.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             SmartInventoryManagerTheme {
-                SmartInventoryManagerApp()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    LanguageContextProvider { 
+                        SmartInventoryManagerApp()
+                    }
+                }
             }
         }
     }
@@ -65,7 +75,7 @@ fun SmartInventoryManagerApp() {
         topBar = {
             TopAppBar(
                 title = { 
-                    Text("Smart Inventory Manager") 
+                    Text(stringResource(id = R.string.app_name))
                 }
             )
         },
@@ -120,10 +130,10 @@ fun LiquidBottomNavigation(
     modifier: Modifier = Modifier
 ) {
     val tabs = listOf(
-        BottomNavItem("Inventory", Icons.Default.Home),
-        BottomNavItem("Add", Icons.Default.Add),
-        BottomNavItem("Purchase", Icons.Default.ShoppingCart),
-        BottomNavItem("Menu", Icons.Default.Menu)
+        BottomNavItem(stringResource(id = R.string.nav_inventory), Icons.Default.Home),
+        BottomNavItem(stringResource(id = R.string.nav_add), Icons.Default.Add),
+        BottomNavItem(stringResource(id = R.string.nav_purchaselist), Icons.Default.ShoppingCart),
+        BottomNavItem(stringResource(id = R.string.nav_menu), Icons.Default.Menu)
     )
     
     LiquidBottomTabs(
@@ -197,17 +207,13 @@ fun PurchaseListScreen() {
 // 菜单页面
 @Composable
 fun MenuScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Menu Screen")
+    val navController = rememberNavController()
+    
+    SettingsScreen(
+        onNavigateBack = {
+            navController.popBackStack()
         }
-    }
+    )
 }
 
 @Preview(showBackground = true)
