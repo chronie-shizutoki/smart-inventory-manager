@@ -44,6 +44,15 @@ android {
         compose = true
     }
     
+    kotlin {
+        jvmToolchain(17)
+        compilerOptions {
+            freeCompilerArgs.addAll(
+                "-Xcontext-parameters"
+            )
+        }
+    }
+    
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.17"
     }
