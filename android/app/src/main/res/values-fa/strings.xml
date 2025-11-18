@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">آیتم با موفقیت افزوده شد</string>
     <string name="notifications_itemdeleted">آیتم با موفقیت حذف شد</string>
     <string name="notifications_itemupdated">آیتم با موفقیت به‌روزرسانی شد</string>
-    <string name="notifications_itemusedsuccessfully">1 %s از %s استفاده شد (موجودی: %s %s)</string>
+    <string name="notifications_itemusedsuccessfully" formatted="false">1 %s از %s استفاده شد (موجودی: %s %s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

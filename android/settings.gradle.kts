@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Smart Inventory Manager"
 include(":app")
-include(":AndroidLiquidGlass")

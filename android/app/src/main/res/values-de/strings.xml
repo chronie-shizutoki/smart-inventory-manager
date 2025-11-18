@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">Artikel erfolgreich hinzugefügt</string>
     <string name="notifications_itemdeleted">Artikel erfolgreich gelöscht</string>
     <string name="notifications_itemupdated">Artikel erfolgreich aktualisiert</string>
-    <string name="notifications_itemusedsuccessfully">1 %s von %s verwendet (%s %s verbleiben)</string>
+    <string name="notifications_itemusedsuccessfully" formatted="false">1 %s von %s verwendet (%s %s verbleiben)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

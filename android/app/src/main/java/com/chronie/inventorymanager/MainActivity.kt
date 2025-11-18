@@ -17,7 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Inventory2
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -55,7 +55,7 @@ import com.kyant.backdrop.effects.lens
 import com.kyant.backdrop.backdrops.layerBackdrop
 import androidx.compose.ui.unit.dp
 import com.kyant.capsule.ContinuousCapsule
-import androidx.compose.material.icons.filled.Inventory2
+// import androidx.compose.material.icons.filled.Home
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -238,7 +238,7 @@ fun LiquidGlassBottomNavigation(
         NavigationBarItem(
             icon = { 
                 Icon(
-                    Icons.Default.Inventory2,
+                    Icons.Default.Home,
                     contentDescription = "库存",
                     tint = if (selectedIndex == 0) MaterialTheme.colorScheme.primary else Color.White
                 ) 

@@ -45,7 +45,7 @@ android {
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
+        kotlinCompilerExtensionVersion = "1.5.17"
     }
     
     packaging {
@@ -112,6 +112,6 @@ dependencies {
     implementation(libs.androidx.datastore)
     
     // AndroidLiquidGlass毛玻璃效果库
-    implementation(project(":AndroidLiquidGlass"))
+    implementation("io.github.kyant0:backdrop:1.0.0")
     implementation("io.github.kyant0:capsule:2.1.1")
 }

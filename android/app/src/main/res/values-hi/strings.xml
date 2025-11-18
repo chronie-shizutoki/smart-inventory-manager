@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">आइटम जोड़ा गया</string>
     <string name="notifications_itemdeleted">आइटम हटाया गया</string>
     <string name="notifications_itemupdated">आइटम अपडेट किया गया</string>
-    <string name="notifications_itemusedsuccessfully">%s का 1 %s इस्तेमाल किया गया (%s %s बाकी)</string>
+    <string name="notifications_itemusedsuccessfully" formatted="false">%s का 1 %s इस्तेमाल किया गया (%s %s बाकी)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->
