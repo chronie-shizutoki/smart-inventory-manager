@@ -7,6 +7,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -102,11 +103,12 @@ fun LiquidBottomTabs(
         content = {
             items.forEachIndexed { index, item ->
                 TabItem(
-                    item = item,
-                    index = index,
-                    selectedIndex = selectedIndex,
-                    onTabSelected = onTabSelected
-                )
+            item = item,
+            index = index,
+            selectedIndex = selectedIndex,
+            onTabSelected = onTabSelected,
+            modifier = Modifier.weight(1f)
+        )
             }
         }
     )
@@ -117,15 +119,16 @@ private fun TabItem(
     item: TabItemData,
     index: Int,
     selectedIndex: Int,
-    onTabSelected: (Int) -> Unit
+    onTabSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val currentScale = LocalLiquidBottomTabScale.current()
     val isLightTheme = !isSystemInDarkTheme()
     val accentColor = if (isLightTheme) Color(0xFF0088FF) else Color(0xFF0091FF)
     val inactiveColor = if (isLightTheme) Color(0xFF666666) else Color(0xFFB0B0B0)
 
-    Row(
-        modifier = Modifier
+    Column(
+        modifier = modifier
             .padding(horizontal = 8f.dp)
             .graphicsLayer {
                 scaleX = currentScale
@@ -134,8 +137,8 @@ private fun TabItem(
             .clickable {
                 onTabSelected(index)
             },
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Icon(
             imageVector = item.icon,
@@ -143,14 +146,12 @@ private fun TabItem(
             modifier = Modifier.size(24.dp),
             tint = if (index == selectedIndex) accentColor else inactiveColor
         )
-        if (index == selectedIndex) {
-            Text(
-                text = item.label,
-                style = MaterialTheme.typography.labelSmall,
-                color = accentColor,
-                modifier = Modifier.padding(start = 4f.dp)
-            )
-        }
+        Text(
+            text = item.label,
+            style = MaterialTheme.typography.labelSmall,
+            color = if (index == selectedIndex) accentColor else inactiveColor,
+            modifier = Modifier.padding(top = 2f.dp)
+        )
     }
 }
 
@@ -167,10 +168,14 @@ private fun LiquidBottomTabsImpl(
     val accentColor = if (isLightTheme) Color(0xFF0088FF) else Color(0xFF0091FF)
     val containerColor = if (isLightTheme) Color(0xFFFAFAFA).copy(0.4f) else Color(0xFF121212).copy(0.4f)
 
-    BoxWithConstraints(
-        modifier,
-        contentAlignment = Alignment.CenterStart
+    Box(
+        modifier = modifier.fillMaxWidth().padding(bottom = 16.dp),
+        contentAlignment = Alignment.BottomCenter
     ) {
+        BoxWithConstraints(
+            Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.CenterStart
+        ) {
         val density = LocalDensity.current
         val tabWidth = with(density) {
             (constraints.maxWidth.toFloat() - 8f.dp.toPx()) / tabsCount
@@ -226,13 +231,13 @@ private fun LiquidBottomTabsImpl(
             snapshotFlow { selectedTabIndex() }
                 .collectLatest { index ->
                     currentIndex = index
+                    dampedDragAnimation.animateToValue(index.toFloat())
                 }
         }
         LaunchedEffect(dampedDragAnimation) {
             snapshotFlow { currentIndex }
                 .drop(1)
                 .collectLatest { index ->
-                    dampedDragAnimation.animateToValue(index.toFloat())
                     onTabSelected(index)
                 }
         }
@@ -272,7 +277,7 @@ private fun LiquidBottomTabsImpl(
                     onDrawSurface = { drawRect(containerColor) }
                 )
                 .then(interactiveHighlight.modifier)
-                .height(64f.dp)
+                .height(60f.dp)
                 .fillMaxWidth()
                 .padding(4f.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -322,8 +327,8 @@ private fun LiquidBottomTabsImpl(
                 .padding(horizontal = 4f.dp)
                 .graphicsLayer {
                     translationX =
-                        if (isLtr) dampedDragAnimation.value * tabWidth + panelOffset
-                        else size.width - (dampedDragAnimation.value + 1f) * tabWidth + panelOffset
+                        if (isLtr) dampedDragAnimation.value * tabWidth + panelOffset + 4f.dp.toPx()
+                        else size.width - (dampedDragAnimation.value + 1f) * tabWidth + panelOffset - 4f.dp.toPx()
                 }
                 .then(interactiveHighlight.gestureModifier)
                 .then(dampedDragAnimation.modifier)
@@ -373,5 +378,6 @@ private fun LiquidBottomTabsImpl(
                 .height(56f.dp)
                 .fillMaxWidth(1f / tabsCount)
         )
+        }
     }
 }
