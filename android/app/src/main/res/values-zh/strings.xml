@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">智能家居库存管理系统</string>
+    <string name="app_name">智能家居库存管理系统</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">物品添加成功</string>
     <string name="notifications_itemdeleted">物品删除成功</string>
     <string name="notifications_itemupdated">物品更新成功</string>
-    <string name="notifications_itemusedsuccessfully">已使用 1 %s %s（剩余 %s %s）</string>
+    <string name="notifications_itemusedsuccessfully">已使用 1 %2$s %1$s（剩余 %3$s %4$s）</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->
@@ -111,7 +111,7 @@
     <!-- Keys that do not fit into predefined groups -->
     <!-- =========================================== -->
     <string name="airecord_airecordbutton">AI记录</string>
-    <string name="airecord_apikey">SiliconFlow API密钥</string>
+    <string name="airecord_apikey">硅基流动API密钥</string>
     <string name="airecord_apikeyhint">您可以从SiliconFlow控制台获取API密钥</string>
     <string name="airecord_apikeyrequired">请输入API密钥</string>
     <string name="airecord_confirmadd">确认添加</string>

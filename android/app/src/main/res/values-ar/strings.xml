@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">نظام إدارة المخزون المنزلي الذكي</string>
+    <string name="app_name">نظام إدارة المخزون المنزلي الذكي</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">تمت إضافة العنصر بنجاح</string>
     <string name="notifications_itemdeleted">تم حذف العنصر بنجاح</string>
     <string name="notifications_itemupdated">تم تحديث العنصر بنجاح</string>
-    <string name="notifications_itemusedsuccessfully">تم استخدام 1 %s من %s (المتبقي: %s %s)</string>
+    <string name="notifications_itemusedsuccessfully">تم استخدام 1 %2$s من %1$s (المتبقي: %3$s %4$s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

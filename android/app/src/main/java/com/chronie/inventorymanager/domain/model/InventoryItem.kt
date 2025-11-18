@@ -27,9 +27,9 @@ data class InventoryItem(
     
     val price: Double = 0.0,
     
-    val currency: String = "CNY",
+    val currency: String,
     
-    val unit: String = "个",
+    val unit: String,
     
     val location: String = "",
     

@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Akıllı Ev Envanteri</string>
+    <string name="app_name">Akıllı Ev Envanteri</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">Ürün eklendi</string>
     <string name="notifications_itemdeleted">Ürün silindi</string>
     <string name="notifications_itemupdated">Ürün güncellendi</string>
-    <string name="notifications_itemusedsuccessfully">%s ürününden 1 %s kullanıldı (%s %s kaldı)</string>
+    <string name="notifications_itemusedsuccessfully">%1$s ürününden 1 %2$s kullanıldı (%3$s %4$s kaldı)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

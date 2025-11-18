@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">ہوشمند گھریلو انوینٹری</string>
+    <string name="app_name">ہوشمند گھریلو انوینٹری</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">آئٹم کامیابی سے شامل ہو گیا</string>
     <string name="notifications_itemdeleted">آئٹم کامیابی سے حذف ہو گیا</string>
     <string name="notifications_itemupdated">آئٹم کامیابی سے اپ ڈیٹ ہو گیا</string>
-    <string name="notifications_itemusedsuccessfully">%s کا 1 %s استعمال ہو گیا (بقیہ: %s %s)</string>
+    <string name="notifications_itemusedsuccessfully">%1$s کا 1 %2$s استعمال ہو گیا (بقیہ: %3$s %4$s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

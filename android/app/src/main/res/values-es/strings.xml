@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Inventario Inteligente para el Hogar</string>
+    <string name="app_name">Inventario Inteligente para el Hogar</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">¡Artículo añadido!</string>
     <string name="notifications_itemdeleted">¡Artículo eliminado!</string>
     <string name="notifications_itemupdated">¡Artículo actualizado!</string>
-    <string name="notifications_itemusedsuccessfully">Se usó 1 %s de %s (%s %s restantes)</string>
+    <string name="notifications_itemusedsuccessfully">Se usó 1 %2$s de %1$s (%3$s %4$s restantes)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

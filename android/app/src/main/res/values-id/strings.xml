@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Smart Home Inventory</string>
+    <string name="app_name">Smart Home Inventory</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">Item berhasil ditambahkan</string>
     <string name="notifications_itemdeleted">Item berhasil dihapus</string>
     <string name="notifications_itemupdated">Item berhasil diperbarui</string>
-    <string name="notifications_itemusedsuccessfully">%s 1 %s digunakan (%s %s tersisa)</string>
+    <string name="notifications_itemusedsuccessfully">%1$s 1 %2$s digunakan (%3$s %4$s tersisa)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

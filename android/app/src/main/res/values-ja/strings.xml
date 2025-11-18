@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">スマート家庭在庫管理</string>
+    <string name="app_name">スマート家庭在庫管理</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">アイテムを追加しました</string>
     <string name="notifications_itemdeleted">アイテムを削除しました</string>
     <string name="notifications_itemupdated">アイテムを更新しました</string>
-    <string name="notifications_itemusedsuccessfully">%sを使用しました（残り：%s%s）</string>
+    <string name="notifications_itemusedsuccessfully">1 %2$s の %1$s を使用しました（残り：%3$s%4$s）</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

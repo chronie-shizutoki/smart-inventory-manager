@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Gestione Inventario Domestico Intelligente</string>
+    <string name="app_name">Gestione Inventario Domestico Intelligente</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -44,7 +44,7 @@
     <!-- Add, edit, and manage individual inventory items -->
     <!-- Form labels and validation messages for item operations -->
 
-    <string name="add_cancel">An\"\"a</string>
+    <string name="add_cancel">Annulla</string>
     <string name="add_category">Categoria</string>
     <string name="add_description">Descrizione</string>
     <string name="add_edittitle">Modifica articolo</string>
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">Articolo aggiunto correttamente</string>
     <string name="notifications_itemdeleted">Articolo eliminato correttamente</string>
     <string name="notifications_itemupdated">Articolo aggiornato correttamente</string>
-    <string name="notifications_itemusedsuccessfully">Utilizzato 1 %s di %s (rimanenti: %s %s)</string>
+    <string name="notifications_itemusedsuccessfully">Utilizzato 1 %2$s di %1$s (rimanenti: %3$s %4$s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">سامانه‌ی مدیریت موجودی خانه</string>
+    <string name="app_name">سامانه‌ی مدیریت موجودی خانه</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -32,7 +32,7 @@
     <string name="inventory_expirydate">تاریخ انقضا</string>
     <string name="inventory_name">نام آیتم</string>
     <string name="inventory_quantity">مقدار</string>
-    <string name="inventory_search">جستجو among آیتم‌ها...</string>
+    <string name="inventory_search">جستجو میان آیتم‌ها...</string>
     <string name="inventory_showexpired">نمایش همه آیتم‌ها</string>
     <string name="inventory_status">وضعیت</string>
     <string name="inventory_title">انباره</string>

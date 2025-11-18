@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">스마트 홈 인벤토리</string>
+    <string name="app_name">스마트 홈 인벤토리</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">품목이 성공적으로 추가되었습니다</string>
     <string name="notifications_itemdeleted">품목이 성공적으로 삭제되었습니다</string>
     <string name="notifications_itemupdated">품목이 성공적으로 수정되었습니다</string>
-    <string name="notifications_itemusedsuccessfully">%s 1%s 사용 (잔여 수량: %s%s)</string>
+    <string name="notifications_itemusedsuccessfully">%1$s 1%2$s 사용 (잔여 수량: %3$s%4$s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

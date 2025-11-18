@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">智慧家居庫存管理系統</string>
+    <string name="app_name">智慧家居庫存管理系統</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">物品新增成功</string>
     <string name="notifications_itemdeleted">物品刪除成功</string>
     <string name="notifications_itemupdated">物品更新成功</string>
-    <string name="notifications_itemusedsuccessfully">已使用 1 %s %s（剩餘 %s %s）</string>
+    <string name="notifications_itemusedsuccessfully">已使用 1 %2$s %1$s（剩餘 %3$s %4$s）</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

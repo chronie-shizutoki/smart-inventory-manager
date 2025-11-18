@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">ระบบจัดการคลังสินค้าในบ้านอัจฉริยะ</string>
+    <string name="app_name">ระบบจัดการคลังสินค้าในบ้านอัจฉริยะ</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">เพิ่มรายการเรียบร้อยแล้ว</string>
     <string name="notifications_itemdeleted">ลบรายการเรียบร้อยแล้ว</string>
     <string name="notifications_itemupdated">อัปเดตรายการเรียบร้อยแล้ว</string>
-    <string name="notifications_itemusedsuccessfully">ใช้ %s ไป 1 %s เรียบร้อยแล้ว (เหลือ %s %s)</string>
+    <string name="notifications_itemusedsuccessfully">ใช้ %1$s ไป 1 %2$s เรียบร้อยแล้ว (เหลือ %3$s %4$s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

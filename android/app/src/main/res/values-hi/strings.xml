@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">स्मार्ट होम इन्वेंटरी</string>
+    <string name="app_name">स्मार्ट होम इन्वेंटरी</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->

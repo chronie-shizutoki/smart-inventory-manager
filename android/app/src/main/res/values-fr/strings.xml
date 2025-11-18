@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Gestionnaire Intelligent d\\"Inventaire Domestique</string>
+    <string name="app_name">Gestionnaire Intelligent d\'Inventaire Domestique</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -29,7 +29,7 @@
     <string name="inventory_actions">Actions</string>
     <string name="inventory_allcategories">Toutes les catégories</string>
     <string name="inventory_category">Catégorie</string>
-    <string name="inventory_expirydate">Date d\\"expiration</string>
+    <string name="inventory_expirydate">Date d\'expiration</string>
     <string name="inventory_name">Article</string>
     <string name="inventory_quantity">Quantité</string>
     <string name="inventory_search">Rechercher un article...</string>
@@ -47,10 +47,10 @@
     <string name="add_cancel">Annuler</string>
     <string name="add_category">Catégorie</string>
     <string name="add_description">Description (optionnelle)</string>
-    <string name="add_edittitle">Modifier l\\"article</string>
-    <string name="add_expirydate">Date d\\"expiration</string>
+    <string name="add_edittitle">Modifier l\'article</string>
+    <string name="add_expirydate">Date d\'expiration</string>
     <string name="add_minquantity">Stock minimum</string>
-    <string name="add_name">Nom de l\\"article</string>
+    <string name="add_name">Nom de l\'article</string>
     <string name="add_quantity">Quantité</string>
     <string name="add_save">Enregistrer</string>
     <string name="add_selectcategory">Sélectionnez une catégorie</string>
@@ -75,12 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
-    <string name="notifications_error">L\\"opération a échoué. Veuillez réessayer.</string>
+    <string name="notifications_error">L\'opération a échoué. Veuillez réessayer.</string>
     <string name="notifications_insufficientstock">Stock insuffisant : %s</string>
     <string name="notifications_itemadded">Article ajouté</string>
     <string name="notifications_itemdeleted">Article supprimé</string>
     <string name="notifications_itemupdated">Article mis à jour</string>
-    <string name="notifications_itemusedsuccessfully">1 %s de %s utilisé (reste %s %s)</string>
+    <string name="notifications_itemusedsuccessfully">1 %2$s de %1$s utilisé (reste %3$s %4$s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->
@@ -104,14 +104,14 @@
     <string name="stats_categories">Répartition par catégorie</string>
     <string name="stats_expiringsoon">Expirations proches</string>
     <string name="stats_lowstock">Stocks faibles</string>
-    <string name="stats_totalitems">Nombre total d\\"articles</string>
+    <string name="stats_totalitems">Nombre total d\'articles</string>
 
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->
     <!-- =========================================== -->
     <string name="purchaselist_currentquantity">Quantité actuelle</string>
-    <string name="purchaselist_description">Articles à réapprovisionner en raison d\\"un stock faible</string>
+    <string name="purchaselist_description">Articles à réapprovisionner en raison d\'un stock faible</string>
     <string name="purchaselist_lastused">Dernière utilisation</string>
     <string name="purchaselist_minquantity">Stock minimum</string>
     <string name="purchaselist_refresh">Actualiser la liste</string>

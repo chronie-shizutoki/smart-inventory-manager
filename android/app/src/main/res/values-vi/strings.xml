@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Kho Thông Minh</string>
+    <string name="app_name">Kho Thông Minh</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">Đã thêm mặt hàng</string>
     <string name="notifications_itemdeleted">Đã xóa mặt hàng</string>
     <string name="notifications_itemupdated">Đã cập nhật mặt hàng</string>
-    <string name="notifications_itemusedsuccessfully">Đã sử dụng 1 %s %s (còn lại %s %s)</string>
+    <string name="notifications_itemusedsuccessfully">Đã sử dụng 1 %2$s %1$s (còn lại %3$s %4$s)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->

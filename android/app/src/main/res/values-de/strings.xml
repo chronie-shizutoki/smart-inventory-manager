@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Smart Home Inventar</string>
+    <string name="app_name">Smart Home Inventar</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->

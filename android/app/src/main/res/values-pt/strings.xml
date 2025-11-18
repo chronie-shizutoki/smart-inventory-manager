@@ -6,7 +6,7 @@
     <!-- Application name and basic configuration settings -->
     <!-- Used in AndroidManifest.xml and main app interface -->
 
-    <string name="app_title">Gestão Inteligente de Stock</string>
+    <string name="app_name">Gestão Inteligente de Stock</string>
 
     <!-- =============================================== -->
     <!-- NAVIGATION & MENU SYSTEM -->
@@ -80,7 +80,7 @@
     <string name="notifications_itemadded">Item adicionado</string>
     <string name="notifications_itemdeleted">Item excluído</string>
     <string name="notifications_itemupdated">Item atualizado</string>
-    <string name="notifications_itemusedsuccessfully">Utilizado 1 %s de %s (%s %s restantes)</string>
+    <string name="notifications_itemusedsuccessfully">Utilizado 1 %2$s de %1$s (%3$s %4$s restantes)</string>
 
     <!-- =============================================== -->
     <!-- ITEM CATEGORIES & CLASSIFICATION -->
