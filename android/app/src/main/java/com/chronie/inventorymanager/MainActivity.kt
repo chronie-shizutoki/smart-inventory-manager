@@ -44,18 +44,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.chronie.inventorymanager.ui.theme.SmartInventoryManagerTheme
-import com.kyant.backdrop.Backdrop
-import com.kyant.backdrop.BackdropEffectScope
-import com.kyant.backdrop.backdrops.LayerBackdrop
-import com.kyant.backdrop.backdrops.rememberBackdrop
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
-import com.kyant.backdrop.drawBackdrop
-import com.kyant.backdrop.effects.blur
-import com.kyant.backdrop.effects.lens
-import com.kyant.backdrop.backdrops.layerBackdrop
 import androidx.compose.ui.unit.dp
-import com.kyant.capsule.ContinuousCapsule
-// import androidx.compose.material.icons.filled.Home
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,31 +68,97 @@ fun SmartInventoryManagerApp() {
         topBar = {
             TopAppBar(
                 title = { 
-                    Text("智能库存管理") 
+                    Text("Smart Inventory Manager") 
                 }
             )
         },
         bottomBar = {
-            // 使用毛玻璃效果的底部导航栏
-            LiquidGlassBottomNavigation(
-                selectedIndex = selectedIndex,
-                onItemSelected = { index ->
-                    selectedIndex = index
-                    val route = when (index) {
-                        0 -> "inventory"
-                        1 -> "add"
-                        2 -> "purchaselist"
-                        else -> "menu"
-                    }
-                    navController.navigate(route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+            // 使用简化版本的底部导航栏进行调试
+            NavigationBar {
+                NavigationBarItem(
+                    icon = { 
+                        Icon(
+                            Icons.Default.Home,
+                            contentDescription = "Inventory"
+                        ) 
+                    },
+                    label = { Text("Inventory") },
+                    selected = selectedIndex == 0,
+                    onClick = { 
+                        selectedIndex = 0
+                        navController.navigate("inventory") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
+                
+                NavigationBarItem(
+                    icon = { 
+                        Icon(
+                            Icons.Default.Add,
+                            contentDescription = "Add"
+                        ) 
+                    },
+                    label = { Text("Add") },
+                    selected = selectedIndex == 1,
+                    onClick = { 
+                        selectedIndex = 1
+                        navController.navigate("add") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                )
+                
+                NavigationBarItem(
+                    icon = { 
+                        Icon(
+                            Icons.Default.ShoppingCart,
+                            contentDescription = "Purchase List"
+                        ) 
+                    },
+                    label = { Text("Purchase") },
+                    selected = selectedIndex == 2,
+                    onClick = { 
+                        selectedIndex = 2
+                        navController.navigate("purchaselist") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                )
+                
+                NavigationBarItem(
+                    icon = { 
+                        Icon(
+                            Icons.Default.Menu,
+                            contentDescription = "Menu"
+                        ) 
+                    },
+                    label = { Text("Menu") },
+                    selected = selectedIndex == 3,
+                    onClick = { 
+                        selectedIndex = 3
+                        navController.navigate("menu") {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                )
+            }
         }
     ) { innerPadding ->
         NavHost(
@@ -138,7 +193,7 @@ fun InventoryScreen() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("库存管理页面")
+            Text("Inventory Screen")
         }
     }
 }
@@ -154,7 +209,7 @@ fun AddItemScreen() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("添加物品页面")
+            Text("Add Item Screen")
         }
     }
 }
@@ -170,7 +225,7 @@ fun PurchaseListScreen() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("采购清单页面")
+            Text("Purchase List Screen")
         }
     }
 }
@@ -186,129 +241,8 @@ fun MenuScreen() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("菜单页面")
+            Text("Menu Screen")
         }
-    }
-}
-
-@Composable
-fun LiquidGlassBottomNavigation(
-    selectedIndex: Int,
-    onItemSelected: (Int) -> Unit
-) {
-    // 创建backdrop和layer实例
-    val tabsBackdrop = rememberLayerBackdrop()
-    
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(80.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .layerBackdrop(tabsBackdrop)
-            .drawBackdrop(
-                backdrop = tabsBackdrop,
-                shape = { ContinuousCapsule },
-                effects = {
-                    // 透镜折射效果，模拟真实玻璃
-                    lens(
-                        refractionHeight = 24f,
-                        refractionAmount = 0.3f,
-                        depthEffect = true,
-                        chromaticAberration = true
-                    )
-                    // 适度模糊背景
-                    blur(radius = 8f)
-                },
-                onDrawSurface = {
-                    // 背景渐变
-                    drawRect(
-                        Brush.verticalGradient(
-                            colors = listOf(
-                                Color.White.copy(alpha = 0.1f),
-                                Color.White.copy(alpha = 0.05f)
-                            )
-                        )
-                    )
-                }
-            ),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        // 库存页面
-        NavigationBarItem(
-            icon = { 
-                Icon(
-                    Icons.Default.Home,
-                    contentDescription = "库存",
-                    tint = if (selectedIndex == 0) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            label = { 
-                Text(
-                    "库存",
-                    color = if (selectedIndex == 0) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            selected = selectedIndex == 0,
-            onClick = { onItemSelected(0) }
-        )
-        
-        // 添加物品页面
-        NavigationBarItem(
-            icon = { 
-                Icon(
-                    Icons.Default.Add,
-                    contentDescription = "添加",
-                    tint = if (selectedIndex == 1) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            label = { 
-                Text(
-                    "添加",
-                    color = if (selectedIndex == 1) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            selected = selectedIndex == 1,
-            onClick = { onItemSelected(1) }
-        )
-        
-        // 采购清单页面
-        NavigationBarItem(
-            icon = { 
-                Icon(
-                    Icons.Default.ShoppingCart,
-                    contentDescription = "采购清单",
-                    tint = if (selectedIndex == 2) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            label = { 
-                Text(
-                    "采购清单",
-                    color = if (selectedIndex == 2) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            selected = selectedIndex == 2,
-            onClick = { onItemSelected(2) }
-        )
-        
-        // 菜单页面
-        NavigationBarItem(
-            icon = { 
-                Icon(
-                    Icons.Default.Menu,
-                    contentDescription = "菜单",
-                    tint = if (selectedIndex == 3) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            label = { 
-                Text(
-                    "菜单",
-                    color = if (selectedIndex == 3) MaterialTheme.colorScheme.primary else Color.White
-                ) 
-            },
-            selected = selectedIndex == 3,
-            onClick = { onItemSelected(3) }
-        )
     }
 }
 
