@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">スマート家庭在庫管理</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">アイテム追加</string>
+    <string name="nav_inventory">在庫一覧</string>
+    <string name="nav_language">言語</string>
+    <string name="nav_menu">メニュー</string>
+    <string name="nav_purchaselist">購入リスト</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">操作</string>
+    <string name="inventory_allcategories">すべてのカテゴリ</string>
+    <string name="inventory_category">カテゴリ</string>
+    <string name="inventory_expirydate">賞味期限</string>
+    <string name="inventory_name">アイテム名</string>
+    <string name="inventory_quantity">数量</string>
+    <string name="inventory_search">アイテムを検索...</string>
+    <string name="inventory_showexpired">すべてのアイテムを表示</string>
+    <string name="inventory_status">ステータス</string>
+    <string name="inventory_title">在庫一覧</string>
+    <string name="inventory_unit">単位</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">キャンセル</string>
+    <string name="add_category">カテゴリ</string>
+    <string name="add_description">説明</string>
+    <string name="add_edittitle">アイテムを編集</string>
+    <string name="add_expirydate">賞味期限</string>
+    <string name="add_minquantity">最低在庫数量</string>
+    <string name="add_name">品名</string>
+    <string name="add_quantity">数量</string>
+    <string name="add_save">保存</string>
+    <string name="add_selectcategory">選択してください</string>
+    <string name="add_title">アイテムを追加</string>
+    <string name="add_unit">単位（例：個、袋）</string>
+    <string name="add_update">更新</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">期限切れ</string>
+    <string name="status_expiringsoon">期限間近</string>
+    <string name="status_lowstock">在庫不足</string>
+    <string name="status_normal">正常</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">エラーが発生しました</string>
+    <string name="notifications_insufficientstock">%sの在庫が不足しています</string>
+    <string name="notifications_itemadded">アイテムを追加しました</string>
+    <string name="notifications_itemdeleted">アイテムを削除しました</string>
+    <string name="notifications_itemupdated">アイテムを更新しました</string>
+    <string name="notifications_itemusedsuccessfully">%sを使用しました（残り：%s%s）</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">掃除用品</string>
+    <string name="categories_electronics">電化製品</string>
+    <string name="categories_food">食品</string>
+    <string name="categories_household">家庭用品</string>
+    <string name="categories_medicine">医薬品</string>
+    <string name="categories_personal">日用品</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">カテゴリ数</string>
+    <string name="stats_expiringsoon">期限間近</string>
+    <string name="stats_lowstock">在庫不足</string>
+    <string name="stats_totalitems">総アイテム数</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">現在の数量</string>
+    <string name="purchaselist_description">在庫が不足しているアイテムの購入リスト</string>
+    <string name="purchaselist_lastused">最終使用日</string>
+    <string name="purchaselist_minquantity">最低在庫数量</string>
+    <string name="purchaselist_refresh">更新</string>
+    <string name="purchaselist_suggestedquantity">推奨購入数量</string>
+    <string name="purchaselist_totalitems">購入アイテム数</string>
+    <string name="purchaselist_unit">単位</string>
+
+</resources>

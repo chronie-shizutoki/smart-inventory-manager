@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">ระบบจัดการคลังสินค้าในบ้านอัจฉริยะ</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">เพิ่มรายการ</string>
+    <string name="nav_inventory">คลังสินค้า</string>
+    <string name="nav_language">ภาษา</string>
+    <string name="nav_menu">เมนู</string>
+    <string name="nav_purchaselist">รายการซื้อ</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">การดำเนินการ</string>
+    <string name="inventory_allcategories">ทั้งหมด</string>
+    <string name="inventory_category">หมวดหมู่</string>
+    <string name="inventory_expirydate">วันหมดอายุ</string>
+    <string name="inventory_name">ชื่อรายการ</string>
+    <string name="inventory_quantity">จำนวน</string>
+    <string name="inventory_search">ค้นหารายการ...</string>
+    <string name="inventory_showexpired">แสดงรายการหมดอายุ</string>
+    <string name="inventory_status">สถานะ</string>
+    <string name="inventory_title">คลังสินค้า</string>
+    <string name="inventory_unit">หน่วย</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">ยกเลิก</string>
+    <string name="add_category">หมวดหมู่</string>
+    <string name="add_description">คำอธิบาย</string>
+    <string name="add_edittitle">แก้ไขรายการ</string>
+    <string name="add_expirydate">วันหมดอายุ</string>
+    <string name="add_minquantity">จำนวนขั้นต่ำ</string>
+    <string name="add_name">ชื่อรายการ</string>
+    <string name="add_quantity">จำนวน</string>
+    <string name="add_save">บันทึก</string>
+    <string name="add_selectcategory">เลือกหมวดหมู่</string>
+    <string name="add_title">เพิ่มรายการ</string>
+    <string name="add_unit">หน่วย</string>
+    <string name="add_update">อัปเดต</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">หมดอายุ</string>
+    <string name="status_expiringsoon">ใกล้หมดอายุ</string>
+    <string name="status_lowstock">สต็อกต่ำ</string>
+    <string name="status_normal">ปกติ</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">การดำเนินการล้มเหลว กรุณาลองอีกครั้ง</string>
+    <string name="notifications_insufficientstock">สต็อกไม่เพียงพอ: %s</string>
+    <string name="notifications_itemadded">เพิ่มรายการเรียบร้อยแล้ว</string>
+    <string name="notifications_itemdeleted">ลบรายการเรียบร้อยแล้ว</string>
+    <string name="notifications_itemupdated">อัปเดตรายการเรียบร้อยแล้ว</string>
+    <string name="notifications_itemusedsuccessfully">ใช้ %s ไป 1 %s เรียบร้อยแล้ว (เหลือ %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">ผลิตภัณฑ์ทำความสะอาด</string>
+    <string name="categories_electronics">อิเล็กทรอนิกส์</string>
+    <string name="categories_food">อาหาร</string>
+    <string name="categories_household">เครื่องใช้ในครัวเรือน</string>
+    <string name="categories_medicine">ยา</string>
+    <string name="categories_personal">ของใช้ส่วนตัว</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">หมวดหมู่</string>
+    <string name="stats_expiringsoon">ใกล้หมดอายุ</string>
+    <string name="stats_lowstock">สต็อกต่ำ</string>
+    <string name="stats_totalitems">รายการทั้งหมด</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">จำนวนปัจจุบัน</string>
+    <string name="purchaselist_description">รายการสินค้าที่ควรสั่งซื้อเพิ่มเนื่องจากสต็อกเหลือน้อย</string>
+    <string name="purchaselist_lastused">ใช้งานล่าสุด</string>
+    <string name="purchaselist_minquantity">จำนวนขั้นต่ำ</string>
+    <string name="purchaselist_refresh">รีเฟรชรายการ</string>
+    <string name="purchaselist_suggestedquantity">จำนวนที่แนะนำ</string>
+    <string name="purchaselist_totalitems">จำนวนรายการที่ต้องซื้อ</string>
+    <string name="purchaselist_unit">หน่วย</string>
+
+</resources>

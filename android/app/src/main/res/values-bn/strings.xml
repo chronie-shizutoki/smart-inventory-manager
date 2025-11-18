@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">স্মার্ট হোম ইনভেন্টরি</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">নতুন আইটেম</string>
+    <string name="nav_inventory">ইনভেন্টরি</string>
+    <string name="nav_language">ভাষা</string>
+    <string name="nav_menu">মেনু</string>
+    <string name="nav_purchaselist">ক্রয়ের তালিকা</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">ক্রিয়া</string>
+    <string name="inventory_allcategories">সব বিভাগ</string>
+    <string name="inventory_category">বিভাগ</string>
+    <string name="inventory_expirydate">মেয়াদ শেষের তারিখ</string>
+    <string name="inventory_name">আইটেমের নাম</string>
+    <string name="inventory_quantity">পরিমাণ</string>
+    <string name="inventory_search">আইটেম খুঁজুন...</string>
+    <string name="inventory_showexpired">সব আইটেম প্রদর্শন করুন</string>
+    <string name="inventory_status">স্থিতি</string>
+    <string name="inventory_title">ইনভেন্টরি</string>
+    <string name="inventory_unit">একক</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">বাতিল</string>
+    <string name="add_category">বিভাগ</string>
+    <string name="add_description">বিবরণ</string>
+    <string name="add_edittitle">আইটেম সম্পাদনা করুন</string>
+    <string name="add_expirydate">মেয়াদ শেষের তারিখ</string>
+    <string name="add_minquantity">ন্যূনতম স্টক</string>
+    <string name="add_name">আইটেমের নাম</string>
+    <string name="add_quantity">পরিমাণ</string>
+    <string name="add_save">সংরক্ষণ</string>
+    <string name="add_selectcategory">একটি বিভাগ নির্বাচন করুন</string>
+    <string name="add_title">নতুন আইটেম যোগ করুন</string>
+    <string name="add_unit">একক</string>
+    <string name="add_update">হালনাগাদ</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">মেয়াদোত্তীর্ণ</string>
+    <string name="status_expiringsoon">মেয়াদ শেষ হওয়ার পথে</string>
+    <string name="status_lowstock">স্টক কম</string>
+    <string name="status_normal">স্বাভাবিক</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">ক্রটি ঘটেছে। দয়া করে আবার চেষ্টা করুন</string>
+    <string name="notifications_insufficientstock">স্টক অপর্যাপ্ত: %s</string>
+    <string name="notifications_itemadded">আইটেম যোগ করা হয়েছে</string>
+    <string name="notifications_itemdeleted">আইটেম মুছে ফেলা হয়েছে</string>
+    <string name="notifications_itemupdated">আইটেম হালনাগাদ করা হয়েছে</string>
+    <string name="notifications_itemusedsuccessfully">%s এর ১ %s ব্যবহার করা হয়েছে (%s %s অবশিষ্ট আছে)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">পরিষ্কারকের সামগ্রী</string>
+    <string name="categories_electronics">ইলেকট্রনিক্স</string>
+    <string name="categories_food">খাদ্য</string>
+    <string name="categories_household">গৃহস্থালির সামগ্রী</string>
+    <string name="categories_medicine">ওষুধ</string>
+    <string name="categories_personal">ব্যক্তিগত পরিচর্যা</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">বিভাগসমূহ</string>
+    <string name="stats_expiringsoon">শীঘ্রই মেয়াদ শেষ</string>
+    <string name="stats_lowstock">স্বল্প স্টক</string>
+    <string name="stats_totalitems">মোট আইটেম</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">বর্তমান পরিমাণ</string>
+    <string name="purchaselist_description">স্বল্প স্টক থাকা আইটেমগুলির পুনঃস্থাপনের তালিকা</string>
+    <string name="purchaselist_lastused">সর্বশেষ ব্যবহার</string>
+    <string name="purchaselist_minquantity">ন্যূনতম স্টক</string>
+    <string name="purchaselist_refresh">তালিকা রিফ্রেশ করুন</string>
+    <string name="purchaselist_suggestedquantity">প্রস্তাবিত ক্রয় পরিমাণ</string>
+    <string name="purchaselist_totalitems">মোট ক্রয়할 আইটেম</string>
+    <string name="purchaselist_unit">একক</string>
+
+</resources>

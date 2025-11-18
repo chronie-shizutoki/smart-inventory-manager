@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">Умный домашний склад</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">Добавить товар</string>
+    <string name="nav_inventory">Инвентарь</string>
+    <string name="nav_language">Язык</string>
+    <string name="nav_menu">Меню</string>
+    <string name="nav_purchaselist">Список покупок</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">Действия</string>
+    <string name="inventory_allcategories">Все категории</string>
+    <string name="inventory_category">Категория</string>
+    <string name="inventory_expirydate">Годен до</string>
+    <string name="inventory_name">Название</string>
+    <string name="inventory_quantity">Кол-во</string>
+    <string name="inventory_search">Поиск товаров...</string>
+    <string name="inventory_showexpired">Показать все товары</string>
+    <string name="inventory_status">Статус</string>
+    <string name="inventory_title">Инвентарь</string>
+    <string name="inventory_unit">Ед.</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">Отмена</string>
+    <string name="add_category">Категория</string>
+    <string name="add_description">Описание</string>
+    <string name="add_edittitle">Редактировать товар</string>
+    <string name="add_expirydate">Срок годности</string>
+    <string name="add_minquantity">Минимальный запас</string>
+    <string name="add_name">Название товара</string>
+    <string name="add_quantity">Количество</string>
+    <string name="add_save">Сохранить</string>
+    <string name="add_selectcategory">Выберите категорию</string>
+    <string name="add_title">Добавить товар</string>
+    <string name="add_unit">Единица измерения</string>
+    <string name="add_update">Обновить</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">Просрочен</string>
+    <string name="status_expiringsoon">Скоро истечёт</string>
+    <string name="status_lowstock">Мало осталось</string>
+    <string name="status_normal">В норме</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">Не удалось выполнить операцию. Пожалуйста, попробуйте ещё раз</string>
+    <string name="notifications_insufficientstock">Нет в наличии: %s</string>
+    <string name="notifications_itemadded">Товар добавлен</string>
+    <string name="notifications_itemdeleted">Товар удалён</string>
+    <string name="notifications_itemupdated">Товар обновлён</string>
+    <string name="notifications_itemusedsuccessfully">Использовано 1 %s %s (осталось %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">Чистящие средства</string>
+    <string name="categories_electronics">Электроника</string>
+    <string name="categories_food">Продукты</string>
+    <string name="categories_household">Для дома</string>
+    <string name="categories_medicine">Лекарства</string>
+    <string name="categories_personal">Гигиена</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">Категории</string>
+    <string name="stats_expiringsoon">Скоро истечёт</string>
+    <string name="stats_lowstock">Низкий запас</string>
+    <string name="stats_totalitems">Всего товаров</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">Текущее количество</string>
+    <string name="purchaselist_description">Товары для пополнения запасов на основе низкого остатка</string>
+    <string name="purchaselist_lastused">Последнее использование</string>
+    <string name="purchaselist_minquantity">Минимальный запас</string>
+    <string name="purchaselist_refresh">Обновить список</string>
+    <string name="purchaselist_suggestedquantity">Рекомендуемое количество</string>
+    <string name="purchaselist_totalitems">Товаров к покупке</string>
+    <string name="purchaselist_unit">Единица измерения</string>
+
+</resources>

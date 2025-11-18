@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">Kho Thông Minh</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">Thêm mặt hàng</string>
+    <string name="nav_inventory">Tồn kho</string>
+    <string name="nav_language">Ngôn ngữ</string>
+    <string name="nav_menu">Menu</string>
+    <string name="nav_purchaselist">Danh sách mua hàng</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">Thao tác</string>
+    <string name="inventory_allcategories">Tất cả danh mục</string>
+    <string name="inventory_category">Danh mục</string>
+    <string name="inventory_expirydate">Ngày hết hạn</string>
+    <string name="inventory_name">Tên mặt hàng</string>
+    <string name="inventory_quantity">Số lượng</string>
+    <string name="inventory_search">Tìm kiếm mặt hàng...</string>
+    <string name="inventory_showexpired">Hiển thị tất cả mặt hàng hết hạn</string>
+    <string name="inventory_status">Trạng thái</string>
+    <string name="inventory_title">Kho hàng</string>
+    <string name="inventory_unit">Đơn vị</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">Hủy</string>
+    <string name="add_category">Danh mục</string>
+    <string name="add_description">Mô tả</string>
+    <string name="add_edittitle">Sửa mặt hàng</string>
+    <string name="add_expirydate">Ngày hết hạn</string>
+    <string name="add_minquantity">Tồn kho tối thiểu</string>
+    <string name="add_name">Tên mặt hàng</string>
+    <string name="add_quantity">Số lượng</string>
+    <string name="add_save">Lưu</string>
+    <string name="add_selectcategory">Chọn danh mục</string>
+    <string name="add_title">Thêm mặt hàng</string>
+    <string name="add_unit">Đơn vị</string>
+    <string name="add_update">Cập nhật</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">Hết hạn</string>
+    <string name="status_expiringsoon">Sắp hết hạn</string>
+    <string name="status_lowstock">Tồn kho thấp</string>
+    <string name="status_normal">Bình thường</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">Thao tác thất bại. Vui lòng thử lại</string>
+    <string name="notifications_insufficientstock">Đã hết hàng: %s</string>
+    <string name="notifications_itemadded">Đã thêm mặt hàng</string>
+    <string name="notifications_itemdeleted">Đã xóa mặt hàng</string>
+    <string name="notifications_itemupdated">Đã cập nhật mặt hàng</string>
+    <string name="notifications_itemusedsuccessfully">Đã sử dụng 1 %s %s (còn lại %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">Vệ sinh</string>
+    <string name="categories_electronics">Điện tử</string>
+    <string name="categories_food">Thực phẩm</string>
+    <string name="categories_household">Gia dụng</string>
+    <string name="categories_medicine">Thuốc</string>
+    <string name="categories_personal">Cá nhân</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">Danh mục</string>
+    <string name="stats_expiringsoon">Sắp hết hạn</string>
+    <string name="stats_lowstock">Tồn kho thấp</string>
+    <string name="stats_totalitems">Tổng số mặt hàng</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">Số lượng hiện tại</string>
+    <string name="purchaselist_description">Các mặt hàng cần bổ sung dựa trên mức tồn kho thấp</string>
+    <string name="purchaselist_lastused">Lần dùng cuối</string>
+    <string name="purchaselist_minquantity">Mức tối thiểu</string>
+    <string name="purchaselist_refresh">Làm mới</string>
+    <string name="purchaselist_suggestedquantity">Đề xuất mua</string>
+    <string name="purchaselist_totalitems">Tổng số mặt hàng cần mua</string>
+    <string name="purchaselist_unit">Đơn vị</string>
+
+</resources>

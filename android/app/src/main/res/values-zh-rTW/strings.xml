@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">智慧家居庫存管理系統</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">新增物品</string>
+    <string name="nav_inventory">庫存管理</string>
+    <string name="nav_language">語言設定</string>
+    <string name="nav_menu">選單</string>
+    <string name="nav_purchaselist">採購清單</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">操作</string>
+    <string name="inventory_allcategories">全部分類</string>
+    <string name="inventory_category">物品類別</string>
+    <string name="inventory_expirydate">有效期限</string>
+    <string name="inventory_name">物品名稱</string>
+    <string name="inventory_quantity">庫存數量</string>
+    <string name="inventory_search">搜尋物品名稱...</string>
+    <string name="inventory_showexpired">顯示所有物品</string>
+    <string name="inventory_status">狀態</string>
+    <string name="inventory_title">庫存清單</string>
+    <string name="inventory_unit">單位</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">取消</string>
+    <string name="add_category">物品類別</string>
+    <string name="add_description">物品描述</string>
+    <string name="add_edittitle">編輯物品資訊</string>
+    <string name="add_expirydate">有效期限</string>
+    <string name="add_minquantity">安全存量</string>
+    <string name="add_name">物品名稱</string>
+    <string name="add_quantity">目前數量</string>
+    <string name="add_save">儲存</string>
+    <string name="add_selectcategory">選擇類別</string>
+    <string name="add_title">新增物品</string>
+    <string name="add_unit">計量單位</string>
+    <string name="add_update">更新</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">已過期</string>
+    <string name="status_expiringsoon">即將到期</string>
+    <string name="status_lowstock">庫存不足</string>
+    <string name="status_normal">庫存正常</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">操作失敗，請稍後重試</string>
+    <string name="notifications_insufficientstock">庫存不足：%s</string>
+    <string name="notifications_itemadded">物品新增成功</string>
+    <string name="notifications_itemdeleted">物品刪除成功</string>
+    <string name="notifications_itemupdated">物品更新成功</string>
+    <string name="notifications_itemusedsuccessfully">已使用 1 %s %s（剩餘 %s %s）</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">清潔用品</string>
+    <string name="categories_electronics">電子產品</string>
+    <string name="categories_food">食品</string>
+    <string name="categories_household">家居用品</string>
+    <string name="categories_medicine">藥品</string>
+    <string name="categories_personal">個人護理</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">分類統計</string>
+    <string name="stats_expiringsoon">即將到期物品</string>
+    <string name="stats_lowstock">低庫存預警</string>
+    <string name="stats_totalitems">物品總數</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="airecord_airecordbutton">AI紀錄</string>
+    <string name="airecord_apikey">SiliconFlow API金鑰</string>
+    <string name="airecord_apikeyhint">您可以從SiliconFlow控制台取得API金鑰</string>
+    <string name="airecord_apikeyrequired">請輸入API金鑰</string>
+    <string name="airecord_confirmadd">確認添加</string>
+    <string name="airecord_description">使用AI從圖片快速生成庫存紀錄</string>
+    <string name="airecord_dragdroporclick">拖拽檔案至此處或點擊上傳</string>
+    <string name="airecord_editrecord">編輯紀錄</string>
+    <string name="airecord_error">紀錄生成失敗</string>
+    <string name="airecord_failedtogenerate">未能生成紀錄，請檢查您的圖片和API金鑰</string>
+    <string name="airecord_generaterecords">生成紀錄</string>
+    <string name="airecord_generating">正在生成紀錄...</string>
+    <string name="airecord_generatingrecords">正在生成紀錄，請稍候...</string>
+    <string name="airecord_noimagesselected">請至少選擇一張圖片</string>
+    <string name="airecord_norecordsgenerated">沒有生成任何紀錄</string>
+    <string name="airecord_recordsgenerated">紀錄已生成</string>
+    <string name="airecord_reviewandconfirm">請檢查並確認以下生成的紀錄</string>
+    <string name="airecord_success">紀錄生成成功</string>
+    <string name="airecord_supportedformats">支援JPG、PNG、WebP格式（最多10張）</string>
+    <string name="airecord_title">AI紀錄生成器</string>
+    <string name="airecord_uploadedimages">已上傳圖片</string>
+    <string name="airecord_uploadimages">上傳圖片</string>
+    <string name="purchaselist_currentquantity">目前數量</string>
+    <string name="purchaselist_description">根據庫存狀態生成的智能補貨清單</string>
+    <string name="purchaselist_lastused">最後使用時間</string>
+    <string name="purchaselist_minquantity">安全存量</string>
+    <string name="purchaselist_refresh">重新整理清單</string>
+    <string name="purchaselist_suggestedquantity">建議採購量</string>
+    <string name="purchaselist_totalitems">待採購物品</string>
+    <string name="purchaselist_unit">單位</string>
+
+</resources>

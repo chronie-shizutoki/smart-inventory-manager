@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">ஸ்மார்ட் வீட்டு இருப்பு மேலாண்மை</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">பொருள் சேர்</string>
+    <string name="nav_inventory">இருப்பு</string>
+    <string name="nav_language">மொழி</string>
+    <string name="nav_menu">பட்டி</string>
+    <string name="nav_purchaselist">வாங்கும் பட்டியல்</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">செயல்கள்</string>
+    <string name="inventory_allcategories">அனைத்து வகைகளும்</string>
+    <string name="inventory_category">வகை</string>
+    <string name="inventory_expirydate">காலாவதி தேதி</string>
+    <string name="inventory_name">பொருள்</string>
+    <string name="inventory_quantity">அளவு</string>
+    <string name="inventory_search">பொருட்களை தேடு...</string>
+    <string name="inventory_showexpired">எல்லா பொருட்களை காட்டு</string>
+    <string name="inventory_status">நிலை</string>
+    <string name="inventory_title">இருப்பு</string>
+    <string name="inventory_unit">அலகு</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">ரத்து செய்</string>
+    <string name="add_category">வகை</string>
+    <string name="add_description">விளக்கம்</string>
+    <string name="add_edittitle">பொருளை திருத்து</string>
+    <string name="add_expirydate">காலாவதி தேதி</string>
+    <string name="add_minquantity">குறைந்தபட்ச அளவு</string>
+    <string name="add_name">பொருளின் பெயர்</string>
+    <string name="add_quantity">அளவு</string>
+    <string name="add_save">சேமி</string>
+    <string name="add_selectcategory">வகையை தேர்ந்தெடுக்கவும்</string>
+    <string name="add_title">பொருள் சேர்</string>
+    <string name="add_unit">அலகு</string>
+    <string name="add_update">புதுப்பிக்கவும்</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">காலாவதியானது</string>
+    <string name="status_expiringsoon">விரைவில் காலாவதியாகும்</string>
+    <string name="status_lowstock">குறைந்த பங்கு</string>
+    <string name="status_normal">இயல்பான</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">செயல் தோல்வியடைந்தது. தயவு செய்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="notifications_insufficientstock">போதிய பங்கு இல்லை: %s</string>
+    <string name="notifications_itemadded">பொருள் சேர்க்கப்பட்டது</string>
+    <string name="notifications_itemdeleted">பொருள் நீக்கப்பட்டது</string>
+    <string name="notifications_itemupdated">பொருள் புதுப்பிக்கப்பட்டது</string>
+    <string name="notifications_itemusedsuccessfully">%s 1 %s பயன்படுத்தப்பட்டது (மீதம் %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">சுத்தம் செய்யும் பொருட்கள்</string>
+    <string name="categories_electronics">மின்னணு பொருட்கள்</string>
+    <string name="categories_food">உணவு</string>
+    <string name="categories_household">வீட்டு உபயோக பொருட்கள்</string>
+    <string name="categories_medicine">மருந்து</string>
+    <string name="categories_personal">தனிப்பட்ட பராமரிப்பு</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">வகைகள்</string>
+    <string name="stats_expiringsoon">விரைவில் காலாவதியாகும்</string>
+    <string name="stats_lowstock">குறைந்த பங்கு</string>
+    <string name="stats_totalitems">மொத்த பொருட்கள்</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_// more accurate
+        totalitems">வாங்க வேண்டிய மொத்த பொருட்கள்</string>
+    <string name="purchaselist_currentquantity">தற்போதைய அளவு</string>
+    <string name="purchaselist_description">குறைந்த பங்கு அடிப்படையில் மீள் சேமிப்பு செய்ய வேண்டிய பொருட்கள்</string>
+    <string name="purchaselist_lastused">கடைசியாக பயன்படுத்திய தேதி</string>
+    <string name="purchaselist_minquantity">குறைந்தபட்ச அளவு</string>
+    <string name="purchaselist_refresh">பட்டியலைப் புதுப்பிக்கவும்</string>
+    <string name="purchaselist_suggestedquantity">பரிந்துரைக்கப்பட்ட அளவு</string>
+    <string name="purchaselist_unit">அலகு</string>
+
+</resources>

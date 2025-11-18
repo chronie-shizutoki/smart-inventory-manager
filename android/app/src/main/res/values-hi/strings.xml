@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">स्मार्ट होम इन्वेंटरी</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">आइटम जोड़ें</string>
+    <string name="nav_inventory">इन्वेंटरी</string>
+    <string name="nav_language">भाषा</string>
+    <string name="nav_menu">मेन्यू</string>
+    <string name="nav_purchaselist">खरीदारी सूची</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">एक्शन्स</string>
+    <string name="inventory_allcategories">सभी कैटेगरीज़</string>
+    <string name="inventory_category">कैटेगरी</string>
+    <string name="inventory_expirydate">एक्सपायरी डेट</string>
+    <string name="inventory_name">आइटम</string>
+    <string name="inventory_quantity">मात्रा</string>
+    <string name="inventory_search">आइटम्स में खोजें...</string>
+    <string name="inventory_showexpired">सभी आइटम्स दिखाएं</string>
+    <string name="inventory_status">स्थिति</string>
+    <string name="inventory_title">इन्वेंटरी</string>
+    <string name="inventory_unit">यूनिट</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">कैंसल</string>
+    <string name="add_category">कैटेगरी</string>
+    <string name="add_description">विवरण</string>
+    <string name="add_edittitle">आइटम एडिट करें</string>
+    <string name="add_expirydate">एक्सपायरी डेट</string>
+    <string name="add_minquantity">न्यूनतम स्टॉक</string>
+    <string name="add_name">आइटम का नाम</string>
+    <string name="add_quantity">मात्रा</string>
+    <string name="add_save">सेव</string>
+    <string name="add_selectcategory">कैटेगरी चुनें</string>
+    <string name="add_title">आइटम जोड़ें</string>
+    <string name="add_unit">यूनिट</string>
+    <string name="add_update">अपडेट</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">एक्सपायर्ड</string>
+    <string name="status_expiringsoon">जल्द एक्सपायर</string>
+    <string name="status_lowstock">कम स्टॉक</string>
+    <string name="status_normal">नॉर्मल</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">ऑपरेशन विफल। कृपया पुनः प्रयास करें</string>
+    <string name="notifications_insufficientstock">स्टॉक खत्म: %s</string>
+    <string name="notifications_itemadded">आइटम जोड़ा गया</string>
+    <string name="notifications_itemdeleted">आइटम हटाया गया</string>
+    <string name="notifications_itemupdated">आइटम अपडेट किया गया</string>
+    <string name="notifications_itemusedsuccessfully">%s का 1 %s इस्तेमाल किया गया (%s %s बाकी)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">सफ़ाई का सामान</string>
+    <string name="categories_electronics">इलेक्ट्रॉनिक्स</string>
+    <string name="categories_food">खाना</string>
+    <string name="categories_household">घरेलू सामान</string>
+    <string name="categories_medicine">दवाई</string>
+    <string name="categories_personal">पर्सनल केयर</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">कैटेगरीज़</string>
+    <string name="stats_expiringsoon">जल्द एक्सपायर होने वाले</string>
+    <string name="stats_lowstock">कम स्टॉक</string>
+    <string name="stats_totalitems">कुल आइटम्स</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">मौजूदा मात्रा</string>
+    <string name="purchaselist_description">कम स्टॉक के आधार पर रिस्टॉक के लिए सुझाई गई आइटम्स</string>
+    <string name="purchaselist_lastused">आखिरी बार इस्तेमाल</string>
+    <string name="purchaselist_minquantity">न्यूनतम स्टॉक</string>
+    <string name="purchaselist_refresh">सूची ताज़ा करें</string>
+    <string name="purchaselist_suggestedquantity">सुझाई गई मात्रा</string>
+    <string name="purchaselist_totalitems">खरीदने के लिए आइटम्स</string>
+    <string name="purchaselist_unit">यूनिट</string>
+
+</resources>

@@ -1,3 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Smart Inventory Manager</string>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">Smart Home Inventory</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">Add Item</string>
+    <string name="nav_inventory">Inventory</string>
+    <string name="nav_language">Language</string>
+    <string name="nav_menu">Menu</string>
+    <string name="nav_purchaselist">Shopping List</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">Actions</string>
+    <string name="inventory_allcategories">All Categories</string>
+    <string name="inventory_category">Category</string>
+    <string name="inventory_expirydate">Expiry Date</string>
+    <string name="inventory_name">Item Name</string>
+    <string name="inventory_quantity">Quantity</string>
+    <string name="inventory_search">Search items...</string>
+    <string name="inventory_showexpired">Show All Items</string>
+    <string name="inventory_status">Status</string>
+    <string name="inventory_title">Inventory</string>
+    <string name="inventory_unit">Unit</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">Cancel</string>
+    <string name="add_category">Category</string>
+    <string name="add_description">Description</string>
+    <string name="add_edittitle">Edit Item</string>
+    <string name="add_expirydate">Expiry Date</string>
+    <string name="add_minquantity">Minimum Stock</string>
+    <string name="add_name">Item Name</string>
+    <string name="add_quantity">Quantity</string>
+    <string name="add_save">Save</string>
+    <string name="add_selectcategory">Select Category</string>
+    <string name="add_title">Add New Item</string>
+    <string name="add_unit">Unit</string>
+    <string name="add_update">Update</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">Expired</string>
+    <string name="status_expiringsoon">Expiring Soon</string>
+    <string name="status_lowstock">Low Stock</string>
+    <string name="status_normal">Normal</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">Operation failed. Please try again</string>
+    <string name="notifications_insufficientstock">Insufficient stock: %s</string>
+    <string name="notifications_itemadded">Item added successfully</string>
+    <string name="notifications_itemdeleted">Item deleted successfully</string>
+    <string name="notifications_itemupdated">Item updated successfully</string>
+    <string name="notifications_itemusedsuccessfully">Used 1 %s of %s (%s %s remaining)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">Cleaning Supplies</string>
+    <string name="categories_electronics">Electronics</string>
+    <string name="categories_food">Food</string>
+    <string name="categories_household">Household Items</string>
+    <string name="categories_medicine">Medicine</string>
+    <string name="categories_personal">Personal Care</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">Categories</string>
+    <string name="stats_expiringsoon">Expiring Soon</string>
+    <string name="stats_lowstock">Low Stock</string>
+    <string name="stats_totalitems">Total Items</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="airecord_airecordbutton">AI Record</string>
+    <string name="airecord_apikey">SiliconFlow API Key</string>
+    <string name="airecord_apikeyhint">You can get your API key from SiliconFlow console</string>
+    <string name="airecord_apikeyrequired">Please enter API key</string>
+    <string name="airecord_confirmadd">Confirm Add</string>
+    <string name="airecord_description">Generate inventory records from images using AI</string>
+    <string name="airecord_dragdroporclick">Drag &amp; drop files or click to upload</string>
+    <string name="airecord_editrecord">Edit Record</string>
+    <string name="airecord_error">Failed to generate records</string>
+    <string name="airecord_failedtogenerate">Failed to generate records, please check your images and API key</string>
+    <string name="airecord_generaterecords">Generate Records</string>
+    <string name="airecord_generating">Generating records...</string>
+    <string name="airecord_generatingrecords">Generating records, please wait...</string>
+    <string name="airecord_noimagesselected">Please select at least one image</string>
+    <string name="airecord_norecordsgenerated">No records generated</string>
+    <string name="airecord_recordsgenerated">Records Generated</string>
+    <string name="airecord_reviewandconfirm">Please review and confirm the following generated records</string>
+    <string name="airecord_success">Records generated successfully</string>
+    <string name="airecord_supportedformats">Supports JPG, PNG, WebP (max 10 images)</string>
+    <string name="airecord_title">AI Record Generator</string>
+    <string name="airecord_uploadedimages">Uploaded Images</string>
+    <string name="airecord_uploadimages">Upload Images</string>
+    <string name="purchaselist_currentquantity">Current Qty</string>
+    <string name="purchaselist_description">Items to restock based on current inventory levels</string>
+    <string name="purchaselist_lastused">Last Used</string>
+    <string name="purchaselist_minquantity">Min Stock</string>
+    <string name="purchaselist_refresh">Refresh List</string>
+    <string name="purchaselist_suggestedquantity">Suggested Qty</string>
+    <string name="purchaselist_totalitems">Items to Purchase</string>
+    <string name="purchaselist_unit">Unit</string>
+
 </resources>

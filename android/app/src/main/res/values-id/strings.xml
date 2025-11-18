@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">Smart Home Inventory</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">Tambah Item</string>
+    <string name="nav_inventory">Inventaris</string>
+    <string name="nav_language">Bahasa</string>
+    <string name="nav_menu">Menu</string>
+    <string name="nav_purchaselist">Daftar Belanja</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">Aksi</string>
+    <string name="inventory_allcategories">Semua Kategori</string>
+    <string name="inventory_category">Kategori</string>
+    <string name="inventory_expirydate">Tanggal Kedaluwarsa</string>
+    <string name="inventory_name">Nama Item</string>
+    <string name="inventory_quantity">Jumlah</string>
+    <string name="inventory_search">Cari item...</string>
+    <string name="inventory_showexpired">Tampilkan semua item</string>
+    <string name="inventory_status">Status</string>
+    <string name="inventory_title">Inventaris</string>
+    <string name="inventory_unit">Satuan</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">Batal</string>
+    <string name="add_category">Kategori</string>
+    <string name="add_description">Deskripsi</string>
+    <string name="add_edittitle">Edit Item</string>
+    <string name="add_expirydate">Tanggal Kedaluwarsa</string>
+    <string name="add_minquantity">Stok Minimum</string>
+    <string name="add_name">Nama Item</string>
+    <string name="add_quantity">Jumlah</string>
+    <string name="add_save">Simpan</string>
+    <string name="add_selectcategory">Pilih Kategori</string>
+    <string name="add_title">Tambah Item</string>
+    <string name="add_unit">Satuan</string>
+    <string name="add_update">Perbarui</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">Kedaluwarsa</string>
+    <string name="status_expiringsoon">Akan Kedaluwarsa</string>
+    <string name="status_lowstock">Stok Rendah</string>
+    <string name="status_normal">Normal</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">Operasi gagal. Silakan coba lagi</string>
+    <string name="notifications_insufficientstock">Stok tidak mencukupi: %s</string>
+    <string name="notifications_itemadded">Item berhasil ditambahkan</string>
+    <string name="notifications_itemdeleted">Item berhasil dihapus</string>
+    <string name="notifications_itemupdated">Item berhasil diperbarui</string>
+    <string name="notifications_itemusedsuccessfully">%s 1 %s digunakan (%s %s tersisa)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">Peralatan Kebersihan</string>
+    <string name="categories_electronics">Elektronik</string>
+    <string name="categories_food">Makanan</string>
+    <string name="categories_household">Perlengkapan Rumah Tangga</string>
+    <string name="categories_medicine">Obat-obatan</string>
+    <string name="categories_personal">Perawatan Diri</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">Kategori</string>
+    <string name="stats_expiringsoon">Akan Kedaluwarsa</string>
+    <string name="stats_lowstock">Stok Rendah</string>
+    <string name="stats_totalitems">Total Item</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">Jumlah Saat Ini</string>
+    <string name="purchaselist_description">Item yang perlu direstok karena stok rendah</string>
+    <string name="purchaselist_lastused">Terakhir Digunakan</string>
+    <string name="purchaselist_minquantity">Jumlah Minimum</string>
+    <string name="purchaselist_refresh">Segarkan Daftar</string>
+    <string name="purchaselist_suggestedquantity">Jumlah Saran</string>
+    <string name="purchaselist_totalitems">Total Item untuk Dibeli</string>
+    <string name="purchaselist_unit">Satuan</string>
+
+</resources>

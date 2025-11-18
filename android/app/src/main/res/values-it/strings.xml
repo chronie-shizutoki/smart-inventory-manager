@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">Gestione Inventario Domestico Intelligente</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">Aggiungi articolo</string>
+    <string name="nav_inventory">Inventario</string>
+    <string name="nav_language">Lingua</string>
+    <string name="nav_menu">Menu</string>
+    <string name="nav_purchaselist">Lista acquisti</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">Azioni</string>
+    <string name="inventory_allcategories">Tutte le categorie</string>
+    <string name="inventory_category">Categoria</string>
+    <string name="inventory_expirydate">Data di scadenza</string>
+    <string name="inventory_name">Nome articolo</string>
+    <string name="inventory_quantity">Quantità</string>
+    <string name="inventory_search">Cerca articoli...</string>
+    <string name="inventory_showexpired">Mostra tutti gli articoli</string>
+    <string name="inventory_status">Stato</string>
+    <string name="inventory_title">Inventario</string>
+    <string name="inventory_unit">Unità</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">An\"\"a</string>
+    <string name="add_category">Categoria</string>
+    <string name="add_description">Descrizione</string>
+    <string name="add_edittitle">Modifica articolo</string>
+    <string name="add_expirydate">Data di scadenza</string>
+    <string name="add_minquantity">Scorta minima</string>
+    <string name="add_name">Nome articolo</string>
+    <string name="add_quantity">Quantità</string>
+    <string name="add_save">Salva</string>
+    <string name="add_selectcategory">Seleziona categoria</string>
+    <string name="add_title">Aggiungi nuovo articolo</string>
+    <string name="add_unit">Unità</string>
+    <string name="add_update">Aggiorna</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">Scaduto</string>
+    <string name="status_expiringsoon">In scadenza</string>
+    <string name="status_lowstock">Scorte basse</string>
+    <string name="status_normal">Normale</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">Operazione non riuscita. Riprova più tardi</string>
+    <string name="notifications_insufficientstock">Scorte insufficienti: %s</string>
+    <string name="notifications_itemadded">Articolo aggiunto correttamente</string>
+    <string name="notifications_itemdeleted">Articolo eliminato correttamente</string>
+    <string name="notifications_itemupdated">Articolo aggiornato correttamente</string>
+    <string name="notifications_itemusedsuccessfully">Utilizzato 1 %s di %s (rimanenti: %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">Prodotti per la pulizia</string>
+    <string name="categories_electronics">Elettronica</string>
+    <string name="categories_food">Alimentari</string>
+    <string name="categories_household">Casalinghi</string>
+    <string name="categories_medicine">Medicinali</string>
+    <string name="categories_personal">Cura della persona</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">Categorie</string>
+    <string name="stats_expiringsoon">In scadenza</string>
+    <string name="stats_lowstock">Scorte basse</string>
+    <string name="stats_totalitems">Articoli totali</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">Quantità attuale</string>
+    <string name="purchaselist_description">Articoli da rifornire in base ai livelli di scorta attuali</string>
+    <string name="purchaselist_lastused">Ultimo utilizzo</string>
+    <string name="purchaselist_minquantity">Scorta minima</string>
+    <string name="purchaselist_refresh">Aggiorna lista</string>
+    <string name="purchaselist_suggestedquantity">Quantità suggerita</string>
+    <string name="purchaselist_totalitems">Articoli da acquistare</string>
+    <string name="purchaselist_unit">Unità</string>
+
+</resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">Akıllı Ev Envanteri</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">Ürün Ekle</string>
+    <string name="nav_inventory">Envanter</string>
+    <string name="nav_language">Dil</string>
+    <string name="nav_menu">Menü</string>
+    <string name="nav_purchaselist">Alışveriş Listesi</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">İşlemler</string>
+    <string name="inventory_allcategories">Tüm Kategoriler</string>
+    <string name="inventory_category">Kategori</string>
+    <string name="inventory_expirydate">Son Kullanma Tarihi</string>
+    <string name="inventory_name">Ürün</string>
+    <string name="inventory_quantity">Miktar</string>
+    <string name="inventory_search">Ürün ara...</string>
+    <string name="inventory_showexpired">Geçmiş Son Kullanma Tarihine Uygun Ürünleri Göster</string>
+    <string name="inventory_status">Durum</string>
+    <string name="inventory_title">Envanter</string>
+    <string name="inventory_unit">Birim</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">İptal</string>
+    <string name="add_category">Kategori</string>
+    <string name="add_description">Açıklama</string>
+    <string name="add_edittitle">Ürünü Düzenle</string>
+    <string name="add_expirydate">Son Kullanma Tarihi</string>
+    <string name="add_minquantity">Minimum Stok</string>
+    <string name="add_name">Ürün Adı</string>
+    <string name="add_quantity">Miktar</string>
+    <string name="add_save">Kaydet</string>
+    <string name="add_selectcategory">Kategori Seçiniz</string>
+    <string name="add_title">Ürün Ekle</string>
+    <string name="add_unit">Birim</string>
+    <string name="add_update">Güncelle</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">Süresi Dolmuş</string>
+    <string name="status_expiringsoon">Yaklaşan Son Kullanma Tarihi</string>
+    <string name="status_lowstock">Düşük Stok</string>
+    <string name="status_normal">Normal</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">İşlem başarısız oldu. Lütfen tekrar deneyiniz</string>
+    <string name="notifications_insufficientstock">Yetersiz Stok: %s</string>
+    <string name="notifications_itemadded">Ürün eklendi</string>
+    <string name="notifications_itemdeleted">Ürün silindi</string>
+    <string name="notifications_itemupdated">Ürün güncellendi</string>
+    <string name="notifications_itemusedsuccessfully">%s ürününden 1 %s kullanıldı (%s %s kaldı)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">Temizlik Malzemesi</string>
+    <string name="categories_electronics">Elektronik</string>
+    <string name="categories_food">Yiyecek</string>
+    <string name="categories_household">Ev Eşyaları</string>
+    <string name="categories_medicine">İlaç</string>
+    <string name="categories_personal">Kişisel Bakım</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">Kategoriler</string>
+    <string name="stats_expiringsoon">Yaklaşan Son Kullanma Tarihi</string>
+    <string name="stats_lowstock">Düşük Stok</string>
+    <string name="stats_totalitems">Toplam Ürün</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">Mevcut Miktar</string>
+    <string name="purchaselist_description">Düşük stok seviyesine göre yenilenmesi önerilen ürünler</string>
+    <string name="purchaselist_lastused">Son Kullanım</string>
+    <string name="purchaselist_minquantity">Minimum Stok</string>
+    <string name="purchaselist_refresh">Listeyi Yenile</string>
+    <string name="purchaselist_suggestedquantity">Önerilen Miktar</string>
+    <string name="purchaselist_totalitems">Satın Alınacak Ürünler</string>
+    <string name="purchaselist_unit">Birim</string>
+
+</resources>

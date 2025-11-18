@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">سامانه‌ی مدیریت موجودی خانه</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">افزودن آیتم</string>
+    <string name="nav_inventory">موجودی</string>
+    <string name="nav_language">زبان</string>
+    <string name="nav_menu">منو</string>
+    <string name="nav_purchaselist">لیست خرید</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">عملیات</string>
+    <string name="inventory_allcategories">همه‌ی دسته‌ها</string>
+    <string name="inventory_category">دسته‌بندی</string>
+    <string name="inventory_expirydate">تاریخ انقضا</string>
+    <string name="inventory_name">نام آیتم</string>
+    <string name="inventory_quantity">مقدار</string>
+    <string name="inventory_search">جستجو among آیتم‌ها...</string>
+    <string name="inventory_showexpired">نمایش همه آیتم‌ها</string>
+    <string name="inventory_status">وضعیت</string>
+    <string name="inventory_title">انباره</string>
+    <string name="inventory_unit">واحد</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">لغو</string>
+    <string name="add_category">دسته‌بندی</string>
+    <string name="add_description">توضیحات</string>
+    <string name="add_edittitle">ویرایش آیتم</string>
+    <string name="add_expirydate">تاریخ انقضا</string>
+    <string name="add_minquantity">حداقل موجودی</string>
+    <string name="add_name">نام آیتم</string>
+    <string name="add_quantity">مقدار</string>
+    <string name="add_save">ذخیره</string>
+    <string name="add_selectcategory">انتخاب دسته</string>
+    <string name="add_title">افزودن آیتم جدید</string>
+    <string name="add_unit">واحد</string>
+    <string name="add_update">اعمال تغییرات</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">منقضی‌شده</string>
+    <string name="status_expiringsoon">نزدیک انقضا</string>
+    <string name="status_lowstock">کم‌موجودی</string>
+    <string name="status_normal">طبیعی</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">عملیات ناموفق بود. لطفاً مجدداً تلاش کنید</string>
+    <string name="notifications_insufficientstock">موجودی ناکافی: %s</string>
+    <string name="notifications_itemadded">آیتم با موفقیت افزوده شد</string>
+    <string name="notifications_itemdeleted">آیتم با موفقیت حذف شد</string>
+    <string name="notifications_itemupdated">آیتم با موفقیت به‌روزرسانی شد</string>
+    <string name="notifications_itemusedsuccessfully">1 %s از %s استفاده شد (موجودی: %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">شوینده</string>
+    <string name="categories_electronics">لوازم الکترونیکی</string>
+    <string name="categories_food">خوراکی</string>
+    <string name="categories_household">لوازم خانگی</string>
+    <string name="categories_medicine">دارو</string>
+    <string name="categories_personal">لوازم شخصی</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">دسته‌بندی‌ها</string>
+    <string name="stats_expiringsoon">نزدیک به انقضا</string>
+    <string name="stats_lowstock">کم‌موجودی</string>
+    <string name="stats_totalitems">کل آیتم‌ها</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">مقدار فعلی</string>
+    <string name="purchaselist_description">آیتم‌هایی که بر اساس سطح موجودی فعلی نیاز به replenish دارند</string>
+    <string name="purchaselist_lastused">آخرین استفاده</string>
+    <string name="purchaselist_minquantity">حداقل موجودی</string>
+    <string name="purchaselist_refresh">بروزرسانی لیست</string>
+    <string name="purchaselist_suggestedquantity">مقدار پیشنهادی</string>
+    <string name="purchaselist_totalitems">تعداد کل آیتم‌ها</string>
+    <string name="purchaselist_unit">واحد</string>
+
+</resources>

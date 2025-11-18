@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">نظام إدارة المخزون المنزلي الذكي</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">إضافة عنصر</string>
+    <string name="nav_inventory">المخزون</string>
+    <string name="nav_language">اللغة</string>
+    <string name="nav_menu">القائمة</string>
+    <string name="nav_purchaselist">قائمة التسوق</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">الإجراءات</string>
+    <string name="inventory_allcategories">جميع الفئات</string>
+    <string name="inventory_category">الفئة</string>
+    <string name="inventory_expirydate">تاريخ الانتهاء</string>
+    <string name="inventory_name">اسم العنصر</string>
+    <string name="inventory_quantity">الكمية</string>
+    <string name="inventory_search">بحث في العناصر...</string>
+    <string name="inventory_showexpired">عرض جميع العناصر</string>
+    <string name="inventory_status">الحالة</string>
+    <string name="inventory_title">المخزون</string>
+    <string name="inventory_unit">الوحدة</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">إلغاء</string>
+    <string name="add_category">الفئة</string>
+    <string name="add_description">الوصف</string>
+    <string name="add_edittitle">تعديل العنصر</string>
+    <string name="add_expirydate">تاريخ الانتهاء</string>
+    <string name="add_minquantity">الحد الأدنى للمخزون</string>
+    <string name="add_name">اسم العنصر</string>
+    <string name="add_quantity">الكمية</string>
+    <string name="add_save">حفظ</string>
+    <string name="add_selectcategory">اختر الفئة</string>
+    <string name="add_title">إضافة عنصر</string>
+    <string name="add_unit">الوحدة</string>
+    <string name="add_update">تحديث</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">منتهي الصلاحية</string>
+    <string name="status_expiringsoon">قريب الانتهاء</string>
+    <string name="status_lowstock">منخفض المخزون</string>
+    <string name="status_normal">طبيعي</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">فشلت العملية، يرجى المحاولة مرة أخرى</string>
+    <string name="notifications_insufficientstock">العنصر غير متوفر في المخزون: %s</string>
+    <string name="notifications_itemadded">تمت إضافة العنصر بنجاح</string>
+    <string name="notifications_itemdeleted">تم حذف العنصر بنجاح</string>
+    <string name="notifications_itemupdated">تم تحديث العنصر بنجاح</string>
+    <string name="notifications_itemusedsuccessfully">تم استخدام 1 %s من %s (المتبقي: %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">منتجات تنظيف</string>
+    <string name="categories_electronics">إلكترونيات</string>
+    <string name="categories_food">أغذية</string>
+    <string name="categories_household">أدوات منزلية</string>
+    <string name="categories_medicine">أدوية</string>
+    <string name="categories_personal">العناية الشخصية</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">الفئات</string>
+    <string name="stats_expiringsoon">قريب الانتهاء</string>
+    <string name="stats_lowstock">منخفض المخزون</string>
+    <string name="stats_totalitems">إجمالي العناصر</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">الكمية الحالية</string>
+    <string name="purchaselist_description">عناصر تحتاج لإعادة التخزين بناءً على مستويات المخزون المنخفضة</string>
+    <string name="purchaselist_lastused">آخر استخدام</string>
+    <string name="purchaselist_minquantity">الحد الأدنى للمخزون</string>
+    <string name="purchaselist_refresh">تحديث القائمة</string>
+    <string name="purchaselist_suggestedquantity">الكمية المقترحة</string>
+    <string name="purchaselist_totalitems">العناصر المطلوبة للشراء</string>
+    <string name="purchaselist_unit">الوحدة</string>
+
+</resources>

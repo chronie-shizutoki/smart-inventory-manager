@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- =============================================== -->
+    <!-- APPLICATION CONFIGURATION -->
+    <!-- =============================================== -->
+    <!-- Application name and basic configuration settings -->
+    <!-- Used in AndroidManifest.xml and main app interface -->
+
+    <string name="app_title">ہوشمند گھریلو انوینٹری</string>
+
+    <!-- =============================================== -->
+    <!-- NAVIGATION & MENU SYSTEM -->
+    <!-- =============================================== -->
+    <!-- Main navigation menu items and navigation labels -->
+    <!-- Bottom navigation, drawer menu, and tab navigation -->
+
+    <string name="nav_add">نیا آئٹم شامل کریں</string>
+    <string name="nav_inventory">انوینٹری</string>
+    <string name="nav_language">زبان</string>
+    <string name="nav_menu">مینو</string>
+    <string name="nav_purchaselist">خریداری کی فہرست</string>
+
+    <!-- =============================================== -->
+    <!-- INVENTORY MANAGEMENT CORE -->
+    <!-- =============================================== -->
+    <!-- Core inventory operations and data display -->
+    <!-- Main inventory list, search, and filtering functionality -->
+
+    <string name="inventory_actions">اعمال</string>
+    <string name="inventory_allcategories">تمام زمرے</string>
+    <string name="inventory_category">زمرہ</string>
+    <string name="inventory_expirydate">ختم ہونے کی تاریخ</string>
+    <string name="inventory_name">نام</string>
+    <string name="inventory_quantity">مقدار</string>
+    <string name="inventory_search">آئٹمز تلاش کریں...</string>
+    <string name="inventory_showexpired">تمام ختم ہونے والے آئٹمز کو نمایش کریں</string>
+    <string name="inventory_status">حالت</string>
+    <string name="inventory_title">انوینٹری</string>
+    <string name="inventory_unit">اکائی</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM OPERATIONS & MANAGEMENT -->
+    <!-- =============================================== -->
+    <!-- Add, edit, and manage individual inventory items -->
+    <!-- Form labels and validation messages for item operations -->
+
+    <string name="add_cancel">منسوخ کریں</string>
+    <string name="add_category">زمرہ</string>
+    <string name="add_description">تفصیل</string>
+    <string name="add_edittitle">آئٹم میں ترمیم کریں</string>
+    <string name="add_expirydate">ختم ہونے کی تاریخ</string>
+    <string name="add_minquantity">کم از کم اسٹاک</string>
+    <string name="add_name">آئٹم کا نام</string>
+    <string name="add_quantity">مقدار</string>
+    <string name="add_save">محفوظ کریں</string>
+    <string name="add_selectcategory">زمرہ منتخب کریں</string>
+    <string name="add_title">نیا آئٹم شامل کریں</string>
+    <string name="add_unit">اکائی</string>
+    <string name="add_update">اپ ڈیٹ کریں</string>
+
+    <!-- =============================================== -->
+    <!-- STATUS INDICATORS & STATES -->
+    <!-- =============================================== -->
+    <!-- Item status indicators, state badges, and condition labels -->
+    <!-- Used for inventory status visualization and filtering -->
+
+    <string name="status_expired">ختم شدہ</string>
+    <string name="status_expiringsoon">جلد ختم ہونے والا</string>
+    <string name="status_lowstock">کم اسٹاک</string>
+    <string name="status_normal">نارمل</string>
+
+    <!-- =============================================== -->
+    <!-- SYSTEM NOTIFICATIONS & MESSAGES -->
+    <!-- =============================================== -->
+    <!-- System notifications, user feedback messages, and alerts -->
+    <!-- Toast messages, dialog titles, and notification content -->
+
+    <string name="notifications_error">عمل ناکام ہوا۔ براہ کرم دوبارہ کوشش کریں</string>
+    <string name="notifications_insufficientstock">اسٹاک ناکافی ہے: %s</string>
+    <string name="notifications_itemadded">آئٹم کامیابی سے شامل ہو گیا</string>
+    <string name="notifications_itemdeleted">آئٹم کامیابی سے حذف ہو گیا</string>
+    <string name="notifications_itemupdated">آئٹم کامیابی سے اپ ڈیٹ ہو گیا</string>
+    <string name="notifications_itemusedsuccessfully">%s کا 1 %s استعمال ہو گیا (بقیہ: %s %s)</string>
+
+    <!-- =============================================== -->
+    <!-- ITEM CATEGORIES & CLASSIFICATION -->
+    <!-- =============================================== -->
+    <!-- Inventory item classification categories and labels -->
+    <!-- Used for item categorization and filtering in inventory -->
+
+    <string name="categories_cleaning">صفائی</string>
+    <string name="categories_electronics">الیکٹرانکس</string>
+    <string name="categories_food">کھانا</string>
+    <string name="categories_household">گھریلو سامان</string>
+    <string name="categories_medicine">ادویات</string>
+    <string name="categories_personal">ذاتی نگہداشت</string>
+
+    <!-- =============================================== -->
+    <!-- STATISTICS & ANALYTICS -->
+    <!-- =============================================== -->
+    <!-- Inventory statistics, reporting labels, and analytical data -->
+    <!-- Dashboard metrics and data visualization labels -->
+
+    <string name="stats_categories">زمرے</string>
+    <string name="stats_expiringsoon">جلد ختم ہونے والے</string>
+    <string name="stats_lowstock">کم اسٹاک</string>
+    <string name="stats_totalitems">کل آئٹمز</string>
+
+    <!-- =========================================== -->
+    <!-- UNCLASSIFIED / REMAINING KEYS -->
+    <!-- Keys that do not fit into predefined groups -->
+    <!-- =========================================== -->
+    <string name="purchaselist_currentquantity">موجودہ مقدار</string>
+    <string name="purchaselist_description">موجودہ انوینٹری کی سطح کی بنیاد پر دوبارہ اسٹاک کے لیے آئٹمز</string>
+    <string name="purchaselist_lastused">آخری استعمال</string>
+    <string name="purchaselist_minquantity">کم از کم اسٹاک</string>
+    <string name="purchaselist_refresh">تازہ کریں</string>
+    <string name="purchaselist_suggestedquantity">تجویز کردہ مقدار</string>
+    <string name="purchaselist_totalitems">خریدنا ہوں گے (کل آئٹمز)</string>
+    <string name="purchaselist_unit">اکائی</string>
+
+</resources>
