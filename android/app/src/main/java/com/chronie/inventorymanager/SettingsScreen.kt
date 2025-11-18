@@ -85,9 +85,9 @@ private fun SettingsTopBar(
                 modifier = Modifier.padding(end = 12.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "<"
-                )
+                     imageVector = Icons.Default.ArrowBack,
+                     contentDescription = "<"
+                 )
             }
             Text(
                 text = stringResource(R.string.nav_menu),

@@ -77,27 +77,27 @@ class LanguageContext(
 object LanguageManager {
     // 支持的语言列表
     val supportedLanguages = listOf(
-        LanguageConfig("ar", "العربية (Arabic)", Locale("ar")),
-        LanguageConfig("bn", "বাংলা (Bengali)", Locale("bn")),
-        LanguageConfig("de", "Deutsch (German)", Locale("de")),
-        LanguageConfig("en", "English", Locale.ENGLISH),
-        LanguageConfig("es", "Español (Spanish)", Locale("es")),
-        LanguageConfig("fr", "Français (French)", Locale.FRANCE),
-        LanguageConfig("hi", "हिन्दी (Hindi)", Locale("hi")),
-        LanguageConfig("id", "Bahasa Indonesia (Indonesian)", Locale("id")),
-        LanguageConfig("it", "Italiano (Italian)", Locale.ITALIAN),
-        LanguageConfig("ja", "日本語 (Japanese)", Locale.JAPANESE),
-        LanguageConfig("ko", "한국어 (Korean)", Locale.KOREAN),
-        LanguageConfig("fa", "فارسی (Persian)", Locale("fa")),
-        LanguageConfig("pt", "Português (Portuguese)", Locale("pt")),
-        LanguageConfig("ru", "Русский (Russian)", Locale("ru")),
-        LanguageConfig("ta", "தமிழ் (Tamil)", Locale("ta")),
-        LanguageConfig("th", "ไทย (Thai)", Locale("th")),
-        LanguageConfig("tr", "Türkçe (Turkish)", Locale("tr")),
-        LanguageConfig("ur", "اردو (Urdu)", Locale("ur")),
-        LanguageConfig("vi", "Tiếng Việt (Vietnamese)", Locale("vi")),
-        LanguageConfig("zh", "中文 (简体) (Chinese Simplified)", Locale.SIMPLIFIED_CHINESE),
-        LanguageConfig("zh-TW", "中文 (繁體) (Chinese Traditional)", Locale.TRADITIONAL_CHINESE)
+        LanguageConfig("ar", "العربية (Arabic)", Locale.forLanguageTag("ar")),
+        LanguageConfig("bn", "বাংলা (Bengali)", Locale.forLanguageTag("bn")),
+        LanguageConfig("de", "Deutsch (German)", Locale.forLanguageTag("de")),
+        LanguageConfig("en", "English", Locale.forLanguageTag("en")),
+        LanguageConfig("es", "Español (Spanish)", Locale.forLanguageTag("es")),
+        LanguageConfig("fr", "Français (French)", Locale.forLanguageTag("fr")),
+        LanguageConfig("hi", "हिन्दी (Hindi)", Locale.forLanguageTag("hi")),
+        LanguageConfig("id", "Bahasa Indonesia (Indonesian)", Locale.forLanguageTag("id")),
+        LanguageConfig("it", "Italiano (Italian)", Locale.forLanguageTag("it")),
+        LanguageConfig("ja", "日本語 (Japanese)", Locale.forLanguageTag("ja")),
+        LanguageConfig("ko", "한국어 (Korean)", Locale.forLanguageTag("ko")),
+        LanguageConfig("fa", "فارسی (Persian)", Locale.forLanguageTag("fa")),
+        LanguageConfig("pt", "Português (Portuguese)", Locale.forLanguageTag("pt")),
+        LanguageConfig("ru", "Русский (Russian)", Locale.forLanguageTag("ru")),
+        LanguageConfig("ta", "தமிழ் (Tamil)", Locale.forLanguageTag("ta")),
+        LanguageConfig("th", "ไทย (Thai)", Locale.forLanguageTag("th")),
+        LanguageConfig("tr", "Türkçe (Turkish)", Locale.forLanguageTag("tr")),
+        LanguageConfig("ur", "اردو (Urdu)", Locale.forLanguageTag("ur")),
+        LanguageConfig("vi", "Tiếng Việt (Vietnamese)", Locale.forLanguageTag("vi")),
+        LanguageConfig("zh", "中文 (简体) (Chinese Simplified)", Locale.forLanguageTag("zh")),
+        LanguageConfig("zh-TW", "中文 (繁體) (Chinese Traditional)", Locale.forLanguageTag("zh-TW"))
     )
     
     /**
