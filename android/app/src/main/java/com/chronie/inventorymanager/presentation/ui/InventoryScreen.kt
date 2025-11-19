@@ -1,6 +1,7 @@
 package com.chronie.inventorymanager.presentation.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chronie.inventorymanager.R
@@ -47,7 +49,8 @@ fun InventoryScreen(
         onViewItem: (InventoryItem) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
 
     // 对话框状态
     var showCategoryDialog by remember { mutableStateOf(false) }
@@ -115,11 +118,15 @@ fun InventoryScreen(
             // 库存物品列表
             InventoryItemsList(
                     items = uiState.filteredItems,
-                    isLoading = uiState.isLoading,
-                    onUseItem = viewModel::useItem,
+                    onItemClick = { item -> selectedItemForAction = item },
                     onEditItem = { item -> selectedItemForAction = item },
-                    onViewItem = { item -> selectedItemForAction = item },
-                    onDeleteItem = viewModel::deleteItem
+                    onDeleteItem = { item -> viewModel.deleteItem(item) },
+                    onToggleFavorite = { item -> 
+                        // TODO: 实现切换收藏状态
+                    },
+                    onUpdateStock = { item -> 
+                        // TODO: 实现更新库存
+                    }
             )
         }
 
@@ -209,6 +216,9 @@ fun InventoryScreen(
 /** 库存页面标题栏 */
 @Composable
 private fun InventoryHeader(onAddItem: () -> Unit, onRefresh: () -> Unit) {
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+    
     Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -219,12 +229,7 @@ private fun InventoryHeader(onAddItem: () -> Unit, onRefresh: () -> Unit) {
                     text = stringResource(R.string.nav_inventory),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = getGlassColors(true).text
-            )
-            Text(
-                    text = "", // Removed hardcoded subtitle
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = getGlassColors(true).textSecondary
+                    color = glassColors.text
             )
         }
 
@@ -234,25 +239,14 @@ private fun InventoryHeader(onAddItem: () -> Unit, onRefresh: () -> Unit) {
                     onClick = onRefresh,
                     modifier =
                             Modifier.clip(RoundedCornerShape(12.dp))
-                                    .background(
-                                            getGlassColors(true).cardContainer.copy(alpha = 0.4f)
-                                    )
+                                    .background(glassColors.cardContainer.copy(alpha = 0.4f))
             ) {
                 Icon(
                         imageVector = Icons.Default.Refresh,
-                        tint = getGlassColors(true).primary,
+                        tint = glassColors.primary,
                         contentDescription = stringResource(R.string.purchaselist_refresh)
                 )
             }
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            // 添加物品按钮
-            GlassButton(
-                    onClick = onAddItem,
-                    text = stringResource(R.string.nav_add),
-                    icon = Icons.Default.Add
-            )
         }
     }
 }
@@ -260,6 +254,9 @@ private fun InventoryHeader(onAddItem: () -> Unit, onRefresh: () -> Unit) {
 /** 统计信息卡片区域 */
 @Composable
 private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boolean) {
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+    
     if (isLoading || statistics == null) {
         // 统计卡片骨架屏
         GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.6f) {
@@ -267,7 +264,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
                 Text(
                         text = stringResource(R.string.inventory_title),
                         style = MaterialTheme.typography.titleMedium,
-                        color = getGlassColors(true).text
+                        color = glassColors.text
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -281,7 +278,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
                 Text(
                         text = stringResource(R.string.inventory_title),
                         style = MaterialTheme.typography.titleMedium,
-                        color = getGlassColors(true).text
+                        color = glassColors.text
                 )
                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -291,7 +288,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
                                 title = stringResource(R.string.stats_totalitems),
                                 value = statistics.totalItems.toString(),
                                 icon = Icons.Default.Inventory2,
-                                iconTint = getGlassColors(true).info
+                                iconTint = glassColors.info
                         )
                     }
                     item {
@@ -299,7 +296,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
                                 title = stringResource(R.string.stats_lowstock),
                                 value = statistics.lowStockItems.toString(),
                                 icon = Icons.Default.Warning,
-                                iconTint = getGlassColors(true).warning
+                                iconTint = glassColors.warning
                         )
                     }
                     item {
@@ -307,7 +304,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
                                 title = stringResource(R.string.stats_expiringsoon),
                                 value = statistics.expiringSoonItems.toString(),
                                 icon = Icons.Default.Schedule,
-                                iconTint = getGlassColors(true).warning
+                                iconTint = glassColors.warning
                         )
                     }
                     item {
@@ -315,7 +312,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
                                 title = stringResource(R.string.status_expired),
                                 value = statistics.expiredItems.toString(),
                                 icon = Icons.Default.Error,
-                                iconTint = getGlassColors(true).error
+                                iconTint = glassColors.error
                         )
                     }
                 }
@@ -339,6 +336,9 @@ private fun InventoryFilterSection(
         onShowStatusDialog: () -> Unit,
         onShowAdvancedDialog: () -> Unit
 ) {
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+    
     GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.6f) {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             // 搜索框
@@ -403,13 +403,13 @@ private fun InventoryFilterSection(
                         modifier =
                                 Modifier.clip(RoundedCornerShape(8.dp))
                                         .background(
-                                                getGlassColors(true).container.copy(alpha = 0.3f)
+                                                glassColors.container.copy(alpha = 0.3f)
                                         )
                 ) {
                     Icon(
                             imageVector = Icons.Default.FilterList,
                             contentDescription = null,
-                            tint = getGlassColors(true).text.copy(alpha = 0.7f),
+                            tint = glassColors.text.copy(alpha = 0.7f),
                             modifier = Modifier.size(18.dp)
                     )
                 }
@@ -423,15 +423,14 @@ private fun InventoryFilterSection(
                             modifier =
                                     Modifier.clip(RoundedCornerShape(8.dp))
                                             .background(
-                                                    getGlassColors(true)
-                                                            .container
+                                                    glassColors.container
                                                             .copy(alpha = 0.3f)
                                             )
                     ) {
                         Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = null,
-                                tint = getGlassColors(true).text.copy(alpha = 0.7f),
+                                tint = glassColors.text.copy(alpha = 0.7f),
                                 modifier = Modifier.size(18.dp)
                         )
                     }
@@ -445,81 +444,60 @@ private fun InventoryFilterSection(
 @Composable
 private fun InventoryItemsList(
         items: List<InventoryItem>,
-        isLoading: Boolean,
-        onUseItem: (InventoryItem) -> Unit,
+        onItemClick: (InventoryItem) -> Unit,
         onEditItem: (InventoryItem) -> Unit,
-        onViewItem: (InventoryItem) -> Unit,
-        onDeleteItem: (InventoryItem) -> Unit
+        onDeleteItem: (InventoryItem) -> Unit,
+        onToggleFavorite: (InventoryItem) -> Unit,
+        onUpdateStock: (InventoryItem) -> Unit
 ) {
-    if (isLoading) {
-        // 物品列表骨架屏
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(10) { index ->
-                GlassContainer(
-                        modifier = Modifier.fillMaxWidth(),
-                        cornerRadius = 12.dp,
-                        backgroundAlpha = 0.6f
-                ) {
-                    Row(
-                            modifier = Modifier.fillMaxWidth().padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                                modifier =
-                                        Modifier.size(48.dp)
-                                                .clip(RoundedCornerShape(12.dp))
-                                                .background(getGlassColors(true).border)
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Box(
-                                    modifier =
-                                            Modifier.height(16.dp)
-                                                    .fillMaxWidth(0.6f)
-                                                    .background(getGlassColors(true).border)
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Box(
-                                    modifier =
-                                            Modifier.height(12.dp)
-                                                    .fillMaxWidth(0.4f)
-                                                    .background(getGlassColors(true).border)
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    } else if (items.isEmpty()) {
-        // 空状态
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+    
+    if (items.isEmpty()) {
         GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.6f) {
             Column(
-                    modifier = Modifier.fillMaxWidth().padding(32.dp),
+                    modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(32.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
                         imageVector = Icons.Default.Inventory2,
                         contentDescription = null,
-                        modifier = Modifier.size(64.dp),
-                        tint = getGlassColors(true).textSecondary
+                        tint = glassColors.text.copy(alpha = 0.5f),
+                        modifier = Modifier.size(64.dp)
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                        text = stringResource(id = R.string.inventory_title),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = glassColors.text.copy(alpha = 0.7f),
+                        textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                         text = stringResource(id = R.string.inventory_title),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = getGlassColors(true).textSecondary
+                        color = glassColors.text.copy(alpha = 0.5f),
+                        textAlign = TextAlign.Center
                 )
             }
         }
     } else {
-        // 物品列表
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(items) { item ->
+        LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            items(
+                    items = items,
+                    key = { it.id }
+            ) { item ->
                 GlassInventoryItemCard(
                         item = item,
-                        onUse = { onUseItem(item) },
+                        onUse = { onToggleFavorite(item) },
                         onEdit = { onEditItem(item) },
-                        onView = { onViewItem(item) },
+                        onView = { onItemClick(item) },
                         onDelete = { onDeleteItem(item) }
                 )
             }
@@ -530,6 +508,9 @@ private fun InventoryItemsList(
 /** 加载覆盖层 */
 @Composable
 private fun LoadingOverlay() {
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+    
     Box(
             modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.3f)),
             contentAlignment = Alignment.Center
@@ -541,9 +522,14 @@ private fun LoadingOverlay() {
             ) {
                 CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = getGlassColors(true).primary
+                        color = glassColors.primary
                 )
-                // Removed text
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                        text = stringResource(id = R.string.inventory_title),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = glassColors.text
+                )
             }
         }
     }
@@ -552,6 +538,9 @@ private fun LoadingOverlay() {
 /** 错误覆盖层 */
 @Composable
 private fun ErrorOverlay(message: String, onDismiss: () -> Unit) {
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+    
     Box(
             modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f)),
             contentAlignment = Alignment.Center
@@ -565,23 +554,26 @@ private fun ErrorOverlay(message: String, onDismiss: () -> Unit) {
                         imageVector = Icons.Default.Error,
                         contentDescription = null,
                         modifier = Modifier.size(48.dp),
-                        tint = getGlassColors(true).error
+                        tint = glassColors.error
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                        text = stringResource(R.string.notifications_error),
+                        text = stringResource(id = R.string.inventory_title),
                         style = MaterialTheme.typography.titleLarge,
-                        color = getGlassColors(true).text
+                        color = glassColors.text
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                         text = message,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = getGlassColors(true).textSecondary,
+                        color = glassColors.text,
                         modifier = Modifier.padding(horizontal = 16.dp)
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                GlassButton(onClick = onDismiss, text = stringResource(R.string.add_save))
+                GlassButton(
+                        onClick = onDismiss,
+                        text = stringResource(id = R.string.inventory_title)
+                )
             }
         }
     }
@@ -601,7 +593,8 @@ private fun FilterSortBar(
         onShowSortDialog: () -> Unit = {},
         onShowAdvancedDialog: () -> Unit = {}
 ) {
-    val glassColors = getGlassColors(true)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
 
     // 对话框状态
     var showCategoryDialog by remember { mutableStateOf(false) }
@@ -616,7 +609,7 @@ private fun FilterSortBar(
     ) {
         // 分类筛选
         GlassFilterChip(
-                text = selectedCategory ?: stringResource(R.string.inventory_category),
+                text = selectedCategory ?: stringResource(id = R.string.inventory_title),
                 isSelected = selectedCategory != null,
                 onSelected = { isSelected ->
                     if (isSelected) {
@@ -632,12 +625,12 @@ private fun FilterSortBar(
         GlassFilterChip(
                 text =
                         when (statusFilter) {
-                            StatusFilter.ALL -> stringResource(R.string.inventory_showexpired)
-                            StatusFilter.NORMAL -> stringResource(R.string.status_normal)
-                            StatusFilter.LOW_STOCK -> stringResource(R.string.status_lowstock)
+                            StatusFilter.ALL -> stringResource(id = R.string.inventory_title)
+                            StatusFilter.NORMAL -> stringResource(id = R.string.inventory_title)
+                            StatusFilter.LOW_STOCK -> stringResource(id = R.string.inventory_title)
                             StatusFilter.EXPIRING_SOON ->
-                                    stringResource(R.string.status_expiringsoon)
-                            StatusFilter.EXPIRED -> stringResource(R.string.status_expired)
+                                    stringResource(id = R.string.inventory_title)
+                            StatusFilter.EXPIRED -> stringResource(id = R.string.inventory_title)
                         },
                 isSelected = statusFilter != StatusFilter.ALL,
                 onSelected = { isSelected ->
@@ -764,36 +757,49 @@ private fun FilterSortBar(
     }
 }
 
-/** 统计卡片骨架屏 */
+/**
+ * 统计卡片骨架屏
+ */
 @Composable
 private fun GlassStatsCardSkeleton() {
-    GlassContainer(
-            modifier = Modifier.width(120.dp).height(80.dp),
-            cornerRadius = 12.dp,
-            backgroundAlpha = 0.6f
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+
+    Row(
+            modifier =
+                    Modifier.clip(RoundedCornerShape(12.dp))
+                            .background(glassColors.container.copy(alpha = 0.3f))
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(
-                        modifier =
-                                Modifier.size(24.dp)
-                                        .clip(RoundedCornerShape(6.dp))
-                                        .background(getGlassColors(true).border)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Box(
-                        modifier =
-                                Modifier.height(12.dp)
-                                        .weight(1f)
-                                        .background(getGlassColors(true).border)
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
+        // 骨架图标
+        Box(
+                modifier =
+                        Modifier.size(24.dp)
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(glassColors.text.copy(alpha = 0.2f))
+        )
+
+        Column(modifier = Modifier.weight(1f)) {
+            // 骨架标题
             Box(
                     modifier =
                             Modifier.height(16.dp)
-                                    .width(60.dp)
-                                    .background(getGlassColors(true).border)
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .background(glassColors.text.copy(alpha = 0.2f))
+                                    .fillMaxWidth(0.6f)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // 骨架数值
+            Box(
+                    modifier =
+                            Modifier.height(20.dp)
+                                    .clip(RoundedCornerShape(4.dp))
+                                    .background(glassColors.text.copy(alpha = 0.2f))
+                                    .fillMaxWidth(0.4f)
             )
         }
     }
