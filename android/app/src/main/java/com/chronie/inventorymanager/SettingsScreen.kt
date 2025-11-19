@@ -25,6 +25,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalContext
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.chronie.inventorymanager.liquidglass.utils.GlassBackground
 import com.chronie.inventorymanager.data.*
 import com.chronie.inventorymanager.liquidglass.backdrop.drawBackdrop
 import com.chronie.inventorymanager.liquidglass.backdrop.backdrops.rememberCanvasBackdrop
@@ -41,24 +51,21 @@ fun SettingsScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            // 设置界面标题栏
-            SettingsTopBar(onNavigateBack = onNavigateBack)
-            
-            // 设置选项内容
-            SettingsContent(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            )
+    Surface(modifier = modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+        // 使用液态玻璃背景包裹整个设置界面
+        GlassBackground {
+            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+                // 设置界面标题栏（保留原实现）
+                SettingsTopBar(onNavigateBack = onNavigateBack)
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // 设置选项内容，放在玻璃背景内
+                SettingsContent(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
         }
     }
 }
@@ -108,10 +115,8 @@ private fun SettingsTopBar(
 private fun SettingsContent(
     modifier: Modifier = Modifier
 ) {
-    val scrollState = rememberScrollState()
-    
     Column(
-        modifier = modifier.verticalScroll(scrollState),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // 语言设置组
@@ -229,12 +234,26 @@ private fun LanguageSetting() {
     val languageContext = getLanguageContext()
     val currentLanguage = languageContext.currentLanguage
     val languages = LanguageManager.supportedLanguages
-    
+    val ctx = LocalContext.current
+    val activity = ctx as? ComponentActivity
+
     LanguageDropdown(
         selectedLanguage = currentLanguage,
         languages = languages,
         onLanguageChanged = { newLanguage ->
+            // 更新语言上下文
             languageContext.changeLanguage(newLanguage)
+
+            // 尝试应用系统级 locale 更改并重启 Activity，以便 stringResource 使用新语言
+            try {
+                val res = ctx.resources
+                val conf = res.configuration
+                conf.setLocale(newLanguage.locale)
+                @Suppress("DEPRECATION")
+                res.updateConfiguration(conf, res.displayMetrics)
+            } catch (_: Exception) {
+            }
+            activity?.recreate()
         }
     )
 }
@@ -334,29 +353,36 @@ private fun LanguageDropdown(
             }
         }
         
-        // 下拉菜单
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .fillMaxWidth(0.8f)
-                .padding(top = 8.dp)
-        ) {
-            languages.forEach { language ->
-                DropdownMenuItem(
-                    onClick = {
-                        onLanguageChanged(language)
-                        expanded = false
-                    },
-                    text = {
-                        Text(
-                            text = language.name,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+        // 使用对话框替代 DropdownMenu，避免某些设备/组合导致 Popup 崩溃
+        if (expanded) {
+            AlertDialog(
+                onDismissRequest = { expanded = false },
+                title = { Text(text = stringResource(R.string.nav_language)) },
+                text = {
+                    // 限制高度并使用 LazyColumn 以便长列表可滚动
+                    Box(modifier = Modifier.heightIn(max = 360.dp)) {
+                        LazyColumn {
+                            items(languages) { language ->
+                                TextButton(
+                                    onClick = {
+                                        onLanguageChanged(language)
+                                        expanded = false
+                                    },
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Text(
+                                        text = language.name,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                }
+                            }
+                        }
                     }
-                )
-            }
+                },
+                confirmButton = {},
+                dismissButton = {}
+            )
         }
     }
 }

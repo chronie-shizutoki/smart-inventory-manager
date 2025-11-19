@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 
 import androidx.compose.ui.res.stringResource
@@ -138,8 +139,9 @@ fun LiquidBottomNavigation(
     )
     
     LiquidBottomTabs(
+        // 不要在 bottomBar 中使用 fillMaxSize()，会撑满 Scaffold 可用高度并遮盖主内容
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(horizontal = 16.dp),
         selectedIndex = selectedIndex,
         onTabSelected = onTabSelected,
