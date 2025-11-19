@@ -3,6 +3,7 @@ package com.chronie.inventorymanager.liquidglass.utils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -23,7 +24,8 @@ import com.chronie.inventorymanager.ui.theme.getGlassColors
 /** 创建液态玻璃背景效果 */
 @Composable
 fun GlassBackground(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
-    val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
 
     Box(
             modifier =
@@ -57,7 +59,8 @@ fun GlassContainer(
         elevation: Dp = 8.dp,
         content: @Composable BoxScope.() -> Unit
 ) {
-    val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
 
     Box(
             modifier =
@@ -113,7 +116,8 @@ fun GlassCard(
         onClick: (() -> Unit)? = null,
         content: @Composable ColumnScope.() -> Unit
 ) {
-    val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
     val containerColor =
             if (selected) {
                 glassColors.selectedContainer.copy(alpha = backgroundAlpha)
@@ -174,7 +178,8 @@ fun GlassButton(
         onClick: () -> Unit,
         enabled: Boolean = true
 ) {
-    val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
     val buttonColor =
             if (enabled) {
                 glassColors.primary.copy(alpha = 0.8f)
@@ -229,7 +234,8 @@ fun GlassTextField(
         placeholder: String = "",
         singleLine: Boolean = true
 ) {
-    val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
 
     androidx.compose.material3.OutlinedTextField(
             value = value,
@@ -279,7 +285,8 @@ fun GlassTextField(
 /** 液态玻璃状态指示器 */
 @Composable
 fun GlassStatusIndicator(status: String, type: StatusType, modifier: Modifier = Modifier) {
-    val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
     val (color, icon) =
             when (type) {
                 StatusType.SUCCESS -> glassColors.success to "✓"
@@ -342,7 +349,8 @@ fun Modifier.glassHoverEffect(isHovered: Boolean, hoverColor: Color = Color.Whit
 @Composable
 fun GlassShimmer(modifier: Modifier = Modifier, isLoading: Boolean = true) {
     if (isLoading) {
-        val glassColors = getGlassColors(MaterialTheme.colorScheme.background == Color.White)
+        val isLightTheme = !isSystemInDarkTheme()
+        val glassColors = getGlassColors(isLightTheme)
 
         Box(
                 modifier =

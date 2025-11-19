@@ -1,6 +1,8 @@
 package com.chronie.inventorymanager.ui.theme
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.Composable
+import androidx.compose.foundation.isSystemInDarkTheme
 
 // 基础颜色 - 保持原有定义
 val Purple80 = Color(0xFFD0BCFF)
@@ -117,4 +119,11 @@ fun getGlassColors(isLightTheme: Boolean): GlassColorScheme {
     } else {
         GlassColors.DarkTheme
     }
+}
+
+/** 根据Compose主题获取液态玻璃颜色方案 */
+@Composable
+fun getGlassColors(): GlassColorScheme {
+    val isLightTheme = !isSystemInDarkTheme()
+    return getGlassColors(isLightTheme)
 }
