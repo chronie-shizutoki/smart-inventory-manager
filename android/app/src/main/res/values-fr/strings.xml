@@ -31,6 +31,7 @@
     <string name="inventory_category">Catégorie</string>
     <string name="inventory_expirydate">Date d\'expiration</string>
     <string name="inventory_name">Article</string>
+    <string name="inventory_filter">Filtrer et trier</string>
     <string name="inventory_quantity">Quantité</string>
     <string name="inventory_search">Rechercher un article...</string>
     <string name="inventory_showexpired">Afficher tous les articles</string>

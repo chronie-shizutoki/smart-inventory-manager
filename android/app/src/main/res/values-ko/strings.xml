@@ -31,6 +31,7 @@
     <string name="inventory_category">카테고리</string>
     <string name="inventory_expirydate">유통기한</string>
     <string name="inventory_name">품목명</string>
+    <string name="inventory_filter">필터와 정렬</string>
     <string name="inventory_quantity">수량</string>
     <string name="inventory_search">품목명 검색...</string>
     <string name="inventory_showexpired">모든 품목 표시</string>

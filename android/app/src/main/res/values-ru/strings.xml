@@ -31,6 +31,7 @@
     <string name="inventory_category">Категория</string>
     <string name="inventory_expirydate">Годен до</string>
     <string name="inventory_name">Название</string>
+    <string name="inventory_filter">Фильтр и сортировка</string>
     <string name="inventory_quantity">Кол-во</string>
     <string name="inventory_search">Поиск товаров...</string>
     <string name="inventory_showexpired">Показать все товары</string>

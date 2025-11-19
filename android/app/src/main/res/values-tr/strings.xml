@@ -31,6 +31,7 @@
     <string name="inventory_category">Kategori</string>
     <string name="inventory_expirydate">Son Kullanma Tarihi</string>
     <string name="inventory_name">Ürün</string>
+    <string name="inventory_filter">Filtreleme ve Sıralama</string>
     <string name="inventory_quantity">Miktar</string>
     <string name="inventory_search">Ürün ara...</string>
     <string name="inventory_showexpired">Geçmiş Son Kullanma Tarihine Uygun Ürünleri Göster</string>

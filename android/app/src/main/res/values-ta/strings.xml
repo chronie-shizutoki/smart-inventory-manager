@@ -31,6 +31,7 @@
     <string name="inventory_category">வகை</string>
     <string name="inventory_expirydate">காலாவதி தேதி</string>
     <string name="inventory_name">பொருள்</string>
+    <string name="inventory_filter">பட்டி மற்றும் வரிசைப்படுத்து</string>
     <string name="inventory_quantity">அளவு</string>
     <string name="inventory_search">பொருட்களை தேடு...</string>
     <string name="inventory_showexpired">எல்லா பொருட்களை காட்டு</string>

@@ -31,6 +31,7 @@
     <string name="inventory_category">Kategori</string>
     <string name="inventory_expirydate">Tanggal Kedaluwarsa</string>
     <string name="inventory_name">Nama Item</string>
+    <string name="inventory_filter">Filter dan Urutkan</string>
     <string name="inventory_quantity">Jumlah</string>
     <string name="inventory_search">Cari item...</string>
     <string name="inventory_showexpired">Tampilkan semua item</string>

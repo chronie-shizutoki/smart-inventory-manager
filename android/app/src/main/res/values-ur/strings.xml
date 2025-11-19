@@ -31,6 +31,7 @@
     <string name="inventory_category">زمرہ</string>
     <string name="inventory_expirydate">ختم ہونے کی تاریخ</string>
     <string name="inventory_name">نام</string>
+    <string name="inventory_filter">فلٹر اور ترتیب</string>
     <string name="inventory_quantity">مقدار</string>
     <string name="inventory_search">آئٹمز تلاش کریں...</string>
     <string name="inventory_showexpired">تمام ختم ہونے والے آئٹمز کو نمایش کریں</string>

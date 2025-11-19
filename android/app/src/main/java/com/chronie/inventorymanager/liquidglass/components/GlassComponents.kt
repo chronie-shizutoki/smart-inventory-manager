@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -38,6 +39,7 @@ import com.chronie.inventorymanager.liquidglass.backdrop.backdrops.rememberCanva
 import com.chronie.inventorymanager.liquidglass.backdrop.drawBackdrop
 import com.chronie.inventorymanager.ui.theme.GlassTypography
 import com.chronie.inventorymanager.ui.theme.getGlassColors
+import com.chronie.inventorymanager.utils.CategoryNameConverter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -549,7 +551,7 @@ fun GlassInventoryItemCard(
                                                 text =
                                                         stringResource(id = R.string.add_category) +
                                                                 ": " +
-                                                                item.category,
+                                                                CategoryNameConverter.getDisplayName(item.category, LocalContext.current),
                                                 style =
                                                         GlassTypography.bodySmall.copy(
                                                                 color =
@@ -678,6 +680,7 @@ fun GlassFilterBar(
         onStatusFilterChanged: (StatusFilter) -> Unit,
         modifier: Modifier = Modifier
 ) {
+        val context = LocalContext.current
         LazyColumn(
                 modifier = modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -707,7 +710,7 @@ fun GlassFilterBar(
                                                                         R.string
                                                                                 .inventory_allcategories
                                                                 )
-                                                        else category,
+                                                        else CategoryNameConverter.getDisplayName(category, context),
                                                 isSelected = selectedCategory == category,
                                                 onSelected = { onCategorySelected(category) },
                                                 icon =

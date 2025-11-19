@@ -31,6 +31,7 @@
     <string name="inventory_category">物品類別</string>
     <string name="inventory_expirydate">有效期限</string>
     <string name="inventory_name">物品名稱</string>
+    <string name="inventory_filter">篩選和排序</string>
     <string name="inventory_quantity">庫存數量</string>
     <string name="inventory_search">搜尋物品名稱...</string>
     <string name="inventory_showexpired">顯示所有物品</string>

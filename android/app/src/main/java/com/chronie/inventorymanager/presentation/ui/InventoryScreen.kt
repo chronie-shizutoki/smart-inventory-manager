@@ -112,7 +112,10 @@ fun InventoryScreen(
                             searchQuery = uiState.searchQuery,
                             onSearchChanged = viewModel::updateSearchQuery,
                             onShowFilterDialog = { showUnifiedFilterDialog = true },
-                            onRefresh = { viewModel.refreshData() }
+                            onRefresh = { viewModel.refreshData() },
+                            onClearFilters = { viewModel.clearFilters() },
+                            selectedCategory = uiState.selectedCategory,
+                            statusFilter = uiState.statusFilter
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -133,26 +136,25 @@ fun InventoryScreen(
                 }
 
                 // 统一筛选对话框
-                if (showUnifiedFilterDialog) {
-                    UnifiedFilterDialog(
-                            categories = uiState.availableCategories,
-                            currentFilter = UnifiedFilter(
-                                    selectedCategories = if (uiState.selectedCategory != null) listOf(uiState.selectedCategory!!) else emptyList(),
-                                    statusFilter = uiState.statusFilter,
-                                    sortOption = uiState.sortOption
-                            ),
-                            onFilterChanged = { filter ->
-                                    // 更新筛选条件
-                                    viewModel.updateCategory(
-                                            if (filter.selectedCategories.isEmpty()) null else filter.selectedCategories.first()
-                                    )
-                                    viewModel.updateStatusFilter(filter.statusFilter)
-                                    viewModel.updateSortOption(filter.sortOption)
-                                    showUnifiedFilterDialog = false
-                            },
-                            onDismiss = { showUnifiedFilterDialog = false }
-                    )
-                }
+                UnifiedFilterDialog(
+                        categories = uiState.availableCategories,
+                        currentFilter = UnifiedFilter(
+                                selectedCategories = if (uiState.selectedCategory != null) listOf(uiState.selectedCategory!!) else emptyList(),
+                                statusFilter = uiState.statusFilter,
+                                sortOption = uiState.sortOption
+                        ),
+                        onFilterChanged = { filter ->
+                                // 更新筛选条件
+                                viewModel.updateCategory(
+                                        if (filter.selectedCategories.isEmpty()) null else filter.selectedCategories.first()
+                                )
+                                viewModel.updateStatusFilter(filter.statusFilter)
+                                viewModel.updateSortOption(filter.sortOption)
+                                showUnifiedFilterDialog = false
+                        },
+                        onDismiss = { showUnifiedFilterDialog = false },
+                        isVisible = showUnifiedFilterDialog
+                )
 
                 // 物品操作对话框
                 selectedItemForAction?.let { item ->
@@ -260,7 +262,10 @@ private fun InventoryFilterSection(
         searchQuery: String,
         onSearchChanged: (String) -> Unit,
         onShowFilterDialog: () -> Unit,
-        onRefresh: () -> Unit
+        onRefresh: () -> Unit,
+        onClearFilters: () -> Unit = {},
+        selectedCategory: String? = null,
+        statusFilter: StatusFilter = StatusFilter.ALL
 ) {
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
@@ -313,6 +318,23 @@ private fun InventoryFilterSection(
                             contentDescription = stringResource(R.string.purchaselist_refresh),
                             modifier = Modifier.size(20.dp)
                     )
+                }
+
+                // 清除筛选按钮（当有筛选条件时显示）
+                if (selectedCategory != null || statusFilter != StatusFilter.ALL) {
+                    IconButton(
+                            onClick = onClearFilters,
+                            modifier =
+                                    Modifier.clip(RoundedCornerShape(12.dp))
+                                            .background(glassColors.cardContainer.copy(alpha = 0.4f))
+                    ) {
+                        Icon(
+                                imageVector = Icons.Default.Close,
+                                tint = glassColors.primary,
+                                contentDescription = stringResource(R.string.filter_clear),
+                                modifier = Modifier.size(20.dp)
+                        )
+                    }
                 }
             }
         }

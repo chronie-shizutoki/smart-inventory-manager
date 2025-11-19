@@ -31,6 +31,7 @@
     <string name="inventory_category">Danh mục</string>
     <string name="inventory_expirydate">Ngày hết hạn</string>
     <string name="inventory_name">Tên mặt hàng</string>
+    <string name="inventory_filter">Lọc và sắp xếp</string>
     <string name="inventory_quantity">Số lượng</string>
     <string name="inventory_search">Tìm kiếm mặt hàng...</string>
     <string name="inventory_showexpired">Hiển thị tất cả mặt hàng hết hạn</string>

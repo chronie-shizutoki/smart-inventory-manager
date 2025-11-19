@@ -31,6 +31,7 @@
     <string name="inventory_category">कैटेगरी</string>
     <string name="inventory_expirydate">एक्सपायरी डेट</string>
     <string name="inventory_name">आइटम</string>
+    <string name="inventory_filter">फिल्टर और सॉर्ट करें</string>
     <string name="inventory_quantity">मात्रा</string>
     <string name="inventory_search">आइटम्स में खोजें...</string>
     <string name="inventory_showexpired">सभी आइटम्स दिखाएं</string>

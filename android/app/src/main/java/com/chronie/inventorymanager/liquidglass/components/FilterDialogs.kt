@@ -30,6 +30,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.animation.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import java.text.SimpleDateFormat
 import java.util.Locale
 import com.chronie.inventorymanager.R
@@ -41,6 +44,7 @@ import com.chronie.inventorymanager.domain.model.UnifiedFilter
 import com.chronie.inventorymanager.ui.theme.GlassColorScheme
 import com.chronie.inventorymanager.ui.theme.GlassTypography
 import com.chronie.inventorymanager.ui.theme.getGlassColors
+import com.chronie.inventorymanager.utils.CategoryNameConverter
 
 /**
  * 分类选择对话框
@@ -88,8 +92,8 @@ fun CategoryFilterDialog(
         onConfirmClick = onDismiss,
         onDismissClick = onDismiss,
         isVisible = true
-    )
-}
+        )
+    }
 
 /**
  * 分类筛选项
@@ -124,7 +128,7 @@ private fun CategoryFilterItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = category,
+                text = CategoryNameConverter.getDisplayName(category),
                 style = GlassTypography.bodyLarge.copy(
                     color = if (isSelected) colors.primary else colors.text,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
@@ -674,7 +678,8 @@ fun UnifiedFilterDialog(
     categories: List<String>,
     currentFilter: UnifiedFilter,
     onFilterChanged: (UnifiedFilter) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    isVisible: Boolean = false
 ) {
     val context = LocalContext.current
     var tempFilter by remember { mutableStateOf(currentFilter) }
@@ -708,9 +713,20 @@ fun UnifiedFilterDialog(
     val sortOptions = remember { SortOption.values().map { sortOption -> sortOptionDisplayMap[sortOption]!! } }
     val sortOptionByDisplay = remember { sortOptionDisplayMap.entries.associate { (key, value) -> value to key } }
 
-    GlassConfirmDialog(
-        title = stringResource(id = R.string.inventory_filter),
-        content = {
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn(animationSpec = tween(300, easing = FastOutSlowInEasing)) + slideInVertically(
+            animationSpec = tween(300, easing = FastOutSlowInEasing),
+            initialOffsetY = { it / 3 }
+        ),
+        exit = fadeOut(animationSpec = tween(200, easing = FastOutSlowInEasing)) + slideOutVertically(
+            animationSpec = tween(200, easing = FastOutSlowInEasing),
+            targetOffsetY = { it / 3 }
+        )
+    ) {
+        GlassConfirmDialog(
+            title = stringResource(id = R.string.inventory_filter),
+            content = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -719,14 +735,20 @@ fun UnifiedFilterDialog(
             ) {
                 // 分类下拉菜单（多选）
                 GlassDropdownMenu(
-                    selectedItem = if (tempFilter.selectedCategories.isEmpty()) "" else tempFilter.selectedCategories.joinToString(", "),
-                    items = categories,
+                    selectedItem = if (tempFilter.selectedCategories.isEmpty()) "" else tempFilter.selectedCategories.map { CategoryNameConverter.getDisplayName(it, context) }.joinToString(", "),
+                    items = categories.map { CategoryNameConverter.getDisplayName(it, context) },
                     onItemSelected = { selected ->
-                        tempFilter = tempFilter.copy(selectedCategories = if (selected.isEmpty()) emptyList() else selected.split(", "))
+                        val selectedKeys = if (selected.isEmpty()) emptyList() else {
+                            selected.split(", ").map { displayName ->
+                                // 根据显示名称找到对应的分类键名
+                                categories.find { category -> CategoryNameConverter.getDisplayName(category, context) == displayName } ?: displayName
+                            }
+                        }
+                        tempFilter = tempFilter.copy(selectedCategories = selectedKeys)
                     },
                     placeholder = stringResource(id = R.string.inventory_category),
                     multiSelect = true,
-                    selectedItems = tempFilter.selectedCategories,
+                    selectedItems = tempFilter.selectedCategories.map { CategoryNameConverter.getDisplayName(it, context) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 
@@ -753,6 +775,7 @@ fun UnifiedFilterDialog(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+        }
         },
         confirmText = stringResource(id = R.string.add_save),
         dismissText = stringResource(id = R.string.add_cancel),

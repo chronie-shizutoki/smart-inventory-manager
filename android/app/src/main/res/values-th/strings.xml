@@ -31,6 +31,7 @@
     <string name="inventory_category">หมวดหมู่</string>
     <string name="inventory_expirydate">วันหมดอายุ</string>
     <string name="inventory_name">ชื่อรายการ</string>
+    <string name="inventory_filter">กรองและเรียง</string>
     <string name="inventory_quantity">จำนวน</string>
     <string name="inventory_search">ค้นหารายการ...</string>
     <string name="inventory_showexpired">แสดงรายการหมดอายุ</string>

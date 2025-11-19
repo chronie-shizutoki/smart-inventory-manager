@@ -31,6 +31,7 @@
     <string name="inventory_category">বিভাগ</string>
     <string name="inventory_expirydate">মেয়াদ শেষের তারিখ</string>
     <string name="inventory_name">আইটেমের নাম</string>
+    <string name="inventory_filter">ছাঁকুনি ও বাছাই</string>
     <string name="inventory_quantity">পরিমাণ</string>
     <string name="inventory_search">আইটেম খুঁজুন...</string>
     <string name="inventory_showexpired">সব আইটেম প্রদর্শন করুন</string>

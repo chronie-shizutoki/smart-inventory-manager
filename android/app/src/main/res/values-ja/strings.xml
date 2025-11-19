@@ -31,6 +31,7 @@
     <string name="inventory_category">カテゴリ</string>
     <string name="inventory_expirydate">賞味期限</string>
     <string name="inventory_name">アイテム名</string>
+    <string name="inventory_filter">フィルターとソート</string>
     <string name="inventory_quantity">数量</string>
     <string name="inventory_search">アイテムを検索...</string>
     <string name="inventory_showexpired">すべてのアイテムを表示</string>
