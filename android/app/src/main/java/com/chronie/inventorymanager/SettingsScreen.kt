@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -281,15 +282,24 @@ private fun LanguageDropdown(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp))
-                .drawBackdrop(
-                    backdrop = glassBackground,
-                    shape = { RoundedCornerShape(12.dp) },
-                    effects = {
-                        blur(radius = 20f)
-                    },
-                    highlight = { Highlight.Default },
-                    shadow = { Shadow.Default }
-                )
+                .let { base ->
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                        base.drawBackdrop(
+                            backdrop = glassBackground,
+                            shape = { RoundedCornerShape(12.dp) },
+                            effects = { blur(radius = 20f) },
+                            highlight = { Highlight.Default },
+                            shadow = { Shadow.Default }
+                        )
+                    } else {
+                        base.background(MaterialTheme.colorScheme.surface.copy(alpha = 0.6f))
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                    }
+                }
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null

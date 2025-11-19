@@ -8,9 +8,7 @@ plugins {
 
 android {
     namespace = "com.chronie.inventorymanager"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk { version = release(36) }
 
     defaultConfig {
         applicationId = "com.chronie.inventorymanager"
@@ -20,55 +18,41 @@ android {
         versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        vectorDrawables { useSupportLibrary = true }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
-    
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    
-    buildFeatures {
-        compose = true
-    }
-    
+
+    buildFeatures { compose = true }
+
     kotlin {
-        jvmToolchain(17)
-        compilerOptions {
-            freeCompilerArgs.addAll(
-                "-Xcontext-parameters"
-            )
-        }
+        jvmToolchain(21)
+        compilerOptions { freeCompilerArgs.addAll("-Xcontext-parameters") }
     }
-    
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.17"
-    }
-    
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
+    composeOptions { kotlinCompilerExtensionVersion = "1.5.17" }
+
+    packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    
+
     // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
@@ -76,50 +60,51 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
-    
+    implementation("androidx.compose.material:material-icons-extended")
+
     // Navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.testing)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    
+
     // Room数据库 (暂时禁用Kapt)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     // kapt(libs.androidx.room.compiler)
-    
+
     // 网络依赖
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    
+
     // 依赖注入 (暂时禁用Hilt)
     // implementation(libs.hilt.android)
     // kapt(libs.hilt.compiler)
     // implementation(libs.hilt.navigation.compose)
-    
+
     // 协程
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-    
+
     // 生命周期
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    
+
     // Coil图片加载
     implementation("io.coil-kt:coil-compose:2.5.0")
-    
+
     // 测试依赖
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    
+
     // 可选：临时数据存储
     implementation(libs.androidx.datastore)
-    
+
     // AndroidLiquidGlass毛玻璃效果库
     implementation("io.github.kyant0:backdrop:1.0.0")
     implementation("io.github.kyant0:capsule:2.1.1")

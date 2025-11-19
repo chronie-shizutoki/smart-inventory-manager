@@ -11,33 +11,40 @@ import java.util.Date
 @Entity(tableName = "inventory_items")
 data class InventoryItem(
     @PrimaryKey
-    val id: String,
+    val id: String = "",
     
-    val name: String,
+    val name: String = "",
     
-    val description: String = "",
+    val category: String = "",
     
-    val category: String,
+    val quantity: Int = 0,
     
-    val quantity: Int,
+    val unit: String = "",
     
     val minQuantity: Int = 0,
     
-    val maxQuantity: Int = 0,
+    val description: String = "",
     
+    val barcode: String = "",
+    
+    val usageCount: Int = 0,
+    
+    val lastUsedAt: Date? = null,
+    
+    val createdAt: Date = Date(),
+    
+    val updatedAt: Date = Date(),
+    
+    val expiryDate: Date? = null,
+    
+    // 扩展字段
     val price: Double = 0.0,
     
-    val currency: String,
-    
-    val unit: String,
+    val currency: String = "",
     
     val location: String = "",
     
     val supplier: String = "",
-    
-    val lastUpdated: Date = Date(),
-    
-    val createdAt: Date = Date(),
     
     // 同步相关字段
     val isDeleted: Boolean = false,
@@ -48,17 +55,48 @@ data class InventoryItem(
     
     val lastSyncedAt: Date? = null,
     
-    // 扩展字段
     val metadata: Map<String, String> = emptyMap(),
     
     val tags: List<String> = emptyList(),
     
-    val imageUrl: String = "",
-    
-    val barcode: String = "",
-    
-    val sku: String = ""
+    val imageUrl: String = ""
 )
+
+/**
+ * 库存物品扩展函数
+ */
+fun InventoryItem.isExpired(): Boolean {
+    return expiryDate?.before(Date()) == true
+}
+
+fun InventoryItem.isExpiringSoon(days: Int = 7): Boolean {
+    val expiryDate = this.expiryDate ?: return false
+    val soonDate = Date(Date().time + (days * 24 * 60 * 60 * 1000L))
+    return !isExpired() && expiryDate.before(soonDate)
+}
+
+fun InventoryItem.isLowStock(): Boolean {
+    return quantity <= minQuantity
+}
+
+fun InventoryItem.getStockStatus(): StockStatus {
+    return when {
+        isExpired() -> StockStatus.EXPIRED
+        isExpiringSoon() -> StockStatus.EXPIRING_SOON
+        isLowStock() -> StockStatus.LOW_STOCK
+        else -> StockStatus.NORMAL
+    }
+}
+
+/**
+ * 库存状态枚举
+ */
+enum class StockStatus {
+    NORMAL,        // 正常
+    LOW_STOCK,     // 库存不足
+    EXPIRING_SOON, // 即将过期
+    EXPIRED        // 已过期
+}
 
 /**
  * 同步状态枚举

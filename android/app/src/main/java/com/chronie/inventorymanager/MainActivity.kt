@@ -46,6 +46,7 @@ import com.chronie.inventorymanager.liquidglass.TabItemData
 import androidx.compose.ui.unit.dp
 import com.chronie.inventorymanager.SettingsScreen
 import com.chronie.inventorymanager.data.*
+import com.chronie.inventorymanager.presentation.ui.InventoryScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,7 +118,7 @@ fun SmartInventoryManagerApp() {
                 PurchaseListScreen()
             }
             composable("menu") {
-                MenuScreen()
+                MenuScreen(navController)
             }
         }
     }
@@ -156,21 +157,7 @@ data class BottomNavItem(
     val icon: androidx.compose.ui.graphics.vector.ImageVector
 )
 
-// 库存页面
-@Composable
-fun InventoryScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Inventory Screen")
-        }
-    }
-}
+// 库存页面 - 已在 InventoryScreen.kt 中实现
 
 // 添加物品页面
 @Composable
@@ -206,12 +193,10 @@ fun PurchaseListScreen() {
 
 // 菜单页面
 @Composable
-fun MenuScreen() {
-    val navController = rememberNavController()
-    
+fun MenuScreen(navController: androidx.navigation.NavController) {
     SettingsScreen(
         onNavigateBack = {
-            navController.popBackStack()
+            navController.navigateUp()
         }
     )
 }

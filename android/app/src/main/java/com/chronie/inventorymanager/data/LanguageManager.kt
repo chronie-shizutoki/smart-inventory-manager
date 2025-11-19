@@ -127,7 +127,7 @@ object LanguageManager {
  * CompositionLocal用于在Compose中访问语言上下文
  */
 val LocalLanguageContext = staticCompositionLocalOf<LanguageContext> {
-    error("No LanguageContext provided!")
+    LanguageContext(LanguageManager.getDefaultLanguage())
 }
 
 /**
