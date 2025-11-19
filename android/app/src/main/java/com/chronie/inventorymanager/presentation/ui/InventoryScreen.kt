@@ -99,11 +99,6 @@ fun InventoryScreen(
             // 主内容区域
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-                    // 标题栏
-                    InventoryHeader(onAddItem = onAddItem, onRefresh = { viewModel.refreshData() })
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
                     // 统计卡片区域
                     InventoryStatsSection(
                             statistics = uiState.statistics,
@@ -112,7 +107,7 @@ fun InventoryScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // 搜索和筛选栏
+                    // 搜索和筛选栏（包含刷新按钮）
                     InventoryFilterSection(
                             searchQuery = uiState.searchQuery,
                             selectedCategory = uiState.selectedCategory,
@@ -124,8 +119,8 @@ fun InventoryScreen(
                             onClearFilters = viewModel::clearFilters,
                             onShowCategoryDialog = { showCategoryDialog = true },
                             onShowStatusDialog = { showStatusDialog = true },
-                            
-                            onShowAdvancedDialog = { showAdvancedDialog = true }
+                            onShowAdvancedDialog = { showAdvancedDialog = true },
+                            onRefresh = { viewModel.refreshData() }
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -223,33 +218,6 @@ fun InventoryScreen(
     }
 }
 
-/** 库存页面标题栏 */
-@Composable
-private fun InventoryHeader(onAddItem: () -> Unit, onRefresh: () -> Unit) {
-    val isLightTheme = !isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
-    
-    Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-    ) {
-        // 刷新按钮
-        IconButton(
-                onClick = onRefresh,
-                modifier =
-                        Modifier.clip(RoundedCornerShape(12.dp))
-                                .background(glassColors.cardContainer.copy(alpha = 0.4f))
-        ) {
-            Icon(
-                    imageVector = Icons.Default.Refresh,
-                    tint = glassColors.primary,
-                    contentDescription = stringResource(R.string.purchaselist_refresh)
-            )
-        }
-    }
-}
-
 /** 统计信息卡片区域 */
 @Composable
 private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boolean) {
@@ -333,7 +301,8 @@ private fun InventoryFilterSection(
         onClearFilters: () -> Unit,
         onShowCategoryDialog: () -> Unit,
         onShowStatusDialog: () -> Unit,
-        onShowAdvancedDialog: () -> Unit
+        onShowAdvancedDialog: () -> Unit,
+        onRefresh: () -> Unit
 ) {
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
@@ -413,7 +382,19 @@ private fun InventoryFilterSection(
                     )
                 }
 
-                
+                // 刷新按钮
+                IconButton(
+                        onClick = onRefresh,
+                        modifier =
+                                Modifier.clip(RoundedCornerShape(12.dp))
+                                        .background(glassColors.cardContainer.copy(alpha = 0.4f))
+                ) {
+                    Icon(
+                            imageVector = Icons.Default.Refresh,
+                            tint = glassColors.primary,
+                            contentDescription = stringResource(R.string.purchaselist_refresh)
+                    )
+                }
 
                 // 清除筛选按钮
                 if (selectedCategory != null || statusFilter != StatusFilter.ALL) {
