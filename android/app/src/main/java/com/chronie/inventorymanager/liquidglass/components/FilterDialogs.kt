@@ -682,7 +682,12 @@ fun UnifiedFilterDialog(
     isVisible: Boolean = false
 ) {
     val context = LocalContext.current
-    var tempFilter by remember { mutableStateOf(currentFilter) }
+    var tempFilter by remember(currentFilter) { mutableStateOf(currentFilter) }
+    
+    // 当 currentFilter 改变时，更新 tempFilter
+    LaunchedEffect(currentFilter) {
+        tempFilter = currentFilter
+    }
     
     // 预先获取排序选项的显示文本映射，避免在非Composable上下文中调用stringResource
     val sortOptionDisplayMap = remember {
