@@ -77,8 +77,13 @@ with app.app_context():
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
+
 def serve(path):
     static_folder_path = app.static_folder
+        # 排除API路由，只处理前端静态文件路由
+    if path.startswith('api/'):
+        return "API route not found", 404
+    
     if static_folder_path is None:
         return "Static folder not configured", 404
 

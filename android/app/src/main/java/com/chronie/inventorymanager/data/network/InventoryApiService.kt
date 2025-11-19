@@ -12,7 +12,7 @@ import retrofit2.http.*
 interface InventoryApiService {
     
     // 获取库存物品列表
-    @GET("/api/items")
+    @GET("/api/inventory/items")
     suspend fun getItems(
         @Query("search") search: String = "",
         @Query("category") category: String = "",
@@ -22,27 +22,27 @@ interface InventoryApiService {
     ): Response<InventoryItemsResponse>
     
     // 获取单个物品
-    @GET("/api/items/{id}")
+    @GET("/api/inventory/items/{id}")
     suspend fun getItem(@Path("id") id: String): Response<SingleItemResponse>
     
     // 创建新物品
-    @POST("/api/items")
+    @POST("/api/inventory/items")
     suspend fun createItem(@Body item: InventoryItem): Response<SingleItemResponse>
     
     // 更新物品
-    @PUT("/api/items/{id}")
+    @PUT("/api/inventory/items/{id}")
     suspend fun updateItem(@Path("id") id: String, @Body item: InventoryItem): Response<SingleItemResponse>
     
     // 删除物品
-    @DELETE("/api/items/{id}")
+    @DELETE("/api/inventory/items/{id}")
     suspend fun deleteItem(@Path("id") id: String): Response<DeleteResponse>
     
     // 使用物品（库存-1）
-    @POST("/api/items/{id}/use")
+    @POST("/api/inventory/items/{id}/use")
     suspend fun useItem(@Path("id") id: String): Response<SingleItemResponse>
     
     // 获取库存统计
-    @GET("/api/stats")
+    @GET("/api/inventory/stats")
     suspend fun getStatistics(): Response<StatisticsResponse>
     
     // 获取分类列表
