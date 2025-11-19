@@ -404,7 +404,6 @@ private fun InventoryItemsList(
                         item = item,
                         onUse = { onToggleFavorite(item) },
                         onEdit = { onEditItem(item) },
-                        onView = { onItemClick(item) },
                         onDelete = { onDeleteItem(item) }
                 )
             }

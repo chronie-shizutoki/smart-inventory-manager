@@ -439,7 +439,6 @@ fun GlassInventoryItemCard(
         item: InventoryItem,
         onUse: () -> Unit,
         onEdit: () -> Unit,
-        onView: () -> Unit,
         onDelete: () -> Unit,
         modifier: Modifier = Modifier
 ) {
@@ -506,22 +505,7 @@ fun GlassInventoryItemCard(
                                 }
 
                                 Row {
-                                        IconButton(onClick = onUse, enabled = item.quantity > 0) {
-                                                Icon(
-                                                        imageVector = Icons.Default.Remove,
-                                                        contentDescription = null,
-                                                        tint =
-                                                                if (item.quantity > 0) colors.text
-                                                                else colors.text.copy(alpha = 0.5f)
-                                                )
-                                        }
-                                        IconButton(onClick = onView) {
-                                                Icon(
-                                                        imageVector = Icons.Default.Info,
-                                                        contentDescription = null,
-                                                        tint = colors.text
-                                                )
-                                        }
+                                        // 编辑按钮
                                         IconButton(onClick = onEdit) {
                                                 Icon(
                                                         imageVector = Icons.Default.Edit,
@@ -529,6 +513,17 @@ fun GlassInventoryItemCard(
                                                         tint = colors.text
                                                 )
                                         }
+                                        // 使用1个库存按钮（打勾图标）
+                                        IconButton(onClick = onUse, enabled = item.quantity > 0) {
+                                                Icon(
+                                                        imageVector = Icons.Default.Check,
+                                                        contentDescription = null,
+                                                        tint =
+                                                                if (item.quantity > 0) colors.text
+                                                                else colors.text.copy(alpha = 0.5f)
+                                                )
+                                        }
+                                        // 删除整个条目按钮
                                         IconButton(onClick = onDelete) {
                                                 Icon(
                                                         imageVector = Icons.Default.Delete,
