@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.platform.LocalContext
 import java.text.SimpleDateFormat
 import java.util.Locale
 import com.chronie.inventorymanager.R
@@ -56,43 +57,38 @@ fun CategoryFilterDialog(
     val isLightTheme = !isSystemInDarkTheme()
     val colors = getGlassColors(isLightTheme)
     
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        modifier = modifier
-            .background(colors.container.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
-    ) {
-        GlassConfirmDialog(
-            title = stringResource(id = R.string.inventory_category),
-            content = {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(categories) { category ->
-                        CategoryFilterItem(
-                            category = category,
-                            isSelected = selectedCategories.contains(category),
-                            onSelected = { isSelected ->
-                                val newSelection = if (isSelected) {
-                                    selectedCategories + category
-                                } else {
-                                    selectedCategories - category
-                                }
-                                onCategoriesSelected(newSelection)
-                            },
-                            colors = colors
-                        )
-                    }
+    GlassConfirmDialog(
+        title = stringResource(id = R.string.inventory_category),
+        content = {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                items(categories) { category ->
+                    CategoryFilterItem(
+                        category = category,
+                        isSelected = selectedCategories.contains(category),
+                        onSelected = { isSelected ->
+                            val newSelection = if (isSelected) {
+                                selectedCategories + category
+                            } else {
+                                selectedCategories - category
+                            }
+                            onCategoriesSelected(newSelection)
+                        },
+                        colors = colors
+                    )
                 }
-            },
-            confirmText = stringResource(id = R.string.add_save),
-            dismissText = stringResource(id = R.string.add_cancel),
-            onConfirmClick = onDismiss,
-            onDismissClick = onDismiss
-        )
-    }
+            }
+        },
+        confirmText = stringResource(id = R.string.add_save),
+        dismissText = stringResource(id = R.string.add_cancel),
+        onConfirmClick = onDismiss,
+        onDismissClick = onDismiss,
+        isVisible = true
+    )
 }
 
 /**
@@ -173,8 +169,8 @@ fun ItemActionDialog(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(vertical = 4.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     // 物品基本信息
                     Text(
@@ -387,44 +383,39 @@ fun StatusFilterDialog(
         StockStatus.EXPIRED to stringResource(id = R.string.status_expired)
     )
     
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        modifier = modifier
-            .background(colors.container.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
-    ) {
-        GlassConfirmDialog(
-            title = stringResource(id = R.string.inventory_status),
-            content = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    statusOptions.forEach { (status, label) ->
-                        StatusFilterItem(
-                            status = status,
-                            label = label,
-                            isSelected = selectedStatuses.contains(status),
-                            onSelected = { isSelected ->
-                                val newSelection = if (isSelected) {
-                                    selectedStatuses + status
-                                } else {
-                                    selectedStatuses - status
-                                }
-                                onStatusesSelected(newSelection)
-                            },
-                            colors = colors
-                        )
-                    }
+    GlassConfirmDialog(
+        title = stringResource(id = R.string.inventory_status),
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                statusOptions.forEach { (status, label) ->
+                    StatusFilterItem(
+                        status = status,
+                        label = label,
+                        isSelected = selectedStatuses.contains(status),
+                        onSelected = { isSelected ->
+                            val newSelection = if (isSelected) {
+                                selectedStatuses + status
+                            } else {
+                                selectedStatuses - status
+                            }
+                            onStatusesSelected(newSelection)
+                        },
+                        colors = colors
+                    )
                 }
-            },
-            confirmText = stringResource(id = R.string.add_save),
-            dismissText = stringResource(id = R.string.add_cancel),
-            onConfirmClick = onDismiss,
-            onDismissClick = onDismiss
-        )
-    }
+            }
+        },
+        confirmText = stringResource(id = R.string.add_save),
+        dismissText = stringResource(id = R.string.add_cancel),
+        onConfirmClick = onDismiss,
+        onDismissClick = onDismiss,
+        isVisible = true
+    )
 }
 
 /**
@@ -519,61 +510,57 @@ fun AdvancedFilterDialog(
     var tempDateRange by remember { mutableStateOf(dateRange) }
     var tempMinQuantity by remember { mutableStateOf(minQuantity) }
     
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        modifier = modifier
-            .background(colors.container.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
-    ) {
-        GlassConfirmDialog(
-            title = "Advanced Filter",
-            content = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    // 数量筛选
-                    Text(
-                        text = stringResource(R.string.add_minquantity),
-                        style = GlassTypography.bodyMedium.copy(
-                            color = colors.text.copy(alpha = 0.8f)
+    GlassConfirmDialog(
+        title = stringResource(R.string.filter_title),
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                // 数量筛选
+                Text(
+                    text = stringResource(R.string.add_minquantity),
+                    style = GlassTypography.bodyMedium.copy(
+                        color = colors.text.copy(alpha = 0.8f)
+                    )
+                )
+                OutlinedTextField(
+                    value = tempMinQuantity?.toString() ?: "",
+                    onValueChange = { value ->
+                        tempMinQuantity = value.toIntOrNull()
+                    },
+                    placeholder = {
+                        Text(
+                            text = stringResource(R.string.add_minquantity),
+                            style = GlassTypography.bodyMedium
                         )
-                    )
-                    OutlinedTextField(
-                        value = tempMinQuantity?.toString() ?: "",
-                        onValueChange = { value ->
-                            tempMinQuantity = value.toIntOrNull()
-                        },
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.add_minquantity),
-                                style = GlassTypography.bodyMedium
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = colors.text,
-                            unfocusedTextColor = colors.text.copy(alpha = 0.7f),
-                            focusedBorderColor = colors.selectedBorder,
-                            unfocusedBorderColor = colors.border,
-                            focusedLabelColor = colors.text.copy(alpha = 0.7f),
-                            unfocusedLabelColor = colors.text.copy(alpha = 0.5f)
-                        ),
-                        textStyle = GlassTypography.bodyMedium
-                    )
-                }
-            },
-            confirmText = stringResource(id = R.string.add_save),
-            dismissText = stringResource(id = R.string.add_cancel),
-            onConfirmClick = {
-                onDateRangeChanged(tempDateRange)
-                onMinQuantityChanged(tempMinQuantity)
-                onApplyFilters()
-            },
-            onDismissClick = onDismiss
-        )
-    }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = colors.text,
+                        unfocusedTextColor = colors.text.copy(alpha = 0.7f),
+                        focusedBorderColor = colors.selectedBorder,
+                        unfocusedBorderColor = colors.border,
+                        focusedLabelColor = colors.text.copy(alpha = 0.7f),
+                        unfocusedLabelColor = colors.text.copy(alpha = 0.5f)
+                    ),
+                    textStyle = GlassTypography.bodyMedium
+                )
+            }
+        },
+        confirmText = stringResource(id = R.string.add_save),
+        dismissText = stringResource(id = R.string.add_cancel),
+        onConfirmClick = {
+            onDateRangeChanged(tempDateRange)
+            onMinQuantityChanged(tempMinQuantity)
+            onApplyFilters()
+            onDismiss()
+        },
+        onDismissClick = onDismiss,
+        isVisible = true
+    )
 }
 
 /**
@@ -591,47 +578,42 @@ fun SortDialog(
     val colors = getGlassColors(isLightTheme)
     
     val sortOptions = listOf(
-        "Name A-Z" to "name_asc",
-        "Name Z-A" to "name_desc",
-        "Quantity Asc" to "quantity_asc",
-        "Quantity Desc" to "quantity_desc",
-        "Date Newest" to "created_desc",
-        "Date Oldest" to "created_asc"
+        stringResource(R.string.sort_name_asc) to "name_asc",
+        stringResource(R.string.sort_name_desc) to "name_desc",
+        stringResource(R.string.sort_quantity_asc) to "quantity_asc",
+        stringResource(R.string.sort_quantity_desc) to "quantity_desc",
+        stringResource(R.string.sort_date_added_desc) to "created_desc",
+        stringResource(R.string.sort_date_added_asc) to "created_asc"
     )
     
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        modifier = modifier
-            .background(colors.container.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
-    ) {
-        GlassConfirmDialog(
-            title = "Sort By",
-            content = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    sortOptions.forEach { (label, value) ->
-                        SortOptionItem(
-                            label = label,
-                            isSelected = currentSort == value,
-                            onSelected = {
-                                onSortSelected(value)
-                                onDismiss()
-                            },
-                            colors = colors
-                        )
-                    }
+    GlassConfirmDialog(
+        title = stringResource(R.string.sort_title),
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                sortOptions.forEach { (label, value) ->
+                    SortOptionItem(
+                        label = label,
+                        isSelected = currentSort == value,
+                        onSelected = {
+                            onSortSelected(value)
+                            onDismiss()
+                        },
+                        colors = colors
+                    )
                 }
-            },
-            confirmText = stringResource(id = R.string.add_cancel),
-            dismissText = "",
-            onConfirmClick = onDismiss,
-            onDismissClick = {}
-        )
-    }
+            }
+        },
+        confirmText = stringResource(id = R.string.add_cancel),
+        dismissText = "",
+        onConfirmClick = onDismiss,
+        onDismissClick = {},
+        isVisible = true
+    )
 }
 
 /**
@@ -692,233 +674,93 @@ fun UnifiedFilterDialog(
     categories: List<String>,
     currentFilter: UnifiedFilter,
     onFilterChanged: (UnifiedFilter) -> Unit,
-    onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    onDismiss: () -> Unit
 ) {
-    val isLightTheme = !isSystemInDarkTheme()
-    val colors = getGlassColors(isLightTheme)
-    
+    val context = LocalContext.current
     var tempFilter by remember { mutableStateOf(currentFilter) }
     
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        modifier = modifier
-            .background(colors.container.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
-    ) {
-        GlassConfirmDialog(
-            title = stringResource(id = R.string.inventory_filter),
-            content = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    // 分类筛选
-                    Text(
-                        text = stringResource(id = R.string.inventory_category),
-                        style = GlassTypography.bodyMedium.copy(
-                            color = colors.text.copy(alpha = 0.8f),
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(120.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(categories) { category ->
-                            Surface(
-                                onClick = {
-                                    tempFilter = tempFilter.copy(
-                                        selectedCategories = if (tempFilter.selectedCategories.contains(category)) {
-                                            tempFilter.selectedCategories - category
-                                        } else {
-                                            tempFilter.selectedCategories + category
-                                        }
-                                    )
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(
-                                        color = if (tempFilter.selectedCategories.contains(category)) 
-                                            colors.selectedContainer else colors.container.copy(alpha = 0.5f),
-                                        shape = RoundedCornerShape(8.dp)
-                                    )
-                                    .border(
-                                        width = if (tempFilter.selectedCategories.contains(category)) 1.dp else 0.dp,
-                                        color = if (tempFilter.selectedCategories.contains(category)) 
-                                            colors.selectedBorder else Color.Transparent,
-                                        shape = RoundedCornerShape(8.dp)
-                                    )
-                                    .padding(12.dp),
-                                tonalElevation = 0.dp
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = category,
-                                        style = GlassTypography.bodyMedium.copy(
-                                            color = if (tempFilter.selectedCategories.contains(category)) 
-                                                colors.primary else colors.text
-                                        )
-                                    )
-                                    if (tempFilter.selectedCategories.contains(category)) {
-                                        Icon(
-                                            imageVector = Icons.Default.Check,
-                                            contentDescription = null,
-                                            tint = colors.primary,
-                                            modifier = Modifier.size(16.dp)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    // 状态筛选
-                    Text(
-                        text = stringResource(id = R.string.inventory_status),
-                        style = GlassTypography.bodyMedium.copy(
-                            color = colors.text.copy(alpha = 0.8f),
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(StatusFilter.values()) { statusFilter ->
-                            Surface(
-                                onClick = {
-                                    tempFilter = tempFilter.copy(statusFilter = statusFilter)
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(
-                                        color = if (tempFilter.statusFilter == statusFilter) 
-                                            colors.selectedContainer else colors.container.copy(alpha = 0.5f),
-                                        shape = RoundedCornerShape(8.dp)
-                                    )
-                                    .border(
-                                        width = if (tempFilter.statusFilter == statusFilter) 1.dp else 0.dp,
-                                        color = if (tempFilter.statusFilter == statusFilter) 
-                                            colors.selectedBorder else Color.Transparent,
-                                        shape = RoundedCornerShape(8.dp)
-                                    )
-                                    .padding(12.dp),
-                                tonalElevation = 0.dp
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = statusFilter.displayName,
-                                        style = GlassTypography.bodyMedium.copy(
-                                            color = if (tempFilter.statusFilter == statusFilter) 
-                                                colors.primary else colors.text
-                                        )
-                                    )
-                                    if (tempFilter.statusFilter == statusFilter) {
-                                        Icon(
-                                            imageVector = Icons.Default.Check,
-                                            contentDescription = null,
-                                            tint = colors.primary,
-                                            modifier = Modifier.size(16.dp)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    // 排序选项
-                    Text(
-                        text = stringResource(id = R.string.inventory_sort),
-                        style = GlassTypography.bodyMedium.copy(
-                            color = colors.text.copy(alpha = 0.8f),
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(SortOption.values()) { sortOption ->
-                            Surface(
-                                onClick = {
-                                    tempFilter = tempFilter.copy(sortOption = sortOption)
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(
-                                        color = if (tempFilter.sortOption == sortOption) 
-                                            colors.selectedContainer else colors.container.copy(alpha = 0.5f),
-                                        shape = RoundedCornerShape(8.dp)
-                                    )
-                                    .border(
-                                        width = if (tempFilter.sortOption == sortOption) 1.dp else 0.dp,
-                                        color = if (tempFilter.sortOption == sortOption) 
-                                            colors.selectedBorder else Color.Transparent,
-                                        shape = RoundedCornerShape(8.dp)
-                                    )
-                                    .padding(12.dp),
-                                tonalElevation = 0.dp
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = when (sortOption) {
-                                            SortOption.NAME_ASC -> "名称 A-Z"
-                                            SortOption.NAME_DESC -> "名称 Z-A"
-                                            SortOption.QUANTITY_ASC -> "数量 升序"
-                                            SortOption.QUANTITY_DESC -> "数量 降序"
-                                            SortOption.DATE_ADDED_ASC -> "添加日期 升序"
-                                            SortOption.DATE_ADDED_DESC -> "添加日期 降序"
-                                            SortOption.EXPIRY_DATE_ASC -> "过期日期 近到远"
-                                            SortOption.EXPIRY_DATE_DESC -> "过期日期 远到近"
-                                            SortOption.UPDATED_AT_ASC -> "更新时间 旧到新"
-                                            SortOption.UPDATED_AT_DESC -> "更新时间 新到旧"
-                                        },
-                                        style = GlassTypography.bodyMedium.copy(
-                                            color = if (tempFilter.sortOption == sortOption) 
-                                                colors.primary else colors.text
-                                        )
-                                    )
-                                    if (tempFilter.sortOption == sortOption) {
-                                        Icon(
-                                            imageVector = Icons.Default.Check,
-                                            contentDescription = null,
-                                            tint = colors.primary,
-                                            modifier = Modifier.size(16.dp)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            confirmText = stringResource(id = R.string.add_save),
-            dismissText = stringResource(id = R.string.add_cancel),
-            onConfirmClick = {
-                onFilterChanged(tempFilter)
-                onDismiss()
-            },
-            onDismissClick = onDismiss
-        )
+    // 预先获取排序选项的显示文本映射，避免在非Composable上下文中调用stringResource
+    val sortOptionDisplayMap = remember {
+        SortOption.values().associateWith { sortOption ->
+            when (sortOption) {
+                SortOption.NAME_ASC -> context.getString(R.string.sort_name_asc)
+                SortOption.NAME_DESC -> context.getString(R.string.sort_name_desc)
+                SortOption.QUANTITY_ASC -> context.getString(R.string.sort_quantity_asc)
+                SortOption.QUANTITY_DESC -> context.getString(R.string.sort_quantity_desc)
+                SortOption.DATE_ADDED_ASC -> context.getString(R.string.sort_date_added_asc)
+                SortOption.DATE_ADDED_DESC -> context.getString(R.string.sort_date_added_desc)
+                SortOption.EXPIRY_DATE_ASC -> context.getString(R.string.sort_expiry_date_asc)
+                SortOption.EXPIRY_DATE_DESC -> context.getString(R.string.sort_expiry_date_desc)
+                SortOption.UPDATED_AT_ASC -> context.getString(R.string.sort_updated_at_asc)
+                SortOption.UPDATED_AT_DESC -> context.getString(R.string.sort_updated_at_desc)
+            }
+        }
     }
+    
+    // 预先获取状态筛选选项的显示文本映射
+    val statusFilterDisplayMap = remember {
+        StatusFilter.values().associateWith { statusFilter ->
+            context.getString(statusFilter.displayNameRes)
+        }
+    }
+    val statusFilterByDisplay = remember { statusFilterDisplayMap.entries.associate { (key, value) -> value to key } }
+    
+    val sortOptions = remember { SortOption.values().map { sortOption -> sortOptionDisplayMap[sortOption]!! } }
+    val sortOptionByDisplay = remember { sortOptionDisplayMap.entries.associate { (key, value) -> value to key } }
+
+    GlassConfirmDialog(
+        title = stringResource(id = R.string.inventory_filter),
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                // 分类下拉菜单（多选）
+                GlassDropdownMenu(
+                    selectedItem = if (tempFilter.selectedCategories.isEmpty()) "" else tempFilter.selectedCategories.joinToString(", "),
+                    items = categories,
+                    onItemSelected = { selected ->
+                        tempFilter = tempFilter.copy(selectedCategories = if (selected.isEmpty()) emptyList() else selected.split(", "))
+                    },
+                    placeholder = stringResource(id = R.string.inventory_category),
+                    multiSelect = true,
+                    selectedItems = tempFilter.selectedCategories,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                
+                // 状态下拉菜单（单选）
+                GlassDropdownMenu(
+                    selectedItem = statusFilterDisplayMap[tempFilter.statusFilter] ?: "",
+                    items = StatusFilter.values().map { statusFilterDisplayMap[it] ?: "" },
+                    onItemSelected = { selected ->
+                        tempFilter = tempFilter.copy(statusFilter = statusFilterByDisplay[selected] ?: StatusFilter.ALL)
+                    },
+                    placeholder = stringResource(id = R.string.inventory_status),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                
+                // 排序下拉菜单（单选）
+                GlassDropdownMenu(
+                    selectedItem = sortOptionDisplayMap[tempFilter.sortOption] ?: "",
+                    items = sortOptions,
+                    onItemSelected = { selected ->
+                        val sortOption = sortOptionByDisplay[selected] ?: SortOption.NAME_ASC
+                        tempFilter = tempFilter.copy(sortOption = sortOption)
+                    },
+                    placeholder = stringResource(id = R.string.inventory_sort),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        },
+        confirmText = stringResource(id = R.string.add_save),
+        dismissText = stringResource(id = R.string.add_cancel),
+        onConfirmClick = {
+            onFilterChanged(tempFilter)
+            onDismiss()
+        },
+        onDismissClick = onDismiss,
+        isVisible = true
+    )
 }
