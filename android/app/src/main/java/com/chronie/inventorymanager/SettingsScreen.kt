@@ -1,18 +1,16 @@
 package com.chronie.inventorymanager
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
+import androidx.compose.ui.window.Dialog
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +33,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.chronie.inventorymanager.liquidglass.utils.GlassBackground
+import com.chronie.inventorymanager.liquidglass.utils.GlassCard
+import com.chronie.inventorymanager.ui.theme.getGlassColors
 import com.chronie.inventorymanager.data.*
 import com.chronie.inventorymanager.liquidglass.backdrop.drawBackdrop
 import com.chronie.inventorymanager.liquidglass.backdrop.backdrops.rememberCanvasBackdrop
@@ -55,9 +55,7 @@ fun SettingsScreen(
         // 使用液态玻璃背景包裹整个设置界面
         GlassBackground {
             Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-                // 设置界面标题栏（保留原实现）
-                SettingsTopBar(onNavigateBack = onNavigateBack)
-
+                // 顶部导航由 MainActivity 的 TopAppBar 提供，这里仅渲染内容
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // 设置选项内容，放在玻璃背景内
@@ -73,40 +71,7 @@ fun SettingsScreen(
 /**
  * 设置界面的标题栏
  */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun SettingsTopBar(
-    onNavigateBack: () -> Unit
-) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = onNavigateBack,
-                modifier = Modifier.padding(end = 12.dp)
-            ) {
-                Icon(
-                     imageVector = Icons.Default.ArrowBack,
-                     contentDescription = "<"
-                 )
-            }
-            Text(
-                text = stringResource(R.string.nav_menu),
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-        }
-    }
-}
+// SettingsTopBar 已移除：顶部由 MainActivity 管理（显示当前页面标题）
 
 /**
  * 设置界面的主要内容
@@ -119,18 +84,21 @@ private fun SettingsContent(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // 语言设置组
-        SettingsGroup(
-            title = stringResource(R.string.nav_menu),
-            items = listOf(
-                SettingsItem(
-                    title = stringResource(R.string.nav_language),
-                    subtitle = stringResource(R.string.nav_language),
-                    icon = Icons.Default.Menu,
-                    content = { LanguageSetting() }
+        // 使用液态玻璃卡片展示语言设置，移除多余图标/外框
+        GlassCard(modifier = Modifier.fillMaxWidth(), cornerRadius = 12.dp, backgroundAlpha = 0.9f) {
+            Column {
+                Text(
+                    text = stringResource(R.string.nav_language),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 )
-            )
-        )
+                Spacer(modifier = Modifier.height(8.dp))
+                // 语言选择控件（已在下方实现）
+                LanguageSetting()
+            }
+        }
     }
 }
 
@@ -232,7 +200,7 @@ private fun SettingsCard(
 @Composable
 private fun LanguageSetting() {
     val languageContext = getLanguageContext()
-    val currentLanguage = languageContext.currentLanguage
+    val currentLanguage = getCurrentLanguage()
     val languages = LanguageManager.supportedLanguages
     val ctx = LocalContext.current
     val activity = ctx as? ComponentActivity
@@ -251,6 +219,14 @@ private fun LanguageSetting() {
                 conf.setLocale(newLanguage.locale)
                 @Suppress("DEPRECATION")
                 res.updateConfiguration(conf, res.displayMetrics)
+            } catch (_: Exception) {
+            }
+            // 保存偏好以便 Activity 重启/重新创建时保留所选语言
+            try {
+                ctx.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
+                    .edit()
+                    .putString("preferred_language", newLanguage.code)
+                    .apply()
             } catch (_: Exception) {
             }
             activity?.recreate()
@@ -272,21 +248,25 @@ private fun LanguageDropdown(
     val interactionSource = remember { MutableInteractionSource() }
     
     // 液态玻璃效果的背景绘制
+    // 使用系统主题判断代替对比具体颜色，避免动态主题/不同背景值导致误判
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+
     val glassBackground = rememberCanvasBackdrop {
         val radius = 12.dp.toPx()
-        
-        // 绘制半透明的背景
+
+        // 使用主题色绘制半透明卡片背景，适配浅/深色模式
         drawRoundRect(
-            color = Color.White.copy(alpha = 0.15f),
+            color = glassColors.cardContainer.copy(alpha = 0.85f),
             cornerRadius = androidx.compose.ui.geometry.CornerRadius(radius)
         )
-        
-        // 绘制渐变效果
+
+        // 绘制渐变效果（基于 cardContainer 的亮度变化）
         drawRoundRect(
             brush = Brush.verticalGradient(
                 colors = listOf(
-                    Color.White.copy(alpha = 0.3f),
-                    Color.White.copy(alpha = 0.1f)
+                    glassColors.cardContainer.copy(alpha = 0.95f),
+                    glassColors.container.copy(alpha = 0.7f)
                 )
             ),
             cornerRadius = androidx.compose.ui.geometry.CornerRadius(radius)
@@ -331,13 +311,6 @@ private fun LanguageDropdown(
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = "Language",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = selectedLanguage.name,
                     modifier = Modifier.weight(1f),
@@ -353,36 +326,52 @@ private fun LanguageDropdown(
             }
         }
         
-        // 使用对话框替代 DropdownMenu，避免某些设备/组合导致 Popup 崩溃
+        // 使用自定义 Dialog + GlassCard 实现玻璃弹窗列表
         if (expanded) {
-            AlertDialog(
-                onDismissRequest = { expanded = false },
-                title = { Text(text = stringResource(R.string.nav_language)) },
-                text = {
-                    // 限制高度并使用 LazyColumn 以便长列表可滚动
-                    Box(modifier = Modifier.heightIn(max = 360.dp)) {
-                        LazyColumn {
-                            items(languages) { language ->
-                                TextButton(
-                                    onClick = {
-                                        onLanguageChanged(language)
-                                        expanded = false
-                                    },
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        text = language.name,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
+            Dialog(onDismissRequest = { expanded = false }) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(0.92f)
+                        .heightIn(max = 400.dp)
+                        .padding(8.dp)
+                ) {
+                    GlassCard(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.nav_language),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                            Box(modifier = Modifier.heightIn(max = 320.dp)) {
+                                LazyColumn {
+                                    items(languages) { language ->
+                                        TextButton(
+                                            onClick = {
+                                                onLanguageChanged(language)
+                                                expanded = false
+                                            },
+                                            modifier = Modifier.fillMaxWidth()
+                                        ) {
+                                            Text(
+                                                text = language.name,
+                                                color = MaterialTheme.colorScheme.onSurface,
+                                                style = MaterialTheme.typography.bodyMedium
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                },
-                confirmButton = {},
-                dismissButton = {}
-            )
+                }
+            }
         }
     }
 }

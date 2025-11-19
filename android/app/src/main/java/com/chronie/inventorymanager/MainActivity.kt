@@ -76,8 +76,15 @@ fun SmartInventoryManagerApp() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { 
-                    Text(stringResource(id = R.string.app_name))
+                title = {
+                    val title = when (selectedIndex) {
+                        0 -> stringResource(id = R.string.nav_inventory)
+                        1 -> stringResource(id = R.string.nav_add)
+                        2 -> stringResource(id = R.string.nav_purchaselist)
+                        3 -> stringResource(id = R.string.nav_menu)
+                        else -> stringResource(id = R.string.app_name)
+                    }
+                    Text(title)
                 }
             )
         },

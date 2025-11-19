@@ -154,11 +154,30 @@ fun LanguageContextProvider(
     initialLanguage: LanguageConfig? = null,
     content: @Composable () -> Unit
 ) {
-    val languageContext = remember {
-        val initialLang = initialLanguage ?: LanguageManager.getDefaultLanguage()
-        LanguageContext(initialLang)
+    val ctx = LocalContext.current
+
+    // 从 SharedPreferences 中读取保存的语言偏好（若存在）
+    val savedCode = remember {
+        ctx.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
+            .getString("preferred_language", null)
     }
-    
+
+    val resolvedInitial = remember(savedCode, initialLanguage) {
+        when {
+            initialLanguage != null -> initialLanguage
+            savedCode != null -> LanguageManager.getLanguageByCode(savedCode) ?: LanguageManager.getDefaultLanguage()
+            else -> {
+                // 根据系统 Locale 尝试选取匹配语言，否则使用默认
+                val sys = ctx.resources.configuration.locale ?: java.util.Locale.getDefault()
+                LanguageManager.getLanguageByLocale(sys) ?: LanguageManager.getDefaultLanguage()
+            }
+        }
+    }
+
+    val languageContext = remember(resolvedInitial) {
+        LanguageContext(resolvedInitial)
+    }
+
     // 提供语言上下文给子组件
     CompositionLocalProvider(LocalLanguageContext provides languageContext) {
         content()
