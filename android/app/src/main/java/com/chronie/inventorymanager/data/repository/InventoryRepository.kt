@@ -133,13 +133,22 @@ class InventoryRepository(
     suspend fun useItem(id: String): InventoryItem =
             withContext(Dispatchers.IO) {
                 try {
+                    println("InventoryRepository: 调用 API - useItem(id: $id)")
                     val response = apiService.useItem(id)
+                    println("InventoryRepository: API 响应 - isSuccessful: ${response.isSuccessful}, code: ${response.code()}")
+                    
                     if (response.isSuccessful && response.body()?.data != null) {
-                        response.body()!!.data
+                        val item = response.body()!!.data
+                        println("InventoryRepository: 成功获取物品 - 数量: ${item.quantity}")
+                        item
                     } else {
-                        throw Exception("Failed to use item")
+                        val errorBody = response.errorBody()?.string()
+                        println("InventoryRepository: API 失败 - errorBody: $errorBody")
+                        throw Exception("Failed to use item: ${response.code()} - $errorBody")
                     }
                 } catch (e: Exception) {
+                    println("InventoryRepository: 异常 - ${e.message}")
+                    e.printStackTrace()
                     throw Exception("操作失败: ${e.message}")
                 }
             }

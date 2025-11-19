@@ -1,6 +1,8 @@
 package com.chronie.inventorymanager.liquidglass.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -197,6 +199,7 @@ fun ItemActionDialog(
                             icon = Icons.Default.Remove,
                             enabled = item.quantity > 0,
                             onClick = {
+                                println("ItemActionDialog: 使用物品按钮被点击 - ${item.name}")
                                 onUseOne()
                                 onDismiss()
                             },
@@ -263,39 +266,43 @@ private fun IconActionButton(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        onClick = onClick,
+        onClick = {
+            println("IconActionButton: Surface onClick triggered")
+            onClick()
+        },
         enabled = enabled,
-        modifier = modifier
-            .background(
-                color = when {
-                    !enabled -> colors.container.copy(alpha = 0.3f)
-                    isDestructive -> Color(0xFFFFEBEE).copy(alpha = 0.8f)
-                    else -> colors.container.copy(alpha = 0.5f)
-                },
-                shape = RoundedCornerShape(12.dp)
-            )
-            .border(
-                width = 1.dp,
-                color = when {
-                    !enabled -> colors.border.copy(alpha = 0.3f)
-                    isDestructive -> Color(0xFFF44336).copy(alpha = 0.5f)
-                    else -> colors.border.copy(alpha = 0.5f)
-                },
-                shape = RoundedCornerShape(12.dp)
-            )
-            .padding(12.dp),
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        color = when {
+            !enabled -> colors.container.copy(alpha = 0.3f)
+            isDestructive -> Color(0xFFFFEBEE).copy(alpha = 0.8f)
+            else -> colors.container.copy(alpha = 0.5f)
+        },
+        border = BorderStroke(
+            width = 1.dp,
+            color = when {
+                !enabled -> colors.border.copy(alpha = 0.3f)
+                isDestructive -> Color(0xFFF44336).copy(alpha = 0.5f)
+                else -> colors.border.copy(alpha = 0.5f)
+            }
+        ),
         tonalElevation = 0.dp
+    ) {
+        Box(
+            modifier = Modifier.padding(12.dp),
+            contentAlignment = Alignment.Center
         ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = when {
-                !enabled -> colors.text.copy(alpha = 0.3f)
-                isDestructive -> Color(0xFFF44336)
-                else -> colors.text.copy(alpha = 0.8f)
-            },
-            modifier = Modifier.size(24.dp)
-        )
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = when {
+                    !enabled -> colors.text.copy(alpha = 0.3f)
+                    isDestructive -> Color(0xFFF44336)
+                    else -> colors.text.copy(alpha = 0.8f)
+                },
+                modifier = Modifier.size(24.dp)
+            )
+        }
     }
 }
 

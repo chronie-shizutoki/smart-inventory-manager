@@ -11,13 +11,11 @@ import kotlinx.coroutines.withContext
 class UseInventoryItemUseCase(
     private val repository: InventoryRepository = InventoryRepository()
 ) {
-    suspend fun execute(item: InventoryItem) = withContext(Dispatchers.IO) {
-        // 更新使用次数和最后使用时间
-        val updatedItem = item.copy(
-            quantity = maxOf(0, item.quantity - 1),
-            usageCount = item.usageCount + 1
-            // lastUsedAt会在repository中设置
-        )
-        repository.updateItem(updatedItem)
+    suspend fun execute(itemId: String): InventoryItem = withContext(Dispatchers.IO) {
+        println("UseInventoryItemUseCase: 调用 repository.useItem - itemId: $itemId")
+        // 调用 repository 的 useItem 方法，该方法会调用 API 端点 /api/inventory/items/{id}/use
+        val result = repository.useItem(itemId)
+        println("UseInventoryItemUseCase: repository.useItem 返回成功")
+        result
     }
 }

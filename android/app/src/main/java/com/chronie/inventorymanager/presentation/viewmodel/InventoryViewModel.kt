@@ -159,14 +159,12 @@ class InventoryViewModel(
     fun useItem(item: InventoryItem) {
         viewModelScope.launch {
             try {
-                val updatedItem =
-                        item.copy(
-                                quantity = maxOf(0, item.quantity - 1),
-                                usageCount = item.usageCount + 1,
-                                lastUsedAt = Date()
-                        )
-
-                updateInventoryItemUseCase.execute(updatedItem)
+                println("InventoryViewModel: 开始使用物品 - ID: ${item.id}, 名称: ${item.name}")
+                
+                // 调用 useInventoryItemUseCase，该方法会调用 API 端点 /api/inventory/items/{id}/use
+                val updatedItem = useInventoryItemUseCase.execute(item.id)
+                
+                println("InventoryViewModel: 物品使用成功 - 更新后数量: ${updatedItem.quantity}")
 
                 // 更新本地状态
                 val updatedItems =
@@ -181,6 +179,8 @@ class InventoryViewModel(
                 // 重新加载统计数据
                 loadStatistics()
             } catch (e: Exception) {
+                println("InventoryViewModel: 使用物品失败 - ${e.message}")
+                e.printStackTrace()
                 _uiState.value = _uiState.value.copy(error = "使用物品失败: ${e.message}")
             }
         }
