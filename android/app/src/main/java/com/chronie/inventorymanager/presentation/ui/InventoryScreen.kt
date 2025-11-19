@@ -1,6 +1,7 @@
 package com.chronie.inventorymanager.presentation.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,11 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.animation.core.*
+import kotlinx.coroutines.delay
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.domain.model.InventoryItem
 import com.chronie.inventorymanager.domain.model.StatusFilter
@@ -64,151 +69,156 @@ fun InventoryScreen(
         viewModel.loadStatistics()
     }
 
-    Box(
-            modifier =
-                    Modifier.fillMaxSize()
-                            .background(
-                                    brush =
-                                            Brush.verticalGradient(
-                                                    colors =
-                                                            listOf(
-                                                                    glassColors.primary.copy(
-                                                                            alpha = 0.1f
-                                                                    ),
-                                                                    glassColors.secondary.copy(
-                                                                            alpha = 0.05f
-                                                                    )
-                                                            )
-                                            )
-                            )
-    ) {
-        // 主内容区域
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-            // 标题栏
-            InventoryHeader(onAddItem = onAddItem, onRefresh = { viewModel.refreshData() })
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // 统计卡片区域
-            InventoryStatsSection(
-                    statistics = uiState.statistics,
-                    isLoading = uiState.isLoadingStats
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // 搜索和筛选栏
-            InventoryFilterSection(
-                    searchQuery = uiState.searchQuery,
-                    selectedCategory = uiState.selectedCategory,
-                    statusFilter = uiState.statusFilter,
-                    categories = uiState.availableCategories,
-                    onSearchChanged = viewModel::updateSearchQuery,
-                    onCategoryChanged = viewModel::updateCategory,
-                    onStatusFilterChanged = viewModel::updateStatusFilter,
-                    onClearFilters = viewModel::clearFilters,
-                    onShowCategoryDialog = { showCategoryDialog = true },
-                    onShowStatusDialog = { showStatusDialog = true },
-                    
-                    onShowAdvancedDialog = { showAdvancedDialog = true }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // 库存物品列表
-            InventoryItemsList(
-                    items = uiState.filteredItems,
-                    onItemClick = { item -> selectedItemForAction = item },
-                    onEditItem = { item -> selectedItemForAction = item },
-                    onDeleteItem = { item -> viewModel.deleteItem(item) },
-                    onToggleFavorite = { item -> 
-                        // TODO: 实现切换收藏状态
-                    },
-                    onUpdateStock = { item -> 
-                        // TODO: 实现更新库存
-                    }
-            )
+    // 优先渲染错误覆盖层，确保真正显示在最顶层
+    if (uiState.error != null) {
+        Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+        ) {
+            ErrorOverlay(message = uiState.error!!, onDismiss = viewModel::clearError)
         }
+    } else {
+        Box(
+                modifier =
+                        Modifier.fillMaxSize()
+                                .background(
+                                        brush =
+                                                Brush.verticalGradient(
+                                                        colors =
+                                                                listOf(
+                                                                        glassColors.primary.copy(
+                                                                                alpha = 0.1f
+                                                                        ),
+                                                                        glassColors.secondary.copy(
+                                                                                alpha = 0.05f
+                                                                        )
+                                                                )
+                                                )
+                                )
+        ) {
+            // 主内容区域
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+                    // 标题栏
+                    InventoryHeader(onAddItem = onAddItem, onRefresh = { viewModel.refreshData() })
 
-        // 加载覆盖层
-        if (uiState.isLoading || uiState.isLoadingStats) {
-            LoadingOverlay()
-        }
+                    Spacer(modifier = Modifier.height(16.dp))
 
-        // 错误信息覆盖层
-        uiState.error?.let { error ->
-            ErrorOverlay(message = error, onDismiss = viewModel::clearError)
-        }
+                    // 统计卡片区域
+                    InventoryStatsSection(
+                            statistics = uiState.statistics,
+                            isLoading = uiState.isLoadingStats
+                    )
 
-        // 对话框显示
-        if (showCategoryDialog) {
-            CategoryFilterDialog(
-                    categories = uiState.availableCategories,
-                    selectedCategories =
-                            if (uiState.selectedCategory != null) listOf(uiState.selectedCategory!!)
-                            else emptyList(),
-                    onCategoriesSelected = { categories ->
-                        viewModel.updateCategory(
-                                if (categories.isEmpty()) null else categories.first()
-                        )
-                        showCategoryDialog = false
-                    },
-                    onDismiss = { showCategoryDialog = false }
-            )
-        }
+                    Spacer(modifier = Modifier.height(16.dp))
 
-        if (showStatusDialog) {
-            StatusFilterDialog(
-                    selectedStatuses =
-                            listOf(
-                                    when (uiState.statusFilter) {
-                                        StatusFilter.ALL -> StockStatus.NORMAL // 占位值，不会被选中
-                                        StatusFilter.NORMAL -> StockStatus.NORMAL
-                                        StatusFilter.LOW_STOCK -> StockStatus.LOW_STOCK
-                                        StatusFilter.EXPIRING_SOON -> StockStatus.EXPIRING_SOON
-                                        StatusFilter.EXPIRED -> StockStatus.EXPIRED
-                                    }
-                            ),
-                    onStatusesSelected = { statuses ->
-                        val newFilter =
-                                when {
-                                    statuses.isEmpty() -> StatusFilter.ALL
-                                    statuses.contains(StockStatus.NORMAL) -> StatusFilter.NORMAL
-                                    statuses.contains(StockStatus.LOW_STOCK) ->
-                                            StatusFilter.LOW_STOCK
-                                    statuses.contains(StockStatus.EXPIRING_SOON) ->
-                                            StatusFilter.EXPIRING_SOON
-                                    statuses.contains(StockStatus.EXPIRED) -> StatusFilter.EXPIRED
-                                    else -> StatusFilter.ALL
-                                }
-                        viewModel.updateStatusFilter(newFilter)
-                        showStatusDialog = false
-                    },
-                    onDismiss = { showStatusDialog = false }
-            )
-        }
+                    // 搜索和筛选栏
+                    InventoryFilterSection(
+                            searchQuery = uiState.searchQuery,
+                            selectedCategory = uiState.selectedCategory,
+                            statusFilter = uiState.statusFilter,
+                            categories = uiState.availableCategories,
+                            onSearchChanged = viewModel::updateSearchQuery,
+                            onCategoryChanged = viewModel::updateCategory,
+                            onStatusFilterChanged = viewModel::updateStatusFilter,
+                            onClearFilters = viewModel::clearFilters,
+                            onShowCategoryDialog = { showCategoryDialog = true },
+                            onShowStatusDialog = { showStatusDialog = true },
+                            
+                            onShowAdvancedDialog = { showAdvancedDialog = true }
+                    )
 
-        
+                    Spacer(modifier = Modifier.height(16.dp))
 
-        // 物品操作对话框
-        selectedItemForAction?.let { item ->
-            ItemActionDialog(
-                    item = item,
-                    onUseOne = { viewModel.useItem(item) },
-                    onEdit = {
-                        onEditItem(item)
-                        selectedItemForAction = null
-                    },
-                    onView = {
-                        onViewItem(item)
-                        selectedItemForAction = null
-                    },
-                    onDelete = {
-                        viewModel.deleteItem(item)
-                        selectedItemForAction = null
-                    },
-                    onDismiss = { selectedItemForAction = null }
-            )
+                    // 库存物品列表
+                    InventoryItemsList(
+                            items = uiState.filteredItems,
+                            onItemClick = { item -> selectedItemForAction = item },
+                            onEditItem = { item -> selectedItemForAction = item },
+                            onDeleteItem = { item -> viewModel.deleteItem(item) },
+                            onToggleFavorite = { item -> 
+                                // TODO: 实现切换收藏状态
+                            },
+                            onUpdateStock = { item -> 
+                                // TODO: 实现更新库存
+                            }
+                    )
+                }
+
+                // 对话框显示 - 在主内容之上
+                if (showCategoryDialog) {
+                    CategoryFilterDialog(
+                            categories = uiState.availableCategories,
+                            selectedCategories =
+                                    if (uiState.selectedCategory != null) listOf(uiState.selectedCategory!!)
+                                    else emptyList(),
+                            onCategoriesSelected = { categories ->
+                                    viewModel.updateCategory(
+                                            if (categories.isEmpty()) null else categories.first()
+                                    )
+                                    showCategoryDialog = false
+                            },
+                            onDismiss = { showCategoryDialog = false }
+                    )
+                }
+
+                if (showStatusDialog) {
+                    StatusFilterDialog(
+                            selectedStatuses =
+                                    listOf(
+                                            when (uiState.statusFilter) {
+                                                StatusFilter.ALL -> StockStatus.NORMAL // 占位值，不会被选中
+                                                StatusFilter.NORMAL -> StockStatus.NORMAL
+                                                StatusFilter.LOW_STOCK -> StockStatus.LOW_STOCK
+                                                StatusFilter.EXPIRING_SOON -> StockStatus.EXPIRING_SOON
+                                                StatusFilter.EXPIRED -> StockStatus.EXPIRED
+                                            }
+                                    ),
+                            onStatusesSelected = { statuses ->
+                                    val newFilter =
+                                            when {
+                                                statuses.isEmpty() -> StatusFilter.ALL
+                                                statuses.contains(StockStatus.NORMAL) -> StatusFilter.NORMAL
+                                                statuses.contains(StockStatus.LOW_STOCK) ->
+                                                        StatusFilter.LOW_STOCK
+                                                statuses.contains(StockStatus.EXPIRING_SOON) ->
+                                                        StatusFilter.EXPIRING_SOON
+                                                statuses.contains(StockStatus.EXPIRED) -> StatusFilter.EXPIRED
+                                                else -> StatusFilter.ALL
+                                            }
+                                    viewModel.updateStatusFilter(newFilter)
+                                    showStatusDialog = false
+                            },
+                            onDismiss = { showStatusDialog = false }
+                    )
+                }
+
+                // 物品操作对话框
+                selectedItemForAction?.let { item ->
+                    ItemActionDialog(
+                            item = item,
+                            onUseOne = { viewModel.useItem(item) },
+                            onEdit = {
+                                    onEditItem(item)
+                                    selectedItemForAction = null
+                            },
+                            onView = {
+                                    onViewItem(item)
+                                    selectedItemForAction = null
+                            },
+                            onDelete = {
+                                    viewModel.deleteItem(item)
+                                    selectedItemForAction = null
+                            },
+                            onDismiss = { selectedItemForAction = null }
+                    )
+                }
+
+                // 加载覆盖层 - 在对话框之下，但在主内容之上
+                if (uiState.isLoading || uiState.isLoadingStats) {
+                    LoadingOverlay()
+                }
+            }
         }
     }
 }
@@ -501,7 +511,9 @@ private fun LoadingOverlay() {
     val glassColors = getGlassColors(isLightTheme)
     
     Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.3f)),
+            modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.3f)),
             contentAlignment = Alignment.Center
     ) {
         GlassContainer(modifier = Modifier.padding(32.dp), backgroundAlpha = 0.2f) {
@@ -530,11 +542,61 @@ private fun ErrorOverlay(message: String, onDismiss: () -> Unit) {
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
+    // 动画状态
+    var isVisible by remember { mutableStateOf(false) }
+    val animatedAlpha by animateFloatAsState(
+        targetValue = if (isVisible) 1f else 0f,
+        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing)
+    )
+    val animatedScale by animateFloatAsState(
+        targetValue = if (isVisible) 1f else 0.8f,
+        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing)
+    )
+
+    // 启动动画
+    LaunchedEffect(Unit) {
+        isVisible = true
+    }
+
+    // 关闭动画处理
+    LaunchedEffect(isVisible) {
+        if (!isVisible) {
+            delay(300) // 等待动画完成
+            onDismiss()
+        }
+    }
+
     Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f)),
+            modifier = Modifier
+                    .fillMaxSize()
+                    .graphicsLayer(alpha = animatedAlpha)
+                    .pointerInput(Unit) {
+                        detectDragGestures { change, _ ->
+                            change.consume()
+                        }
+                    },
             contentAlignment = Alignment.Center
     ) {
-        GlassContainer(modifier = Modifier.fillMaxWidth().padding(24.dp), backgroundAlpha = 0.25f) {
+        // 背景暗化层
+        Box(
+                modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.3f * animatedAlpha))
+        )
+
+        // 错误内容毛玻璃容器
+        GlassContainer(
+                modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp)
+                        .graphicsLayer(
+                            scaleX = animatedScale,
+                            scaleY = animatedScale,
+                            alpha = animatedAlpha
+                        ),
+                backgroundAlpha = 0.25f,
+                enableBlur = false
+        ) {
             Column(
                     modifier = Modifier.padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -560,7 +622,10 @@ private fun ErrorOverlay(message: String, onDismiss: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 GlassButton(
-                        onClick = onDismiss,
+                        onClick = {
+                            // 触发淡出动画
+                            isVisible = false
+                        },
                         text = stringResource(id = R.string.dismiss)
                 )
             }
