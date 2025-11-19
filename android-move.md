@@ -91,7 +91,6 @@ Response:
     "minQuantity": 5,
     "expiryDate": "2024-12-31",
     "description": "描述",
-    "barcode": "条形码",
     "usageCount": 0,
     "lastUsedAt": "2024-01-01T10:00:00",
     "createdAt": "2024-01-01T10:00:00",
@@ -111,8 +110,7 @@ Body:
   "unit": "个",
   "minQuantity": 5,
   "expiryDate": "2024-12-31",
-  "description": "描述",
-  "barcode": "条形码"
+  "description": "描述"
 }
 
 Response:
@@ -249,8 +247,7 @@ Response:
       "quantity": 物品数量,
       "unit": "数量单位",
       "expiryDate": "过期日期（可选）",
-      "description": "物品描述",
-      "barcode": "条形码（可选）"
+      "description": "物品描述"
     }
   ],
   "message": "Successfully generated 3 records"
@@ -335,7 +332,6 @@ data class InventoryItemEntity(
     val minQuantity: Int,
     val expiryDate: String?, // ISO date string
     val description: String?,
-    val barcode: String?,
     val usageCount: Int = 0,
     val lastUsedAt: String?, // ISO datetime string
     val createdAt: String,
@@ -362,7 +358,6 @@ data class InventoryItemDto(
     val minQuantity: Int,
     val expiryDate: String?,
     val description: String?,
-    val barcode: String?,
     val usageCount: Int,
     val lastUsedAt: String?,
     val createdAt: String,

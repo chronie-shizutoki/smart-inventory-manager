@@ -12,7 +12,6 @@ class InventoryItem(db.Model):
     min_quantity = db.Column(db.Integer, nullable=False, default=0)
     expiry_date = db.Column(db.Date, nullable=True)
     description = db.Column(db.Text, nullable=True)
-    barcode = db.Column(db.String(50), nullable=True)
     usage_count = db.Column(db.Integer, nullable=False, default=0)
     last_used_at = db.Column(db.DateTime, nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -28,7 +27,6 @@ class InventoryItem(db.Model):
             'minQuantity': self.min_quantity,
             'expiryDate': self.expiry_date.isoformat() if self.expiry_date else None,
             'description': self.description,
-            'barcode': self.barcode,
             'usageCount': self.usage_count,
             'lastUsedAt': self.last_used_at.isoformat() if self.last_used_at else None,
             'createdAt': self.created_at.isoformat(),
@@ -62,7 +60,6 @@ class InventoryItem(db.Model):
                 item.last_used_at = None
         
         item.description = data.get('description', '')
-        item.barcode = data.get('barcode', '')
         return item
     
     def update_from_dict(self, data):
@@ -93,7 +90,6 @@ class InventoryItem(db.Model):
                 pass
         
         self.description = data.get('description', self.description)
-        self.barcode = data.get('barcode', self.barcode)
         self.updated_at = datetime.utcnow()
 
 class Category(db.Model):

@@ -120,8 +120,7 @@ const app = createApp({
                 unit: '',
                 minQuantity: 0,
                 expiryDate: '',
-                description: '',
-                barcode: ''
+                description: ''
             },
         
         // AI表单数据
@@ -515,8 +514,7 @@ const app = createApp({
                 unit: '',
                 minQuantity: 0,
                 expiryDate: '',
-                description: '',
-                barcode: ''
+                description: ''
             };
             this.editingItem = null;
         },

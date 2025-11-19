@@ -128,8 +128,7 @@ def analyze_images_with_siliconflow(images, api_key):
       "quantity": 物品数量,
       "unit": "数量单位",
       "expiryDate": "过期日期（如果有，格式：YYYY-MM-DD）",
-      "description": "物品描述（可选）",
-      "barcode": "条形码（如果能识别）"
+      "description": "物品描述（可选）"
     }
   ]
 }
@@ -200,8 +199,7 @@ def analyze_images_with_siliconflow(images, api_key):
                         'category': record['category'],
                         'quantity': max(1, int(record['quantity'])),
                         'unit': record['unit'].strip(),
-                        'description': record.get('description', '').strip(),
-                        'barcode': record.get('barcode', '').strip()
+                        'description': record.get('description', '').strip()
                     }
                     
                     # 处理过期日期

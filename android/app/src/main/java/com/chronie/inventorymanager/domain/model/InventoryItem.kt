@@ -25,8 +25,6 @@ data class InventoryItem(
     
     val description: String = "",
     
-    val barcode: String = "",
-    
     val usageCount: Int = 0,
     
     val lastUsedAt: Date? = null,
