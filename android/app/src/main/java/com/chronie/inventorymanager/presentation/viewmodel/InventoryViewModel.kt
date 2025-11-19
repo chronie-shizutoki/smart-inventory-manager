@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chronie.inventorymanager.domain.model.InventoryItem
 import com.chronie.inventorymanager.domain.model.StatusFilter
+import com.chronie.inventorymanager.domain.model.SortOption
 import com.chronie.inventorymanager.domain.model.StockStatistics
+import com.chronie.inventorymanager.domain.model.UnifiedFilter
 import com.chronie.inventorymanager.domain.model.getStockStatus
 import com.chronie.inventorymanager.domain.usecase.DeleteInventoryItemUseCase
 import com.chronie.inventorymanager.domain.usecase.GetInventoryItemsUseCase
@@ -131,12 +133,27 @@ class InventoryViewModel(
                 _uiState.value.copy(
                         searchQuery = "",
                         selectedCategory = null,
-                        statusFilter = StatusFilter.ALL
+                        statusFilter = StatusFilter.ALL,
+                        sortOption = SortOption.NAME_ASC
                 )
         applyFilters()
     }
 
-    /** 取消排序功能（直接使用过滤结果） */
+    /** 更新排序选项 */
+    fun updateSortOption(sortOption: SortOption) {
+        _uiState.value = _uiState.value.copy(sortOption = sortOption)
+        applyFilters()
+    }
+
+    /** 处理统一筛选变更 */
+    fun onUnifiedFilterChanged(filter: UnifiedFilter) {
+        _uiState.value = _uiState.value.copy(
+            selectedCategory = filter.selectedCategories.firstOrNull(), // 统一筛选支持多分类，但UI中只取第一个
+            statusFilter = filter.statusFilter,
+            sortOption = filter.sortOption
+        )
+        applyFilters()
+    }
 
     /** 使用物品（减少库存） */
     fun useItem(item: InventoryItem) {
@@ -213,6 +230,7 @@ class InventoryViewModel(
         val searchQuery = currentState.searchQuery
         val selectedCategory = currentState.selectedCategory
         val statusFilter = currentState.statusFilter
+        val sortOption = currentState.sortOption
 
         val filteredItems =
                 currentState.items.filter { item ->
@@ -261,7 +279,30 @@ class InventoryViewModel(
                     matchesSearch && matchesCategory && matchesStatus
                 }
 
-        _uiState.value = _uiState.value.copy(filteredItems = filteredItems)
+        // 应用排序
+        val sortedItems = filteredItems.sortedWith(compareBy<InventoryItem> { item ->
+            when (sortOption) {
+                SortOption.NAME_ASC -> item.name.lowercase()
+                SortOption.NAME_DESC -> item.name.lowercase()
+                SortOption.QUANTITY_ASC -> item.quantity.toString().padStart(10, '0')
+                SortOption.QUANTITY_DESC -> item.quantity.toString().padStart(10, '0')
+                SortOption.DATE_ADDED_ASC -> item.createdAt.toString()
+                SortOption.DATE_ADDED_DESC -> item.createdAt.toString()
+                SortOption.EXPIRY_DATE_ASC -> item.expiryDate?.toString() ?: ""
+                SortOption.EXPIRY_DATE_DESC -> item.expiryDate?.toString() ?: ""
+                SortOption.UPDATED_AT_ASC -> item.updatedAt.toString()
+                SortOption.UPDATED_AT_DESC -> item.updatedAt.toString()
+            }
+        }.let { comparator ->
+            when (sortOption) {
+                SortOption.NAME_ASC, SortOption.QUANTITY_ASC, SortOption.DATE_ADDED_ASC, 
+                     SortOption.EXPIRY_DATE_ASC, SortOption.UPDATED_AT_ASC -> comparator
+                SortOption.NAME_DESC, SortOption.QUANTITY_DESC, SortOption.DATE_ADDED_DESC,
+                SortOption.EXPIRY_DATE_DESC, SortOption.UPDATED_AT_DESC -> comparator.reversed()
+            }
+        })
+
+        _uiState.value = _uiState.value.copy(filteredItems = sortedItems)
     }
 }
 
@@ -274,6 +315,7 @@ data class InventoryUiState(
         val searchQuery: String = "",
         val selectedCategory: String? = null,
         val statusFilter: StatusFilter = StatusFilter.ALL,
+        val sortOption: SortOption = SortOption.NAME_ASC,
         val isLoading: Boolean = false,
         val isLoadingStats: Boolean = false,
         val error: String? = null

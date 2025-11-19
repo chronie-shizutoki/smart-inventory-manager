@@ -112,6 +112,40 @@
     <string name="stats_lowstock">कम स्टॉक</string>
     <string name="stats_totalitems">कुल आइटम्स</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">नाम अ-ज</string>
+    <string name="sort_name_desc">नाम ज-अ</string>
+    <string name="sort_quantity_asc">मात्रा बढ़ते क्रम</string>
+    <string name="sort_quantity_desc">मात्रा घटते क्रम</string>
+    <string name="sort_date_added_asc">जोड़ने की तिथि बढ़ते क्रम</string>
+    <string name="sort_date_added_desc">जोड़ने की तिथि घटते क्रम</string>
+    <string name="sort_expiry_date_asc">एक्सपायरी डेट बढ़ते क्रम</string>
+    <string name="sort_expiry_date_desc">एक्सपायरी डेट घटते क्रम</string>
+    <string name="sort_updated_at_asc">आखिरी अपडेट बढ़ते क्रम</string>
+    <string name="sort_updated_at_desc">आखिरी अपडेट घटते क्रम</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">सभी आइटम्स</string>
+    <string name="statistics_normal">नॉर्मल</string>
+    <string name="statistics_lowstock">कम स्टॉक</string>
+    <string name="statistics_expiringsoon">जल्द एक्सपायर</string>
+    <string name="statistics_expired">एक्सपायर्ड</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">फ़िल्टर और सॉर्ट</string>
+    <string name="sort_title">सॉर्ट विकल्प</string>
+    <string name="filter_apply">लागू करें</string>
+    <string name="filter_clear">सभी हटाएं</string>
+    <string name="filter_categories">कैटेगरीज़</string>
+    <string name="filter_status">स्थिति</string>
+    <string name="filter_date_range">तिथि सीमा</string>
+    <string name="filter_min_quantity">न्यूनतम मात्रा</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

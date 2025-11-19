@@ -112,6 +112,40 @@
     <string name="stats_lowstock">สต็อกต่ำ</string>
     <string name="stats_totalitems">รายการทั้งหมด</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">ชื่อ ก-ฮ</string>
+    <string name="sort_name_desc">ชื่อ ฮ-ก</string>
+    <string name="sort_quantity_asc">จำนวน น้อยไปมาก</string>
+    <string name="sort_quantity_desc">จำนวน มากไปน้อย</string>
+    <string name="sort_date_added_asc">วันที่เพิ่ม น้อยไปมาก</string>
+    <string name="sort_date_added_desc">วันที่เพิ่ม มากไปน้อย</string>
+    <string name="sort_expiry_date_asc">วันหมดอายุ น้อยไปมาก</string>
+    <string name="sort_expiry_date_desc">วันหมดอายุ มากไปน้อย</string>
+    <string name="sort_updated_at_asc">อัปเดตล่าสุด น้อยไปมาก</string>
+    <string name="sort_updated_at_desc">อัปเดตล่าสุด มากไปน้อย</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">รายการทั้งหมด</string>
+    <string name="statistics_normal">ปกติ</string>
+    <string name="statistics_lowstock">สต็อกต่ำ</string>
+    <string name="statistics_expiringsoon">ใกล้หมดอายุ</string>
+    <string name="statistics_expired">หมดอายุ</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">กรองและเรียงลำดับ</string>
+    <string name="sort_title">ตัวเลือกการเรียงลำดับ</string>
+    <string name="filter_apply">ใช้</string>
+    <string name="filter_clear">ล้างทั้งหมด</string>
+    <string name="filter_categories">หมวดหมู่</string>
+    <string name="filter_status">สถานะ</string>
+    <string name="filter_date_range">ช่วงวันที่</string>
+    <string name="filter_min_quantity">จำนวนขั้นต่ำ</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

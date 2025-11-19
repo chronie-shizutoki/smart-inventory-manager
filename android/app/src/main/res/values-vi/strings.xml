@@ -112,6 +112,40 @@
     <string name="stats_lowstock">Tồn kho thấp</string>
     <string name="stats_totalitems">Tổng số mặt hàng</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">Tên A-Z</string>
+    <string name="sort_name_desc">Tên Z-A</string>
+    <string name="sort_quantity_asc">Số lượng tăng dần</string>
+    <string name="sort_quantity_desc">Số lượng giảm dần</string>
+    <string name="sort_date_added_asc">Ngày thêm tăng dần</string>
+    <string name="sort_date_added_desc">Ngày thêm giảm dần</string>
+    <string name="sort_expiry_date_asc">Ngày hết hạn tăng dần</string>
+    <string name="sort_expiry_date_desc">Ngày hết hạn giảm dần</string>
+    <string name="sort_updated_at_asc">Cập nhật gần nhất tăng dần</string>
+    <string name="sort_updated_at_desc">Cập nhật gần nhất giảm dần</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">Tất cả mặt hàng</string>
+    <string name="statistics_normal">Bình thường</string>
+    <string name="statistics_lowstock">Tồn kho thấp</string>
+    <string name="statistics_expiringsoon">Sắp hết hạn</string>
+    <string name="statistics_expired">Đã hết hạn</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">Lọc &amp; Sắp xếp</string>
+    <string name="sort_title">Tùy chọn sắp xếp</string>
+    <string name="filter_apply">Áp dụng</string>
+    <string name="filter_clear">Xóa tất cả</string>
+    <string name="filter_categories">Danh mục</string>
+    <string name="filter_status">Trạng thái</string>
+    <string name="filter_date_range">Khoảng ngày</string>
+    <string name="filter_min_quantity">Số lượng tối thiểu</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

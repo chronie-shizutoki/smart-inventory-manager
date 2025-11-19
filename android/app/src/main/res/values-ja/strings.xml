@@ -112,6 +112,40 @@
     <string name="stats_lowstock">在庫不足</string>
     <string name="stats_totalitems">総アイテム数</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">名前 昇順（A-Z）</string>
+    <string name="sort_name_desc">名前 降順（Z-A）</string>
+    <string name="sort_quantity_asc">数量 昇順</string>
+    <string name="sort_quantity_desc">数量 降順</string>
+    <string name="sort_date_added_asc">追加日 昇順</string>
+    <string name="sort_date_added_desc">追加日 降順</string>
+    <string name="sort_expiry_date_asc">有効期限 昇順</string>
+    <string name="sort_expiry_date_desc">有効期限 降順</string>
+    <string name="sort_updated_at_asc">最終更新日 昇順</string>
+    <string name="sort_updated_at_desc">最終更新日 降順</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">すべてのアイテム</string>
+    <string name="statistics_normal">正常</string>
+    <string name="statistics_lowstock">在庫不足</string>
+    <string name="statistics_expiringsoon">期限間近</string>
+    <string name="statistics_expired">期限切れ</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">フィルターと並び替え</string>
+    <string name="sort_title">並び替えオプション</string>
+    <string name="filter_apply">適用</string>
+    <string name="filter_clear">すべてクリア</string>
+    <string name="filter_categories">カテゴリ</string>
+    <string name="filter_status">ステータス</string>
+    <string name="filter_date_range">日付範囲</string>
+    <string name="filter_min_quantity">最低数量</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

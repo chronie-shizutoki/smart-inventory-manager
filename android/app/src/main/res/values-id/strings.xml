@@ -112,6 +112,40 @@
     <string name="stats_lowstock">Stok Rendah</string>
     <string name="stats_totalitems">Total Item</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">Nama A-Z</string>
+    <string name="sort_name_desc">Nama Z-A</string>
+    <string name="sort_quantity_asc">Jumlah Naik</string>
+    <string name="sort_quantity_desc">Jumlah Turun</string>
+    <string name="sort_date_added_asc">Tanggal Ditambah Naik</string>
+    <string name="sort_date_added_desc">Tanggal Ditambah Turun</string>
+    <string name="sort_expiry_date_asc">Tanggal Kedaluwarsa Naik</string>
+    <string name="sort_expiry_date_desc">Tanggal Kedaluwarsa Turun</string>
+    <string name="sort_updated_at_asc">Terakhir Diperbarui Naik</string>
+    <string name="sort_updated_at_desc">Terakhir Diperbarui Turun</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">Semua Item</string>
+    <string name="statistics_normal">Normal</string>
+    <string name="statistics_lowstock">Stok Rendah</string>
+    <string name="statistics_expiringsoon">Akan Kedaluwarsa</string>
+    <string name="statistics_expired">Kedaluwarsa</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">Filter &amp; Urutkan</string>
+    <string name="sort_title">Opsi Urutkan</string>
+    <string name="filter_apply">Terapkan</string>
+    <string name="filter_clear">Hapus Semua</string>
+    <string name="filter_categories">Kategori</string>
+    <string name="filter_status">Status</string>
+    <string name="filter_date_range">Rentang Tanggal</string>
+    <string name="filter_min_quantity">Jumlah Minimum</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

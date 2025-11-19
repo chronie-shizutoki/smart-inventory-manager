@@ -112,6 +112,40 @@
     <string name="stats_lowstock">Düşük Stok</string>
     <string name="stats_totalitems">Toplam Ürün</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">İsim A-Z</string>
+    <string name="sort_name_desc">İsim Z-A</string>
+    <string name="sort_quantity_asc">Miktar Artan</string>
+    <string name="sort_quantity_desc">Miktar Azalan</string>
+    <string name="sort_date_added_asc">Eklenme Tarihi Artan</string>
+    <string name="sort_date_added_desc">Eklenme Tarihi Azalan</string>
+    <string name="sort_expiry_date_asc">Son Kullanma Tarihi Artan</string>
+    <string name="sort_expiry_date_desc">Son Kullanma Tarihi Azalan</string>
+    <string name="sort_updated_at_asc">Son Güncelleme Artan</string>
+    <string name="sort_updated_at_desc">Son Güncelleme Azalan</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">Tüm Ürünler</string>
+    <string name="statistics_normal">Normal</string>
+    <string name="statistics_lowstock">Düşük Stok</string>
+    <string name="statistics_expiringsoon">Yaklaşan Son Kullanma Tarihi</string>
+    <string name="statistics_expired">Süresi Dolmuş</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">Filtrele &amp; Sırala</string>
+    <string name="sort_title">Sıralama Seçenekleri</string>
+    <string name="filter_apply">Uygula</string>
+    <string name="filter_clear">Tümünü Temizle</string>
+    <string name="filter_categories">Kategoriler</string>
+    <string name="filter_status">Durum</string>
+    <string name="filter_date_range">Tarih Aralığı</string>
+    <string name="filter_min_quantity">Minimum Miktar</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

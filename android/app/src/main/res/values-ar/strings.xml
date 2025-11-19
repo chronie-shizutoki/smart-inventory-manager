@@ -111,7 +111,40 @@
     <string name="stats_expiringsoon">قريب الانتهاء</string>
     <string name="stats_lowstock">منخفض المخزون</string>
     <string name="stats_totalitems">إجمالي العناصر</string>
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
 
+    <string name="sort_name_asc">الاسم أ-ي</string>
+    <string name="sort_name_desc">الاسم ي-أ</string>
+    <string name="sort_quantity_asc">الكمية تصاعديًا</string>
+    <string name="sort_quantity_desc">الكمية تنازليًا</string>
+    <string name="sort_date_added_asc">تاريخ الإضافة تصاعديًا</string>
+    <string name="sort_date_added_desc">تاريخ الإضافة تنازليًا</string>
+    <string name="sort_expiry_date_asc">تاريخ الانتهاء تصاعديًا</string>
+    <string name="sort_expiry_date_desc">تاريخ الانتهاء تنازليًا</string>
+    <string name="sort_updated_at_asc">آخر تحديث تصاعديًا</string>
+    <string name="sort_updated_at_desc">آخر تحديث تنازليًا</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">جميع العناصر</string>
+    <string name="statistics_normal">طبيعي</string>
+    <string name="statistics_lowstock">مخزون منخفض</string>
+    <string name="statistics_expiringsoon">قريب الانتهاء</string>
+    <string name="statistics_expired">منتهي الصلاحية</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">تصفية وفرز</string>
+    <string name="sort_title">خيارات الفرز</string>
+    <string name="filter_apply">تطبيق</string>
+    <string name="filter_clear">مسح الكل</string>
+    <string name="filter_categories">الفئات</string>
+    <string name="filter_status">الحالة</string>
+    <string name="filter_date_range">نطاق التاريخ</string>
+    <string name="filter_min_quantity">الحد الأدنى للكمية</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

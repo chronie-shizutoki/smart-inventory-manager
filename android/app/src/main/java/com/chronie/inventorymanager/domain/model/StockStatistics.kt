@@ -25,12 +25,12 @@ data class InventorySearchFilter(
 /**
  * 状态筛选枚举
  */
-enum class StatusFilter(val resourceKey: String) {
-    ALL("statistics_all"),
-    NORMAL("statistics_normal"),
-    LOW_STOCK("statistics_lowstock"),
-    EXPIRING_SOON("statistics_expiringsoon"),
-    EXPIRED("statistics_expired")
+enum class StatusFilter(val displayName: String) {
+    ALL("全部"),
+    NORMAL("正常"),
+    LOW_STOCK("库存不足"),
+    EXPIRING_SOON("即将过期"),
+    EXPIRED("已过期")
 }
 
 /**
@@ -42,3 +42,30 @@ enum class InventoryActionType {
     DELETE,       // 删除
     ADJUST_STOCK  // 调整库存
 }
+
+/**
+ * 排序枚举
+ */
+enum class SortOption(val displayName: String) {
+    NAME_ASC("名称 A-Z"),
+    NAME_DESC("名称 Z-A"),
+    QUANTITY_ASC("数量升序"),
+    QUANTITY_DESC("数量降序"),
+    DATE_ADDED_ASC("添加日期升序"),
+    DATE_ADDED_DESC("添加日期降序"),
+    EXPIRY_DATE_ASC("过期日期升序"),
+    EXPIRY_DATE_DESC("过期日期降序"),
+    UPDATED_AT_ASC("更新时间升序"),
+    UPDATED_AT_DESC("更新时间降序")
+}
+
+/**
+ * 统一筛选条件
+ */
+data class UnifiedFilter(
+    val selectedCategories: List<String> = emptyList(),
+    val statusFilter: StatusFilter = StatusFilter.ALL,
+    val sortOption: SortOption = SortOption.NAME_ASC,
+    val dateRange: Pair<Long?, Long?>? = null,
+    val minQuantity: Int? = null
+)

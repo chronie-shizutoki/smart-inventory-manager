@@ -112,6 +112,40 @@
     <string name="stats_lowstock">স্বল্প স্টক</string>
     <string name="stats_totalitems">মোট আইটেম</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">নাম (অ-ঔ)</string>
+    <string name="sort_name_desc">নাম (ঔ-অ)</string>
+    <string name="sort_quantity_asc">পরিমাণ বর্ধমান</string>
+    <string name="sort_quantity_desc">পরিমাণ হ্রাসমান</string>
+    <string name="sort_date_added_asc">যোগের তারিখ বর্ধমান</string>
+    <string name="sort_date_added_desc">যোগের তারিখ হ্রাসমান</string>
+    <string name="sort_expiry_date_asc">মেয়াদ শেষের তারিখ বর্ধমান</string>
+    <string name="sort_expiry_date_desc">মেয়াদ শেষের তারিখ হ্রাসমান</string>
+    <string name="sort_updated_at_asc">সর্বশেষ হালনাগাদ বর্ধমান</string>
+    <string name="sort_updated_at_desc">সর্বশেষ হালনাগাদ হ্রাসমান</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">সব আইটেম</string>
+    <string name="statistics_normal">স্বাভাবিক</string>
+    <string name="statistics_lowstock">স্বল্প স্টক</string>
+    <string name="statistics_expiringsoon">শীঘ্রই মেয়াদ শেষ</string>
+    <string name="statistics_expired">মেয়াদোত্তীর্ণ</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">ছাঁকুনি ও বাছাই</string>
+    <string name="sort_title">বাছাই অপশন</string>
+    <string name="filter_apply">প্রয়োগ করুন</string>
+    <string name="filter_clear">সব সাফ করুন</string>
+    <string name="filter_categories">বিভাগসমূহ</string>
+    <string name="filter_status">স্থিতি</string>
+    <string name="filter_date_range">তারিখ পরিসর</string>
+    <string name="filter_min_quantity">ন্যূনতম পরিমাণ</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

@@ -34,6 +34,9 @@ import java.util.Locale
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.domain.model.InventoryItem
 import com.chronie.inventorymanager.domain.model.StockStatus
+import com.chronie.inventorymanager.domain.model.StatusFilter
+import com.chronie.inventorymanager.domain.model.SortOption
+import com.chronie.inventorymanager.domain.model.UnifiedFilter
 import com.chronie.inventorymanager.ui.theme.GlassColorScheme
 import com.chronie.inventorymanager.ui.theme.GlassTypography
 import com.chronie.inventorymanager.ui.theme.getGlassColors
@@ -677,5 +680,245 @@ private fun SortOptionItem(
                 )
             }
         }
+    }
+}
+
+/**
+ * 统一筛选对话框
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun UnifiedFilterDialog(
+    categories: List<String>,
+    currentFilter: UnifiedFilter,
+    onFilterChanged: (UnifiedFilter) -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val isLightTheme = !isSystemInDarkTheme()
+    val colors = getGlassColors(isLightTheme)
+    
+    var tempFilter by remember { mutableStateOf(currentFilter) }
+    
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        modifier = modifier
+            .background(colors.container.copy(alpha = 0.9f), RoundedCornerShape(16.dp))
+    ) {
+        GlassConfirmDialog(
+            title = stringResource(id = R.string.inventory_filter),
+            content = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // 分类筛选
+                    Text(
+                        text = stringResource(id = R.string.inventory_category),
+                        style = GlassTypography.bodyMedium.copy(
+                            color = colors.text.copy(alpha = 0.8f),
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(120.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(categories) { category ->
+                            Surface(
+                                onClick = {
+                                    tempFilter = tempFilter.copy(
+                                        selectedCategories = if (tempFilter.selectedCategories.contains(category)) {
+                                            tempFilter.selectedCategories - category
+                                        } else {
+                                            tempFilter.selectedCategories + category
+                                        }
+                                    )
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        color = if (tempFilter.selectedCategories.contains(category)) 
+                                            colors.selectedContainer else colors.container.copy(alpha = 0.5f),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = if (tempFilter.selectedCategories.contains(category)) 1.dp else 0.dp,
+                                        color = if (tempFilter.selectedCategories.contains(category)) 
+                                            colors.selectedBorder else Color.Transparent,
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .padding(12.dp),
+                                tonalElevation = 0.dp
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = category,
+                                        style = GlassTypography.bodyMedium.copy(
+                                            color = if (tempFilter.selectedCategories.contains(category)) 
+                                                colors.primary else colors.text
+                                        )
+                                    )
+                                    if (tempFilter.selectedCategories.contains(category)) {
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = null,
+                                            tint = colors.primary,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // 状态筛选
+                    Text(
+                        text = stringResource(id = R.string.inventory_status),
+                        style = GlassTypography.bodyMedium.copy(
+                            color = colors.text.copy(alpha = 0.8f),
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(160.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(StatusFilter.values()) { statusFilter ->
+                            Surface(
+                                onClick = {
+                                    tempFilter = tempFilter.copy(statusFilter = statusFilter)
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        color = if (tempFilter.statusFilter == statusFilter) 
+                                            colors.selectedContainer else colors.container.copy(alpha = 0.5f),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = if (tempFilter.statusFilter == statusFilter) 1.dp else 0.dp,
+                                        color = if (tempFilter.statusFilter == statusFilter) 
+                                            colors.selectedBorder else Color.Transparent,
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .padding(12.dp),
+                                tonalElevation = 0.dp
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = statusFilter.displayName,
+                                        style = GlassTypography.bodyMedium.copy(
+                                            color = if (tempFilter.statusFilter == statusFilter) 
+                                                colors.primary else colors.text
+                                        )
+                                    )
+                                    if (tempFilter.statusFilter == statusFilter) {
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = null,
+                                            tint = colors.primary,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // 排序选项
+                    Text(
+                        text = stringResource(id = R.string.inventory_sort),
+                        style = GlassTypography.bodyMedium.copy(
+                            color = colors.text.copy(alpha = 0.8f),
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(160.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(SortOption.values()) { sortOption ->
+                            Surface(
+                                onClick = {
+                                    tempFilter = tempFilter.copy(sortOption = sortOption)
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        color = if (tempFilter.sortOption == sortOption) 
+                                            colors.selectedContainer else colors.container.copy(alpha = 0.5f),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .border(
+                                        width = if (tempFilter.sortOption == sortOption) 1.dp else 0.dp,
+                                        color = if (tempFilter.sortOption == sortOption) 
+                                            colors.selectedBorder else Color.Transparent,
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
+                                    .padding(12.dp),
+                                tonalElevation = 0.dp
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = when (sortOption) {
+                                            SortOption.NAME_ASC -> "名称 A-Z"
+                                            SortOption.NAME_DESC -> "名称 Z-A"
+                                            SortOption.QUANTITY_ASC -> "数量 升序"
+                                            SortOption.QUANTITY_DESC -> "数量 降序"
+                                            SortOption.DATE_ADDED_ASC -> "添加日期 升序"
+                                            SortOption.DATE_ADDED_DESC -> "添加日期 降序"
+                                            SortOption.EXPIRY_DATE_ASC -> "过期日期 近到远"
+                                            SortOption.EXPIRY_DATE_DESC -> "过期日期 远到近"
+                                            SortOption.UPDATED_AT_ASC -> "更新时间 旧到新"
+                                            SortOption.UPDATED_AT_DESC -> "更新时间 新到旧"
+                                        },
+                                        style = GlassTypography.bodyMedium.copy(
+                                            color = if (tempFilter.sortOption == sortOption) 
+                                                colors.primary else colors.text
+                                        )
+                                    )
+                                    if (tempFilter.sortOption == sortOption) {
+                                        Icon(
+                                            imageVector = Icons.Default.Check,
+                                            contentDescription = null,
+                                            tint = colors.primary,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmText = stringResource(id = R.string.add_save),
+            dismissText = stringResource(id = R.string.add_cancel),
+            onConfirmClick = {
+                onFilterChanged(tempFilter)
+                onDismiss()
+            },
+            onDismissClick = onDismiss
+        )
     }
 }

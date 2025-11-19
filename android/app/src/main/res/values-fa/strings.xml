@@ -112,6 +112,40 @@
     <string name="stats_lowstock">کم‌موجودی</string>
     <string name="stats_totalitems">کل آیتم‌ها</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">نام الف-ی</string>
+    <string name="sort_name_desc">نام ی-الف</string>
+    <string name="sort_quantity_asc">مقدار صعودی</string>
+    <string name="sort_quantity_desc">مقدار نزولی</string>
+    <string name="sort_date_added_asc">تاریخ افزودن صعودی</string>
+    <string name="sort_date_added_desc">تاریخ افزودن نزولی</string>
+    <string name="sort_expiry_date_asc">تاریخ انقضا صعودی</string>
+    <string name="sort_expiry_date_desc">تاریخ انقضا نزولی</string>
+    <string name="sort_updated_at_asc">آخرین به‌روزرسانی صعودی</string>
+    <string name="sort_updated_at_desc">آخرین به‌روزرسانی نزولی</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">همه‌ی آیتم‌ها</string>
+    <string name="statistics_normal">عادی</string>
+    <string name="statistics_lowstock">کم‌موجودی</string>
+    <string name="statistics_expiringsoon">نزدیک به انقضا</string>
+    <string name="statistics_expired">منقضی‌شده</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">فیلتر و مرتب‌سازی</string>
+    <string name="sort_title">گزینه‌های مرتب‌سازی</string>
+    <string name="filter_apply">اعمال</string>
+    <string name="filter_clear">پاک‌کردن همه</string>
+    <string name="filter_categories">دسته‌بندی‌ها</string>
+    <string name="filter_status">وضعیت</string>
+    <string name="filter_date_range">بازه‌ی زمانی</string>
+    <string name="filter_min_quantity">حداقل مقدار</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

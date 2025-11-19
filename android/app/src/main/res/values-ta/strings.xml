@@ -112,6 +112,40 @@
     <string name="stats_lowstock">குறைந்த பங்கு</string>
     <string name="stats_totalitems">மொத்த பொருட்கள்</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">பெயர் அ-ஆ</string>
+    <string name="sort_name_desc">பெயர் ஆ-அ</string>
+    <string name="sort_quantity_asc">அளவு குறைவான முதல்</string>
+    <string name="sort_quantity_desc">அளவு அதிகமான முதல்</string>
+    <string name="sort_date_added_asc">சேர்க்கப்பட்ட தேதி குறைவான முதல்</string>
+    <string name="sort_date_added_desc">சேர்க்கப்பட்ட தேதி அதிகமான முதல்</string>
+    <string name="sort_expiry_date_asc">காலாவதி தேதி குறைவான முதல்</string>
+    <string name="sort_expiry_date_desc">காலாவதி தேதி அதிகமான முதல்</string>
+    <string name="sort_updated_at_asc">புதுப்பிக்கப்பட்ட தேதி குறைவான முதல்</string>
+    <string name="sort_updated_at_desc">புதுப்பிக்கப்பட்ட தேதி அதிகமான முதல்</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">அனைத்து பொருட்கள்</string>
+    <string name="statistics_normal">இயல்பான</string>
+    <string name="statistics_lowstock">குறைந்த பங்கு</string>
+    <string name="statistics_expiringsoon">விரைவில் காலாவதியாகும்</string>
+    <string name="statistics_expired">காலாவதியானது</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">வடிகட்டி &amp; வரிசைப்படுத்து</string>
+    <string name="sort_title">வரிசைப்படுத்தும் விருப்பங்கள்</string>
+    <string name="filter_apply">பயன்படுத்து</string>
+    <string name="filter_clear">அனைத்தையும் அழி</string>
+    <string name="filter_categories">வகைகள்</string>
+    <string name="filter_status">நிலை</string>
+    <string name="filter_date_range">தேதி வரம்பு</string>
+    <string name="filter_min_quantity">குறைந்தபட்ச அளவு</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

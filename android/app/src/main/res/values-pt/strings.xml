@@ -112,6 +112,40 @@
     <string name="stats_lowstock">Stock Baixo</string>
     <string name="stats_totalitems">Total de Itens</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">Nome A-Z</string>
+    <string name="sort_name_desc">Nome Z-A</string>
+    <string name="sort_quantity_asc">Quantidade Crescente</string>
+    <string name="sort_quantity_desc">Quantidade Decrescente</string>
+    <string name="sort_date_added_asc">Data de Adição Crescente</string>
+    <string name="sort_date_added_desc">Data de Adição Decrescente</string>
+    <string name="sort_expiry_date_asc">Data de Validade Crescente</string>
+    <string name="sort_expiry_date_desc">Data de Validade Decrescente</string>
+    <string name="sort_updated_at_asc">Última Atualização Crescente</string>
+    <string name="sort_updated_at_desc">Última Atualização Decrescente</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">Todos os Itens</string>
+    <string name="statistics_normal">Normal</string>
+    <string name="statistics_lowstock">Stock Baixo</string>
+    <string name="statistics_expiringsoon">A Expirar Brevemente</string>
+    <string name="statistics_expired">Expirado</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">Filtrar &amp; Ordenar</string>
+    <string name="sort_title">Opções de Ordenação</string>
+    <string name="filter_apply">Aplicar</string>
+    <string name="filter_clear">Limpar Tudo</string>
+    <string name="filter_categories">Categorias</string>
+    <string name="filter_status">Estado</string>
+    <string name="filter_date_range">Intervalo de Datas</string>
+    <string name="filter_min_quantity">Quantidade Mínima</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

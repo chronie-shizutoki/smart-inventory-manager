@@ -30,10 +30,12 @@
     <string name="inventory_allcategories">All Categories</string>
     <string name="inventory_category">Category</string>
     <string name="inventory_expirydate">Expiry Date</string>
+    <string name="inventory_filter">Filter &amp; Sort</string>
     <string name="inventory_name">Item Name</string>
     <string name="inventory_quantity">Quantity</string>
     <string name="inventory_search">Search items...</string>
     <string name="inventory_showexpired">Show All Items</string>
+    <string name="inventory_sort">Sort Options</string>
     <string name="inventory_status">Status</string>
     <string name="inventory_title">Inventory</string>
     <string name="inventory_unit">Unit</string>
@@ -111,6 +113,40 @@
     <string name="stats_expiringsoon">Expiring Soon</string>
     <string name="stats_lowstock">Low Stock</string>
     <string name="stats_totalitems">Total Items</string>
+
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">Name A-Z</string>
+    <string name="sort_name_desc">Name Z-A</string>
+    <string name="sort_quantity_asc">Quantity Ascending</string>
+    <string name="sort_quantity_desc">Quantity Descending</string>
+    <string name="sort_date_added_asc">Date Added Ascending</string>
+    <string name="sort_date_added_desc">Date Added Descending</string>
+    <string name="sort_expiry_date_asc">Expiry Date Ascending</string>
+    <string name="sort_expiry_date_desc">Expiry Date Descending</string>
+    <string name="sort_updated_at_asc">Last Updated Ascending</string>
+    <string name="sort_updated_at_desc">Last Updated Descending</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">All Items</string>
+    <string name="statistics_normal">Normal</string>
+    <string name="statistics_lowstock">Low Stock</string>
+    <string name="statistics_expiringsoon">Expiring Soon</string>
+    <string name="statistics_expired">Expired</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">Filter &amp; Sort</string>
+    <string name="sort_title">Sort Options</string>
+    <string name="filter_apply">Apply</string>
+    <string name="filter_clear">Clear All</string>
+    <string name="filter_categories">Categories</string>
+    <string name="filter_status">Status</string>
+    <string name="filter_date_range">Date Range</string>
+    <string name="filter_min_quantity">Minimum Quantity</string>
 
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->

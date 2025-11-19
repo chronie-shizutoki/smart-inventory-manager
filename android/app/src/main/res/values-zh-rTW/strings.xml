@@ -112,6 +112,40 @@
     <string name="stats_lowstock">低庫存預警</string>
     <string name="stats_totalitems">物品總數</string>
 
+    <!-- =============================================== -->
+    <!-- SORTING & FILTERING -->
+    <!-- =============================================== -->
+    <!-- Sorting options, filtering controls, and search functionality -->
+    <!-- Used for inventory sorting and advanced filtering features -->
+
+    <string name="sort_name_asc">名稱 A-Z</string>
+    <string name="sort_name_desc">名稱 Z-A</string>
+    <string name="sort_quantity_asc">數量由少到多</string>
+    <string name="sort_quantity_desc">數量由多到少</string>
+    <string name="sort_date_added_asc">新增日期由舊到新</string>
+    <string name="sort_date_added_desc">新增日期由新到舊</string>
+    <string name="sort_expiry_date_asc">有效期限由遠到近</string>
+    <string name="sort_expiry_date_desc">有效期限由近到遠</string>
+    <string name="sort_updated_at_asc">更新時間由舊到新</string>
+    <string name="sort_updated_at_desc">更新時間由新到舊</string>
+
+    <!-- Status filter resources -->
+    <string name="statistics_all">全部物品</string>
+    <string name="statistics_normal">庫存正常</string>
+    <string name="statistics_lowstock">庫存不足</string>
+    <string name="statistics_expiringsoon">即將到期</string>
+    <string name="statistics_expired">已過期</string>
+
+    <!-- Filter and sorting buttons -->
+    <string name="filter_title">篩選與排序</string>
+    <string name="sort_title">排序選項</string>
+    <string name="filter_apply">套用</string>
+    <string name="filter_clear">清除全部</string>
+    <string name="filter_categories">分類</string>
+    <string name="filter_status">狀態</string>
+    <string name="filter_date_range">日期範圍</string>
+    <string name="filter_min_quantity">最低數量</string>
+    
     <!-- =========================================== -->
     <!-- UNCLASSIFIED / REMAINING KEYS -->
     <!-- Keys that do not fit into predefined groups -->

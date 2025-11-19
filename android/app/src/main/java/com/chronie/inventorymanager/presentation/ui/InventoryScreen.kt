@@ -36,8 +36,10 @@ import androidx.compose.animation.core.*
 import kotlinx.coroutines.delay
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.domain.model.InventoryItem
-import com.chronie.inventorymanager.domain.model.StatusFilter
 import com.chronie.inventorymanager.domain.model.StockStatistics
+import com.chronie.inventorymanager.domain.model.StatusFilter
+import com.chronie.inventorymanager.domain.model.SortOption
+import com.chronie.inventorymanager.domain.model.UnifiedFilter
 import com.chronie.inventorymanager.domain.model.StockStatus
 import com.chronie.inventorymanager.liquidglass.components.*
 import com.chronie.inventorymanager.liquidglass.utils.GlassButton
@@ -58,11 +60,9 @@ fun InventoryScreen(
     val glassColors = getGlassColors(isLightTheme)
 
     // 对话框状态
-    var showCategoryDialog by remember { mutableStateOf(false) }
-    var showStatusDialog by remember { mutableStateOf(false) }
+    var showUnifiedFilterDialog by remember { mutableStateOf(false) }
     
     var selectedItemForAction by remember { mutableStateOf<InventoryItem?>(null) }
-    var showAdvancedDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.loadInventory()
@@ -110,16 +110,8 @@ fun InventoryScreen(
                     // 搜索和筛选栏（包含刷新按钮）
                     InventoryFilterSection(
                             searchQuery = uiState.searchQuery,
-                            selectedCategory = uiState.selectedCategory,
-                            statusFilter = uiState.statusFilter,
-                            categories = uiState.availableCategories,
                             onSearchChanged = viewModel::updateSearchQuery,
-                            onCategoryChanged = viewModel::updateCategory,
-                            onStatusFilterChanged = viewModel::updateStatusFilter,
-                            onClearFilters = viewModel::clearFilters,
-                            onShowCategoryDialog = { showCategoryDialog = true },
-                            onShowStatusDialog = { showStatusDialog = true },
-                            onShowAdvancedDialog = { showAdvancedDialog = true },
+                            onShowFilterDialog = { showUnifiedFilterDialog = true },
                             onRefresh = { viewModel.refreshData() }
                     )
 
@@ -140,51 +132,25 @@ fun InventoryScreen(
                     )
                 }
 
-                // 对话框显示 - 在主内容之上
-                if (showCategoryDialog) {
-                    CategoryFilterDialog(
+                // 统一筛选对话框
+                if (showUnifiedFilterDialog) {
+                    UnifiedFilterDialog(
                             categories = uiState.availableCategories,
-                            selectedCategories =
-                                    if (uiState.selectedCategory != null) listOf(uiState.selectedCategory!!)
-                                    else emptyList(),
-                            onCategoriesSelected = { categories ->
+                            currentFilter = UnifiedFilter(
+                                    selectedCategories = if (uiState.selectedCategory != null) listOf(uiState.selectedCategory!!) else emptyList(),
+                                    statusFilter = uiState.statusFilter,
+                                    sortOption = uiState.sortOption
+                            ),
+                            onFilterChanged = { filter ->
+                                    // 更新筛选条件
                                     viewModel.updateCategory(
-                                            if (categories.isEmpty()) null else categories.first()
+                                            if (filter.selectedCategories.isEmpty()) null else filter.selectedCategories.first()
                                     )
-                                    showCategoryDialog = false
+                                    viewModel.updateStatusFilter(filter.statusFilter)
+                                    viewModel.updateSortOption(filter.sortOption)
+                                    showUnifiedFilterDialog = false
                             },
-                            onDismiss = { showCategoryDialog = false }
-                    )
-                }
-
-                if (showStatusDialog) {
-                    StatusFilterDialog(
-                            selectedStatuses =
-                                    listOf(
-                                            when (uiState.statusFilter) {
-                                                StatusFilter.ALL -> StockStatus.NORMAL // 占位值，不会被选中
-                                                StatusFilter.NORMAL -> StockStatus.NORMAL
-                                                StatusFilter.LOW_STOCK -> StockStatus.LOW_STOCK
-                                                StatusFilter.EXPIRING_SOON -> StockStatus.EXPIRING_SOON
-                                                StatusFilter.EXPIRED -> StockStatus.EXPIRED
-                                            }
-                                    ),
-                            onStatusesSelected = { statuses ->
-                                    val newFilter =
-                                            when {
-                                                statuses.isEmpty() -> StatusFilter.ALL
-                                                statuses.contains(StockStatus.NORMAL) -> StatusFilter.NORMAL
-                                                statuses.contains(StockStatus.LOW_STOCK) ->
-                                                        StatusFilter.LOW_STOCK
-                                                statuses.contains(StockStatus.EXPIRING_SOON) ->
-                                                        StatusFilter.EXPIRING_SOON
-                                                statuses.contains(StockStatus.EXPIRED) -> StatusFilter.EXPIRED
-                                                else -> StatusFilter.ALL
-                                            }
-                                    viewModel.updateStatusFilter(newFilter)
-                                    showStatusDialog = false
-                            },
-                            onDismiss = { showStatusDialog = false }
+                            onDismiss = { showUnifiedFilterDialog = false }
                     )
                 }
 
@@ -292,16 +258,8 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
 @Composable
 private fun InventoryFilterSection(
         searchQuery: String,
-        selectedCategory: String?,
-        statusFilter: StatusFilter,
-        categories: List<String>,
         onSearchChanged: (String) -> Unit,
-        onCategoryChanged: (String?) -> Unit,
-        onStatusFilterChanged: (StatusFilter) -> Unit,
-        onClearFilters: () -> Unit,
-        onShowCategoryDialog: () -> Unit,
-        onShowStatusDialog: () -> Unit,
-        onShowAdvancedDialog: () -> Unit,
+        onShowFilterDialog: () -> Unit,
         onRefresh: () -> Unit
 ) {
     val isLightTheme = !isSystemInDarkTheme()
@@ -319,66 +277,26 @@ private fun InventoryFilterSection(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // 筛选器行
+            // 筛选和操作按钮行
             Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
             ) {
-                // 分类筛选
-                GlassFilterChip(
-                        text = selectedCategory ?: stringResource(R.string.inventory_category),
-                        isSelected = selectedCategory != null,
-                        onSelected = { isSelected ->
-                            if (isSelected) {
-                                onShowCategoryDialog()
-                            } else {
-                                onCategoryChanged(null)
-                            }
-                        },
-                        modifier = Modifier
-                )
-
-                // 状态筛选
-                GlassFilterChip(
-                        text =
-                                when (statusFilter) {
-                                    StatusFilter.ALL ->
-                                            stringResource(R.string.inventory_showexpired)
-                                    StatusFilter.NORMAL -> stringResource(R.string.status_normal)
-                                    StatusFilter.LOW_STOCK ->
-                                            stringResource(R.string.status_lowstock)
-                                    StatusFilter.EXPIRING_SOON ->
-                                            stringResource(R.string.status_expiringsoon)
-                                    StatusFilter.EXPIRED -> stringResource(R.string.status_expired)
-                                },
-                        isSelected = statusFilter != StatusFilter.ALL,
-                        onSelected = { isSelected ->
-                            if (isSelected) {
-                                onShowStatusDialog()
-                            } else {
-                                onStatusFilterChanged(StatusFilter.ALL)
-                            }
-                        },
-                        modifier = Modifier
-                )
-
                 Spacer(modifier = Modifier.weight(1f))
 
-                // 高级筛选按钮
+                // 统一筛选按钮
                 IconButton(
-                        onClick = onShowAdvancedDialog,
+                        onClick = onShowFilterDialog,
                         modifier =
-                                Modifier.clip(RoundedCornerShape(8.dp))
-                                        .background(
-                                                glassColors.container.copy(alpha = 0.3f)
-                                        )
+                                Modifier.clip(RoundedCornerShape(12.dp))
+                                        .background(glassColors.cardContainer.copy(alpha = 0.4f))
                 ) {
                     Icon(
                             imageVector = Icons.Default.FilterList,
-                            contentDescription = null,
-                            tint = glassColors.text.copy(alpha = 0.7f),
-                            modifier = Modifier.size(18.dp)
+                            contentDescription = stringResource(R.string.inventory_filter),
+                            tint = glassColors.primary,
+                            modifier = Modifier.size(20.dp)
                     )
                 }
 
@@ -392,28 +310,9 @@ private fun InventoryFilterSection(
                     Icon(
                             imageVector = Icons.Default.Refresh,
                             tint = glassColors.primary,
-                            contentDescription = stringResource(R.string.purchaselist_refresh)
+                            contentDescription = stringResource(R.string.purchaselist_refresh),
+                            modifier = Modifier.size(20.dp)
                     )
-                }
-
-                // 清除筛选按钮
-                if (selectedCategory != null || statusFilter != StatusFilter.ALL) {
-                    IconButton(
-                            onClick = onClearFilters,
-                            modifier =
-                                    Modifier.clip(RoundedCornerShape(8.dp))
-                                            .background(
-                                                    glassColors.container
-                                                            .copy(alpha = 0.3f)
-                                            )
-                    ) {
-                        Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = null,
-                                tint = glassColors.text.copy(alpha = 0.7f),
-                                modifier = Modifier.size(18.dp)
-                        )
-                    }
                 }
             }
         }
