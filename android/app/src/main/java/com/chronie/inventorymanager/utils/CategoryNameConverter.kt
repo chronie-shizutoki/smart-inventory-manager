@@ -26,20 +26,20 @@ object CategoryNameConverter {
      * @return 本地化的分类显示名称
      */
     fun getDisplayName(category: String, context: Context? = null): String {
-        // 分类键名到字符串资源ID的直接映射
-        val categoryResourceMap = mapOf(
-            "food" to R.string.categories_food,
-            "medicine" to R.string.categories_medicine,
-            "cleaning" to R.string.categories_cleaning,
-            "personal" to R.string.categories_personal,
-            "household" to R.string.categories_household,
-            "electronics" to R.string.categories_electronics
-        )
-        
-        // 首先尝试从上下文获取本地化字符串（如果提供了context）
+        // 如果提供了context，通过资源名称获取本地化字符串
         context?.let { ctx ->
-            val resourceId = categoryResourceMap[category.lowercase()]
-            if (resourceId != null) {
+            // 通过资源名称动态获取字符串资源ID
+            val resourceId: Int = try {
+                ctx.resources.getIdentifier(
+                    "categories_${category.lowercase()}",
+                    "string",
+                    ctx.packageName
+                )
+            } catch (e: Exception) {
+                0
+            }
+            
+            if (resourceId != 0) {
                 return ctx.getString(resourceId)
             }
         }

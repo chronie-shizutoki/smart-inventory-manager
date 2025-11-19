@@ -727,12 +727,12 @@ fun UnifiedFilterDialog(
         GlassConfirmDialog(
             title = stringResource(id = R.string.inventory_filter),
             content = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
                 // 分类下拉菜单（多选）
                 GlassDropdownMenu(
                     selectedItem = if (tempFilter.selectedCategories.isEmpty()) "" else tempFilter.selectedCategories.map { CategoryNameConverter.getDisplayName(it, context) }.joinToString(", "),
@@ -763,27 +763,27 @@ fun UnifiedFilterDialog(
                     modifier = Modifier.fillMaxWidth()
                 )
                 
-                // 排序下拉菜单（单选）
-                GlassDropdownMenu(
-                    selectedItem = sortOptionDisplayMap[tempFilter.sortOption] ?: "",
-                    items = sortOptions,
-                    onItemSelected = { selected ->
-                        val sortOption = sortOptionByDisplay[selected] ?: SortOption.NAME_ASC
-                        tempFilter = tempFilter.copy(sortOption = sortOption)
-                    },
-                    placeholder = stringResource(id = R.string.inventory_sort),
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-        },
-        confirmText = stringResource(id = R.string.add_save),
-        dismissText = stringResource(id = R.string.add_cancel),
-        onConfirmClick = {
-            onFilterChanged(tempFilter)
-            onDismiss()
-        },
-        onDismissClick = onDismiss,
-        isVisible = true
-    )
+                    // 排序下拉菜单（单选）
+                    GlassDropdownMenu(
+                        selectedItem = sortOptionDisplayMap[tempFilter.sortOption] ?: "",
+                        items = sortOptions,
+                        onItemSelected = { selected ->
+                            val sortOption = sortOptionByDisplay[selected] ?: SortOption.NAME_ASC
+                            tempFilter = tempFilter.copy(sortOption = sortOption)
+                        },
+                        placeholder = stringResource(id = R.string.inventory_sort),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmText = stringResource(id = R.string.add_save),
+            dismissText = stringResource(id = R.string.add_cancel),
+            onConfirmClick = {
+                onFilterChanged(tempFilter)
+                onDismiss()
+            },
+            onDismissClick = onDismiss,
+            isVisible = true
+        )
+    }
 }
