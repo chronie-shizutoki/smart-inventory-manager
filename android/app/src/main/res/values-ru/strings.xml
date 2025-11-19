@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Загрузка...</string>
+    <string name="error_title">Ошибка</string>
+    <string name="dismiss">Закрыть</string>
+    <string name="error_network_connection">Невозможно подключиться к серверу. Проверьте подключение к интернету и состояние сервера.</string>
+    <string name="error_network_timeout">Время ожидания ответа сервера истекло. Проверьте подключение к интернету.</string>
+    <string name="error_network_unknown">Неизвестная ошибка сети. Пожалуйста, попробуйте ещё раз.</string>
     <string name="notifications_error">Не удалось выполнить операцию. Пожалуйста, попробуйте ещё раз</string>
     <string name="notifications_insufficientstock">Нет в наличии: %s</string>
     <string name="notifications_itemadded">Товар добавлен</string>

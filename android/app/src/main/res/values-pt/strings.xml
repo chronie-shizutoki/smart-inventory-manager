@@ -75,7 +75,13 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
-    <string name="notifications_error">Falha na operação. Tente novamente</string>
+    <string name="loading">Carregando...</string>
+    <string name="error_title">Erro</string>
+    <string name="dismiss">Fechar</string>
+    <string name="error_network_connection">Impossível conectar ao servidor. Verifique a conexão com a internet e o estado do servidor.</string>
+    <string name="error_network_timeout">Timeout de rede. Verifique a conexão com a internet.</string>
+    <string name="error_network_unknown">Erro de rede desconhecido. Tente novamente mais tarde.</string>
+    <string name="notifications_error">Operação não realizada. Tente novamente</string>
     <string name="notifications_insufficientstock">Estoque insuficiente: %s</string>
     <string name="notifications_itemadded">Item adicionado</string>
     <string name="notifications_itemdeleted">Item excluído</string>

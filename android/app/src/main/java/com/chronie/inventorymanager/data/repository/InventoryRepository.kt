@@ -24,6 +24,21 @@ class InventoryRepository(
                         emptyList()
                     }
                 } catch (e: Exception) {
+                    // 改进的错误处理 - 记录网络连接问题
+                    when (e) {
+                        is java.net.UnknownHostException -> {
+                            println("网络连接失败: 无法访问服务器")
+                        }
+                        is java.net.SocketTimeoutException -> {
+                            println("网络请求超时: 请检查网络连接")
+                        }
+                        is java.net.ConnectException -> {
+                            println("网络连接异常: 服务器可能无法访问")
+                        }
+                        else -> {
+                            println("获取数据失败: ${e.message}")
+                        }
+                    }
                     emptyList()
                 }
             }

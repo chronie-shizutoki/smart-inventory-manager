@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">جاري التحميل...</string>
+    <string name="error_title">خطأ</string>
+    <string name="dismiss">تجاهل</string>
+    <string name="error_network_connection">لا يمكن الاتصال بالخادم. يرجى التحقق من اتصال الشبكة وحالة الخادم.</string>
+    <string name="error_network_timeout">انتهت مهلة طلب الشبكة. يرجى التحقق من اتصال الشبكة.</string>
+    <string name="error_network_unknown">حدث خطأ في الشبكة. يرجى المحاولة مرة أخرى لاحقًا.</string>
     <string name="notifications_error">فشلت العملية، يرجى المحاولة مرة أخرى</string>
     <string name="notifications_insufficientstock">العنصر غير متوفر في المخزون: %s</string>
     <string name="notifications_itemadded">تمت إضافة العنصر بنجاح</string>

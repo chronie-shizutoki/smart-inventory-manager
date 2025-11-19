@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Cargando...</string>
+    <string name="error_title">Error</string>
+    <string name="dismiss">Cancelar</string>
+    <string name="error_network_connection">No se pudo conectar al servidor. Por favor, verifique su conexión a Internet y el estado del servidor.</string>
+    <string name="error_network_timeout">Tiempo de espera de la solicitud agotado. Por favor, verifique su conexión a Internet.</string>
+    <string name="error_network_unknown">Error desconocido en la red. Por favor, inténtelo de nuevo.</string>
     <string name="notifications_error">Error en la operación. Por favor, inténtelo de nuevo.</string>
     <string name="notifications_insufficientstock">Stock insuficiente: %s</string>
     <string name="notifications_itemadded">¡Artículo añadido!</string>

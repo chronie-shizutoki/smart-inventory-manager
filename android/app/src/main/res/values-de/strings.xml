@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Laden...</string>
+    <string name="error_title">Fehler</string>
+    <string name="dismiss">Abbrechen</string>
+    <string name="error_network_connection">Konnte nicht mit dem Server verbinden. Bitte überprüfen Sie Ihre Netzwerkverbindung und den Serverstatus.</string>
+    <string name="error_network_timeout">Netzwerkanfrage abgelaufen. Bitte überprüfen Sie Ihre Netzwerkverbindung.</string>
+    <string name="error_network_unknown">Unbekannter Netzwerkfehler. Bitte versuchen Sie es erneut.</string>
     <string name="notifications_error">Aktion fehlgeschlagen. Bitte erneut versuchen</string>
     <string name="notifications_insufficientstock">Nicht vorrätig: %s</string>
     <string name="notifications_itemadded">Artikel erfolgreich hinzugefügt</string>

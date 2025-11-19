@@ -515,7 +515,7 @@ private fun LoadingOverlay() {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                        text = stringResource(id = R.string.inventory_title),
+                        text = stringResource(id = R.string.loading),
                         style = MaterialTheme.typography.bodyMedium,
                         color = glassColors.text
                 )
@@ -547,7 +547,7 @@ private fun ErrorOverlay(message: String, onDismiss: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                        text = stringResource(id = R.string.inventory_title),
+                        text = stringResource(id = R.string.error_title),
                         style = MaterialTheme.typography.titleLarge,
                         color = glassColors.text
                 )
@@ -561,7 +561,7 @@ private fun ErrorOverlay(message: String, onDismiss: () -> Unit) {
                 Spacer(modifier = Modifier.height(20.dp))
                 GlassButton(
                         onClick = onDismiss,
-                        text = stringResource(id = R.string.inventory_title)
+                        text = stringResource(id = R.string.dismiss)
                 )
             }
         }

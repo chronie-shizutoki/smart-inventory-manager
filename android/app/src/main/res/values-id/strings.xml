@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Memuat...</string>
+    <string name="error_title">Kesalahan</string>
+    <string name="dismiss">Tutup</string>
+    <string name="error_network_connection">Gagal terhubung ke server. Silakan periksa koneksi internet dan status server.</string>
+    <string name="error_network_timeout">Permintaan jaringan telah habis waktu. Silakan periksa koneksi internet.</string>
+    <string name="error_network_unknown">Kesalahan jaringan tidak diketahui. Silakan coba lagi.</string>
     <string name="notifications_error">Operasi gagal. Silakan coba lagi</string>
     <string name="notifications_insufficientstock">Stok tidak mencukupi: %s</string>
     <string name="notifications_itemadded">Item berhasil ditambahkan</string>

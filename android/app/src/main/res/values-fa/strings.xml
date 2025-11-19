@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">در حال بارگذاری...</string>
+    <string name="error_title">خطا</string>
+    <string name="dismiss">بستن</string>
+    <string name="error_network_connection">عدم اتصال به سرور. لطفاً اتصال شبکه و وضعیت سرور را بررسی کنید.</string>
+    <string name="error_network_timeout">درخواست شبکه منقضی شد. لطفاً اتصال شبکه را بررسی کنید.</string>
+    <string name="error_network_unknown">خطای شبکه رخ داد. لطفاً بعداً دوباره تلاش کنید.</string>
     <string name="notifications_error">عملیات ناموفق بود. لطفاً مجدداً تلاش کنید</string>
     <string name="notifications_insufficientstock">موجودی ناکافی: %s</string>
     <string name="notifications_itemadded">آیتم با موفقیت افزوده شد</string>

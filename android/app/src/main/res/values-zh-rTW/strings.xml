@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">載入中...</string>
+    <string name="error_title">錯誤</string>
+    <string name="dismiss">關閉</string>
+    <string name="error_network_connection">網絡連接失敗，請檢查網絡設置並重試。</string>
+    <string name="error_network_timeout">請求超時，請重試。</string>
+    <string name="error_network_unknown">未知網絡錯誤，請重試。</string>
     <string name="notifications_error">操作失敗，請稍後重試</string>
     <string name="notifications_insufficientstock">庫存不足：%s</string>
     <string name="notifications_itemadded">物品新增成功</string>

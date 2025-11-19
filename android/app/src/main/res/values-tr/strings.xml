@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Yükleniyor...</string>
+    <string name="error_title">Hata</string>
+    <string name="dismiss">Kapat</string>
+    <string name="error_network_connection">Bağlantı hatası. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.</string>
+    <string name="error_network_timeout">Zaman aşımı hatası. Lütfen tekrar deneyin.</string>
+    <string name="error_network_unknown">Bilinmeyen bir hata oluştu. Lütfen tekrar deneyin.</string>
     <string name="notifications_error">İşlem başarısız oldu. Lütfen tekrar deneyiniz</string>
     <string name="notifications_insufficientstock">Yetersiz Stok: %s</string>
     <string name="notifications_itemadded">Ürün eklendi</string>

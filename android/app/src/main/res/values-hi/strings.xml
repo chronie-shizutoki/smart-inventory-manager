@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">लोडिंग...</string>
+    <string name="error_title">त्रुटि</string>
+    <string name="dismiss">छोड़ें</string>
+    <string name="error_network_connection">सर्वर तक पहुँच नहीं सका। कृपया अपनी इंटरनेट कनेक्शन और सर्वर स्थिति की जाँच करें।</string>
+    <string name="error_network_timeout">नेटवर्क अनुरोध समय समाप्त। कृपया अपनी इंटरनेट कनेक्शन की जाँच करें।</string>
+    <string name="error_network_unknown">अज्ञात नेटवर्क त्रुटि। कृपया पुनः प्रयास करें।</string>
     <string name="notifications_error">ऑपरेशन विफल। कृपया पुनः प्रयास करें</string>
     <string name="notifications_insufficientstock">स्टॉक खत्म: %s</string>
     <string name="notifications_itemadded">आइटम जोड़ा गया</string>

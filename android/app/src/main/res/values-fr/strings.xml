@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Chargement en cours...</string>
+    <string name="error_title">Erreur</string>
+    <string name="dismiss">Fermer</string>
+    <string name="error_network_connection">Impossible de se connecter au serveur. Veuillez vérifier votre connexion Internet et l\'état du serveur.</string>
+    <string name="error_network_timeout">La requête réseau a expiré. Veuillez vérifier votre connexion Internet.</string>
+    <string name="error_network_unknown">Erreur réseau inconnue. Veuillez réessayer.</string>
     <string name="notifications_error">L\'opération a échoué. Veuillez réessayer.</string>
     <string name="notifications_insufficientstock">Stock insuffisant : %s</string>
     <string name="notifications_itemadded">Article ajouté</string>

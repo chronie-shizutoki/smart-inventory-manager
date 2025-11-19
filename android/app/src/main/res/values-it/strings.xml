@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Caricamento in corso...</string>
+    <string name="error_title">Errore</string>
+    <string name="dismiss">Chiudi</string>
+    <string name="error_network_connection">Impossibile connettersi al server. Controlla la connessione internet e lo stato del server.</string>
+    <string name="error_network_timeout">Richiesta di rete scaduta. Controlla la connessione internet.</string>
+    <string name="error_network_unknown">Errore di rete sconosciuto. Riprova più tardi.</string>
     <string name="notifications_error">Operazione non riuscita. Riprova più tardi</string>
     <string name="notifications_insufficientstock">Scorte insufficienti: %s</string>
     <string name="notifications_itemadded">Articolo aggiunto correttamente</string>

@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Đang tải...</string>
+    <string name="error_title">Lỗi</string>
+    <string name="dismiss">Đóng</string>
+    <string name="error_network_connection">Kết nối mạng thất bại. Vui lòng kiểm tra kết nối mạng và thử lại.</string>
+    <string name="error_network_timeout">Hết thời gian chờ. Vui lòng thử lại.</string>
+    <string name="error_network_unknown">Lỗi mạng không xác định. Vui lòng thử lại.</string>
     <string name="notifications_error">Thao tác thất bại. Vui lòng thử lại</string>
     <string name="notifications_insufficientstock">Đã hết hàng: %s</string>
     <string name="notifications_itemadded">Đã thêm mặt hàng</string>

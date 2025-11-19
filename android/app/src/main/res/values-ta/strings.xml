@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">தöltება...</string>
+    <string name="error_title">மத்திய பிழை</string>
+    <string name="dismiss">முடி</string>
+    <string name="error_network_connection">தளம் இணைப்பு முடியவில்லை. தயவு செய்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="error_network_timeout">தளம் பதில் கிடைக்கவில்லை. தயவு செய்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="error_network_unknown">தளம் பிழை: %s. தயவு செய்து மீண்டும் முயற்சிக்கவும்.</string>
     <string name="notifications_error">செயல் தோல்வியடைந்தது. தயவு செய்து மீண்டும் முயற்சிக்கவும்.</string>
     <string name="notifications_insufficientstock">போதிய பங்கு இல்லை: %s</string>
     <string name="notifications_itemadded">பொருள் சேர்க்கப்பட்டது</string>

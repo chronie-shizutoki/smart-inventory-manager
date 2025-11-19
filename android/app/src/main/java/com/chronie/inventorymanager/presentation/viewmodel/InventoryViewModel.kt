@@ -32,6 +32,14 @@ class InventoryViewModel(
     private val _uiState = MutableStateFlow(InventoryUiState())
     val uiState: StateFlow<InventoryUiState> = _uiState.asStateFlow()
 
+    // 错误信息
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
+
+    // 加载状态
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
     /** 加载库存数据 */
     fun loadInventory() {
         viewModelScope.launch {
@@ -39,26 +47,43 @@ class InventoryViewModel(
 
             try {
                 val items = getInventoryItemsUseCase.execute()
-                val categories = items.mapNotNull { it.category }.distinct().sorted()
-
-                _uiState.value =
-                        _uiState.value.copy(
-                                items = items,
-                                availableCategories = categories,
-                                isLoading = false
-                        )
-
-                // 重新应用筛选器
-                applyFilters()
+                
+                // 如果返回空列表，可能是网络问题
+                if (items.isEmpty()) {
+                    val errorMessage = "无法连接到服务器 (${getBaseUrl()})，请检查网络连接和服务器状态"
+                    _uiState.value = _uiState.value.copy(
+                        items = emptyList(),
+                        availableCategories = emptyList(),
+                        isLoading = false,
+                        error = errorMessage
+                    )
+                } else {
+                    val categories = items.mapNotNull { it.category }.distinct().sorted()
+                    _uiState.value = _uiState.value.copy(
+                        items = items,
+                        availableCategories = categories,
+                        isLoading = false
+                    )
+                    // 重新应用筛选器
+                    applyFilters()
+                }
             } catch (e: Exception) {
-                _uiState.value =
-                        _uiState.value.copy(
-                                isLoading = false,
-                                error = "Failed to load inventory: ${e.message}"
-                        )
+                val errorMessage = when (e) {
+                    is java.net.UnknownHostException -> "网络连接失败: 无法访问服务器 ${getBaseUrl()}"
+                    is java.net.SocketTimeoutException -> "网络请求超时: 请检查网络连接"
+                    is java.net.ConnectException -> "服务器连接失败: 请确认服务器 ${getBaseUrl()} 正在运行"
+                    else -> "加载数据失败: ${e.message}"
+                }
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = errorMessage
+                )
             }
         }
     }
+    
+    /** 获取服务器地址 */
+    private fun getBaseUrl(): String = "http://192.168.0.197:5000"
 
     /** 加载统计数据 */
     fun loadStatistics() {

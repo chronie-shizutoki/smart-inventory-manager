@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">ロード中...</string>
+    <string name="error_title">エラー</string>
+    <string name="dismiss">閉じる</string>
+    <string name="error_network_connection">サーバーに接続できません。インターネット接続を確認してください。</string>
+    <string name="error_network_timeout">ネットワーク要求がタイムアウトしました。インターネット接続を確認してください。</string>
+    <string name="error_network_unknown">未知のネットワークエラーが発生しました。もう一度試してください。</string>
     <string name="notifications_error">エラーが発生しました</string>
     <string name="notifications_insufficientstock">%sの在庫が不足しています</string>
     <string name="notifications_itemadded">アイテムを追加しました</string>

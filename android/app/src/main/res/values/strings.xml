@@ -75,6 +75,12 @@
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
 
+    <string name="loading">Loading...</string>
+    <string name="error_title">Error</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="error_network_connection">Cannot connect to server. Please check your network connection and server status.</string>
+    <string name="error_network_timeout">Network request timeout. Please check your network connection.</string>
+    <string name="error_network_unknown">Network error occurred. Please try again later.</string>
     <string name="notifications_error">Operation failed. Please try again</string>
     <string name="notifications_insufficientstock">Insufficient stock: %s</string>
     <string name="notifications_itemadded">Item added successfully</string>

@@ -74,7 +74,12 @@
     <!-- =============================================== -->
     <!-- System notifications, user feedback messages, and alerts -->
     <!-- Toast messages, dialog titles, and notification content -->
-
+    <string name="loading">لوڈ ہو رہا ہے...</string>
+    <string name="error_title">خرابی</string>
+    <string name="dismiss">ختم کریں</string>
+    <string name="error_network_connection">سرور سے رابطہ نہیں ہو سکا۔ براہ کرم اپنی نیٹ ورک کنکشن اور سرور کی حالت چیک کریں۔</string>
+    <string name="error_network_timeout">نیٹ ورک درخواست کی وقت ختم ہو گئی۔ براہ کرم اپنی نیٹ ورک کنکشن چیک کریں۔</string>
+    <string name="error_network_unknown">نیٹ ورک خرابی واقع ہوئی ہے۔ براہ کرم بعد میں دوبارہ کوشش کریں۔</string>
     <string name="notifications_error">عمل ناکام ہوا۔ براہ کرم دوبارہ کوشش کریں</string>
     <string name="notifications_insufficientstock">اسٹاک ناکافی ہے: %s</string>
     <string name="notifications_itemadded">آئٹم کامیابی سے شامل ہو گیا</string>
