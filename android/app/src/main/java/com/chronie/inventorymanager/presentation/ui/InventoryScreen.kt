@@ -115,7 +115,8 @@ fun InventoryScreen(
                             onRefresh = { viewModel.refreshData() },
                             onClearFilters = { viewModel.clearFilters() },
                             selectedCategory = uiState.selectedCategory,
-                            statusFilter = uiState.statusFilter
+                            statusFilter = uiState.statusFilter,
+                            sortOption = uiState.sortOption
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -265,7 +266,8 @@ private fun InventoryFilterSection(
         onRefresh: () -> Unit,
         onClearFilters: () -> Unit = {},
         selectedCategory: String? = null,
-        statusFilter: StatusFilter = StatusFilter.ALL
+        statusFilter: StatusFilter = StatusFilter.ALL,
+        sortOption: SortOption = SortOption.NAME_ASC
 ) {
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
@@ -321,7 +323,11 @@ private fun InventoryFilterSection(
                 }
 
                 // 清除筛选按钮（当有筛选条件时显示）
-                if (selectedCategory != null || statusFilter != StatusFilter.ALL) {
+                val hasActiveFilters = selectedCategory != null || 
+                                      statusFilter != StatusFilter.ALL || 
+                                      sortOption != SortOption.NAME_ASC
+                
+                if (hasActiveFilters) {
                     IconButton(
                             onClick = onClearFilters,
                             modifier =
