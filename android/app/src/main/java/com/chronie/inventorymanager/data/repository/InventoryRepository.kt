@@ -4,9 +4,12 @@ import com.chronie.inventorymanager.data.network.*
 import com.chronie.inventorymanager.domain.model.InventoryItem
 import com.chronie.inventorymanager.domain.model.StatusFilter
 import com.chronie.inventorymanager.domain.model.StockStatistics
+import com.google.gson.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 /** 库存数据仓库 负责与后端API交互，管理本地缓存 */
 class InventoryRepository(
@@ -198,9 +201,15 @@ private object ApiFactory {
             .addInterceptor(logging)
             .build()
 
+        // 自定义Gson解析器，支持ISO 8601日期格式
+        val gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+            .setLenient()
+            .create()
+
         val retrofit = retrofit2.Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create())
+            .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create(gson))
             .client(client)
             .build()
 
