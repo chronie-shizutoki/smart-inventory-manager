@@ -221,32 +221,21 @@ private fun InventoryHeader(onAddItem: () -> Unit, onRefresh: () -> Unit) {
     
     Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
-            Text(
-                    text = stringResource(R.string.nav_inventory),
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = glassColors.text
+        // 刷新按钮
+        IconButton(
+                onClick = onRefresh,
+                modifier =
+                        Modifier.clip(RoundedCornerShape(12.dp))
+                                .background(glassColors.cardContainer.copy(alpha = 0.4f))
+        ) {
+            Icon(
+                    imageVector = Icons.Default.Refresh,
+                    tint = glassColors.primary,
+                    contentDescription = stringResource(R.string.purchaselist_refresh)
             )
-        }
-
-        Row {
-            // 刷新按钮
-            IconButton(
-                    onClick = onRefresh,
-                    modifier =
-                            Modifier.clip(RoundedCornerShape(12.dp))
-                                    .background(glassColors.cardContainer.copy(alpha = 0.4f))
-            ) {
-                Icon(
-                        imageVector = Icons.Default.Refresh,
-                        tint = glassColors.primary,
-                        contentDescription = stringResource(R.string.purchaselist_refresh)
-                )
-            }
         }
     }
 }
@@ -259,7 +248,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
     
     if (isLoading || statistics == null) {
         // 统计卡片骨架屏
-        GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.6f) {
+        GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.2f, enableBlur = false) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                         text = stringResource(R.string.inventory_title),
@@ -273,7 +262,7 @@ private fun InventoryStatsSection(statistics: StockStatistics?, isLoading: Boole
             }
         }
     } else {
-        GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.6f) {
+        GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.15f, enableBlur = false) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                         text = stringResource(R.string.inventory_title),
@@ -339,7 +328,7 @@ private fun InventoryFilterSection(
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
-    GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.6f) {
+    GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.1f, enableBlur = false) {
         Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             // 搜索框
             GlassSearchBar(
@@ -454,7 +443,7 @@ private fun InventoryItemsList(
     val glassColors = getGlassColors(isLightTheme)
     
     if (items.isEmpty()) {
-        GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.6f) {
+        GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.1f, enableBlur = false) {
             Column(
                     modifier = Modifier
                             .fillMaxWidth()
@@ -515,7 +504,7 @@ private fun LoadingOverlay() {
             modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.3f)),
             contentAlignment = Alignment.Center
     ) {
-        GlassContainer(modifier = Modifier.padding(32.dp), backgroundAlpha = 0.8f) {
+        GlassContainer(modifier = Modifier.padding(32.dp), backgroundAlpha = 0.2f) {
             Row(
                     modifier = Modifier.padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -542,10 +531,10 @@ private fun ErrorOverlay(message: String, onDismiss: () -> Unit) {
     val glassColors = getGlassColors(isLightTheme)
     
     Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f)),
+            modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.2f)),
             contentAlignment = Alignment.Center
     ) {
-        GlassContainer(modifier = Modifier.fillMaxWidth().padding(24.dp), backgroundAlpha = 0.9f) {
+        GlassContainer(modifier = Modifier.fillMaxWidth().padding(24.dp), backgroundAlpha = 0.25f) {
             Column(
                     modifier = Modifier.padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally

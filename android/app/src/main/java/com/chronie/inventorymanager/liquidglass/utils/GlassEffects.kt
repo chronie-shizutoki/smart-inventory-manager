@@ -57,50 +57,56 @@ fun GlassContainer(
         backgroundAlpha: Float = 0.4f,
         borderAlpha: Float = 0.3f,
         elevation: Dp = 8.dp,
+        enableBlur: Boolean = true,
         content: @Composable BoxScope.() -> Unit
 ) {
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
 
-    Box(
-            modifier =
-                    modifier.clip(RoundedCornerShape(cornerRadius))
-                            .background(
-                                    brush =
-                                            Brush.linearGradient(
-                                                    colors =
-                                                            listOf(
-                                                                    glassColors.cardContainer.copy(
-                                                                            alpha = backgroundAlpha
-                                                                    ),
-                                                                    glassColors.container.copy(
-                                                                            alpha =
-                                                                                    backgroundAlpha *
-                                                                                            0.7f
-                                                                    )
-                                                            )
+    var glassModifier = modifier
+            .clip(RoundedCornerShape(cornerRadius))
+            .background(
+                    brush =
+                            Brush.linearGradient(
+                                    colors =
+                                            listOf(
+                                                    glassColors.cardContainer.copy(
+                                                            alpha = backgroundAlpha
+                                                    ),
+                                                    glassColors.container.copy(
+                                                            alpha =
+                                                                    backgroundAlpha *
+                                                                            0.7f
+                                                    )
                                             )
                             )
-                            .border(
-                                    width = 1.dp,
-                                    brush =
-                                            Brush.linearGradient(
-                                                    colors =
-                                                            listOf(
-                                                                    glassColors.border.copy(
-                                                                            alpha = borderAlpha
-                                                                    ),
-                                                                    Color.Transparent
-                                                            )
-                                            ),
-                                    shape = RoundedCornerShape(cornerRadius)
-                            )
-                            .shadow(
-                                    elevation = elevation,
-                                    spotColor = glassColors.primary.copy(alpha = 0.1f),
-                                    ambientColor = glassColors.primary.copy(alpha = 0.05f)
-                            )
-                            .blur(20.dp),
+            )
+            .border(
+                    width = 1.dp,
+                    brush =
+                            Brush.linearGradient(
+                                    colors =
+                                            listOf(
+                                                    glassColors.border.copy(
+                                                            alpha = borderAlpha
+                                                    ),
+                                                    Color.Transparent
+                                            )
+                            ),
+                    shape = RoundedCornerShape(cornerRadius)
+            )
+            .shadow(
+                    elevation = elevation,
+                    spotColor = glassColors.primary.copy(alpha = 0.1f),
+                    ambientColor = glassColors.primary.copy(alpha = 0.05f)
+            )
+
+    if (enableBlur) {
+        glassModifier = glassModifier.blur(20.dp)
+    }
+
+    Box(
+            modifier = glassModifier,
             contentAlignment = Alignment.Center,
             content = content
     )
