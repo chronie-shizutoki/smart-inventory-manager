@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 data class AddItemUiState(
     val categories: List<String> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val isSuccess: Boolean = false
 )
 
 /** 添加物品页面ViewModel */
@@ -51,11 +52,15 @@ class AddItemViewModel(
     /** 添加物品 */
     fun addItem(item: InventoryItem) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null, isSuccess = false)
 
             try {
                 addInventoryItemUseCase.execute(item)
-                _uiState.value = _uiState.value.copy(isLoading = false)
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    isSuccess = true,
+                    error = null
+                )
             } catch (e: Exception) {
                 val errorMessage = when (e) {
                     is java.net.UnknownHostException -> "网络连接失败: 无法访问服务器"
@@ -65,6 +70,7 @@ class AddItemViewModel(
                 }
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
+                    isSuccess = false,
                     error = errorMessage
                 )
             }
@@ -74,5 +80,19 @@ class AddItemViewModel(
     /** 清除错误信息 */
     fun clearError() {
         _uiState.value = _uiState.value.copy(error = null)
+    }
+    
+    /** 清除成功状态 */
+    fun clearSuccess() {
+        _uiState.value = _uiState.value.copy(isSuccess = false)
+    }
+    
+    /** 重置表单状态 */
+    fun resetForm() {
+        _uiState.value = _uiState.value.copy(
+            isLoading = false,
+            error = null,
+            isSuccess = false
+        )
     }
 }

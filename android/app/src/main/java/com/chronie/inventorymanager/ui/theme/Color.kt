@@ -33,7 +33,9 @@ object GlassColors {
                     success = Color(0xFF4CAF50),
                     warning = Color(0xFFFF9800),
                     error = Color(0xFFF44336),
-                    info = Color(0xFF2196F3)
+                    info = Color(0xFF2196F3),
+                    glassTop = Color(0xFFFFFFFF).copy(0.7f),
+                    glassBottom = Color(0xFFF5F5F5).copy(0.3f)
             )
 
     // 深色模式
@@ -53,7 +55,9 @@ object GlassColors {
                     success = Color(0xFF4CAF50),
                     warning = Color(0xFFFF9800),
                     error = Color(0xFFF44336),
-                    info = Color(0xFF2196F3)
+                    info = Color(0xFF2196F3),
+                    glassTop = Color(0xFF2A2A2A).copy(0.7f),
+                    glassBottom = Color(0xFF1A1A1A).copy(0.3f)
             )
 }
 
@@ -109,7 +113,9 @@ data class GlassColorScheme(
         val success: Color,
         val warning: Color,
         val error: Color,
-        val info: Color
+        val info: Color,
+        val glassTop: Color,
+        val glassBottom: Color
 )
 
 /** 根据主题获取液态玻璃颜色方案 */

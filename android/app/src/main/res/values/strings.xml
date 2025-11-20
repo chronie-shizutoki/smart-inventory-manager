@@ -48,17 +48,32 @@
 
     <string name="add_cancel">Cancel</string>
     <string name="add_category">Category</string>
+    <string name="add_confirm">Confirm</string>
+    <string name="add_date_instruction">Please enter the date information</string>
+    <string name="add_day">Day</string>
     <string name="add_description">Description</string>
     <string name="add_edittitle">Edit Item</string>
     <string name="add_expirydate">Expiry Date</string>
     <string name="add_minquantity">Minimum Stock</string>
+    <string name="add_month">Month</string>
     <string name="add_name">Item Name</string>
     <string name="add_quantity">Quantity</string>
     <string name="add_save">Save</string>
     <string name="add_selectcategory">Select Category</string>
+    <string name="add_select_date">Select Date</string>
     <string name="add_title">Add New Item</string>
     <string name="add_unit">Unit</string>
     <string name="add_update">Update</string>
+    <string name="add_year">Year</string>
+    <string name="add_name_placeholder">Enter item name</string>
+    <string name="add_quantity_placeholder">Enter quantity</string>
+    <string name="add_minquantity_placeholder">Enter minimum stock</string>
+    <string name="add_unit_placeholder">Enter unit</string>
+    <string name="add_expirydate_placeholder">Select expiry date</string>
+    <string name="add_description_placeholder">Enter description</string>
+    <string name="error_name_required">Item name is required</string>
+    <string name="error_category_required">Category is required</string>
+    <string name="error_quantity_required">Valid quantity is required</string>
 
     <!-- =============================================== -->
     <!-- STATUS INDICATORS & STATES -->

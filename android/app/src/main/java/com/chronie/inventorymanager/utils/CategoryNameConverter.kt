@@ -3,6 +3,7 @@ package com.chronie.inventorymanager.utils
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.chronie.inventorymanager.R
 
 /**
  * 分类名称国际化转换工具
@@ -10,14 +11,18 @@ import androidx.compose.ui.platform.LocalContext
  */
 object CategoryNameConverter {
     
+    // 英文分类键名到中文显示名称的映射
     private val categoryDisplayNameMap = mapOf(
-        "food" to "Food",
-        "medicine" to "Medicine", 
-        "cleaning" to "Cleaning Supplies",
-        "personal" to "Personal Care",
-        "household" to "Household Items",
-        "electronics" to "Electronics"
+        "food" to "食品",
+        "medicine" to "药品", 
+        "cleaning" to "清洁用品",
+        "personal" to "个人护理",
+        "household" to "家居用品",
+        "electronics" to "电子产品"
     )
+    
+    // 预定义的显示名称列表，用于下拉选择
+    val predefinedCategories = listOf("food", "medicine", "cleaning", "personal", "household", "electronics")
     
     /**
      * 将分类键名转换为本地化显示名称
@@ -26,27 +31,39 @@ object CategoryNameConverter {
      * @return 本地化的分类显示名称
      */
     fun getDisplayName(category: String, context: Context? = null): String {
-        // 如果提供了context，通过资源名称获取本地化字符串
+        val normalizedCategory = category.trim()
+        
+        // 首先尝试通过上下文从资源获取中文名称
         context?.let { ctx ->
-            // 通过资源名称动态获取字符串资源ID
+            // 使用预定义的分类键名
             val resourceId: Int = try {
-                ctx.resources.getIdentifier(
-                    "categories_${category.lowercase()}",
-                    "string",
-                    ctx.packageName
-                )
+                when (normalizedCategory.lowercase()) {
+                    "food" -> R.string.categories_food
+                    "medicine" -> R.string.categories_medicine
+                    "cleaning" -> R.string.categories_cleaning
+                    "personal" -> R.string.categories_personal
+                    "household" -> R.string.categories_household
+                    "electronics" -> R.string.categories_electronics
+                    else -> 0
+                }
             } catch (e: Exception) {
                 0
             }
             
             if (resourceId != 0) {
-                return ctx.getString(resourceId)
+                return try {
+                    ctx.getString(resourceId)
+                } catch (e: Exception) {
+                    // 如果获取失败，使用映射的显示名称
+                    categoryDisplayNameMap[normalizedCategory.lowercase()] 
+                        ?: normalizedCategory.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                }
             }
         }
         
         // 如果没有context或无法获取本地化字符串，返回映射的显示名称或默认处理
-        return categoryDisplayNameMap[category.lowercase()] 
-            ?: category.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+        return categoryDisplayNameMap[normalizedCategory.lowercase()] 
+            ?: normalizedCategory.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
     }
     
     /**
@@ -65,7 +82,7 @@ object CategoryNameConverter {
      * @return 分类键名到显示名称的映射
      */
     fun getAllCategoryDisplayNames(context: Context): Map<String, String> {
-        return categoryDisplayNameMap.mapValues { (key, _) ->
+        return predefinedCategories.associateWith { key ->
             getDisplayName(key, context)
         }
     }
@@ -76,7 +93,7 @@ object CategoryNameConverter {
      * @return 是否为有效的分类键名
      */
     fun isValidCategory(category: String): Boolean {
-        return categoryDisplayNameMap.containsKey(category.lowercase())
+        return predefinedCategories.contains(category.lowercase())
     }
     
     /**
@@ -84,6 +101,21 @@ object CategoryNameConverter {
      * @return 所有支持的分类键名列表
      */
     fun getValidCategories(): List<String> {
-        return categoryDisplayNameMap.keys.toList()
+        return predefinedCategories
+    }
+    
+    /**
+     * 将显示名称转换回分类键名
+     * @param displayName 显示名称
+     * @param context 应用上下文
+     * @return 对应的分类键名，如果找不到则返回原值
+     */
+    fun getCategoryKeyFromDisplayName(displayName: String, context: Context): String {
+        predefinedCategories.forEach { key ->
+            if (getDisplayName(key, context) == displayName) {
+                return key
+            }
+        }
+        return displayName
     }
 }
