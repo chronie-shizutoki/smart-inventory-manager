@@ -4,6 +4,7 @@ import com.chronie.inventorymanager.data.network.*
 import com.chronie.inventorymanager.domain.model.InventoryItem
 import com.chronie.inventorymanager.domain.model.StatusFilter
 import com.chronie.inventorymanager.domain.model.StockStatistics
+import com.smartinventory.models.PurchaseListResponse
 import com.google.gson.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -272,5 +273,9 @@ class MockInventoryApiService : InventoryApiService {
 
     override suspend fun batchDeleteItems(itemIds: List<String>): Response<BatchDeleteResponse> {
         return Response.success(BatchDeleteResponse(true, "Success"))
+    }
+
+    override suspend fun getPurchaseList(): Response<PurchaseListResponse> {
+        return Response.success(PurchaseListResponse(true, emptyList(), ""))
     }
 }

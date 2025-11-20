@@ -2,6 +2,8 @@ package com.chronie.inventorymanager.data.network
 
 import com.chronie.inventorymanager.domain.model.InventoryItem
 import com.chronie.inventorymanager.domain.model.StockStatistics
+import com.smartinventory.models.PurchaseListItem
+import com.smartinventory.models.PurchaseListResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -48,6 +50,10 @@ interface InventoryApiService {
     // 获取分类列表
     @GET("/api/categories")
     suspend fun getCategories(): Response<CategoriesResponse>
+    
+    // 采购清单相关操作
+    @GET("/api/inventory/items/generate-purchase-list")
+    suspend fun getPurchaseList(): Response<PurchaseListResponse>
     
     // 批量操作
     @POST("/api/items/batch/use")

@@ -48,6 +48,8 @@ import androidx.compose.ui.unit.dp
 import com.chronie.inventorymanager.SettingsScreen
 import com.chronie.inventorymanager.data.*
 import com.chronie.inventorymanager.presentation.ui.InventoryScreen
+import com.chronie.inventorymanager.presentation.ui.AddItemScreen
+import com.chronie.inventorymanager.presentation.ui.PurchaseListScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -171,33 +173,17 @@ data class BottomNavItem(
 // 添加物品页面
 @Composable
 fun AddItemScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Add Item Screen")
+    com.chronie.inventorymanager.presentation.ui.AddItemScreen(
+        onNavigateBack = {
+            // Navigation is handled by the bottom navigation
         }
-    }
+    )
 }
 
 // 采购清单页面
 @Composable
 fun PurchaseListScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Purchase List Screen")
-        }
-    }
+    com.chronie.inventorymanager.presentation.ui.PurchaseListScreen()
 }
 
 // 菜单页面

@@ -602,7 +602,7 @@ private fun FilterSortBar(
                                 .background(glassColors.container.copy(alpha = 0.3f))
         ) {
             Icon(
-                    imageVector = Icons.Default.Sort,
+                    imageVector = Icons.Filled.Sort,
                     contentDescription = null,
                     tint = glassColors.text.copy(alpha = 0.7f),
                     modifier = Modifier.size(18.dp)
@@ -696,8 +696,7 @@ private fun FilterSortBar(
  */
 @Composable
 private fun GlassStatsCardSkeleton() {
-    val isLightTheme = !isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    val glassColors = getGlassColors(true)
 
     Row(
             modifier =
