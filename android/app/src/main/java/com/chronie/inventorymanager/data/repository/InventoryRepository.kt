@@ -199,7 +199,8 @@ class InventoryRepository(
             }
 }
 
-private object ApiFactory {
+/** 公共 API 工厂类 */
+object ApiFactory {
     private const val BASE_URL = "http://192.168.0.197:5000/"
 
     fun create(): InventoryApiService {

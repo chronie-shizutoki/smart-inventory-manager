@@ -25,7 +25,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.data.network.InventoryApiService
+import com.chronie.inventorymanager.data.repository.ApiFactory
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListViewModel
+import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListViewModelFactory
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListUiState
 import com.chronie.inventorymanager.utils.CategoryNameConverter
 import com.smartinventory.models.PurchaseListItem
@@ -37,7 +39,14 @@ fun PurchaseListScreen(
     navController: NavController? = null,
     inventoryApiService: InventoryApiService? = null
 ) {
-    val viewModel: PurchaseListViewModel = viewModel()
+    // 创建 ViewModel Factory，提供所需的 InventoryApiService 依赖
+    val viewModelFactory = remember {
+        PurchaseListViewModelFactory(
+            inventoryApiService ?: ApiFactory.create()
+        )
+    }
+    
+    val viewModel: PurchaseListViewModel = viewModel(factory = viewModelFactory)
     val context = LocalContext.current
     
     val uiState by viewModel.uiState.collectAsState()
