@@ -61,8 +61,6 @@ fun InventoryScreen(
 
     // 对话框状态
     var showUnifiedFilterDialog by remember { mutableStateOf(false) }
-    
-    var selectedItemForAction by remember { mutableStateOf<InventoryItem?>(null) }
 
     LaunchedEffect(Unit) {
         viewModel.loadInventory()
@@ -124,15 +122,10 @@ fun InventoryScreen(
                     // 库存物品列表
                     InventoryItemsList(
                             items = uiState.filteredItems,
-                            onItemClick = { item -> selectedItemForAction = item },
-                            onEditItem = { item -> selectedItemForAction = item },
+                            onItemClick = { item -> onViewItem(item) },
+                            onEditItem = { item -> onEditItem(item) },
                             onDeleteItem = { item -> viewModel.deleteItem(item) },
-                            onToggleFavorite = { item -> 
-                                // TODO: 实现切换收藏状态
-                            },
-                            onUpdateStock = { item -> 
-                                // TODO: 实现更新库存
-                            }
+                            onUseItem = { item -> viewModel.useItem(item) }
                     )
                 }
 
@@ -157,26 +150,7 @@ fun InventoryScreen(
                         isVisible = showUnifiedFilterDialog
                 )
 
-                // 物品操作对话框
-                selectedItemForAction?.let { item ->
-                    ItemActionDialog(
-                            item = item,
-                            onUseOne = { viewModel.useItem(item) },
-                            onEdit = {
-                                    onEditItem(item)
-                                    selectedItemForAction = null
-                            },
-                            onView = {
-                                    onViewItem(item)
-                                    selectedItemForAction = null
-                            },
-                            onDelete = {
-                                    viewModel.deleteItem(item)
-                                    selectedItemForAction = null
-                            },
-                            onDismiss = { selectedItemForAction = null }
-                    )
-                }
+
 
                 // 加载覆盖层 - 在对话框之下，但在主内容之上
                 if (uiState.isLoading || uiState.isLoadingStats) {
@@ -354,8 +328,7 @@ private fun InventoryItemsList(
         onItemClick: (InventoryItem) -> Unit,
         onEditItem: (InventoryItem) -> Unit,
         onDeleteItem: (InventoryItem) -> Unit,
-        onToggleFavorite: (InventoryItem) -> Unit,
-        onUpdateStock: (InventoryItem) -> Unit
+        onUseItem: (InventoryItem) -> Unit
 ) {
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
@@ -402,7 +375,7 @@ private fun InventoryItemsList(
             ) { item ->
                 GlassInventoryItemCard(
                         item = item,
-                        onUse = { onToggleFavorite(item) },
+                        onUse = { onUseItem(item) },
                         onEdit = { onEditItem(item) },
                         onDelete = { onDeleteItem(item) }
                 )
