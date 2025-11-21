@@ -44,23 +44,41 @@ import kotlinx.coroutines.launch
  * @return 格式化后的日期字符串
  */
 @Composable
-fun formatDate(dateString: String): String {
+fun formatDate(dateString: String?): String {
+    // 处理空值情况
+    if (dateString.isNullOrEmpty()) {
+        return "-"
+    }
+    
     return try {
-        // 解析ISO8601日期字符串
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+        // 尝试多种常见日期格式
+        val formats = listOf(
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()),
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        )
         
-        // 解析为日期对象
-        val date = inputFormat.parse(dateString)
+        formats.forEach { format ->
+            format.timeZone = TimeZone.getTimeZone("UTC")
+            try {
+                val date = format.parse(dateString)
+                if (date != null) {
+                    // 使用系统默认日期格式，自动适配用户设备日期显示偏好
+                    val outputFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, Locale.getDefault())
+                    outputFormat.timeZone = TimeZone.getDefault() // 使用设备时区
+                    return outputFormat.format(date)
+                }
+            } catch (e: Exception) {
+                // 当前格式解析失败，尝试下一个格式
+            }
+        }
         
-        // 使用系统默认日期格式，自动适配用户设备日期显示偏好
-        val outputFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, Locale.getDefault())
-        outputFormat.timeZone = TimeZone.getDefault() // 使用设备时区
-        
-        date?.let { outputFormat.format(it) } ?: dateString
+        // 如果所有格式都解析失败，返回格式化后的日期字符串
+        "-"
     } catch (e: Exception) {
-        // 如果解析失败，返回原始字符串
-        dateString
+        // 捕获任何其他异常
+        "-"
     }
 }
 
