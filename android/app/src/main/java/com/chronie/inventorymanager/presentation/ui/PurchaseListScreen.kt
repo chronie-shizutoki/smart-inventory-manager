@@ -26,14 +26,44 @@ import androidx.navigation.NavController
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.data.network.InventoryApiService
 import com.chronie.inventorymanager.data.repository.ApiFactory
+import com.chronie.inventorymanager.liquidglass.utils.GlassContainer
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListViewModel
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListViewModelFactory
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListUiState
+import com.chronie.inventorymanager.ui.theme.getGlassColors
 import com.chronie.inventorymanager.utils.CategoryNameConverter
+import java.text.SimpleDateFormat
+import java.util.*
 import com.smartinventory.models.PurchaseListItem
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
+/**
+ * 格式化ISO8601日期字符串，仅保留日期部分
+ * @param dateString ISO8601格式的日期字符串
+ * @return 格式化后的日期字符串
+ */
+@Composable
+fun formatDate(dateString: String): String {
+    return try {
+        // 解析ISO8601日期字符串
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+        
+        // 解析为日期对象
+        val date = inputFormat.parse(dateString)
+        
+        // 使用系统默认日期格式，自动适配用户设备日期显示偏好
+        val outputFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT, Locale.getDefault())
+        outputFormat.timeZone = TimeZone.getDefault() // 使用设备时区
+        
+        date?.let { outputFormat.format(it) } ?: dateString
+    } catch (e: Exception) {
+        // 如果解析失败，返回原始字符串
+        dateString
+    }
+}
+
 @Composable
 fun PurchaseListScreen(
     navController: NavController? = null,
@@ -48,6 +78,8 @@ fun PurchaseListScreen(
     
     val viewModel: PurchaseListViewModel = viewModel(factory = viewModelFactory)
     val context = LocalContext.current
+    val isLightTheme = MaterialTheme.colorScheme.background == Color.White
+    val glassColors = getGlassColors(isLightTheme)
     
     val uiState by viewModel.uiState.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -79,11 +111,7 @@ fun PurchaseListScreen(
                     Icon(
                         imageVector = Icons.Default.Refresh,
                         contentDescription = stringResource(R.string.purchaselist_refresh),
-                        tint = if (isRefreshing) {
-                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                        } else {
-                            MaterialTheme.colorScheme.onSurface
-                        }
+                        tint = glassColors.text
                     )
                 }
             }
@@ -97,9 +125,9 @@ fun PurchaseListScreen(
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            CircularProgressIndicator()
+                            CircularProgressIndicator(color = glassColors.primary)
                             Spacer(modifier = Modifier.height(16.dp))
-                            Text("Loading...")
+                            Text("Loading...", color = glassColors.text)
                         }
                     }
                 }
@@ -115,13 +143,13 @@ fun PurchaseListScreen(
                             Text(
                                 text = "Network Error",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.error
+                                color = glassColors.error
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 text = (uiState as PurchaseListUiState.Error).message,
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = glassColors.textSecondary,
                                 textAlign = TextAlign.Center
                             )
                             Spacer(modifier = Modifier.height(16.dp))
@@ -130,7 +158,11 @@ fun PurchaseListScreen(
                                     scope.launch {
                                         viewModel.refreshList()
                                     }
-                                }
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = glassColors.primary,
+                                    contentColor = Color.White
+                                )
                             ) {
                                 Text("重试")
                             }
@@ -143,27 +175,30 @@ fun PurchaseListScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Info,
-                                contentDescription = null,
-                                modifier = Modifier.size(64.dp),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = "No purchase items at the moment",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "All items are sufficiently stocked",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                        GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.3f, enableBlur = true) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(32.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Info,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(64.dp),
+                                    tint = glassColors.primary
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    text = "No purchase items at the moment",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = glassColors.textSecondary
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "All items are sufficiently stocked",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = glassColors.textSecondary
+                                )
+                            }
                         }
                     }
                 }
@@ -174,11 +209,14 @@ fun PurchaseListScreen(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "Empty State",
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                            GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.3f, enableBlur = true) {
+                                Text(
+                                    text = "Empty State",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = glassColors.textSecondary,
+                                    modifier = Modifier.padding(32.dp)
+                                )
+                            }
                         }
                     } else {
                         LazyColumn(
@@ -195,6 +233,10 @@ fun PurchaseListScreen(
                                         }
                                     }
                                 )
+                            }
+                            // 底部占位项，用于适应底部导航栏高度
+                            item {
+                                Spacer(modifier = Modifier.height(80.dp))
                             }
                         }
                     }
@@ -213,11 +255,10 @@ fun PurchaseListItemCard(
     item: PurchaseListItem,
     onRefresh: () -> Unit
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
+    val isLightTheme = MaterialTheme.colorScheme.background == Color.White
+    val glassColors = getGlassColors(isLightTheme)
+    
+    GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.4f, enableBlur = true) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -233,31 +274,15 @@ fun PurchaseListItemCard(
                     Text(
                         text = item.name,
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = if (isLightTheme) Color.Black else glassColors.text
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = CategoryNameConverter.getDisplayName(item.category),
+                        text = CategoryNameConverter.getDisplayNameComposable(item.category),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary
+                        color = glassColors.primary
                     )
-                }
-                
-                // 状态指示器
-                if (item.isCriticallyLow()) {
-                    Surface(
-                        color = MaterialTheme.colorScheme.errorContainer,
-                        tonalElevation = 1.dp,
-                        shape = MaterialTheme.shapes.small,
-                        modifier = Modifier.padding(start = 8.dp)
-                    ) {
-                        Text(
-                            text = "紧急",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onErrorContainer,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
-                    }
                 }
             }
             
@@ -269,25 +294,25 @@ fun PurchaseListItemCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 QuantityInfo(
-                    label = "当前数量",
+                    label = stringResource(R.string.purchaselist_currentquantity),
                     value = "${item.currentQuantity}${item.unit}",
                     color = if (item.currentQuantity == 0) {
-                        MaterialTheme.colorScheme.error
+                        glassColors.error
                     } else {
-                        MaterialTheme.colorScheme.onSurface
+                        glassColors.text
                     }
                 )
                 
                 QuantityInfo(
-                    label = "最低库存",
+                    label = stringResource(R.string.purchaselist_minquantity),
                     value = "${item.minQuantity}${item.unit}",
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = glassColors.textSecondary
                 )
                 
                 QuantityInfo(
-                    label = "建议采购",
+                    label = stringResource(R.string.purchaselist_suggestedquantity),
                     value = "${item.suggestedQuantity}${item.unit}",
-                    color = MaterialTheme.colorScheme.primary,
+                    color = glassColors.primary,
                     isHighlighted = true
                 )
             }
@@ -296,9 +321,9 @@ fun PurchaseListItemCard(
             if (item.lastUsedAt != null) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                        text = "Last used: ${item.lastUsedAt}",
+                        text = stringResource(R.string.purchaselist_lastused) + ": ${formatDate(item.lastUsedAt)}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = if (isLightTheme) Color.Black else glassColors.textSecondary
                     )
             }
         }
@@ -315,23 +340,23 @@ fun QuantityInfo(
     color: Color,
     isHighlighted: Boolean = false
 ) {
+    val isLightTheme = MaterialTheme.colorScheme.background == Color.White
+    val glassColors = getGlassColors(isLightTheme)
+    
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (isHighlighted) {
-            Surface(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                tonalElevation = 1.dp,
-                shape = MaterialTheme.shapes.small,
-                modifier = Modifier
-                    .clip(MaterialTheme.shapes.small)
-                    .padding(4.dp)
+            GlassContainer(
+                modifier = Modifier.padding(4.dp),
+                backgroundAlpha = 0.5f,
+                enableBlur = true
             ) {
                 Text(
                     text = value,
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = glassColors.primary,
                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                 )
             }
@@ -340,13 +365,13 @@ fun QuantityInfo(
                 text = value,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Medium,
-                color = color
+                color = if (isLightTheme) Color.Black else color
             )
         }
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = if (isLightTheme) Color.Black else glassColors.textSecondary
         )
     }
 }

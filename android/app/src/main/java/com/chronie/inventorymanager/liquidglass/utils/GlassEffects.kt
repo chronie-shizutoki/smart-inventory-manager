@@ -63,7 +63,8 @@ fun GlassContainer(
     val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
 
-    var glassModifier = modifier
+    // 基础修饰符，不包含模糊效果
+    val glassModifier = modifier
             .clip(RoundedCornerShape(cornerRadius))
             .background(
                     brush =
@@ -101,15 +102,28 @@ fun GlassContainer(
                     ambientColor = glassColors.primary.copy(alpha = 0.05f)
             )
 
+    // 如果启用模糊效果，将模糊效果应用在内容的下方
     if (enableBlur) {
-        glassModifier = glassModifier.blur(20.dp)
+        Box(
+                modifier = glassModifier,
+                contentAlignment = Alignment.Center
+        ) {
+            // 首先渲染模糊背景层
+            Box(modifier = Modifier.matchParentSize().blur(20.dp))
+            // 然后渲染内容层（在模糊层上方）
+            Box(
+                    contentAlignment = Alignment.Center,
+                    content = content
+            )
+        }
+    } else {
+        // 如果不启用模糊效果，直接渲染内容
+        Box(
+                modifier = glassModifier,
+                contentAlignment = Alignment.Center,
+                content = content
+        )
     }
-
-    Box(
-            modifier = glassModifier,
-            contentAlignment = Alignment.Center,
-            content = content
-    )
 }
 
 /** 液态玻璃卡片组件 */
