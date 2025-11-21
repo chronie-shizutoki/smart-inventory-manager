@@ -127,6 +127,9 @@ fun InventoryScreen(
                             onDeleteItem = { item -> viewModel.deleteItem(item) },
                             onUseItem = { item -> viewModel.useItem(item) }
                     )
+                    
+                    // 占位区域已移至InventoryItemsList内部作为最后一项
+                    // 避免在主Column中重复添加占位区域
                 }
 
                 // 统一筛选对话框
@@ -379,6 +382,11 @@ private fun InventoryItemsList(
                         onEdit = { onEditItem(item) },
                         onDelete = { onDeleteItem(item) }
                 )
+            }
+            
+            // 底部占位项，用于适应底部导航栏高度
+            item {
+                Spacer(modifier = Modifier.height(80.dp))
             }
         }
     }
