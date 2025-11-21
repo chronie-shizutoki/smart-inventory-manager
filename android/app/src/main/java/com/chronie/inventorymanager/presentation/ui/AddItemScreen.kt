@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,11 +35,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarDuration
+import android.widget.Toast
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -50,12 +47,20 @@ fun AddItemScreen(
     viewModel: AddItemViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    // 使用CompositionLocal来获取当前主题状态
+    val currentTheme = MaterialTheme.colorScheme
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
-    // Snackbar状态管理
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+    // 响应式主题监听器
+    DisposableEffect(isLightTheme) {
+        // 当主题变化时可以在这里执行一些清理或初始化操作
+        onDispose {
+            // 清理资源（如果需要）
+        }
+    }
+    
+    val context = LocalContext.current
     
     // 表单状态
     var name by remember { mutableStateOf("") }
@@ -63,6 +68,8 @@ fun AddItemScreen(
     var categoryDisplayName by remember { mutableStateOf("") } // 用于显示的中文名称
     var quantity by remember { mutableStateOf("") }
     var minStock by remember { mutableStateOf("") }
+    var quantityValue by remember { mutableStateOf("0") }
+    var minStockValue by remember { mutableStateOf("0") }
     var unit by remember { mutableStateOf("") }
     var expiryDate by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -71,6 +78,7 @@ fun AddItemScreen(
     var nameError by remember { mutableStateOf<String?>(null) }
     var categoryError by remember { mutableStateOf<String?>(null) }
     var quantityError by remember { mutableStateOf<String?>(null) }
+    var minStockError by remember { mutableStateOf<String?>(null) }
     var dateError by remember { mutableStateOf<String?>(null) }
     
     val predefinedCategories = uiState.categories
@@ -84,13 +92,9 @@ fun AddItemScreen(
     // 处理成功状态
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
-            // 显示成功消息
-            scope.launch {
-                snackbarHostState.showSnackbar(
-                    message = "物品添加成功！",
-                    duration = androidx.compose.material3.SnackbarDuration.Long
-                )
-            }
+            // 显示成功Toast消息，包含物品名称
+            val successMessage = "${name.trim()} 添加成功！"
+            Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show()
             
             // 重置表单
             viewModel.resetForm()
@@ -104,21 +108,30 @@ fun AddItemScreen(
         }
     }
 
-    // 液态玻璃主背景效果 - 更丰富的渐变
+    // 液态玻璃主背景效果 - 更丰富的渐变，更好地适应不同主题
     val backgroundBrush = Brush.verticalGradient(
-        colors = listOf(
-            if (isLightTheme) Color(0xFFF8F9FF) else Color(0xFF0A0A0A),
-            if (isLightTheme) Color(0xFFE8EFFF) else Color(0xFF151515),
-            if (isLightTheme) Color(0xFFFAF8FF) else Color(0xFF0D0D0D)
-        )
+        colors = when {
+            isLightTheme -> listOf(
+                Color(0xFFF8F9FF),
+                Color(0xFFE8EFFF),
+                Color(0xFFFAF8FF)
+            )
+            else -> listOf(
+                Color(0xFF0A0A0A),
+                Color(0xFF151515),
+                Color(0xFF0D0D0D)
+            )
+        }
     )
     
-    // 表单容器液态玻璃效果
+    // 表单容器液态玻璃效果 - 使用更适合主题的渐变
     val containerBrush = Brush.verticalGradient(
         colors = listOf(
             glassColors.glassTop,
             glassColors.glassBottom
-        )
+        ),
+        startY = 0f,
+        endY = 300f // 增加渐变范围使效果更明显
     )
     
     // 使用Column替代Scaffold避免标题栏占位
@@ -143,11 +156,13 @@ fun AddItemScreen(
                     subtitle = stringResource(R.string.add_edittitle)
                 )
                 
+                // 添加更多错误处理的Toast提示
                 // 物品名称
                 GlassTextField(
                     value = name,
                     onValueChange = { 
                         name = it
+                        // 实时清除错误状态
                         nameError = null
                     },
                     label = stringResource(R.string.add_name),
@@ -173,6 +188,7 @@ fun AddItemScreen(
                         
                         category = categoryKey // 存储英文键名
                         categoryDisplayName = displayName // 存储显示的中文名称
+                        // 实时清除错误状态
                         categoryError = null
                     },
                     label = stringResource(R.string.add_category),
@@ -188,6 +204,7 @@ fun AddItemScreen(
                     onValueChange = { 
                         if (it.all { char -> char.isDigit() }) {
                             quantity = it
+                            // 实时清除错误状态
                             quantityError = null
                         }
                     },
@@ -207,11 +224,14 @@ fun AddItemScreen(
                     onValueChange = { 
                         if (it.all { char -> char.isDigit() }) {
                             minStock = it
+                            // 实时清除错误状态
+                            minStockError = null
                         }
                     },
                     label = stringResource(R.string.add_minquantity),
                     placeholder = stringResource(R.string.add_minquantity_placeholder),
                     leadingIcon = Icons.Default.ShoppingCart,
+                    errorMessage = minStockError,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Next
@@ -233,7 +253,11 @@ fun AddItemScreen(
                 // 到期日期 - 支持直接文字输入
                 GlassDateField(
                     value = expiryDate,
-                    onValueChange = { expiryDate = it },
+                    onValueChange = { 
+                        expiryDate = it
+                        // 实时清除错误状态
+                        dateError = null
+                    },
                     label = stringResource(R.string.add_expirydate),
                     placeholder = stringResource(R.string.add_expirydate_placeholder),
                     leadingIcon = Icons.Default.CalendarToday,
@@ -265,45 +289,70 @@ fun AddItemScreen(
         val quantityRequired = stringResource(R.string.error_quantity_required)
         val saveText = stringResource(R.string.add_save)
         
+        // 自定义错误消息
+        val nameTooShortError = "名称至少需要2个字符"
+        val invalidQuantityError = "请输入有效的数量"
+        val negativeQuantityError = "数量不能为负数"
+        val invalidMinStockError = "请输入有效的最小库存数量"
+        val negativeMinStockError = "最小库存不能为负数"
+        val invalidDateFormatError = "日期格式无效，请使用 YYYY-MM-DD、YYYY/MM/DD 等常见格式"
+        val pastDateError = "到期日期不能早于今天"
+        
         GlassSaveButton(
             onClick = {
-                // 表单验证
-                var hasError = false
-                
-                if (name.isBlank()) {
-                    nameError = nameRequired
-                    hasError = true
-                }
-                
-                if (category.isBlank()) {
-                    categoryError = categoryRequired
-                    hasError = true
-                }
-                
-                if (quantity.isBlank()) {
-                    quantityError = quantityRequired
-                    hasError = true
-                }
-                
-                if (!hasError) {
-                    // 精确验证数量格式
-                    val quantityValue = quantity.trim().toIntOrNull()
-                    if (quantityValue == null) {
-                        quantityError = "无效的数量格式"
+                // 清除所有错误状态
+                    nameError = null
+                    categoryError = null
+                    quantityError = null
+                    minStockError = null
+                    dateError = null
+                    
+                    // 表单验证
+                    var hasError = false
+                    
+                    // 名称验证
+                    if (name.isBlank()) {
+                        nameError = nameRequired
                         hasError = true
-                    } else if (quantityValue < 0) {
-                        quantityError = "数量不能为负数"
+                    } else if (name.trim().length < 2) {
+                        nameError = nameTooShortError
                         hasError = true
                     }
                     
-                    // 精确验证最小库存格式（如果填写了的话）
-                    val minStockValue = minStock.trim().toIntOrNull()
-                    if (minStock.isNotBlank() && minStockValue == null) {
-                        // 这里我们可以添加最小库存错误处理，或者只是忽略错误使用默认值
+                    // 分类验证
+                    if (category.isBlank() || categoryDisplayName.isBlank()) {
+                        categoryError = categoryRequired
+                        hasError = true
                     }
                     
-                    // 验证日期格式（如果填写了的话）
-                    dateError = null // 重置错误状态
+                    // 数量验证
+                    if (quantity.isBlank()) {
+                        quantityError = quantityRequired
+                        hasError = true
+                    } else {
+                        val quantityValue = quantity.trim().toIntOrNull()
+                        if (quantityValue == null) {
+                            quantityError = invalidQuantityError
+                            hasError = true
+                        } else if (quantityValue < 0) {
+                            quantityError = negativeQuantityError
+                            hasError = true
+                        }
+                    }
+                    
+                    // 最小库存验证（如果填写了的话）
+                    if (minStock.isNotBlank()) {
+                        val minStockValue = minStock.trim().toIntOrNull()
+                        if (minStockValue == null) {
+                            minStockError = invalidMinStockError
+                            hasError = true
+                        } else if (minStockValue < 0) {
+                            minStockError = negativeMinStockError
+                            hasError = true
+                        }
+                    }
+                    
+                    // 日期验证（如果填写了的话）
                     var parsedDate: Date? = null
                     if (expiryDate.trim().isNotEmpty()) {
                         try {
@@ -327,45 +376,57 @@ fun AddItemScreen(
                             }
                             
                             if (parsedDate == null) {
-                                dateError = "日期格式无效，请使用 YYYY-MM-DD、YYYY/MM/DD 等常见格式"
+                                dateError = invalidDateFormatError
                                 hasError = true
+                            } else {
+                                // 检查日期是否早于今天
+                                val today = Calendar.getInstance().apply {
+                                    set(Calendar.HOUR_OF_DAY, 0)
+                                    set(Calendar.MINUTE, 0)
+                                    set(Calendar.SECOND, 0)
+                                    set(Calendar.MILLISECOND, 0)
+                                }.time
+                                
+                                if (parsedDate.before(today)) {
+                                    dateError = pastDateError
+                                    hasError = true
+                                }
                             }
                         } catch (e: Exception) {
-                            dateError = "日期格式无效，请使用 YYYY-MM-DD、YYYY/MM/DD 等常见格式"
-                            hasError = true
-                        }
+                        dateError = invalidDateFormatError
+                        hasError = true
                     }
-                    
-                    if (!hasError) {
-                        try {
-                            // 创建库存物品
-                            val inventoryItem = InventoryItem(
-                                id = "", // 将由数据库分配
-                                name = name.trim(),
-                                category = category.trim(),
-                                quantity = quantityValue!!,
-                                unit = unit.trim(),
-                                description = description.trim(),
-                                expiryDate = parsedDate,
-                                minQuantity = minStockValue ?: 0,
-                                createdAt = Date(),
-                                updatedAt = Date()
-                            )
-                            
-                            // 保存到数据库，通过ViewModel处理成功状态
-                            viewModel.addItem(inventoryItem)
-                            
-                            // 不再直接导航返回，而是通过成功状态处理
-                            
-                        } catch (e: Exception) {
-                            // 数据库操作或其他错误
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = "保存失败：${e.message}",
-                                    duration = androidx.compose.material3.SnackbarDuration.Long
-                                )
-                            }
+                }
+                
+                if (!hasError) {
+                    try {
+                        // 创建库存物品
+                        val inventoryItem = InventoryItem(
+                            id = "", // 将由数据库分配
+                            name = name.trim(),
+                            category = category.trim(),
+                            quantity = quantityValue?.toIntOrNull() ?: 0,
+                            unit = unit.trim(),
+                            description = description.trim(),
+                            expiryDate = parsedDate,
+                            minQuantity = minStockValue?.toIntOrNull() ?: 0,
+                            createdAt = Date(),
+                            updatedAt = Date()
+                        )
+                        
+                        // 保存到数据库，通过ViewModel处理成功状态
+                        viewModel.addItem(inventoryItem)
+                        
+                        // 不再直接导航返回，而是通过成功状态处理
+                        
+                    } catch (e: Exception) {
+                        // 数据库操作或其他错误，提供更友好的错误信息
+                        val errorMessage = if (e.message.isNullOrEmpty()) {
+                            "保存失败，请稍后重试"
+                        } else {
+                            "保存失败：${e.message}"
                         }
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
                     }
                 }
             },
@@ -374,22 +435,8 @@ fun AddItemScreen(
         )
     }
     
-    // Snackbar显示区域
-    SnackbarHost(
-        hostState = snackbarHostState,
-        modifier = Modifier.fillMaxWidth()
-    ) { snackbarData ->
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Snackbar(
-                snackbarData = snackbarData,
-                containerColor = glassColors.primary.copy(alpha = 0.9f),
-                contentColor = Color.White,
-                shape = RoundedCornerShape(12.dp)
-            )
-        }
-    }
+    // Toast会自动显示在屏幕上，无需额外的UI组件
+    // Toast通知已优化，包含详细的成功信息和友好的错误提示
     
 }
 
@@ -445,25 +492,34 @@ fun GlassCardContainer(
         colors = listOf(
             glassColors.glassTop,
             glassColors.glassBottom
-        )
+        ),
+        startY = 0f,
+        endY = 300f // 增加渐变范围使效果更明显
     )
+    
+    // 根据主题调整阴影效果
+    val shadowColor = if (isLightTheme) {
+        glassColors.primary.copy(alpha = 0.2f)
+    } else {
+        glassColors.primary.copy(alpha = 0.4f) // 深色主题下增加阴影透明度
+    }
     
     Box(
         modifier = modifier
             .fillMaxWidth()
             .shadow(
                 elevation = 12.dp,
-                spotColor = glassColors.primary.copy(alpha = 0.2f),
-                ambientColor = glassColors.primary.copy(alpha = 0.1f)
+                spotColor = shadowColor,
+                ambientColor = shadowColor.copy(alpha = 0.7f)
             )
             .background(containerBrush, RoundedCornerShape(20.dp))
             .border(
                 width = 1.dp,
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        glassColors.border,
+                        glassColors.border.copy(alpha = if (isLightTheme) 0.8f else 0.6f),
                         glassColors.border.copy(alpha = 0.5f),
-                        glassColors.border
+                        glassColors.border.copy(alpha = if (isLightTheme) 0.8f else 0.6f)
                     )
                 ),
                 shape = RoundedCornerShape(20.dp)
@@ -525,7 +581,8 @@ fun GlassSaveButton(
                 text = text,
                 style = androidx.compose.material3.Typography().labelLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    color = Color.White
                 )
             )
         }
@@ -549,11 +606,11 @@ fun GlassTextField(
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
-    // 液态玻璃效果
+    // 液态玻璃效果 - 根据主题调整透明度
     val glassBrush = Brush.verticalGradient(
         colors = listOf(
-            glassColors.glassTop,
-            glassColors.glassBottom
+            glassColors.glassTop.copy(alpha = if (isLightTheme) 0.85f else 0.75f),
+            glassColors.glassBottom.copy(alpha = if (isLightTheme) 0.9f else 0.8f)
         )
     )
     
@@ -576,45 +633,43 @@ fun GlassTextField(
                 .padding(1.dp)
         ) {
             OutlinedTextField(
-                value = value,
-                onValueChange = onValueChange,
-                label = { Text(label) },
-                placeholder = { Text(placeholder) },
-                leadingIcon = if (leadingIcon != null) {
-                    { Icon(leadingIcon, contentDescription = null, tint = glassColors.primary) }
-                } else null,
-                isError = errorMessage != null,
-                singleLine = singleLine,
-                keyboardOptions = keyboardOptions,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Transparent),
-                colors = OutlinedTextFieldDefaults.colors(
+                    value = value,
+                    onValueChange = onValueChange,
+                    label = { Text(label, color = glassColors.text) },
+                    placeholder = { Text(placeholder, color = glassColors.textSecondary.copy(alpha = 0.7f)) },
+                    leadingIcon = if (leadingIcon != null) {
+                        { Icon(leadingIcon, contentDescription = null, tint = glassColors.primary) }
+                    } else null,
+                    isError = errorMessage != null,
+                    singleLine = singleLine,
+                    keyboardOptions = keyboardOptions,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.Transparent),
+                    textStyle = TextStyle(color = glassColors.text),
+                    colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = if (errorMessage != null) MaterialTheme.colorScheme.error else Color.Transparent,
                     unfocusedBorderColor = if (errorMessage != null) MaterialTheme.colorScheme.error else Color.Transparent,
                     disabledBorderColor = Color.Transparent,
-                    focusedLabelColor = glassColors.primary,
-                    cursorColor = glassColors.primary,
-                    focusedTrailingIconColor = glassColors.primary,
-                    unfocusedTrailingIconColor = glassColors.container,
-                    focusedLeadingIconColor = glassColors.primary,
-                    unfocusedLeadingIconColor = glassColors.container,
+                    focusedLabelColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
+                    unfocusedLabelColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.textSecondary,
+                    cursorColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
+                    focusedPlaceholderColor = glassColors.textSecondary.copy(alpha = 0.7f),
+                    unfocusedPlaceholderColor = glassColors.textSecondary.copy(alpha = 0.5f),
+                    focusedTrailingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
+                    unfocusedTrailingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.container,
+                    focusedLeadingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
+                    unfocusedLeadingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.container,
                     errorBorderColor = MaterialTheme.colorScheme.error,
                     errorCursorColor = MaterialTheme.colorScheme.error,
                     errorSupportingTextColor = MaterialTheme.colorScheme.error,
                     errorLabelColor = MaterialTheme.colorScheme.error,
                     errorLeadingIconColor = MaterialTheme.colorScheme.error,
-                    errorTrailingIconColor = MaterialTheme.colorScheme.error
+                    errorTrailingIconColor = MaterialTheme.colorScheme.error,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent
                 )
-            )
-        }
-        
-        if (errorMessage != null) {
-            Text(
-                text = errorMessage,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(start = 16.dp, top = 4.dp)
             )
         }
         
@@ -646,11 +701,11 @@ fun GlassDropdownField(
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
-    // 液态玻璃效果
+    // 液态玻璃效果 - 根据主题调整透明度
     val glassBrush = Brush.verticalGradient(
         colors = listOf(
-            glassColors.glassTop,
-            glassColors.glassBottom
+            glassColors.glassTop.copy(alpha = if (isLightTheme) 0.85f else 0.75f),
+            glassColors.glassBottom.copy(alpha = if (isLightTheme) 0.9f else 0.8f)
         )
     )
     
@@ -679,13 +734,15 @@ fun GlassDropdownField(
                 OutlinedTextField(
                     value = value,
                     onValueChange = { onValueChange(it) },
-                    label = { Text(label) },
-                    placeholder = { Text(placeholder) },
+                    label = { Text(label, color = glassColors.text) },
+                    placeholder = { Text(placeholder, color = glassColors.textSecondary.copy(alpha = 0.7f)) },
                     leadingIcon = if (leadingIcon != null) {
                         { Icon(leadingIcon, contentDescription = null, tint = glassColors.primary) }
                     } else null,
                     trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                        ExposedDropdownMenuDefaults.TrailingIcon(
+                            expanded = expanded
+                        )
                     },
                     isError = errorMessage != null,
                     readOnly = true,
@@ -693,11 +750,13 @@ fun GlassDropdownField(
                         .fillMaxWidth()
                         .menuAnchor()
                         .background(Color.Transparent),
+                    textStyle = TextStyle(color = glassColors.text),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
                         disabledBorderColor = Color.Transparent,
                         focusedLabelColor = glassColors.primary,
+                        unfocusedLabelColor = glassColors.textSecondary,
                         cursorColor = glassColors.primary,
                         focusedTrailingIconColor = glassColors.primary,
                         unfocusedTrailingIconColor = glassColors.container,
@@ -709,10 +768,16 @@ fun GlassDropdownField(
                 ExposedDropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
-                    modifier = Modifier.background(
-                        color = glassColors.container.copy(alpha = 0.9f),
-                        shape = RoundedCornerShape(12.dp)
-                    )
+                    modifier = Modifier
+                        .background(
+                            color = glassColors.glassTop.copy(alpha = 0.95f),
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .border(
+                            width = 1.dp,
+                            color = glassColors.border,
+                            shape = RoundedCornerShape(12.dp)
+                        )
                 ) {
                     items.forEach { item ->
                         DropdownMenuItem(
@@ -781,8 +846,8 @@ fun GlassDateField(
             OutlinedTextField(
                 value = value,
                 onValueChange = onValueChange,
-                label = { Text(label) },
-                placeholder = { Text(placeholder) },
+                label = { Text(text = label) },
+                placeholder = { Text(text = placeholder) },
                 leadingIcon = if (leadingIcon != null) {
                     { Icon(leadingIcon, contentDescription = null, tint = glassColors.primary) }
                 } else null,
