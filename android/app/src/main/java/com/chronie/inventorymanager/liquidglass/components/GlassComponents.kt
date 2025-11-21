@@ -638,15 +638,6 @@ fun GlassInventoryItemCard(
                                                         )
                                         )
                                 }
-                                Text(
-                                        text =
-                                                stringResource(R.string.purchaselist_lastused) +
-                                                        ": ${item.usageCount}",
-                                        style =
-                                                GlassTypography.bodySmall.copy(
-                                                        color = colors.text.copy(alpha = 0.6f)
-                                                )
-                                )
                         }
 
                         // 描述
