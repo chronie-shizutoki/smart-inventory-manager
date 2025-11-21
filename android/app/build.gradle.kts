@@ -40,7 +40,12 @@ android {
 
     kotlin {
         jvmToolchain(21)
-        compilerOptions { freeCompilerArgs.addAll("-Xcontext-parameters") }
+        compilerOptions {
+            freeCompilerArgs.addAll(
+                "-Xcontext-parameters",
+                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+            )
+        }
     }
 
     composeOptions { kotlinCompilerExtensionVersion = "1.5.17" }

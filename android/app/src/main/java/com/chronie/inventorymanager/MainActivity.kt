@@ -1,6 +1,9 @@
 package com.chronie.inventorymanager
 
 import android.os.Bundle
+import android.content.res.Configuration
+import android.os.Build
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -54,13 +57,99 @@ import com.chronie.inventorymanager.presentation.ui.PurchaseListScreen
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        android.util.Log.d("MainActivity", "Starting language initialization")
+        
+        // 应用启动时，在UI初始化前先尝试应用保存的语言偏好
+        try {
+            android.util.Log.d("MainActivity", "Attempting to get language preferences")
+            val sharedPrefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+            val savedLanguageCode = sharedPrefs.getString("preferred_language", null)
+            
+            android.util.Log.d("MainActivity", "Saved language code from SharedPreferences: $savedLanguageCode")
+            
+            if (savedLanguageCode != null) {
+                android.util.Log.d("MainActivity", "Attempting to apply saved language: $savedLanguageCode")
+                
+                // 使用LanguageManager获取正确的LanguageConfig对象
+                val languageConfig = LanguageManager.getLanguageByCode(savedLanguageCode)
+                
+                if (languageConfig != null) {
+                    android.util.Log.d("MainActivity", "Found language config: ${languageConfig.code}")
+                    
+                    // 获取当前配置
+                    val resources = resources
+                    val configuration = resources.configuration
+                    
+                    // 使用正确的Locale对象
+                    val locale = languageConfig.locale
+                    android.util.Log.d("MainActivity", "Setting locale to: $locale")
+                    
+                    // 应用Locale设置
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        // Android 4.2及以上
+                        configuration.setLocale(locale)
+                    } else {
+                        // 旧版本Android
+                        @Suppress("DEPRECATION")
+                        configuration.locale = locale
+                    }
+                    
+                    // 更新配置
+                    @Suppress("DEPRECATION")
+                    resources.updateConfiguration(configuration, resources.displayMetrics)
+                    
+                    // 对于Android N及以上，还需要更新Context
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        android.util.Log.d("MainActivity", "Using N+ API for language change")
+                        val context = createConfigurationContext(configuration)
+                        // 将更新后的Context资源应用到当前Activity
+                        resources.updateConfiguration(context.resources.configuration, context.resources.displayMetrics)
+                    }
+                } else {
+                    android.util.Log.w("MainActivity", "Language not found for code: $savedLanguageCode")
+                }
+                
+                android.util.Log.d("MainActivity", "Language set successfully in onCreate")
+                
+                // 验证语言设置是否生效
+                val currentLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    resources.configuration.locales.get(0)
+                } else {
+                    @Suppress("DEPRECATION")
+                    resources.configuration.locale
+                }
+                android.util.Log.d("MainActivity", "Current locale after setting: $currentLocale")
+            } else {
+                android.util.Log.d("MainActivity", "No saved language preference found")
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("MainActivity", "Failed to set language from preferences: ${e.message}", e)
+            // 初始化语言偏好失败时静默处理，继续使用默认语言
+        }
+        
         setContent {
             SmartInventoryManagerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LanguageContextProvider { 
+                    // 从SharedPreferences读取保存的语言偏好
+                    val savedLanguage = remember {
+                        try {
+                            val sharedPrefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                            val savedLanguageCode = sharedPrefs.getString("preferred_language", null)
+                            if (savedLanguageCode != null) {
+                                LanguageManager.getLanguageByCode(savedLanguageCode)
+                            } else {
+                                null
+                            }
+                        } catch (e: Exception) {
+                            null
+                        }
+                    }
+                    
+                    LanguageContextProvider(initialLanguage = savedLanguage) { 
                         SmartInventoryManagerApp()
                     }
                 }
@@ -186,7 +275,7 @@ data class BottomNavItem(
 @Composable
 fun AddItemScreen() {
     com.chronie.inventorymanager.presentation.ui.AddItemScreen(
-        onNavigateBack = {
+        navigateBack = {
             // Navigation is handled by the bottom navigation
         }
     )

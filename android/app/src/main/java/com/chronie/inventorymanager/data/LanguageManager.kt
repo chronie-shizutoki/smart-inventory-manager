@@ -1,13 +1,11 @@
 package com.chronie.inventorymanager.data
 
 import android.content.Context
+import android.os.Build
+import android.content.res.Configuration
 import androidx.compose.runtime.*
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Locale
 
 /**
@@ -23,6 +21,7 @@ data class LanguageConfig(
  * 语言上下文管理类
  */
 class LanguageContext(
+    private val context: Context,
     initialLanguage: LanguageConfig
 ) {
     // 当前选中的语言
@@ -39,13 +38,52 @@ class LanguageContext(
         val oldLanguage = currentLanguage
         currentLanguage = language
         
+        // 应用语言设置到应用资源配置
+        applyLanguageToResources(language)
+        
         // 通知所有监听器
         languageChangeCallbacks.forEach { callback ->
             callback(language)
         }
         
-        // 这里可以添加持久化逻辑
+        // 保存语言偏好
         saveLanguagePreference(language)
+    }
+    
+    /**
+     * 应用语言设置到应用资源配置
+     */
+    private fun applyLanguageToResources(language: LanguageConfig) {
+        try {
+            android.util.Log.d("LanguageContext", "Applying language: ${language.code}")
+            
+            val resources = context.resources
+            val configuration = resources.configuration
+            
+            // 记录当前配置
+            android.util.Log.d("LanguageContext", "Current locale: ${configuration.locale}")
+            
+            // 设置Locale
+            configuration.setLocale(language.locale)
+            
+            // 对于Android N及以上，使用正确的API
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                android.util.Log.d("LanguageContext", "Using N+ API for language change")
+                val newConfig = Configuration(configuration)
+                context.createConfigurationContext(newConfig)
+                // 同时更新应用上下文配置
+                @Suppress("DEPRECATION")
+                resources.updateConfiguration(newConfig, resources.displayMetrics)
+            } else {
+                // 旧版本API
+                @Suppress("DEPRECATION")
+                resources.updateConfiguration(configuration, resources.displayMetrics)
+            }
+            
+            android.util.Log.d("LanguageContext", "Language applied successfully: ${language.code}")
+        } catch (e: Exception) {
+            android.util.Log.e("LanguageContext", "Failed to apply language to resources: ${e.message}", e)
+        }
     }
     
     /**
@@ -64,10 +102,18 @@ class LanguageContext(
     
     /**
      * 保存语言偏好设置到本地存储
+     * 使用try-catch确保保存过程不会导致应用崩溃
      */
     private fun saveLanguagePreference(language: LanguageConfig) {
-        // 可以使用SharedPreferences或其他持久化方式
-        // 这里简化为空实现
+        try {
+            val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+            prefs.edit()
+                .putString("preferred_language", language.code)
+                .apply()
+        } catch (e: Exception) {
+            // 捕获所有异常，确保不会因为保存语言偏好而导致应用崩溃
+            android.util.Log.e("LanguageContext", "Failed to save language preference: ${e.message}", e)
+        }
     }
 }
 
@@ -127,7 +173,7 @@ object LanguageManager {
  * CompositionLocal用于在Compose中访问语言上下文
  */
 val LocalLanguageContext = staticCompositionLocalOf<LanguageContext> {
-    LanguageContext(LanguageManager.getDefaultLanguage())
+    error("No LanguageContext provided")
 }
 
 /**
@@ -156,26 +202,78 @@ fun LanguageContextProvider(
 ) {
     val ctx = LocalContext.current
 
-    // 从 SharedPreferences 中读取保存的语言偏好（若存在）
-    val savedCode = remember {
-        ctx.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
-            .getString("preferred_language", null)
-    }
-
-    val resolvedInitial = remember(savedCode, initialLanguage) {
-        when {
-            initialLanguage != null -> initialLanguage
-            savedCode != null -> LanguageManager.getLanguageByCode(savedCode) ?: LanguageManager.getDefaultLanguage()
-            else -> {
-                // 根据系统 Locale 尝试选取匹配语言，否则使用默认
-                val sys = ctx.resources.configuration.locale ?: java.util.Locale.getDefault()
-                LanguageManager.getLanguageByLocale(sys) ?: LanguageManager.getDefaultLanguage()
+    val languageContext = remember(ctx, initialLanguage) {
+        // 创建语言上下文
+        android.util.Log.d("LanguageProvider", "Initializing language context")
+        
+        // 先确定要使用的语言，再创建LanguageContext
+        val languageToUse = try {
+            // 优先使用传入的initialLanguage
+            if (initialLanguage != null) {
+                android.util.Log.d("LanguageProvider", "Using initialLanguage: ${initialLanguage.code}")
+                // 当使用initialLanguage时，也将其保存到SharedPreferences中
+                try {
+                    val prefs = ctx.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                    prefs.edit()
+                        .putString("preferred_language", initialLanguage.code)
+                        .apply()
+                    android.util.Log.d("LanguageProvider", "Saved initialLanguage to SharedPreferences: ${initialLanguage.code}")
+                } catch (e: Exception) {
+                    android.util.Log.e("LanguageProvider", "Failed to save initialLanguage to SharedPreferences: ${e.message}", e)
+                }
+                initialLanguage
+            } else {
+                // 从SharedPreferences中读取保存的语言偏好
+                val sharedPrefs = ctx.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                val savedLanguageCode = sharedPrefs.getString("preferred_language", null)
+                android.util.Log.d("LanguageProvider", "Saved language code from SharedPreferences: $savedLanguageCode")
+                
+                if (savedLanguageCode != null) {
+                    val foundLanguage = LanguageManager.getLanguageByCode(savedLanguageCode)
+                    if (foundLanguage != null) {
+                        android.util.Log.d("LanguageProvider", "Using saved language from SharedPreferences: $savedLanguageCode")
+                        foundLanguage
+                    } else {
+                        android.util.Log.w("LanguageProvider", "Saved language code '$savedLanguageCode' not found, using default")
+                        LanguageManager.getDefaultLanguage()
+                    }
+                } else {
+                    try {
+                        // 根据系统Locale尝试选取匹配语言，否则使用默认
+                        val sys = ctx.resources.configuration.locale ?: Locale.getDefault()
+                        android.util.Log.d("LanguageProvider", "No saved language, using system locale: $sys")
+                        val systemLanguage = LanguageManager.getLanguageByLocale(sys)
+                        if (systemLanguage != null) {
+                            android.util.Log.d("LanguageProvider", "Found matching language for system locale: ${systemLanguage.code}")
+                            systemLanguage
+                        } else {
+                            android.util.Log.d("LanguageProvider", "No matching language found for system locale, using default")
+                            LanguageManager.getDefaultLanguage()
+                        }
+                    } catch (e: Exception) {
+                        android.util.Log.e("LanguageProvider", "Failed to get system locale: ${e.message}", e)
+                        LanguageManager.getDefaultLanguage()
+                    }
+                }
             }
+        } catch (e: Exception) {
+            android.util.Log.e("LanguageProvider", "Failed to determine language to use: ${e.message}", e)
+            LanguageManager.getDefaultLanguage()
         }
-    }
-
-    val languageContext = remember(resolvedInitial) {
-        LanguageContext(resolvedInitial)
+        
+        android.util.Log.d("LanguageProvider", "Final language to use: ${languageToUse.code}")
+        
+        // 使用确定的语言直接创建LanguageContext
+        val languageCtx = LanguageContext(ctx, languageToUse)
+        
+        // 确保语言设置被应用
+        try {
+            languageCtx.changeLanguage(languageToUse)
+        } catch (e: Exception) {
+            android.util.Log.e("LanguageProvider", "Failed to apply language: ${e.message}", e)
+        }
+        
+        languageCtx
     }
 
     // 提供语言上下文给子组件

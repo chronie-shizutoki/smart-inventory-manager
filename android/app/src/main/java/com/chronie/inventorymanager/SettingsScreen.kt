@@ -209,26 +209,10 @@ private fun LanguageSetting() {
         selectedLanguage = currentLanguage,
         languages = languages,
         onLanguageChanged = { newLanguage ->
-            // 更新语言上下文
+            // 只需要调用LanguageContext的changeLanguage方法，它已经包含了保存到SharedPreferences和应用语言到资源的逻辑
             languageContext.changeLanguage(newLanguage)
-
-            // 尝试应用系统级 locale 更改并重启 Activity，以便 stringResource 使用新语言
-            try {
-                val res = ctx.resources
-                val conf = res.configuration
-                conf.setLocale(newLanguage.locale)
-                @Suppress("DEPRECATION")
-                res.updateConfiguration(conf, res.displayMetrics)
-            } catch (_: Exception) {
-            }
-            // 保存偏好以便 Activity 重启/重新创建时保留所选语言
-            try {
-                ctx.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE)
-                    .edit()
-                    .putString("preferred_language", newLanguage.code)
-                    .apply()
-            } catch (_: Exception) {
-            }
+            
+            // 重新创建Activity以应用新语言
             activity?.recreate()
         }
     )
