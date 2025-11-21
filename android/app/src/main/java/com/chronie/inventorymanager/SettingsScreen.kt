@@ -41,6 +41,10 @@ import com.chronie.inventorymanager.liquidglass.backdrop.backdrops.rememberCanva
 import com.chronie.inventorymanager.liquidglass.backdrop.effects.blur
 import com.chronie.inventorymanager.liquidglass.backdrop.highlight.Highlight
 import com.chronie.inventorymanager.liquidglass.backdrop.shadow.Shadow
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * 设置界面主组件
@@ -98,6 +102,59 @@ private fun SettingsContent(
                 // 语言选择控件（已在下方实现）
                 LanguageSetting()
             }
+        }
+        
+        // 版本信息显示
+        VersionInfoDisplay()
+    }
+}
+
+/**
+ * 版本信息显示组件
+ */
+@Composable
+private fun VersionInfoDisplay(
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val (appVersion, buildTime) = remember {
+        // 获取版本信息和构建时间
+        val packageInfo: PackageInfo? = try {
+            context.packageManager.getPackageInfo(context.packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+        
+        val versionName = packageInfo?.versionName ?: "v.1.20251121.01"
+        
+        // 获取构建时间
+        val buildTimestamp = packageInfo?.lastUpdateTime ?: System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val formattedBuildTime = dateFormat.format(Date(buildTimestamp))
+        
+        Pair(versionName, formattedBuildTime)
+    }
+    
+    GlassCard(modifier = Modifier.fillMaxWidth(), cornerRadius = 12.dp, backgroundAlpha = 0.8f) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "$appVersion",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Build Time: $buildTime",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
         }
     }
 }

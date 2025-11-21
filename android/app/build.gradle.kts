@@ -1,3 +1,5 @@
+import java.util.*
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -14,8 +16,28 @@ android {
         applicationId = "com.chronie.inventorymanager"
         minSdk = 29
         targetSdk = 36
-        versionCode = 2
-        versionName = "1.0.1"
+        // 使用更兼容的日期格式化方式
+        fun getBuildDate(): String {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH) + 1
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            return String.format("%04d%02d%02d", year, month, day)
+        }   
+
+        fun getBuildTime(): String {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            return String.format("%02d%02d", hour, minute)
+        }   
+
+        val buildDate = getBuildDate()
+        val defaultBuildNumber = getBuildTime()
+        val buildNumber = project.findProperty("buildNumber")?.toString() ?: defaultBuildNumber
+
+        versionCode = (System.currentTimeMillis() / 1000).toInt()
+        versionName = "1.${buildDate}.${buildNumber}"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
