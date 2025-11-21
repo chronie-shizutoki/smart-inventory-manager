@@ -280,7 +280,7 @@ private fun LiquidBottomTabsImpl(
                 .then(interactiveHighlight.modifier)
                 .height(60f.dp)
                 .fillMaxWidth() // 填充父容器宽度，不应该缩小，否则会出现宽度不足的情况
-                .padding(4f.dp),
+                .padding(horizontal = 4f.dp),
             verticalAlignment = Alignment.CenterVertically,
             content = content
         )
@@ -328,8 +328,8 @@ private fun LiquidBottomTabsImpl(
                 .padding(horizontal = 4f.dp)
                 .graphicsLayer {
                     translationX =
-                        if (isLtr) dampedDragAnimation.value * tabWidth + panelOffset + 4f.dp.toPx()
-                        else size.width - (dampedDragAnimation.value + 1f) * tabWidth + panelOffset - 4f.dp.toPx()
+                        if (isLtr) dampedDragAnimation.value * tabWidth + panelOffset
+                        else size.width - (dampedDragAnimation.value + 1f) * tabWidth + panelOffset
                 }
                 .then(interactiveHighlight.gestureModifier)
                 .then(dampedDragAnimation.modifier)
