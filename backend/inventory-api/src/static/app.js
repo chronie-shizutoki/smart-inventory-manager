@@ -96,12 +96,43 @@ function updateDocumentDirection(locale) {
 // 初始设置文本方向
 updateDocumentDirection(i18n.global.locale);
 
+// 解析URL参数的函数
+function getUrlParams() {
+    console.log('当前URL:', window.location.href);
+    console.log('URL查询参数:', window.location.search);
+    const params = new URLSearchParams(window.location.search);
+    const result = {};
+    params.forEach((value, key) => {
+        result[key] = value;
+        console.log('解析到参数:', key, '=', value);
+    });
+    return result;
+}
+
 // 创建Vue应用
 const app = createApp({
-
+    
     data() {
-    return {
-        currentView: 'inventory',
+            // 首先尝试从URL获取page参数
+            const url = window.location.href;
+            const paramMatch = url.match(/[?&]page=([^&]+)/);
+            
+            // 设置默认视图
+            let defaultView = 'inventory';
+            
+            // 如果找到有效的page参数，则覆盖默认视图
+            if (paramMatch && paramMatch[1]) {
+                const pageValue = paramMatch[1];
+                const validViews = ['inventory', 'add', 'purchaseList'];
+                if (validViews.includes(pageValue)) {
+                    console.log('从URL参数设置默认视图为:', pageValue);
+                    defaultView = pageValue;
+                }
+            }
+            
+            // 返回数据对象，使用确定的默认视图
+            return {
+        currentView: defaultView,
         currentLocale: i18n.global.locale,
         searchQuery: '',
         selectedCategory: '',
@@ -197,6 +228,8 @@ const app = createApp({
             }
             };
         },
+        
+
     
     computed: {
         // 过滤后的物品列表

@@ -274,11 +274,7 @@ data class BottomNavItem(
 // 添加物品页面
 @Composable
 fun AddItemScreen() {
-    com.chronie.inventorymanager.presentation.ui.AddItemScreen(
-        navigateBack = {
-            // Navigation is handled by the bottom navigation
-        }
-    )
+    com.chronie.inventorymanager.presentation.ui.AddItemScreen()
 }
 
 // 采购清单页面
