@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -25,12 +26,32 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
+import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.rememberDatePickerState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.domain.model.InventoryItem
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+// 移除未使用的导入
+import androidx.compose.runtime.LaunchedEffect
 import com.chronie.inventorymanager.presentation.viewmodel.AddItemViewModel
 import com.chronie.inventorymanager.utils.CategoryNameConverter
-import com.chronie.inventorymanager.ui.theme.getGlassColors
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -50,7 +71,7 @@ fun AddItemScreen(
     // 使用CompositionLocal来获取当前主题状态
     val currentTheme = MaterialTheme.colorScheme
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    // 使用基本颜色值
     
     // 响应式主题监听器
     DisposableEffect(isLightTheme) {
@@ -108,18 +129,18 @@ fun AddItemScreen(
         }
     }
 
-    // 液态玻璃主背景效果 - 更丰富的渐变，更好地适应不同主题
+    // 黑白主题主背景效果
     val backgroundBrush = Brush.verticalGradient(
         colors = when {
             isLightTheme -> listOf(
-                Color(0xFFF8F9FF),
-                Color(0xFFE8EFFF),
-                Color(0xFFFAF8FF)
+                Color.White,
+                Color(0xFFF5F5F5),
+                Color.White
             )
             else -> listOf(
-                Color(0xFF0A0A0A),
-                Color(0xFF151515),
-                Color(0xFF0D0D0D)
+                Color.Black,
+                Color(0xFF1A1A1A),
+                Color.Black
             )
         }
     )
@@ -127,11 +148,11 @@ fun AddItemScreen(
     // 表单容器液态玻璃效果 - 使用更适合主题的渐变
     val containerBrush = Brush.verticalGradient(
         colors = listOf(
-            glassColors.glassTop,
-            glassColors.glassBottom
+            if (isLightTheme) Color(0xFFF5F5F5) else Color(0xFF2A2A2A),
+            if (isLightTheme) Color(0xFFE8E8E8) else Color(0xFF333333)
         ),
         startY = 0f,
-        endY = 300f // 增加渐变范围使效果更明显
+        endY = 300f
     )
     
     // 使用Column替代Scaffold避免标题栏占位
@@ -139,7 +160,7 @@ fun AddItemScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundBrush)
-            .padding(16.dp)
+            .padding(start = 16.dp, top = 16.dp, end = 16.dp) // 只设置水平和顶部padding，移除底部padding
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
@@ -150,11 +171,7 @@ fun AddItemScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                // 标题区域
-                GlassTitleSection(
-                    title = stringResource(R.string.add_title),
-                    subtitle = stringResource(R.string.add_edittitle)
-                )
+                // 移除了标题区域
                 
                 // 添加更多错误处理的Toast提示
                 // 物品名称
@@ -166,7 +183,7 @@ fun AddItemScreen(
                         nameError = null
                     },
                     label = stringResource(R.string.add_name),
-                    placeholder = stringResource(R.string.add_name_placeholder),
+                    placeholder = "",
                     leadingIcon = Icons.Default.Title,
                     errorMessage = nameError,
                     keyboardOptions = KeyboardOptions(
@@ -192,7 +209,7 @@ fun AddItemScreen(
                         categoryError = null
                     },
                     label = stringResource(R.string.add_category),
-                    placeholder = stringResource(R.string.add_selectcategory),
+                    placeholder = "",
                     items = availableCategories.map { CategoryNameConverter.getDisplayName(it, context) },
                     leadingIcon = Icons.Default.Category,
                     errorMessage = categoryError
@@ -209,7 +226,7 @@ fun AddItemScreen(
                         }
                     },
                     label = stringResource(R.string.add_quantity),
-                    placeholder = stringResource(R.string.add_quantity_placeholder),
+                    placeholder = "",
                     leadingIcon = Icons.Default.Numbers,
                     errorMessage = quantityError,
                     keyboardOptions = KeyboardOptions(
@@ -229,7 +246,7 @@ fun AddItemScreen(
                         }
                     },
                     label = stringResource(R.string.add_minquantity),
-                    placeholder = stringResource(R.string.add_minquantity_placeholder),
+                    placeholder = "",
                     leadingIcon = Icons.Default.ShoppingCart,
                     errorMessage = minStockError,
                     keyboardOptions = KeyboardOptions(
@@ -243,7 +260,7 @@ fun AddItemScreen(
                     value = unit,
                     onValueChange = { unit = it },
                     label = stringResource(R.string.add_unit),
-                    placeholder = stringResource(R.string.add_unit_placeholder),
+                    placeholder = "",
                     leadingIcon = Icons.Default.FormatColorFill,
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
@@ -252,17 +269,16 @@ fun AddItemScreen(
                 
                 // 到期日期 - 支持直接文字输入
                 GlassDateField(
+                    label = stringResource(R.string.add_expirydate),
                     value = expiryDate,
                     onValueChange = { 
                         expiryDate = it
                         // 实时清除错误状态
                         dateError = null
                     },
-                    label = stringResource(R.string.add_expirydate),
-                    placeholder = stringResource(R.string.add_expirydate_placeholder),
-                    leadingIcon = Icons.Default.CalendarToday,
-                    modifier = Modifier.fillMaxWidth(),
-                    errorMessage = dateError
+                    isError = dateError != null,
+                    errorMessage = dateError.orEmpty(),
+                    modifier = Modifier.fillMaxWidth()
                 )
                 
                 // 描述
@@ -270,7 +286,7 @@ fun AddItemScreen(
                     value = description,
                     onValueChange = { description = it },
                     label = stringResource(R.string.add_description),
-                    placeholder = stringResource(R.string.add_description_placeholder),
+                    placeholder = "",
                     leadingIcon = Icons.Default.Description,
                     singleLine = false,
                     keyboardOptions = KeyboardOptions(
@@ -448,7 +464,8 @@ fun GlassTitleSection(
     modifier: Modifier = Modifier
 ) {
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    // 使用基本颜色值
+    val textSecondaryColor = if (isLightTheme) Color.Gray else Color.LightGray
     
     Column(
         modifier = modifier
@@ -461,19 +478,14 @@ fun GlassTitleSection(
             style = androidx.compose.material3.Typography().headlineSmall.copy(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        glassColors.primary,
-                        glassColors.secondary
-                    )
-                )
+                color = if (isLightTheme) Color.Black else Color.White
             )
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = subtitle,
             style = androidx.compose.material3.Typography().bodyMedium.copy(
-                color = glassColors.textSecondary
+                color = textSecondaryColor
             )
         )
     }
@@ -486,22 +498,22 @@ fun GlassCardContainer(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    // 使用基本颜色值
     
     val containerBrush = Brush.verticalGradient(
-        colors = listOf(
-            glassColors.glassTop,
-            glassColors.glassBottom
-        ),
-        startY = 0f,
-        endY = 300f // 增加渐变范围使效果更明显
+          colors = listOf(
+              if (isLightTheme) Color(0xFFF5F5F5) else Color(0xFF2A2A2A),
+              if (isLightTheme) Color(0xFFE8E8E8) else Color(0xFF333333)
+          ),
+          startY = 0f,
+          endY = 300f // 增加渐变范围使效果更明显
     )
     
-    // 根据主题调整阴影效果
+    // 黑白主题的阴影效果
     val shadowColor = if (isLightTheme) {
-        glassColors.primary.copy(alpha = 0.2f)
+        Color.Black.copy(alpha = 0.1f)
     } else {
-        glassColors.primary.copy(alpha = 0.4f) // 深色主题下增加阴影透明度
+        Color.White.copy(alpha = 0.1f)
     }
     
     Box(
@@ -514,16 +526,16 @@ fun GlassCardContainer(
             )
             .background(containerBrush, RoundedCornerShape(20.dp))
             .border(
-                width = 1.dp,
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        glassColors.border.copy(alpha = if (isLightTheme) 0.8f else 0.6f),
-                        glassColors.border.copy(alpha = 0.5f),
-                        glassColors.border.copy(alpha = if (isLightTheme) 0.8f else 0.6f)
-                    )
-                ),
-                shape = RoundedCornerShape(20.dp)
-            )
+                    width = 1.dp,
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            if (isLightTheme) Color.Gray.copy(alpha = 0.4f) else Color.White.copy(alpha = 0.2f),
+                            if (isLightTheme) Color.Gray.copy(alpha = 0.2f) else Color.White.copy(alpha = 0.1f),
+                            if (isLightTheme) Color.Gray.copy(alpha = 0.4f) else Color.White.copy(alpha = 0.2f)
+                        )
+                    ),
+                    shape = RoundedCornerShape(20.dp)
+                )
             .padding(24.dp)
     ) {
         Column(content = content)
@@ -538,38 +550,24 @@ fun GlassSaveButton(
     modifier: Modifier = Modifier
 ) {
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    // 使用基本颜色值
     
     val buttonBrush = Brush.verticalGradient(
         colors = listOf(
-            glassColors.primary.copy(alpha = 0.9f),
-            glassColors.secondary.copy(alpha = 0.9f)
+            if (isLightTheme) Color.Black else Color.White,
+            if (isLightTheme) Color.Gray else Color.Gray
         )
     )
     
     Button(
         onClick = onClick,
         modifier = modifier
-            .height(56.dp)
-            .shadow(
-                elevation = 8.dp,
-                spotColor = glassColors.primary.copy(alpha = 0.3f)
-            )
-            .border(
-                width = 1.dp,
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        glassColors.primary.copy(alpha = 0.8f),
-                        glassColors.secondary.copy(alpha = 0.8f)
-                    )
-                ),
-                shape = RoundedCornerShape(16.dp)
-            ),
+            .height(56.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = Color.White
-        ),
-        shape = RoundedCornerShape(16.dp)
+        )
     ) {
         Box(
             modifier = Modifier
@@ -582,7 +580,7 @@ fun GlassSaveButton(
                 style = androidx.compose.material3.Typography().labelLarge.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = Color.White
+                    color = if (isLightTheme) Color.White else Color.Black
                 )
             )
         }
@@ -604,13 +602,15 @@ fun GlassTextField(
     modifier: Modifier = Modifier
 ) {
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    // 直接使用基本颜色值而非getGlassColors
+    val glassTopColor = if (isLightTheme) Color(0xFFF0F0F0) else Color(0xFF2A2A2A)
+    val glassBottomColor = if (isLightTheme) Color(0xFFE0E0E0) else Color(0xFF333333)
     
     // 液态玻璃效果 - 根据主题调整透明度
     val glassBrush = Brush.verticalGradient(
         colors = listOf(
-            glassColors.glassTop.copy(alpha = if (isLightTheme) 0.85f else 0.75f),
-            glassColors.glassBottom.copy(alpha = if (isLightTheme) 0.9f else 0.8f)
+            glassTopColor.copy(alpha = if (isLightTheme) 0.85f else 0.75f),
+            glassBottomColor.copy(alpha = if (isLightTheme) 0.9f else 0.8f)
         )
     )
     
@@ -622,12 +622,7 @@ fun GlassTextField(
                 .background(glassBrush, RoundedCornerShape(16.dp))
                 .border(
                     width = 1.dp,
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            glassColors.border,
-                            glassColors.border.copy(alpha = 0.5f)
-                        )
-                    ),
+                    color = if (isLightTheme) Color.Gray.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.1f),
                     shape = RoundedCornerShape(16.dp)
                 )
                 .padding(1.dp)
@@ -635,10 +630,10 @@ fun GlassTextField(
             OutlinedTextField(
                     value = value,
                     onValueChange = onValueChange,
-                    label = { Text(label, color = glassColors.text) },
-                    placeholder = { Text(placeholder, color = glassColors.textSecondary.copy(alpha = 0.7f)) },
+                    label = { Text(label, color = if (isLightTheme) Color.Black else Color.White) },
+                    placeholder = { Text(placeholder, color = if (isLightTheme) Color.Gray else Color.Gray.copy(alpha = 0.7f)) },
                     leadingIcon = if (leadingIcon != null) {
-                        { Icon(leadingIcon, contentDescription = null, tint = glassColors.primary) }
+                        { Icon(leadingIcon, contentDescription = null, tint = if (isLightTheme) Color.Black else Color.White) }
                     } else null,
                     isError = errorMessage != null,
                     singleLine = singleLine,
@@ -646,29 +641,13 @@ fun GlassTextField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.Transparent),
-                    textStyle = TextStyle(color = glassColors.text),
+                    textStyle = TextStyle(color = if (isLightTheme) Color.Black else Color.White),
                     colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = if (errorMessage != null) MaterialTheme.colorScheme.error else Color.Transparent,
                     unfocusedBorderColor = if (errorMessage != null) MaterialTheme.colorScheme.error else Color.Transparent,
                     disabledBorderColor = Color.Transparent,
-                    focusedLabelColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
-                    unfocusedLabelColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.textSecondary,
-                    cursorColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
-                    focusedPlaceholderColor = glassColors.textSecondary.copy(alpha = 0.7f),
-                    unfocusedPlaceholderColor = glassColors.textSecondary.copy(alpha = 0.5f),
-                    focusedTrailingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
-                    unfocusedTrailingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.container,
-                    focusedLeadingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
-                    unfocusedLeadingIconColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.container,
-                    errorBorderColor = MaterialTheme.colorScheme.error,
-                    errorCursorColor = MaterialTheme.colorScheme.error,
-                    errorSupportingTextColor = MaterialTheme.colorScheme.error,
-                    errorLabelColor = MaterialTheme.colorScheme.error,
-                    errorLeadingIconColor = MaterialTheme.colorScheme.error,
-                    errorTrailingIconColor = MaterialTheme.colorScheme.error,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent
+                    focusedLabelColor = if (errorMessage != null) MaterialTheme.colorScheme.error else if (isLightTheme) Color.Black else Color.White,
+                    unfocusedLabelColor = if (errorMessage != null) MaterialTheme.colorScheme.error else if (isLightTheme) Color.Gray else Color.Gray.copy(alpha = 0.7f)
                 )
             )
         }
@@ -699,13 +678,15 @@ fun GlassDropdownField(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    // 直接使用基本颜色值而非getGlassColors
+    val glassTopColor = if (isLightTheme) Color(0xFFF0F0F0) else Color(0xFF2A2A2A)
+    val glassBottomColor = if (isLightTheme) Color(0xFFE0E0E0) else Color(0xFF333333)
     
     // 液态玻璃效果 - 根据主题调整透明度
     val glassBrush = Brush.verticalGradient(
         colors = listOf(
-            glassColors.glassTop.copy(alpha = if (isLightTheme) 0.85f else 0.75f),
-            glassColors.glassBottom.copy(alpha = if (isLightTheme) 0.9f else 0.8f)
+            glassTopColor.copy(alpha = if (isLightTheme) 0.85f else 0.75f),
+            glassBottomColor.copy(alpha = if (isLightTheme) 0.9f else 0.8f)
         )
     )
     
@@ -717,12 +698,7 @@ fun GlassDropdownField(
                 .background(glassBrush, RoundedCornerShape(16.dp))
                 .border(
                     width = 1.dp,
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            glassColors.border,
-                            glassColors.border.copy(alpha = 0.5f)
-                        )
-                    ),
+                    color = if (isLightTheme) Color.Gray.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.1f),
                     shape = RoundedCornerShape(16.dp)
                 )
                 .padding(1.dp)
@@ -734,10 +710,10 @@ fun GlassDropdownField(
                 OutlinedTextField(
                     value = value,
                     onValueChange = { onValueChange(it) },
-                    label = { Text(label, color = glassColors.text) },
-                    placeholder = { Text(placeholder, color = glassColors.textSecondary.copy(alpha = 0.7f)) },
+                    label = { Text(label, color = if (isLightTheme) Color.Black else Color.White) },
+                    placeholder = { Text(placeholder, color = if (isLightTheme) Color.Gray else Color.Gray.copy(alpha = 0.7f)) },
                     leadingIcon = if (leadingIcon != null) {
-                        { Icon(leadingIcon, contentDescription = null, tint = glassColors.primary) }
+                        { Icon(leadingIcon, contentDescription = null, tint = if (isLightTheme) Color.Black else Color.White) }
                     } else null,
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
@@ -750,18 +726,18 @@ fun GlassDropdownField(
                         .fillMaxWidth()
                         .menuAnchor()
                         .background(Color.Transparent),
-                    textStyle = TextStyle(color = glassColors.text),
+                    textStyle = TextStyle(color = if (isLightTheme) Color.Black else Color.White),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent,
                         disabledBorderColor = Color.Transparent,
-                        focusedLabelColor = glassColors.primary,
-                        unfocusedLabelColor = glassColors.textSecondary,
-                        cursorColor = glassColors.primary,
-                        focusedTrailingIconColor = glassColors.primary,
-                        unfocusedTrailingIconColor = glassColors.container,
-                        focusedLeadingIconColor = glassColors.primary,
-                        unfocusedLeadingIconColor = glassColors.container
+                        focusedLabelColor = if (isLightTheme) Color.Black else Color.White,
+                        unfocusedLabelColor = if (isLightTheme) Color.Gray else Color.Gray.copy(alpha = 0.7f),
+                        cursorColor = if (isLightTheme) Color.Black else Color.White,
+                        focusedTrailingIconColor = if (isLightTheme) Color.Black else Color.White,
+                        unfocusedTrailingIconColor = if (isLightTheme) Color.Gray else Color.Gray.copy(alpha = 0.5f),
+                        focusedLeadingIconColor = if (isLightTheme) Color.Black else Color.White,
+                        unfocusedLeadingIconColor = if (isLightTheme) Color.Gray else Color.Gray.copy(alpha = 0.5f)
                     )
                 )
                 
@@ -770,12 +746,12 @@ fun GlassDropdownField(
                     onDismissRequest = { expanded = false },
                     modifier = Modifier
                         .background(
-                            color = glassColors.glassTop.copy(alpha = 0.95f),
+                            color = glassTopColor.copy(alpha = 0.95f),
                             shape = RoundedCornerShape(12.dp)
                         )
                         .border(
                             width = 1.dp,
-                            color = glassColors.border,
+                            color = if (isLightTheme) Color.Gray.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.1f),
                             shape = RoundedCornerShape(12.dp)
                         )
                 ) {
@@ -803,85 +779,93 @@ fun GlassDropdownField(
     }
 }
 
-/** 液态玻璃日期输入框 - 支持直接文字输入 */
+/** 液态玻璃风格日期输入组件 */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GlassDateField(
+    label: String,
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
-    placeholder: String,
-    leadingIcon: androidx.compose.ui.graphics.vector.ImageVector? = null,
-    errorMessage: String? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    errorMessage: String = ""
 ) {
-    val isLightTheme = !androidx.compose.foundation.isSystemInDarkTheme()
-    val glassColors = getGlassColors(isLightTheme)
+    val showDatePicker = remember {
+        mutableStateOf(false)
+    }
     
-    // 液态玻璃效果
-    val glassBrush = Brush.verticalGradient(
-        colors = listOf(
-            glassColors.glassTop,
-            glassColors.glassBottom
-        )
-    )
+    // 基础颜色配置
+    val textColor = if (isError) Color.Red else Color.Black
     
     Column(modifier = modifier) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .shadow(8.dp, RoundedCornerShape(16.dp), clip = false)
-                .background(glassBrush, RoundedCornerShape(16.dp))
-                .border(
-                    width = 1.dp,
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            glassColors.border,
-                            glassColors.border.copy(alpha = 0.5f)
-                        )
-                    ),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(1.dp)
+        // 可点击的日期输入组件
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+            .border(1.dp, textColor, RoundedCornerShape(12.dp))
+            .clickable {
+                showDatePicker.value = true
+            }
         ) {
-            OutlinedTextField(
-                value = value,
-                onValueChange = onValueChange,
-                label = { Text(text = label) },
-                placeholder = { Text(text = placeholder) },
-                leadingIcon = if (leadingIcon != null) {
-                    { Icon(leadingIcon, contentDescription = null, tint = glassColors.primary) }
-                } else null,
-                trailingIcon = {
-                    Icon(
-                        Icons.Default.DateRange,
-                        contentDescription = null,
-                        tint = glassColors.primary
-                    )
-                },
-                isError = errorMessage != null,
-                singleLine = true,
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Transparent),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.primary,
-                    unfocusedBorderColor = if (errorMessage != null) MaterialTheme.colorScheme.error else glassColors.border,
-                    focusedLabelColor = glassColors.primary,
-                    unfocusedLabelColor = glassColors.textSecondary,
-                    focusedPlaceholderColor = glassColors.textSecondary.copy(alpha = 0.7f),
-                    unfocusedPlaceholderColor = glassColors.textSecondary.copy(alpha = 0.5f),
-                    cursorColor = glassColors.primary,
-                    focusedSupportingTextColor = glassColors.primary,
-                    unfocusedSupportingTextColor = glassColors.textSecondary,
-                    focusedTrailingIconColor = glassColors.primary,
-                    unfocusedTrailingIconColor = glassColors.container,
-                    focusedLeadingIconColor = glassColors.primary,
-                    unfocusedLeadingIconColor = glassColors.container
-                ),
-                textStyle = androidx.compose.material3.Typography().bodyLarge.copy(
-                    color = glassColors.text
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = if (value.isNotEmpty()) value else label,
+                    color = textColor
                 )
+                Icon(
+                    imageVector = Icons.Default.CalendarToday,
+                    contentDescription = "Calendar",
+                    tint = textColor
+                )
+            }
+        }
+        
+        // 错误信息
+        if (isError && errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(start = 16.dp, top = 4.dp)
             )
+        }
+    }
+    
+    // 日期选择对话框
+    if (showDatePicker.value) {
+        val datePickerState = rememberDatePickerState()
+        
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker.value = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let {
+                        val date = Instant.ofEpochMilli(it)
+                            .atZone(ZoneOffset.UTC)
+                            .toLocalDate()
+                        val formattedDate = date.format(DateTimeFormatter.ISO_LOCAL_DATE)
+                        onValueChange(formattedDate)
+                    }
+                    showDatePicker.value = false
+                }) {
+                    Text("确定")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showDatePicker.value = false
+                }) {
+                    Text("取消")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
         }
     }
 }

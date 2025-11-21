@@ -54,18 +54,13 @@ fun PurchaseListScreen(
     val purchaseList by viewModel.purchaseList.collectAsState()
     val scope = rememberCoroutineScope()
     
-    // 刷新列表
-    fun refreshList() {
-        scope.launch {
-            viewModel.refreshList()
-        }
-    }
+    // 直接在需要的地方使用scope.launch，不再定义单独的函数
     
-    Scaffold {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+    // 移除Scaffold，避免额外的布局占位和padding问题
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
             // 刷新按钮行
             Row(
                 modifier = Modifier
@@ -74,7 +69,11 @@ fun PurchaseListScreen(
                 horizontalArrangement = Arrangement.End
             ) {
                 IconButton(
-                    onClick = { refreshList() },
+                    onClick = { 
+                        scope.launch {
+                            viewModel.refreshList()
+                        }
+                    },
                     enabled = !isRefreshing
                 ) {
                     Icon(
@@ -127,7 +126,11 @@ fun PurchaseListScreen(
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             Button(
-                                onClick = { refreshList() }
+                                onClick = { 
+                                    scope.launch {
+                                        viewModel.refreshList()
+                                    }
+                                }
                             ) {
                                 Text("重试")
                             }
@@ -186,7 +189,11 @@ fun PurchaseListScreen(
                             items(purchaseList) { item ->
                                 PurchaseListItemCard(
                                     item = item,
-                                    onRefresh = { refreshList() }
+                                    onRefresh = { 
+                                        scope.launch {
+                                            viewModel.refreshList()
+                                        }
+                                    }
                                 )
                             }
                         }
@@ -194,7 +201,6 @@ fun PurchaseListScreen(
                 }
             }
         }
-    }
 }
 
 

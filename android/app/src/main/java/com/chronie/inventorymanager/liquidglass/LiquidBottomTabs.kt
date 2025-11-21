@@ -168,9 +168,10 @@ private fun LiquidBottomTabsImpl(
     val accentColor = if (isLightTheme) Color(0xFF0088FF) else Color(0xFF0091FF)
     val containerColor = if (isLightTheme) Color(0xFFFAFAFA).copy(0.4f) else Color(0xFF121212).copy(0.4f)
 
+    // 悬浮胶囊效果：直接居中显示，不额外设置padding
     Box(
-        modifier = modifier.fillMaxWidth().padding(bottom = 16.dp),
-        contentAlignment = Alignment.BottomCenter
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
     ) {
         BoxWithConstraints(
             Modifier.fillMaxWidth(),
@@ -256,7 +257,7 @@ private fun LiquidBottomTabsImpl(
         }
 
         Row(
-            Modifier
+            modifier = Modifier
                 .graphicsLayer {
                     translationX = panelOffset
                 }
@@ -278,7 +279,7 @@ private fun LiquidBottomTabsImpl(
                 )
                 .then(interactiveHighlight.modifier)
                 .height(60f.dp)
-                .fillMaxWidth()
+                .fillMaxWidth() // 填充父容器宽度，不应该缩小，否则会出现宽度不足的情况
                 .padding(4f.dp),
             verticalAlignment = Alignment.CenterVertically,
             content = content
@@ -288,7 +289,7 @@ private fun LiquidBottomTabsImpl(
             LocalLiquidBottomTabScale provides { lerp(1f, 1.2f, dampedDragAnimation.pressProgress) }
         ) {
             Row(
-                Modifier
+                modifier = Modifier
                     .clearAndSetSemantics {}
                     .alpha(0f)
                     .graphicsLayer {
@@ -314,7 +315,7 @@ private fun LiquidBottomTabsImpl(
                     )
                     .then(interactiveHighlight.modifier)
                     .height(56f.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth() // 保持完整宽度，避免出现布局占位问题
                     .padding(horizontal = 4f.dp)
                     .graphicsLayer(colorFilter = ColorFilter.tint(accentColor)),
                 verticalAlignment = Alignment.CenterVertically,

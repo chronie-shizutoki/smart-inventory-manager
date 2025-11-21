@@ -75,60 +75,72 @@ fun SmartInventoryManagerApp() {
     val navController = rememberNavController()
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
     
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    val title = when (selectedIndex) {
-                        0 -> stringResource(id = R.string.nav_inventory)
-                        1 -> stringResource(id = R.string.nav_add)
-                        2 -> stringResource(id = R.string.nav_purchaselist)
-                        3 -> stringResource(id = R.string.nav_menu)
-                        else -> stringResource(id = R.string.app_name)
-                    }
-                    Text(title)
+    // 移除Scaffold，直接使用Box作为根组件，避免任何默认的padding或占位
+    Column(modifier = Modifier.fillMaxSize()) {
+        // 顶部应用栏
+        TopAppBar(
+            title = {
+                val title = when (selectedIndex) {
+                    0 -> stringResource(id = R.string.nav_inventory)
+                    1 -> stringResource(id = R.string.nav_add)
+                    2 -> stringResource(id = R.string.nav_purchaselist)
+                    3 -> stringResource(id = R.string.nav_menu)
+                    else -> stringResource(id = R.string.app_name)
                 }
-            )
-        },
-        bottomBar = {
-            LiquidBottomNavigation(
-                selectedIndex = selectedIndex,
-                onTabSelected = { index ->
-                    selectedIndex = index
-                    val route = when (index) {
-                        0 -> "inventory"
-                        1 -> "add"
-                        2 -> "purchaselist"
-                        3 -> "menu"
-                        else -> "inventory"
-                    }
-                    navController.navigate(route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                Text(title)
+            }
+        )
+        
+        // 主内容区域
+        // 使用Box来容纳内容和悬浮的导航栏
+        Box(modifier = Modifier.fillMaxSize()) {
+            // 主内容区域：允许内容完全填充整个屏幕，包括导航栏所在区域
+            NavHost(
+                navController = navController,
+                startDestination = "inventory",
+                modifier = Modifier.fillMaxSize() // 让内容可以填充整个屏幕，包括导航栏区域
+            ) {
+                composable("inventory") {
+                    InventoryScreen()
+                }
+                composable("add") {
+                    AddItemScreen()
+                }
+                composable("purchaselist") {
+                    PurchaseListScreen()
+                }
+                composable("menu") {
+                    MenuScreen(navController)
+                }
+            }
+            
+            // 悬浮导航栏：放置在内容上方，实现完全悬浮效果
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 20.dp) // 离屏幕底部的距离
+            ) {
+                LiquidBottomNavigation(
+                    selectedIndex = selectedIndex,
+                    onTabSelected = { index ->
+                        selectedIndex = index
+                        val route = when (index) {
+                            0 -> "inventory"
+                            1 -> "add"
+                            2 -> "purchaselist"
+                            3 -> "menu"
+                            else -> "inventory"
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                        navController.navigate(route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
-                }
-            )
-        }
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = "inventory",
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable("inventory") {
-                InventoryScreen()
-            }
-            composable("add") {
-                AddItemScreen()
-            }
-            composable("purchaselist") {
-                PurchaseListScreen()
-            }
-            composable("menu") {
-                MenuScreen(navController)
+                )
             }
         }
     }
