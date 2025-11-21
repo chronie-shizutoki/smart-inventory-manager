@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.data.network.InventoryApiService
@@ -96,7 +97,7 @@ fun PurchaseListScreen(
     
     val viewModel: PurchaseListViewModel = viewModel(factory = viewModelFactory)
     val context = LocalContext.current
-    val isLightTheme = MaterialTheme.colorScheme.background == Color.White
+    val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
     val uiState by viewModel.uiState.collectAsState()
@@ -129,7 +130,7 @@ fun PurchaseListScreen(
                     Icon(
                         imageVector = Icons.Default.Refresh,
                         contentDescription = stringResource(R.string.purchaselist_refresh),
-                        tint = glassColors.text
+                        tint = if (isLightTheme) Color.Black else glassColors.text
                     )
                 }
             }
@@ -167,7 +168,7 @@ fun PurchaseListScreen(
                             Text(
                                 text = (uiState as PurchaseListUiState.Error).message,
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = glassColors.textSecondary,
+                                color = if (isLightTheme) Color.Black else glassColors.textSecondary,
                                 textAlign = TextAlign.Center
                             )
                             Spacer(modifier = Modifier.height(16.dp))
@@ -208,13 +209,13 @@ fun PurchaseListScreen(
                                 Text(
                                     text = "No purchase items at the moment",
                                     style = MaterialTheme.typography.titleMedium,
-                                    color = glassColors.textSecondary
+                                    color = if (isLightTheme) Color.Black else glassColors.textSecondary
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
                                     text = "All items are sufficiently stocked",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = glassColors.textSecondary
+                                    color = if (isLightTheme) Color.Black else glassColors.textSecondary
                                 )
                             }
                         }
@@ -231,7 +232,7 @@ fun PurchaseListScreen(
                                 Text(
                                     text = "Empty State",
                                     style = MaterialTheme.typography.bodyLarge,
-                                    color = glassColors.textSecondary,
+                                    color = if (isLightTheme) Color.Black else glassColors.textSecondary,
                                     modifier = Modifier.padding(32.dp)
                                 )
                             }
@@ -293,7 +294,7 @@ fun PurchaseListItemCard(
                         text = item.name,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = if (isLightTheme) Color.Black else glassColors.text
+                        color = if (isLightTheme) Color.Black else glassColors.textSecondary,
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
@@ -315,10 +316,10 @@ fun PurchaseListItemCard(
                     label = stringResource(R.string.purchaselist_currentquantity),
                     value = "${item.currentQuantity}${item.unit}",
                     color = if (item.currentQuantity == 0) {
-                        glassColors.error
-                    } else {
-                        glassColors.text
-                    }
+                                glassColors.error
+                            } else {
+                                if (isLightTheme) Color.Black else glassColors.text
+                            }
                 )
                 
                 QuantityInfo(
@@ -341,7 +342,7 @@ fun PurchaseListItemCard(
                 Text(
                         text = stringResource(R.string.purchaselist_lastused) + ": ${formatDate(item.lastUsedAt)}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = if (isLightTheme) Color.Black else glassColors.textSecondary
+                        color = if (isLightTheme) Color.Black else glassColors.text
                     )
             }
         }
@@ -383,7 +384,7 @@ fun QuantityInfo(
                 text = value,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Medium,
-                color = if (isLightTheme) Color.Black else color
+                color = if (isLightTheme) Color.Black else glassColors.textSecondary
             )
         }
         Text(
