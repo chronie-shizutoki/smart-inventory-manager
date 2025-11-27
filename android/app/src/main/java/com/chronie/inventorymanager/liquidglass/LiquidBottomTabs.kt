@@ -46,6 +46,11 @@ import androidx.compose.ui.util.lerp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalDensity
 import com.chronie.inventorymanager.liquidglass.backdrop.Backdrop
 import com.chronie.inventorymanager.liquidglass.backdrop.backdrops.layerBackdrop
 import com.chronie.inventorymanager.liquidglass.backdrop.backdrops.rememberCombinedBackdrop
@@ -146,11 +151,46 @@ private fun TabItem(
             modifier = Modifier.size(24.dp),
             tint = if (index == selectedIndex) accentColor else inactiveColor
         )
-        Text(
+        AutoResizeText(
             text = item.label,
             style = MaterialTheme.typography.labelSmall,
             color = if (index == selectedIndex) accentColor else inactiveColor,
-            modifier = Modifier.padding(top = 2f.dp)
+            modifier = Modifier.padding(top = 2f.dp),
+            minFontSize = 8.sp
+        )
+    }
+}
+
+@Composable
+private fun AutoResizeText(
+    text: String,
+    style: TextStyle,
+    color: Color,
+    modifier: Modifier = Modifier,
+    minFontSize: TextUnit = 8.sp
+) {
+    // 初始字体为样式中指定的字号（如未指定则使用 12.sp）。使用 Float（sp）进行数值计算以避免对 TextUnit 做减法。
+    val initialFontSize = if (style.fontSize != TextUnit.Unspecified) style.fontSize else 12.sp
+    val initialFontSizeSp = initialFontSize.value
+    val minFontSizeSp = minFontSize.value
+    var fontSizeSp by remember { androidx.compose.runtime.mutableStateOf(initialFontSizeSp) }
+
+    // BoxWithConstraints 用来获取可用宽度，如果文字超出则在 onTextLayout 中缩小字体
+    BoxWithConstraints(modifier = modifier) {
+        val density = LocalDensity.current
+
+        Text(
+            text = text,
+            color = color,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            style = style.copy(fontSize = fontSizeSp.sp),
+            onTextLayout = { result ->
+                if (result.hasVisualOverflow && fontSizeSp > minFontSizeSp) {
+                    // 每次缩小 1.sp（以数值形式），直到不溢出或达到最小字号
+                    fontSizeSp = (fontSizeSp - 1f).coerceAtLeast(minFontSizeSp)
+                }
+            }
         )
     }
 }
