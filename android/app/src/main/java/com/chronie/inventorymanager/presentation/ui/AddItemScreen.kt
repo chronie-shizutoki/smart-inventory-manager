@@ -193,35 +193,7 @@ fun AddItemScreen(
         }
     }
     
-    Box(modifier = Modifier.fillMaxSize()) {
-        // 背景装饰
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(
-                if (isLightTheme) Color(0xFFF8FAFC) else Color(0xFF0F172A)
-            )
-        ) {
-            // 装饰性圆形
-            Box(modifier = Modifier
-                .size(300.dp)
-                .absoluteOffset(x = -150.dp, y = -100.dp)
-                .background(
-                    if (isLightTheme) Color(0xFFE0F2FE) else Color(0xFF1E293B),
-                    shape = RoundedCornerShape(50)
-                )
-                .alpha(0.5f)
-            )
-            Box(modifier = Modifier
-                .size(400.dp)
-                .absoluteOffset(x = 250.dp, y = 400.dp)
-                .background(
-                    if (isLightTheme) Color(0xFFE0F7FA) else Color(0xFF334155),
-                    shape = RoundedCornerShape(50)
-                )
-                .alpha(0.3f)
-            )
-        }
-        
+    Box(modifier = Modifier.fillMaxSize().background(if (isLightTheme) Color(0xFFF8FAFC) else Color(0xFF0F172A))) {
         // 主内容
         Column(
             modifier = Modifier
@@ -230,15 +202,7 @@ fun AddItemScreen(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // 标题
-            Text(
-                text = if (editingItem != null) stringResource(R.string.add_edittitle) else stringResource(R.string.add_title),
-                style = GlassTypography.headlineMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                    color = colors.text
-                ),
-                modifier = Modifier.padding(top = 32.dp, bottom = 24.dp)
-            )
+            // 标题由统一导航/外层管理，不在此处显示
             
             // 表单卡片
             Box(
@@ -538,8 +502,9 @@ fun GlassDropdownMenu(
                     .fillMaxWidth()
                     .background(Color.Transparent)
             ) {
-                Box(
+                Column(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .background(
                             colors.container.copy(alpha = 0.95f),
                             shape = RoundedCornerShape(12.dp)
@@ -549,6 +514,7 @@ fun GlassDropdownMenu(
                             color = colors.border,
                             shape = RoundedCornerShape(12.dp)
                         )
+                        .padding(vertical = 4.dp)
                 ) {
                     items.forEachIndexed { index, item ->
                         DropdownMenuItem(
