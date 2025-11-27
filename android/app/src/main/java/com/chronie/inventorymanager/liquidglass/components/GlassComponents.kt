@@ -19,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Color
@@ -480,31 +481,35 @@ fun GlassInventoryItemCard(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                         ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Text(
-                                                text = item.name,
-                                                style =
-                                                        GlassTypography.titleMedium.copy(
+                                Row(
+                                        modifier = Modifier.weight(1f),
+                                        verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                        // 名称区域：允许换行并在右侧留出按钮空间
+                                        Column(modifier = Modifier.weight(1f)) {
+                                                Text(
+                                                        text = item.name,
+                                                        style = GlassTypography.titleMedium.copy(
                                                                 color = colors.text,
                                                                 fontWeight = FontWeight.Bold
-                                                        )
-                                        )
+                                                        ),
+                                                        maxLines = 2,
+                                                        overflow = TextOverflow.Ellipsis
+                                                )
+                                        }
                                         Spacer(modifier = Modifier.width(8.dp))
                                         // 状态指示器
                                         Box(
-                                                modifier =
-                                                        Modifier.size(8.dp)
-                                                                .background(
-                                                                        color = statusColor,
-                                                                        shape =
-                                                                                RoundedCornerShape(
-                                                                                        4.dp
-                                                                                )
-                                                                )
+                                                modifier = Modifier
+                                                        .size(8.dp)
+                                                        .background(
+                                                                color = statusColor,
+                                                                shape = RoundedCornerShape(4.dp)
+                                                        )
                                         )
                                 }
 
-                                Row {
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                                         // 编辑按钮
                                         IconButton(onClick = onEdit) {
                                                 Icon(
