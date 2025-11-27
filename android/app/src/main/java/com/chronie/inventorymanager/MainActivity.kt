@@ -190,10 +190,22 @@ fun SmartInventoryManagerApp() {
                 modifier = Modifier.fillMaxSize() // 让内容可以填充整个屏幕，包括导航栏区域
             ) {
                 composable("inventory") {
-                    InventoryScreen()
+                    InventoryScreen(
+                        onEditItem = { item ->
+                            // 将编辑的item通过参数传递给AddItemScreen
+                            navController.navigate("add/${item.id}")
+                        }
+                    )
                 }
                 composable("add") {
                     AddItemScreen()
+                }
+                // 添加一个新的路由，用于编辑现有物品
+                composable("add/{itemId}") { backStackEntry ->
+                    val itemId = backStackEntry.arguments?.getString("itemId")
+                    AddItemScreen(
+                        itemId = itemId
+                    )
                 }
                 composable("purchaselist") {
                     PurchaseListScreen()
