@@ -850,7 +850,7 @@ fun GlassDatePickerDialog(
                             onClick = { 
                                 onDateSelected(selectedYear, selectedMonth, selectedDay)
                             },
-                            label = stringResource(R.string.add_confirm),
+                            label = stringResource(R.string.add_save),
                             colors = colors
                         )
                     }

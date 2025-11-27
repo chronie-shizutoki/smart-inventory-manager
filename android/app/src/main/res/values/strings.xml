@@ -48,7 +48,6 @@
 
     <string name="add_cancel">Cancel</string>
     <string name="add_category">Category</string>
-    <string name="add_confirm">Confirm</string>
     <string name="add_date_instruction">Please enter the date information</string>
     <string name="add_day">Day</string>
     <string name="add_description">Description</string>
