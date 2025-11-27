@@ -22,6 +22,8 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.*
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
@@ -312,7 +314,7 @@ fun AddItemScreen(
                         )
                     }
                     
-                    // 按钮区域
+                    // 按钮区域 - 两按钮等宽
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -320,29 +322,35 @@ fun AddItemScreen(
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         // 取消按钮
-                        GlassButton(
-                            onClick = { 
-                                // 重置表单
-                                itemName = ""
-                                category = ""
-                                quantity = ""
-                                unit = ""
-                                minQuantity = ""
-                                description = ""
-                                expiryDate = ""
-                            },
-                            label = stringResource(R.string.add_cancel),
-                            isSecondary = true,
-                            colors = colors
-                        )
-                        
+                        Box(modifier = Modifier.weight(1f)) {
+                            GlassButton(
+                                onClick = {
+                                    // 重置表单
+                                    itemName = ""
+                                    category = ""
+                                    quantity = ""
+                                    unit = ""
+                                    minQuantity = ""
+                                    description = ""
+                                    expiryDate = ""
+                                },
+                                label = stringResource(R.string.add_cancel),
+                                isSecondary = true,
+                                colors = colors,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
                         // 保存按钮
-                        GlassButton(
-                            onClick = { handleSave() },
-                            label = if (editingItem != null) stringResource(R.string.add_update) else stringResource(R.string.add_save),
-                            isEnabled = isValidForm(),
-                            colors = colors
-                        )
+                        Box(modifier = Modifier.weight(1f)) {
+                            GlassButton(
+                                onClick = { handleSave() },
+                                label = if (editingItem != null) stringResource(R.string.add_update) else stringResource(R.string.add_save),
+                                isEnabled = isValidForm(),
+                                colors = colors,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
                     }
                 }
             }
@@ -439,7 +447,10 @@ fun GlassDropdownMenu(
     compact: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
-    
+    // 用于记录触发器（锚点）的宽度，以让下拉菜单宽度与触发器一致且受最大宽度限制
+    val anchorWidthPx = remember { mutableStateOf(0) }
+    val density = LocalDensity.current
+
     Column {
         if (!compact) {
             Text(
@@ -470,6 +481,10 @@ fun GlassDropdownMenu(
                     )
                     .alpha(colors.alpha)
                     .clickable { expanded = !expanded }
+                    .onGloballyPositioned { coords ->
+                        // 记录触发器宽度（像素）
+                        anchorWidthPx.value = coords.size.width
+                    }
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Row(
@@ -494,58 +509,71 @@ fun GlassDropdownMenu(
                 }
             }
             
-            // 下拉菜单
+            // 下拉菜单：宽度与触发器一致（或受最大宽度限制），并为内容加入展开/收起动画
+            val menuModifier = if (anchorWidthPx.value > 0) {
+                // 将像素转换为 dp，并限制最大宽度为 320.dp
+                val anchorDp = with(density) { anchorWidthPx.value.toDp() }
+                Modifier.widthIn(max = 320.dp).width(anchorDp)
+            } else {
+                Modifier.widthIn(max = 320.dp)
+            }
+
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Transparent)
+                modifier = menuModifier.background(Color.Transparent)
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            colors.container.copy(alpha = 0.95f),
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .border(
-                            width = 1.dp,
-                            color = colors.border,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .padding(vertical = 4.dp)
+                // 在弹出内容里添加动画可视化效果
+                AnimatedVisibility(
+                    visible = expanded,
+                    enter = expandVertically(expandFrom = Alignment.Top) + fadeIn(animationSpec = tween(120)),
+                    exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(animationSpec = tween(100))
                 ) {
-                    items.forEachIndexed { index, item ->
-                        DropdownMenuItem(
-                            text = { 
-                                Text(
-                                    text = item,
-                                    style = GlassTypography.bodyMedium.copy(
-                                        color = if (selectedItem == item) 
-                                            colors.primary 
-                                            else colors.text
-                                    )
-                                ) 
-                            },
-                            onClick = {
-                                onItemSelected(item)
-                                expanded = false
-                            },
-                            modifier = Modifier
-                                .background(
-                                    if (selectedItem == item) 
-                                        colors.selectedContainer.copy(alpha = 0.3f)
-                                    else Color.Transparent
-                                )
-                        )
-                        
-                        if (index < items.lastIndex) {
-                            Divider(
-                                color = colors.border,
-                                thickness = 0.5.dp,
-                                modifier = Modifier.padding(horizontal = 16.dp)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                colors.container.copy(alpha = 0.95f),
+                                shape = RoundedCornerShape(12.dp)
                             )
+                            .border(
+                                width = 1.dp,
+                                color = colors.border,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(vertical = 4.dp)
+                    ) {
+                        items.forEachIndexed { index, item ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = item,
+                                        style = GlassTypography.bodyMedium.copy(
+                                            color = if (selectedItem == item)
+                                                colors.primary
+                                            else colors.text
+                                        )
+                                    )
+                                },
+                                onClick = {
+                                    onItemSelected(item)
+                                    expanded = false
+                                },
+                                modifier = Modifier
+                                    .background(
+                                        if (selectedItem == item)
+                                            colors.selectedContainer.copy(alpha = 0.3f)
+                                        else Color.Transparent
+                                    )
+                            )
+
+                            if (index < items.lastIndex) {
+                                Divider(
+                                    color = colors.border,
+                                    thickness = 0.5.dp,
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                )
+                            }
                         }
                     }
                 }
@@ -623,7 +651,8 @@ fun GlassButton(
     label: String,
     isSecondary: Boolean = false,
     isEnabled: Boolean = true,
-    colors: GlassColors
+    colors: GlassColors,
+    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     val buttonBackdrop = rememberCanvasBackdrop {
         drawRoundRect(
@@ -637,20 +666,22 @@ fun GlassButton(
     }
     
     Box(
-        modifier = Modifier
-            .drawBackdrop(
-                backdrop = buttonBackdrop,
-                shape = { RoundedCornerShape(12.dp) },
-                effects = {}
-            )
-            .alpha(if (isEnabled) colors.alpha else 0.6f)
-            .clickable(
-                indication = LocalIndication.current,
-                interactionSource = remember { MutableInteractionSource() },
-                enabled = isEnabled,
-                onClick = onClick
-            )
-            .padding(vertical = 12.dp),
+        modifier = modifier.then(
+            Modifier
+                .drawBackdrop(
+                    backdrop = buttonBackdrop,
+                    shape = { RoundedCornerShape(12.dp) },
+                    effects = {}
+                )
+                .alpha(if (isEnabled) colors.alpha else 0.6f)
+                .clickable(
+                    indication = LocalIndication.current,
+                    interactionSource = remember { MutableInteractionSource() },
+                    enabled = isEnabled,
+                    onClick = onClick
+                )
+                .padding(vertical = 12.dp)
+        ),
         contentAlignment = Alignment.Center
     ) {
         Text(
