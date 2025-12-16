@@ -902,6 +902,11 @@ const app = createApp({
                 // 显示成功通知
                 this.showNotification(this.$t('notifications.saveSuccess'), 'success');
             }
+        },
+        
+        // 打印清单功能
+        printList() {
+            window.print();
         }
     },
     

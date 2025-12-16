@@ -51,6 +51,7 @@ import com.chronie.inventorymanager.ui.theme.getGlassColors
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Date
+import android.widget.Toast
 
 // 全局日期格式化函数
 fun formatDate(date: Date?): String {
@@ -83,6 +84,7 @@ fun AddItemScreen(
     // val items = viewModel.uiState.collectAsState().value.items
     // loadedItem = items.find { it.id == itemId } ?: editingItem
     val context = LocalContext.current
+    val viewModel: InventoryViewModel = viewModel()
     val isLightTheme = !isSystemInDarkTheme()
     val glassColorScheme = getGlassColors(isLightTheme)
     
@@ -177,20 +179,34 @@ fun AddItemScreen(
                 } else null
             )
             
-            // 根据是编辑还是添加调用不同的回调
+            // 根据是编辑还是添加调用不同的 ViewModel API，并显示 Toast
             if (isEditingMode) {
-                onItemUpdated(item)
+                viewModel.updateItem(item) { success, message ->
+                    if (success) {
+                        Toast.makeText(context, stringResource(R.string.add_update) + "：成功", Toast.LENGTH_SHORT).show()
+                        onItemUpdated(item)
+                    } else {
+                        Toast.makeText(context, "更新失败: ${message ?: "未知错误"}", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } else {
-                onItemAdded(item)
-                
-                // 重置表单
-                itemName = ""
-                category = ""
-                quantity = ""
-                unit = ""
-                minQuantity = ""
-                description = ""
-                expiryDate = ""
+                viewModel.addItem(item) { success, message ->
+                    if (success) {
+                        Toast.makeText(context, stringResource(R.string.add_save) + "：成功", Toast.LENGTH_SHORT).show()
+                        onItemAdded(item)
+
+                        // 重置表单
+                        itemName = ""
+                        category = ""
+                        quantity = ""
+                        unit = ""
+                        minQuantity = ""
+                        description = ""
+                        expiryDate = ""
+                    } else {
+                        Toast.makeText(context, "添加失败: ${message ?: "未知错误"}", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

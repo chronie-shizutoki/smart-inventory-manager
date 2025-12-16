@@ -25,7 +25,8 @@ window.enMessages = {
         suggestedQuantity: 'Suggested Qty',
         unit: 'Unit',
         lastUsed: 'Last Used',
-        refresh: 'Refresh List'
+        refresh: 'Refresh List',
+        print: 'Print List'
     },
     inventory: {
         title: 'Inventory',

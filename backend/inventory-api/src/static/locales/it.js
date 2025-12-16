@@ -25,7 +25,8 @@ window.itMessages = {
         suggestedQuantity: 'Quantità suggerita',
         unit: 'Unità',
         lastUsed: 'Ultimo utilizzo',
-        refresh: 'Aggiorna lista'
+        refresh: 'Aggiorna lista',
+        print: 'Stampa lista'
     },
     inventory: {
         title: 'Inventario',

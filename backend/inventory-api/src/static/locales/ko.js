@@ -25,7 +25,8 @@ window.koMessages = {
         suggestedQuantity: '권장 구매 수량',
         unit: '단위',
         lastUsed: '최종 사용일',
-        refresh: '목록 새로고침'
+        refresh: '목록 새로고침',
+        print: '목록 출력'
     },
     inventory: {
         title: '인벤토리',

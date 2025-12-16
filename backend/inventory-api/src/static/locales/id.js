@@ -25,7 +25,8 @@ window.idMessages = {
         suggestedQuantity: 'Jumlah Saran',
         unit: 'Satuan',
         lastUsed: 'Terakhir Digunakan',
-        refresh: 'Segarkan Daftar'
+        refresh: 'Segarkan Daftar',
+        print: 'Cetak Daftar'
     },
     inventory: {
         title: 'Inventaris',

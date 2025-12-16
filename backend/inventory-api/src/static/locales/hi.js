@@ -25,7 +25,8 @@ window.hiMessages = {
         suggestedQuantity: 'सुझाई गई मात्रा',
         unit: 'यूनिट',
         lastUsed: 'आखिरी बार इस्तेमाल',
-        refresh: 'सूची ताज़ा करें'
+        refresh: 'सूची ताज़ा करें',
+        print: 'सूची प्रिंट करें'
     },
     inventory: {
         title: 'इन्वेंटरी',

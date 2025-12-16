@@ -25,7 +25,8 @@ window.viMessages = {
         suggestedQuantity: 'Đề xuất mua',
         unit: 'Đơn vị',
         lastUsed: 'Lần dùng cuối',
-        refresh: 'Làm mới'
+        refresh: 'Làm mới',
+        print: 'In danh sách'
     },
     inventory: {
         title: 'Kho hàng',

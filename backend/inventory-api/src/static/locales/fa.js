@@ -25,7 +25,8 @@ window.faMessages = {
         suggestedQuantity: 'مقدار پیشنهادی',
         unit: 'واحد',
         lastUsed: 'آخرین استفاده',
-        refresh: 'بروزرسانی لیست'
+        refresh: 'بروزرسانی لیست',
+        print: 'چاپ لیست خرید'
     },
     inventory: {
         title: 'انباره',

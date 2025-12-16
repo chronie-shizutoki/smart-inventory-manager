@@ -25,7 +25,8 @@ window.arMessages = {
         suggestedQuantity: 'الكمية المقترحة',
         unit: 'الوحدة',
         lastUsed: 'آخر استخدام',
-        refresh: 'تحديث القائمة'
+        refresh: 'تحديث القائمة',
+        print: 'طباعة القائمة'
     },
     inventory: {
         title: 'المخزون',

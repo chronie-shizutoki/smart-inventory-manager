@@ -441,8 +441,8 @@
                                 <p class="text-gray-600 text-sm">{{ $t('purchaseList.totalItems') }}</p>
                                 <p class="text-2xl font-bold number-change">{{ purchaseList.length }}</p>
                             </div>
-                            <button @click="loadPurchaseListFromAPI" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
-                                <i class="fas fa-sync-alt mr-2"></i>{{ $t('purchaseList.refresh') }}
+                            <button @click="printList" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                <i class="fas fa-print mr-2"></i>{{ $t('purchaseList.print') }}
                             </button>
                         </div>
                     </div>

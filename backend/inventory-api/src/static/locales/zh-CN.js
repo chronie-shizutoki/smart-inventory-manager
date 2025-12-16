@@ -25,7 +25,8 @@ window.zhCNMessages = {
         suggestedQuantity: '建议补货量',
         unit: '单位',
         lastUsed: '最后使用时间',
-        refresh: '刷新清单'
+        refresh: '刷新清单',
+        print: '打印清单'
     },
     inventory: {
         title: '库存清单',

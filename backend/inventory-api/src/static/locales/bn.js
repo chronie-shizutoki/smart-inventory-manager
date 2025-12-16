@@ -25,7 +25,8 @@ window.bnMessages = {
         suggestedQuantity: 'প্রস্তাবিত ক্রয় পরিমাণ',
         unit: 'একক',
         lastUsed: 'সর্বশেষ ব্যবহার',
-        refresh: 'তালিকা রিফ্রেশ করুন'
+        refresh: 'তালিকা রিফ্রেশ করুন',
+        print: 'তালিকা প্রিন্ট করুন'
     },
     inventory: {
         title: 'ইনভেন্টরি',

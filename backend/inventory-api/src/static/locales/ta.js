@@ -25,7 +25,8 @@ window.taMessages = {
         suggestedQuantity: 'பரிந்துரைக்கப்பட்ட அளவு',
         unit: 'அலகு',
         lastUsed: 'கடைசியாக பயன்படுத்திய தேதி',
-        refresh: 'பட்டியலைப் புதுப்பிக்கவும்'
+        refresh: 'பட்டியலைப் புதுப்பிக்கவும்',
+        print: 'பட்டியலை அச்சிடவும்'
     },
     inventory: {
         title: 'இருப்பு',

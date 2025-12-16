@@ -25,7 +25,8 @@ window.zhTWMessages = {
         suggestedQuantity: '建議採購量',
         unit: '單位',
         lastUsed: '最後使用時間',
-        refresh: '重新整理清單'
+        refresh: '重新整理清單',
+        print: '列印清單'
     },
     inventory: {
         title: '庫存清單',

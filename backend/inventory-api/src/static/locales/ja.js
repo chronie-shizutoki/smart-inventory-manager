@@ -17,7 +17,8 @@ window.jaMessages = {
         suggestedQuantity: '推奨購入数量',
         unit: '単位',
         lastUsed: '最終使用日',
-        refresh: '更新'
+        refresh: '更新',
+        print: '印刷'
     },
     inventory: {
         title: '在庫一覧',

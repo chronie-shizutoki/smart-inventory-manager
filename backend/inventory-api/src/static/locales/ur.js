@@ -25,7 +25,8 @@ window.urMessages = {
         suggestedQuantity: 'تجویز کردہ مقدار',
         unit: 'اکائی',
         lastUsed: 'آخری استعمال',
-        refresh: 'تازہ کریں'
+        refresh: 'تازہ کریں',
+        print: 'پرنٹ کریں'
     },
     inventory: {
         title: 'انوینٹری',

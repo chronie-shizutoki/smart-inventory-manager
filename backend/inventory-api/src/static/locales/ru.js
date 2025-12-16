@@ -25,7 +25,8 @@ window.ruMessages = {
         suggestedQuantity: 'Рекомендуемое количество',
         unit: 'Единица измерения',
         lastUsed: 'Последнее использование',
-        refresh: 'Обновить список'
+        refresh: 'Обновить список',
+        print: 'Распечатать список'
     },
     inventory: {
         title: 'Инвентарь',

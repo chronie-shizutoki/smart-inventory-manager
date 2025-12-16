@@ -25,7 +25,8 @@ window.thMessages = {
         suggestedQuantity: 'จำนวนที่แนะนำ',
         unit: 'หน่วย',
         lastUsed: 'ใช้งานล่าสุด',
-        refresh: 'รีเฟรชรายการ'
+        refresh: 'รีเฟรชรายการ',
+        print: 'พิมพ์รายการ'
     },
     inventory: {
         title: 'คลังสินค้า',

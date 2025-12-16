@@ -25,7 +25,8 @@ window.trMessages = {
         suggestedQuantity: 'Önerilen Miktar',
         unit: 'Birim',
         lastUsed: 'Son Kullanım',
-        refresh: 'Listeyi Yenile'
+        refresh: 'Listeyi Yenile',
+        print: 'Listeyi Yazdır'
     },
     inventory: {
         title: 'Envanter',

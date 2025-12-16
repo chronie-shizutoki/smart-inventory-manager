@@ -12,6 +12,7 @@ import com.chronie.inventorymanager.domain.usecase.DeleteInventoryItemUseCase
 import com.chronie.inventorymanager.domain.usecase.GetInventoryItemsUseCase
 import com.chronie.inventorymanager.domain.usecase.GetStatisticsUseCase
 import com.chronie.inventorymanager.domain.usecase.UpdateInventoryItemUseCase
+import com.chronie.inventorymanager.domain.usecase.AddInventoryItemUseCase
 import com.chronie.inventorymanager.domain.usecase.UseInventoryItemUseCase
 import java.util.Date
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 /** 库存页面ViewModel 管理库存页面的UI状态和业务逻辑 */
 class InventoryViewModel(
         private val getInventoryItemsUseCase: GetInventoryItemsUseCase = GetInventoryItemsUseCase(),
+    private val addInventoryItemUseCase: AddInventoryItemUseCase = AddInventoryItemUseCase(),
         private val getStatisticsUseCase: GetStatisticsUseCase = GetStatisticsUseCase(),
         private val updateInventoryItemUseCase: UpdateInventoryItemUseCase =
                 UpdateInventoryItemUseCase(),
@@ -203,6 +205,56 @@ class InventoryViewModel(
                 loadStatistics()
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(error = "删除物品失败: ${e.message}")
+            }
+        }
+    }
+
+    /** 添加物品（调用后端 API 并更新本地状态） */
+    fun addItem(item: InventoryItem, onResult: (Boolean, String?) -> Unit = { _, _ -> }) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val created = addInventoryItemUseCase.execute(item)
+
+                // 将新物品加入本地状态
+                val updatedItems = _uiState.value.items + created
+                _uiState.value = _uiState.value.copy(items = updatedItems)
+
+                // 重新应用筛选器和刷新统计
+                applyFilters()
+                loadStatistics()
+
+                onResult(true, null)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = "添加物品失败: ${e.message}")
+                onResult(false, e.message)
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    /** 更新物品（调用后端 API 并更新本地状态） */
+    fun updateItem(item: InventoryItem, onResult: (Boolean, String?) -> Unit = { _, _ -> }) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val updated = updateInventoryItemUseCase.execute(item)
+
+                val updatedItems = _uiState.value.items.map {
+                    if (it.id == updated.id) updated else it
+                }
+                _uiState.value = _uiState.value.copy(items = updatedItems)
+
+                applyFilters()
+                loadStatistics()
+
+                onResult(true, null)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(error = "更新物品失败: ${e.message}")
+                onResult(false, e.message)
+            } finally {
+                _isLoading.value = false
             }
         }
     }
