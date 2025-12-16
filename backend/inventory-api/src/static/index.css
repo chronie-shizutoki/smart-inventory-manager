@@ -300,7 +300,7 @@ button {
 
 
         /* 移动端优化 */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .mobile-nav-menu {
                 position: fixed;
                 top: 0;
@@ -632,6 +632,22 @@ input[type="date"] {
             /* 标签样式 */
             .text-blue-800 {
                 color: #a5f3fc;
+            }
+            
+            .text-yellow-800 {
+                color: #fef08a;
+            }
+            
+            .text-green-800 {
+                color: #86efac;
+            }
+            
+            .text-red-800 {
+                color: #fca5a5;
+            }
+            
+            .text-orange-800 {
+                color: #fdba74;
             }
             
             /* 自定义复选框样式 */
@@ -973,7 +989,7 @@ input[type="date"] {
         }
 
         /* Ensure Arabic displays correctly on all devices */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             [dir="rtl"] body,
             .rtl body {
                 text-align: right !important;
