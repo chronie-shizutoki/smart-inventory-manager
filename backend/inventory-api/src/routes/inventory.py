@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+import requests
 from src.models.inventory import db, InventoryItem, Category
 from datetime import datetime, date, timedelta
 from sqlalchemy import or_
@@ -301,5 +302,25 @@ def batch_operations():
             
     except Exception as e:
         db.session.rollback()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+# 代理外部记账本API请求
+@inventory_bp.route('/expenses', methods=['GET'])
+def proxy_expenses():
+    try:
+        # 获取所有请求参数
+        params = request.args.to_dict()
+        
+        # 外部记账本API URL
+        external_api_url = 'http://192.168.0.197:3010/api/expenses'
+        
+        # 发送请求到外部API，传递所有参数
+        response = requests.get(external_api_url, params=params)
+        
+        # 将外部API的响应返回给前端
+        return jsonify(response.json()), response.status_code
+        
+    except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 

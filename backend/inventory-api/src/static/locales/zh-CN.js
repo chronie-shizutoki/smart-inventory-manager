@@ -88,7 +88,7 @@ window.zhCNMessages = {
         supportedFormats: '支持JPG、PNG、WebP格式（最多10张）',
         uploadedImages: '已上传图片',
         generateRecords: '生成记录',
-        aiRecordButton: 'AI记录',
+        aiRecordButton: 'AI记录/显示多记录添加弹窗（生成/获取完成后点击）',
         generating: '正在生成记录...',
         generatingRecords: '正在生成记录，请稍候...',
         success: '记录生成成功',
@@ -99,5 +99,11 @@ window.zhCNMessages = {
         noRecordsGenerated: '没有生成任何记录',
         confirmAdd: '确认添加',
         editRecord: '编辑记录'
+    },
+    expense: {
+        fetchData: '从家庭记账本获取最近7天的消费数据以更新库存',
+        fetchingData: '正在获取数据，请稍候...',
+        dataFetched: '数据成功获取',
+        noValidData: '没有有效的数据'
     }
 };

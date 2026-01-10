@@ -172,6 +172,12 @@ const app = createApp({
         // 控制生成记录确认模态框
         showConfirmGeneratedModal: false,
         
+        // 家庭记账本API配置
+        expenseApiConfig: {
+            url: '/api/inventory/expenses',
+            defaultLimit: 20
+        },
+        
         // 控制编辑生成记录模态框
         showEditGeneratedRecordModal: false,
         
@@ -902,6 +908,205 @@ const app = createApp({
                 // 显示成功通知
                 this.showNotification(this.$t('notifications.saveSuccess'), 'success');
             }
+        },
+        
+        // 从家庭记账本获取数据
+        async fetchExpenseData() {
+            try {
+                // 显示加载通知
+                this.showNotification(this.$t('expense.fetchingData'), 'info');
+                
+                // 构建API请求URL
+                // 由于第三方API不支持日期筛选，我们只获取所有数据，然后在前端进行筛选
+                const url = `${this.expenseApiConfig.url}?limit=1000`;
+                
+                // 发送请求到家庭记账本API
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                // 根据实际返回的数据格式调整成功条件判断
+                if (result.data && result.data.length > 0) {
+                    console.log('原始数据数量:', result.data.length);
+                    
+                    // 计算7天前的日期，用于前端筛选
+                    const sevenDaysAgo = new Date();
+                    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                    
+                    // 在前端筛选7天内的数据
+                    const filteredData = result.data.filter(item => {
+                        const itemDate = new Date(item.date);
+                        return itemDate >= sevenDaysAgo;
+                    });
+                    
+                    console.log('7天内数据数量:', filteredData.length);
+                    
+                    // 转换记账数据为库存记录格式
+                    const inventoryRecords = this.convertExpensesToInventory(filteredData);
+                    
+                    console.log('转换后的库存记录数量:', inventoryRecords.length);
+                    
+                    if (inventoryRecords.length > 0) {
+                        // 保存生成的记录到临时变量
+                        this.generatedRecords = inventoryRecords;
+                        
+                        // 打开确认弹窗
+                        this.showConfirmGeneratedModal = true;
+                        
+                        // 显示成功通知
+                        this.showNotification(
+                            `${this.$t('expense.dataFetched')}: ${inventoryRecords.length}`, 
+                            'success'
+                        );
+                    } else {
+                        console.log('没有找到有效的数据进行转换');
+                        this.showNotification(this.$t('expense.noValidData'), 'info');
+                    }
+                } else {
+                    console.log('没有从API获取到数据');
+                    this.showNotification(
+                        this.$t('expense.noValidData'), 
+                        'info'
+                    );
+                }
+            } catch (error) {
+                console.error('Error fetching expense data:', error);
+                this.showNotification(
+                    error.message || this.$t('notifications.serverError'), 
+                    'error'
+                );
+            }
+        },
+        
+        // 将记账数据转换为库存记录格式
+        convertExpensesToInventory(expenses) {
+            // 分类映射表：记账分类 -> 库存分类
+            // 使用Unicode转义序列以确保正确匹配
+            const categoryMap = {
+                '\u98df\u54c1': 'food', // 食品
+                '\u65b9\u4fbf\u98df\u54c1': 'food', // 方便食品
+                '\u96f6\u98df\u7cd6\u679c': 'food', // 零食糖果
+                '\u6c34\u679c': 'food', // 水果
+                '\u9910\u996e': 'food', // 餐饮
+                '\u996e\u54c1': 'food', // 饮品
+                '\u4e73\u517b\u54c1': 'food', // 乳制品
+                '\u6c34\u4ea7\u54c1': 'food', // 水产品
+                '\u8c03\u5473\u54c1': 'food', // 调味品
+                // 也添加中文文本作为备选，确保兼容性
+                '食品': 'food',
+                '方便食品': 'food',
+                '零食糖果': 'food',
+                '水果': 'food',
+                '餐饮': 'food',
+                '饮品': 'food',
+                '乳制品': 'food',
+                '水产品': 'food',
+                '调味品': 'food'
+            };
+            
+            console.log('输入的支出数据数量:', expenses.length);
+            
+            // 查看第一条数据的类型，了解实际的数据格式
+            if (expenses.length > 0) {
+                console.log('第一条数据的类型:', expenses[0].type);
+                console.log('类型是否在映射表中:', categoryMap[expenses[0].type] !== undefined);
+            }
+            
+            // 过滤并转换相关数据
+            const filteredExpenses = expenses.filter(expense => {
+                const hasMapping = categoryMap[expense.type] !== undefined;
+                if (!hasMapping) {
+                    console.log('未匹配的类型:', expense.type);
+                }
+                return hasMapping;
+            });
+            
+            console.log('过滤后的数据数量:', filteredExpenses.length);
+            
+            const convertedRecords = filteredExpenses.map(expense => {
+                // 从备注中提取数量和单位
+                const { quantity, unit } = this.extractQuantityAndUnit(expense.remark);
+                
+                const record = {
+                    name: this.extractProductName(expense.remark),
+                    category: categoryMap[expense.type],
+                    quantity: quantity || 1,
+                    unit: unit || '个',
+                    minQuantity: 1,
+                    expiryDate: '',
+                    description: expense.remark
+                };
+                
+                console.log('转换后的记录:', record);
+                return record;
+            });
+            
+            console.log('转换后的记录数量:', convertedRecords.length);
+            
+            // 合并相同名称的记录
+            const mergedRecords = convertedRecords.reduce((acc, record) => {
+                const existingRecord = acc.find(item => 
+                    item.name.toLowerCase() === record.name.toLowerCase() &&
+                    item.category === record.category
+                );
+                
+                if (existingRecord) {
+                    // 如果单位相同，合并数量
+                    if (existingRecord.unit === record.unit) {
+                        existingRecord.quantity += record.quantity;
+                    } else {
+                        // 单位不同，保留两条记录
+                        acc.push(record);
+                    }
+                } else {
+                    acc.push(record);
+                }
+                
+                return acc;
+            }, []);
+            
+            console.log('合并后的记录数量:', mergedRecords.length);
+            
+            return mergedRecords;
+        },
+        
+        // 从备注中提取产品名称
+        extractProductName(remark) {
+            // 简单的提取逻辑，可根据实际情况优化
+            // 移除数量和单位信息
+            const cleanedRemark = remark
+                .replace(/\d+(\.\d+)?\s*[a-zA-Z\u4e00-\u9fa5]+/g, '')
+                .replace(/[()（）]/g, '')
+                .trim();
+            
+            return cleanedRemark || '未知商品';
+        },
+        
+        // 从备注中提取数量和单位
+        extractQuantityAndUnit(remark) {
+            // 匹配数量和单位的正则表达式
+            const regex = /(\d+(?:\.\d+)?)\s*([a-zA-Z\u4e00-\u9fa5]+)/g;
+            const matches = [...remark.matchAll(regex)];
+            
+            if (matches.length > 0) {
+                // 取最后一个匹配项
+                const lastMatch = matches[matches.length - 1];
+                return {
+                    quantity: parseFloat(lastMatch[1]),
+                    unit: lastMatch[2]
+                };
+            }
+            
+            return { quantity: 1, unit: '个' };
         },
         
         // 打印清单功能

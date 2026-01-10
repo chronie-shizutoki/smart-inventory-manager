@@ -88,7 +88,7 @@ window.enMessages = {
         supportedFormats: 'Supports JPG, PNG, WebP (max 10 images)',
         uploadedImages: 'Uploaded Images',
         generateRecords: 'Generate Records',
-        aiRecordButton: 'AI Record',
+        aiRecordButton: 'AI Record/Show Multi-Record Add Modal (Click after Generation/Retrieval)',
         generating: 'Generating records...',
         generatingRecords: 'Generating records, please wait...',
         success: 'Records generated successfully',
@@ -99,5 +99,11 @@ window.enMessages = {
         noRecordsGenerated: 'No records generated',
         confirmAdd: 'Confirm Add',
         editRecord: 'Edit Record'
+    },
+    expense: {
+        fetchData: 'Fetch recent 7 days expense data from Home Finance Tracker to update inventory',
+        fetchingData: 'Fetching data, please wait...',
+        dataFetched: 'Data fetched successfully',
+        noValidData: 'No valid expense data found'
     }
 };
