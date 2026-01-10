@@ -39,7 +39,7 @@ window.ptMessages = {
         expiryDate: 'Validade',
         status: 'Estado',
         actions: 'Ações',
-        showExpired: 'Mostrar Itens Expirados'
+        showExpired: 'Mostrar Itens Expirados e Não Expirados'
     },
     categories: {
         food: 'Alimentação',

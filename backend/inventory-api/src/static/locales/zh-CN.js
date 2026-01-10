@@ -39,7 +39,7 @@ window.zhCNMessages = {
         expiryDate: '过期日期',
         status: '状态',
         actions: '操作',
-        showExpired: '显示所有物品'
+        showExpired: '显示不只已过期的物品'
     },
     categories: {
         food: '食品',

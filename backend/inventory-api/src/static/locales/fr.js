@@ -39,7 +39,7 @@ window.frMessages = {
         expiryDate: 'Date d\'expiration',
         status: 'Statut',
         actions: 'Actions',
-        showExpired: 'Afficher tous les articles'
+        showExpired: 'Afficher uniquement les articles expirés'
     },
     categories: {
         food: 'Alimentation',

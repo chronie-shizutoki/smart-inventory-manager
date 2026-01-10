@@ -39,7 +39,7 @@ window.arMessages = {
         expiryDate: 'تاريخ الانتهاء',
         status: 'الحالة',
         actions: 'الإجراءات',
-        showExpired: 'عرض جميع العناصر'
+        showExpired: 'إظهار العناصر غير المنتهية فقط'
     },
     categories: {
         food: 'أغذية',

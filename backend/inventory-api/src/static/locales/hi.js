@@ -39,7 +39,7 @@ window.hiMessages = {
         expiryDate: 'एक्सपायरी डेट',
         status: 'स्थिति',
         actions: 'एक्शन्स',
-        showExpired: 'सभी आइटम्स दिखाएं'
+        showExpired: 'केवल एक्सपायर्ड आइटम्स दिखाएं'
     },
     categories: {
         food: 'खाना',

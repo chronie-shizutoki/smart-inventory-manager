@@ -39,7 +39,7 @@ window.zhTWMessages = {
         expiryDate: '有效期限',
         status: '狀態',
         actions: '操作',
-        showExpired: '顯示所有物品'
+        showExpired: '顯示不只已過期的物品'
     },
     categories: {
         food: '食品',

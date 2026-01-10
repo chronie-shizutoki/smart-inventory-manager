@@ -39,7 +39,7 @@ window.itMessages = {
         expiryDate: 'Data di scadenza',
         status: 'Stato',
         actions: 'Azioni',
-        showExpired: 'Mostra tutti gli articoli'
+        showExpired: 'Mostra solo gli articoli scaduti'
     },
     categories: {
         food: 'Alimentari',

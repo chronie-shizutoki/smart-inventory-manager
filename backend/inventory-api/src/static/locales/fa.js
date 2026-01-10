@@ -39,7 +39,7 @@ window.faMessages = {
         expiryDate: 'تاریخ انقضا',
         status: 'وضعیت',
         actions: 'عملیات',
-        showExpired: 'نمایش همه آیتم‌ها'
+        showExpired: 'نمایش آیتم‌های منقضی‌شده'
     },
     categories: {
         food: 'خوراکی',

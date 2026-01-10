@@ -39,7 +39,7 @@ window.taMessages = {
         expiryDate: 'காலாவதி தேதி',
         status: 'நிலை',
         actions: 'செயல்கள்',
-        showExpired: 'எல்லா பொருட்களை காட்டு'
+        showExpired: 'காலாவதியானவற்றை மட்டும் காட்டு'
     },
     categories: {
         food: 'உணவு',

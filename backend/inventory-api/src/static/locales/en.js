@@ -39,7 +39,7 @@ window.enMessages = {
         expiryDate: 'Expiry Date',
         status: 'Status',
         actions: 'Actions',
-        showExpired: 'Show All Items'
+        showExpired: 'Show Not-Only-Expired Items'
     },
     categories: {
         food: 'Food',

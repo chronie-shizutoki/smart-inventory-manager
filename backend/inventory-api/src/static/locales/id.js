@@ -39,7 +39,7 @@ window.idMessages = {
         expiryDate: 'Tanggal Kedaluwarsa',
         status: 'Status',
         actions: 'Aksi',
-        showExpired: 'Tampilkan semua item'
+        showExpired: 'Tampilkan hanya item yang kadaluwarsa'
     },
     categories: {
         food: 'Makanan',

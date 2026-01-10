@@ -39,7 +39,7 @@ window.thMessages = {
         expiryDate: 'วันหมดอายุ',
         status: 'สถานะ',
         actions: 'การดำเนินการ',
-        showExpired: 'แสดงรายการหมดอายุ'
+        showExpired: 'แสดงรายการที่หมดอายุและยังไม่หมดอายุ'
     },
     categories: {
         food: 'อาหาร',

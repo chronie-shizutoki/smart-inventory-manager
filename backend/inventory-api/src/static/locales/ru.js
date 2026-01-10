@@ -39,7 +39,7 @@ window.ruMessages = {
         expiryDate: 'Годен до',
         status: 'Статус',
         actions: 'Действия',
-        showExpired: 'Показать все товары'
+        showExpired: 'Показать не только просроченные'
     },
     categories: {
         food: 'Продукты',

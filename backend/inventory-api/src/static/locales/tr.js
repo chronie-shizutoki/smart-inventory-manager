@@ -39,7 +39,7 @@ window.trMessages = {
         expiryDate: 'Son Kullanma Tarihi',
         status: 'Durum',
         actions: 'İşlemler',
-        showExpired: 'Geçmiş Son Kullanma Tarihine Uygun Ürünleri Göster'
+        showExpired: 'Sadece Geçmiş Son Kullanma Tarihine Sahip Ürünleri Göster'
     },
     categories: {
         food: 'Yiyecek',
