@@ -801,14 +801,17 @@ const app = createApp({
                     // 保存生成的记录到临时变量，用于确认弹窗
                     this.generatedRecords = result.records;
                     
-                    // 打开确认弹窗
-                    this.showConfirmGeneratedModal = true;
-                    
                     // 清空表单
                     this.aiForm.images = [];
                     
                     // 关闭模态框
                     this.closeAiRecordModal();
+                    
+                    // 使用nextTick确保DOM更新后再打开确认弹窗
+                    this.$nextTick(() => {
+                        // 打开确认弹窗
+                        this.showConfirmGeneratedModal = true;
+                    });
                 } else {
                     this.showNotification(
                         result.message || this.$t('aiRecord.failedToGenerate'), 
@@ -980,14 +983,17 @@ const app = createApp({
                         // 保存生成的记录到临时变量
                         this.generatedRecords = inventoryRecords;
                         
-                        // 打开确认弹窗
-                        this.showConfirmGeneratedModal = true;
-                        
                         // 显示成功通知
                         this.showNotification(
                             `${this.$t('expense.dataFetched')}: ${inventoryRecords.length}`, 
                             'success'
                         );
+                        
+                        // 使用nextTick确保DOM更新后再打开确认弹窗
+                        this.$nextTick(() => {
+                            // 打开确认弹窗
+                            this.showConfirmGeneratedModal = true;
+                        });
                     } else {
                         console.log('没有找到有效的数据进行转换');
                         this.showNotification(this.$t('expense.noValidData'), 'info');
