@@ -770,10 +770,7 @@
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('add.category') }}</label>
-                        <select v-model="editingGeneratedRecord.category" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white">
-                            <option v-for="category in categories" :key="category" :value="category">{{ $t('categories.' + category) }}</option>
-                        </select>
+                        <glass-select :options="categoryOptions" v-model="editingGeneratedRecord.category" class="w-full" />
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
