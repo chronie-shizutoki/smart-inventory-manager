@@ -61,21 +61,21 @@
                             </span>
                         </button>
                         <!-- 导航菜单 -->
-                        <button @click="currentView = 'inventory'" :class="{'bg-blue-500': currentView === 'inventory'}"
+                        <button @click="currentView = 'inventory'; updateUrlParams({ page: 'inventory' })" :class="{'bg-blue-500': currentView === 'inventory'}"
                             class="p-2 rounded hover:bg-blue-500 transition-colors relative group">
                             <i class="fas fa-list"></i>
                             <span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                                 {{ $t('nav.inventory') }}
                             </span>
                         </button>
-                        <button @click="currentView = 'add'" :class="{'bg-blue-500': currentView === 'add'}"
+                        <button @click="currentView = 'add'; updateUrlParams({ page: 'add' })" :class="{'bg-blue-500': currentView === 'add'}"
                             class="p-2 rounded hover:bg-blue-500 transition-colors relative group">
                             <i class="fas fa-plus"></i>
                             <span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                                 {{ $t('nav.add') }}
                             </span>
                         </button>
-                        <button @click="currentView = 'purchaseList'" :class="{'bg-blue-500': currentView === 'purchaseList'}"
+                        <button @click="currentView = 'purchaseList'; updateUrlParams({ page: 'purchaseList' })" :class="{'bg-blue-500': currentView === 'purchaseList'}"
                             class="p-2 rounded hover:bg-blue-500 transition-colors relative group">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
@@ -408,26 +408,30 @@
                                     <textarea v-model="form.description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect"></textarea>
                                 </div>
 
-                                <div class="mt-6 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:space-x-3">
-                                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-                                        <button type="button" @click="openAiRecordModal"
-                                            class="flex-1 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 glass-button">
-                                            <i class="fas fa-robot mr-2"></i>{{ $t('aiRecord.aiRecordButton') }}
-                                        </button>
-                                        <button type="button" @click="fetchExpenseData"
-                                            class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 glass-button">
-                                            <i class="fas fa-receipt mr-2"></i>{{ $t('expense.fetchData') }}
-                                        </button>
-                                    </div>
-                                    <div class="space-x-3">
-                                        <button type="button" @click="cancelEdit"
-                                            class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 glass-button hover:bg-gray-50">
-                                            {{ $t('add.cancel') }}
-                                        </button>
-                                        <button type="submit" class="px-4 py-2 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 glass-button">
-                                            {{ editingItem ? $t('add.update') : $t('add.save') }}
-                                        </button>
-                                    </div>
+                                <div class="mt-6 flex flex-wrap justify-between gap-3">
+                                    <div class="flex flex-wrap gap-3 flex-1 min-w-[200px]">
+                                    <button type="button" @click="openAiRecordModal"
+                                        class="flex-1 min-w-[120px] px-4 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 glass-button whitespace-nowrap text-center">
+                                        <i class="fas fa-robot mr-2"></i>{{ $t('aiRecord.aiRecordButton') }}
+                                    </button>
+                                    <button type="button" @click="fetchExpenseData"
+                                        class="flex-1 min-w-[120px] px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 glass-button whitespace-nowrap text-center">
+                                        <i class="fas fa-receipt mr-2"></i>{{ $t('expense.fetchData') }}
+                                    </button>
+                                    <button type="button" @click="openMultiRecordAddModal"
+                                        class="flex-1 min-w-[120px] px-4 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 glass-button whitespace-nowrap text-center">
+                                        <i class="fas fa-plus-square mr-2"></i>{{ $t('multiRecord.show') }}
+                                    </button>
+                                </div>
+                                    <div class="flex space-x-3">
+                                    <button type="button" @click="cancelEdit"
+                                        class="flex-1 px-4 py-3 border border-gray-300 rounded-md text-gray-700 glass-button hover:bg-gray-50 whitespace-nowrap text-center">
+                                        {{ $t('add.cancel') }}
+                                    </button>
+                                    <button type="submit" class="flex-1 px-4 py-3 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 glass-button whitespace-nowrap text-center">
+                                        {{ editingItem ? $t('add.update') : $t('add.save') }}
+                                    </button>
+                                </div>
                                 </div>
                             </form>
                         </div>
@@ -687,9 +691,14 @@
                         <div v-for="(record, index) in generatedRecords" :key="index" class="bg-white/10 p-4 rounded-lg shadow border border-white/20">
                             <div class="flex justify-between items-start mb-2">
                                 <h4 class="font-medium text-white">{{ record.name }}</h4>
-                                <button @click="editGeneratedRecord(index)" class="text-blue-400 hover:text-blue-300 transition-colors">
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                                <div class="flex space-x-2">
+                                    <button @click="editGeneratedRecord(index)" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button @click="removeGeneratedRecord(index)" class="text-red-400 hover:text-red-300 transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="grid grid-cols-2 gap-2 text-sm">
                                 <div>
@@ -724,6 +733,71 @@
                         <button type="button" @click="confirmAndAddGeneratedRecords" 
                             class="flex-1 px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">
                             {{ $t('aiRecord.confirmAdd') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+    
+    <!-- 编辑生成记录模态框 -->
+    <transition name="modal">
+        <div v-if="showEditGeneratedRecordModal" id="edit-generated-record-modal" class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 flex items-center justify-center z-50">
+            <div class="relative w-full max-w-md p-4">
+            <div class="glass-card rounded-xl overflow-hidden shadow-2xl border border-blue-500/20 backdrop-blur-md max-h-[80vh] flex flex-col">
+                <div class="p-6 bg-black/30 rounded-t-xl">
+                    <h3 class="text-xl font-semibold text-blue-400 tracking-wide text-center mb-2">{{ $t('aiRecord.editRecord') }}</h3>
+                </div>
+                <div class="p-6 bg-white/5 rounded-b-xl flex flex-col gap-4 overflow-y-auto">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('add.name') }}</label>
+                        <input v-model="editingGeneratedRecord.name" type="text" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('add.category') }}</label>
+                        <select v-model="editingGeneratedRecord.category" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white">
+                            <option v-for="category in categories" :key="category" :value="category">{{ $t('categories.' + category) }}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('add.quantity') }}</label>
+                            <input v-model.number="editingGeneratedRecord.quantity" type="number" min="0" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('add.unit') }}</label>
+                            <input v-model="editingGeneratedRecord.unit" type="text" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('add.expiryDate') }}</label>
+                        <input v-model="editingGeneratedRecord.expiryDate" type="date"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-200 mb-2">{{ $t('add.description') }}</label>
+                        <textarea v-model="editingGeneratedRecord.description" rows="3"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect bg-black/20 text-white"></textarea>
+                    </div>
+                    
+                    <!-- 操作按钮 -->
+                    <div class="flex space-x-3 pt-4 border-t border-white/10">
+                        <button type="button" @click="closeEditGeneratedRecordModal" 
+                            class="flex-1 px-4 py-3 border border-gray-300 rounded-md text-white hover:bg-white/10 transition-colors">
+                            {{ $t('add.cancel') }}
+                        </button>
+                        <button type="button" @click="saveEditedRecord" 
+                            class="flex-1 px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                            {{ $t('add.save') }}
                         </button>
                     </div>
                 </div>

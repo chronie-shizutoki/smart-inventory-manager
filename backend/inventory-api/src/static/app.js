@@ -323,6 +323,18 @@ const app = createApp({
     },
     
     methods: {
+        // 更新URL参数
+        updateUrlParams(params) {
+            const url = new URL(window.location.href);
+            Object.entries(params).forEach(([key, value]) => {
+                if (value) {
+                    url.searchParams.set(key, value);
+                } else {
+                    url.searchParams.delete(key);
+                }
+            });
+            window.history.pushState({}, '', url);
+        },
         // 切换语言
         changeLanguage() {
             // 使用全局i18n实例
@@ -680,6 +692,7 @@ const app = createApp({
         // 移动端导航相关方法
         navigateAndClose(view) {
             this.currentView = view;
+            this.updateUrlParams({ page: view });
             this.showMobileNav = false;
         },
 
@@ -877,6 +890,14 @@ const app = createApp({
             this.generatedRecords = [];
         },
         
+        // 移除单个生成的记录
+        removeGeneratedRecord(index) {
+            if (confirm(this.$t('notifications.confirmDelete'))) {
+                this.generatedRecords.splice(index, 1);
+                this.showNotification(this.$t('notifications.itemDeleted'), 'success');
+            }
+        },
+        
         // 编辑生成的记录
         editGeneratedRecord(index) {
             // 深拷贝要编辑的记录，避免直接修改原数据
@@ -906,7 +927,7 @@ const app = createApp({
                 this.closeEditGeneratedRecordModal();
                 
                 // 显示成功通知
-                this.showNotification(this.$t('notifications.saveSuccess'), 'success');
+                this.showNotification(this.$t('notifications.itemUpdated'), 'success');
             }
         },
         

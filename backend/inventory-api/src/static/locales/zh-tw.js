@@ -5,7 +5,8 @@ window.zhTWMessages = {
         itemDeleted: '物品刪除成功',
         error: '操作失敗，請稍後重試',
         insufficientStock: '庫存不足：{itemName}',
-        itemUsedSuccessfully: '已使用 1 {unit} {itemName}（剩餘 {quantity} {unit}）'
+        itemUsedSuccessfully: '已使用 1 {unit} {itemName}（剩餘 {quantity} {unit}）',
+        confirmDelete: '確認刪除此物品嗎？'
     },
     app: {
         title: '智慧家居庫存管理系統'
@@ -88,7 +89,7 @@ window.zhTWMessages = {
         supportedFormats: '支援JPG、PNG、WebP格式（最多10張）',
         uploadedImages: '已上傳圖片',
         generateRecords: '生成紀錄',
-        aiRecordButton: 'AI紀錄/顯示多紀錄添加弹窗（生成/取得完成後點擊）',
+        aiRecordButton: 'AI紀錄',
         generating: '正在生成紀錄...',
         generatingRecords: '正在生成紀錄，請稍候...',
         success: '紀錄生成成功',
@@ -101,9 +102,12 @@ window.zhTWMessages = {
         editRecord: '編輯紀錄'
     },
     expense: {
-        fetchData: '從家庭記帳本取得最近7天的消費資料以更新庫存',
+        fetchData: '從家庭記帳本取得最近7天消費資料',
         fetchingData: '正在取得資料，請稍候...',
         dataFetched: '資料成功取得',
         noValidData: '沒有有效的資料'
+    },
+    multiRecord: {
+        show: '顯示多紀錄添加弹窗（生成/取得完成後點擊）'
     }
 };

@@ -5,7 +5,8 @@ window.enMessages = {
         itemDeleted: 'Item deleted successfully',
         error: 'Operation failed. Please try again',
         insufficientStock: 'Insufficient stock: {itemName}',
-        itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} remaining)'
+        itemUsedSuccessfully: 'Used 1 {unit} of {itemName} ({quantity} {unit} remaining)',
+        confirmDelete: 'Are you sure you want to delete this item?'
     },
     app: {
         title: 'Smart Home Inventory'
@@ -88,7 +89,7 @@ window.enMessages = {
         supportedFormats: 'Supports JPG, PNG, WebP (max 10 images)',
         uploadedImages: 'Uploaded Images',
         generateRecords: 'Generate Records',
-        aiRecordButton: 'AI Record/Show Multi-Record Add Modal (Click after Generation/Retrieval)',
+        aiRecordButton: 'AI Record',
         generating: 'Generating records...',
         generatingRecords: 'Generating records, please wait...',
         success: 'Records generated successfully',
@@ -101,9 +102,12 @@ window.enMessages = {
         editRecord: 'Edit Record'
     },
     expense: {
-        fetchData: 'Fetch recent 7 days expense data from Home Finance Tracker to update inventory',
+        fetchData: 'Fetch recent 7 days expense data from Home Finance Tracker',
         fetchingData: 'Fetching data, please wait...',
         dataFetched: 'Data fetched successfully',
         noValidData: 'No valid expense data found'
+    },
+    multiRecord: {
+        show: 'Show Multi-Record Add Modal (Click after Generation/Retrieval)'
     }
 };

@@ -5,7 +5,8 @@ window.zhCNMessages = {
         itemDeleted: '物品删除成功',
         error: '操作失败，请稍后重试',
         insufficientStock: '库存不足：{itemName}',
-        itemUsedSuccessfully: '已使用 1 {unit} {itemName}（剩余 {quantity} {unit}）'
+        itemUsedSuccessfully: '已使用 1 {unit} {itemName}（剩余 {quantity} {unit}）',
+        confirmDelete: '确认删除此物品吗？'
     },
     app: {
         title: '智能家居库存管理系统'
@@ -88,7 +89,7 @@ window.zhCNMessages = {
         supportedFormats: '支持JPG、PNG、WebP格式（最多10张）',
         uploadedImages: '已上传图片',
         generateRecords: '生成记录',
-        aiRecordButton: 'AI记录/显示多记录添加弹窗（生成/获取完成后点击）',
+        aiRecordButton: 'AI记录',
         generating: '正在生成记录...',
         generatingRecords: '正在生成记录，请稍候...',
         success: '记录生成成功',
@@ -101,9 +102,12 @@ window.zhCNMessages = {
         editRecord: '编辑记录'
     },
     expense: {
-        fetchData: '从家庭记账本获取最近7天的消费数据以更新库存',
+        fetchData: '从家庭记账本获取最近7天消费数据',
         fetchingData: '正在获取数据，请稍候...',
         dataFetched: '数据成功获取',
         noValidData: '没有有效的数据'
+    },
+    multiRecord: {
+        show: '显示多记录添加弹窗（生成/获取完成后点击）'
     }
 };
