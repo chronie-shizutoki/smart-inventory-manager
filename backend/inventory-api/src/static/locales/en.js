@@ -102,12 +102,12 @@ window.enMessages = {
         editRecord: 'Edit Record'
     },
     expense: {
-        fetchData: 'Fetch recent 7 days expense data from Home Finance Tracker',
+        fetchData: 'Recent expense from HFT',
         fetchingData: 'Fetching data, please wait...',
         dataFetched: 'Data fetched successfully',
         noValidData: 'No valid expense data found'
     },
     multiRecord: {
-        show: 'Show Multi-Record Add Modal (Click after Generation/Retrieval)'
+        show: 'Show Generated'
     }
 };

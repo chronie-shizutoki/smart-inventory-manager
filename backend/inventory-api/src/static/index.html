@@ -408,30 +408,45 @@
                                     <textarea v-model="form.description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent glass-effect"></textarea>
                                 </div>
 
-                                <div class="mt-6 flex flex-wrap justify-between gap-3">
-                                    <div class="flex flex-wrap gap-3 flex-1 min-w-[200px]">
-                                    <button type="button" @click="openAiRecordModal"
-                                        class="flex-1 min-w-[120px] px-4 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 glass-button whitespace-nowrap text-center">
-                                        <i class="fas fa-robot mr-2"></i>{{ $t('aiRecord.aiRecordButton') }}
-                                    </button>
-                                    <button type="button" @click="fetchExpenseData"
-                                        class="flex-1 min-w-[120px] px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 glass-button whitespace-nowrap text-center">
-                                        <i class="fas fa-receipt mr-2"></i>{{ $t('expense.fetchData') }}
-                                    </button>
-                                    <button type="button" @click="openMultiRecordAddModal"
-                                        class="flex-1 min-w-[120px] px-4 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 glass-button whitespace-nowrap text-center">
-                                        <i class="fas fa-plus-square mr-2"></i>{{ $t('multiRecord.show') }}
-                                    </button>
-                                </div>
+                                <div class="mt-6 space-y-4">
+                                    <!-- AI Record, Fetch expense, Multi-Record buttons -->
+                                    <div class="flex flex-wrap gap-2 justify-start items-stretch">
+                                        <button type="button" @click="openAiRecordModal"
+                                            class="flex-1 min-w-[110px] max-w-[180px] px-2 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 glass-button whitespace-normal text-center transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 overflow-hidden flex items-center justify-center"
+                                            style="max-height: 44px; line-height: 1.2;">
+                                            <i class="fas fa-robot mr-2 text-sm"></i>
+                                            <span class="text-sm truncate">
+                                                {{ $t('aiRecord.aiRecordButton') }}
+                                            </span>
+                                        </button>
+                                        <button type="button" @click="fetchExpenseData"
+                                            class="flex-1 min-w-[110px] max-w-[180px] px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 glass-button whitespace-normal text-center transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 overflow-hidden flex items-center justify-center"
+                                            style="max-height: 44px; line-height: 1.2;">
+                                            <i class="fas fa-receipt mr-2 text-sm"></i>
+                                            <span class="text-sm truncate">
+                                                {{ $t('expense.fetchData') }}
+                                            </span>
+                                        </button>
+                                        <button type="button" @click="openMultiRecordAddModal"
+                                            class="flex-1 min-w-[110px] max-w-[180px] px-2 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 glass-button whitespace-normal text-center transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/20 overflow-hidden flex items-center justify-center"
+                                            style="max-height: 44px; line-height: 1.2;">
+                                            <i class="fas fa-plus-square mr-2 text-sm"></i>
+                                            <span class="text-sm truncate">
+                                                {{ $t('multiRecord.show') }}
+                                            </span>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Cancel and Save buttons -->
                                     <div class="flex space-x-3">
-                                    <button type="button" @click="cancelEdit"
-                                        class="flex-1 px-4 py-3 border border-gray-300 rounded-md text-gray-700 glass-button hover:bg-gray-50 whitespace-nowrap text-center">
-                                        {{ $t('add.cancel') }}
-                                    </button>
-                                    <button type="submit" class="flex-1 px-4 py-3 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 glass-button whitespace-nowrap text-center">
-                                        {{ editingItem ? $t('add.update') : $t('add.save') }}
-                                    </button>
-                                </div>
+                                        <button type="button" @click="cancelEdit"
+                                            class="flex-1 px-3 py-2 border border-gray-300 rounded-md text-gray-700 glass-button hover:bg-gray-50 whitespace-normal text-center transition-all duration-300 hover:shadow-md">
+                                            {{ $t('add.cancel') }}
+                                        </button>
+                                        <button type="submit" class="flex-1 px-3 py-2 bg-blue-600/90 text-white rounded-md hover:bg-blue-700 glass-button whitespace-normal text-center transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30">
+                                            {{ editingItem ? $t('add.update') : $t('add.save') }}
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

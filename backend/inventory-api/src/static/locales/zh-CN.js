@@ -102,12 +102,12 @@ window.zhCNMessages = {
         editRecord: '编辑记录'
     },
     expense: {
-        fetchData: '从家庭记账本获取最近7天消费数据',
+        fetchData: '家庭记账本最近消费数据',
         fetchingData: '正在获取数据，请稍候...',
         dataFetched: '数据成功获取',
         noValidData: '没有有效的数据'
     },
     multiRecord: {
-        show: '显示多记录添加弹窗（生成/获取完成后点击）'
+        show: '显示生成记录'
     }
 };

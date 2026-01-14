@@ -102,12 +102,12 @@ window.zhTWMessages = {
         editRecord: '編輯紀錄'
     },
     expense: {
-        fetchData: '從家庭記帳本取得最近7天消費資料',
+        fetchData: '家庭記帳本最近消費資料',
         fetchingData: '正在取得資料，請稍候...',
         dataFetched: '資料成功取得',
         noValidData: '沒有有效的資料'
     },
     multiRecord: {
-        show: '顯示多紀錄添加弹窗（生成/取得完成後點擊）'
+        show: '顯示生成紀錄'
     }
 };
