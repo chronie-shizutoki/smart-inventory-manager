@@ -106,8 +106,5 @@ window.enMessages = {
         fetchingData: 'Fetching data, please wait...',
         dataFetched: 'Data fetched successfully',
         noValidData: 'No valid expense data found'
-    },
-    multiRecord: {
-        show: 'Show Generated'
     }
 };

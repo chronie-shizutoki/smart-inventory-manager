@@ -106,8 +106,5 @@ window.zhCNMessages = {
         fetchingData: '正在获取数据，请稍候...',
         dataFetched: '数据成功获取',
         noValidData: '没有有效的数据'
-    },
-    multiRecord: {
-        show: '显示生成记录'
     }
 };

@@ -106,8 +106,5 @@ window.zhTWMessages = {
         fetchingData: '正在取得資料，請稍候...',
         dataFetched: '資料成功取得',
         noValidData: '沒有有效的資料'
-    },
-    multiRecord: {
-        show: '顯示生成紀錄'
     }
 };
