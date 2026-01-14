@@ -154,7 +154,10 @@
                             <!-- 显示已过期物品开关 -->
                             <div class="flex items-center space-x-2">
                                 <span>{{ $t('inventory.showExpired') }}</span>
-                                <input type="checkbox" v-model="showExpiredItems" class="form-checkbox h-4 w-4 text-blue-500 transition duration-150 ease-in-out">
+                                <label class="glass-toggle">
+                                    <input type="checkbox" v-model="showExpiredItems">
+                                    <span class="glass-toggle-slider"></span>
+                                </label>
                             </div>
 
                         </div>
@@ -171,7 +174,10 @@
                         <!-- 移动端显示已过期物品开关 -->
                         <div class="lg:hidden flex items-center justify-between mt-3 px-2">
                             <span>{{ $t('inventory.showExpired') }}</span>
-                            <input type="checkbox" v-model="showExpiredItems" class="form-checkbox h-4 w-4 text-blue-500 transition duration-150 ease-in-out">
+                            <label class="glass-toggle">
+                                <input type="checkbox" v-model="showExpiredItems">
+                                <span class="glass-toggle-slider"></span>
+                            </label>
                         </div>
                     </div>
 
