@@ -274,7 +274,7 @@ fun PurchaseListItemCard(
     item: PurchaseListItem,
     onRefresh: () -> Unit
 ) {
-    val isLightTheme = MaterialTheme.colorScheme.background == Color.White
+    val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
     GlassContainer(modifier = Modifier.fillMaxWidth(), backgroundAlpha = 0.4f, enableBlur = true) {
@@ -359,7 +359,7 @@ fun QuantityInfo(
     color: Color,
     isHighlighted: Boolean = false
 ) {
-    val isLightTheme = MaterialTheme.colorScheme.background == Color.White
+    val isLightTheme = !isSystemInDarkTheme()
     val glassColors = getGlassColors(isLightTheme)
     
     Column(
@@ -384,13 +384,13 @@ fun QuantityInfo(
                 text = value,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Medium,
-                color = if (isLightTheme) Color.Black else glassColors.textSecondary
+                color = color
             )
         }
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = if (isLightTheme) Color.Black else glassColors.textSecondary
+            color = color
         )
     }
 }
