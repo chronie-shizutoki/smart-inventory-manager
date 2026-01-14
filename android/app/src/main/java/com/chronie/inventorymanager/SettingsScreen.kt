@@ -269,8 +269,21 @@ private fun LanguageSetting() {
             // 只需要调用LanguageContext的changeLanguage方法，它已经包含了保存到SharedPreferences和应用语言到资源的逻辑
             languageContext.changeLanguage(newLanguage)
             
-            // 重新创建Activity以应用新语言
-            activity?.recreate()
+            // 直接重新启动整个应用以确保语言和布局方向正确更新
+            try {
+                val intent = ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)
+                if (intent != null) {
+                    intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP or android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    ctx.startActivity(intent)
+                    // 结束当前进程，确保应用完全重启
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                }
+            } catch (e: Exception) {
+                // 捕获异常，防止应用崩溃
+                android.util.Log.e("LanguageSetting", "Failed to restart application for language change: ${e.message}")
+                // 如果重启应用失败，退而求其次尝试重建Activity
+                activity?.recreate()
+            }
         }
     )
 }

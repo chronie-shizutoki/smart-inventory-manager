@@ -32,11 +32,17 @@ class LanguageContext(
     private val languageChangeCallbacks = mutableListOf<(LanguageConfig) -> Unit>()
     
     /**
-     * 改变当前语言
-     */
-    fun changeLanguage(language: LanguageConfig) {
-        val oldLanguage = currentLanguage
+ * 改变当前语言
+ */
+fun changeLanguage(language: LanguageConfig) {
+    val oldLanguage = currentLanguage
+    
+    // 只有当语言真正改变时才执行后续操作
+    if (oldLanguage.code != language.code) {
         currentLanguage = language
+        
+        // 先保存语言偏好，确保Activity重建后能读取到最新设置
+        saveLanguagePreference(language)
         
         // 应用语言设置到应用资源配置
         applyLanguageToResources(language)
@@ -45,46 +51,65 @@ class LanguageContext(
         languageChangeCallbacks.forEach { callback ->
             callback(language)
         }
-        
-        // 保存语言偏好
-        saveLanguagePreference(language)
     }
+}
     
-    /**
-     * 应用语言设置到应用资源配置
-     */
-    private fun applyLanguageToResources(language: LanguageConfig) {
-        try {
-            android.util.Log.d("LanguageContext", "Applying language: ${language.code}")
-            
-            val resources = context.resources
-            val configuration = resources.configuration
-            
-            // 记录当前配置
-            android.util.Log.d("LanguageContext", "Current locale: ${configuration.locale}")
-            
-            // 设置Locale
-            configuration.setLocale(language.locale)
-            
-            // 对于Android N及以上，使用正确的API
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                android.util.Log.d("LanguageContext", "Using N+ API for language change")
-                val newConfig = Configuration(configuration)
-                context.createConfigurationContext(newConfig)
-                // 同时更新应用上下文配置
-                @Suppress("DEPRECATION")
-                resources.updateConfiguration(newConfig, resources.displayMetrics)
-            } else {
-                // 旧版本API
-                @Suppress("DEPRECATION")
-                resources.updateConfiguration(configuration, resources.displayMetrics)
-            }
-            
-            android.util.Log.d("LanguageContext", "Language applied successfully: ${language.code}")
-        } catch (e: Exception) {
-            android.util.Log.e("LanguageContext", "Failed to apply language to resources: ${e.message}", e)
+/**
+ * 应用语言设置到应用资源配置
+ */
+private fun applyLanguageToResources(language: LanguageConfig) {
+    try {
+        android.util.Log.d("LanguageContext", "Applying language: ${language.code}")
+        
+        val resources = context.resources
+        val configuration = resources.configuration
+        
+        // 记录当前配置
+        android.util.Log.d("LanguageContext", "Current locale: ${configuration.locale}")
+        
+        // 设置Locale
+        configuration.setLocale(language.locale)
+        
+        // 清除现有配置的布局方向，确保系统根据新的locale自动设置正确的方向
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.setLayoutDirection(language.locale)
         }
+        
+        // 对于Android N及以上，使用正确的API
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            android.util.Log.d("LanguageContext", "Using N+ API for language change")
+            val newConfig = Configuration(configuration)
+            // 创建新的上下文并应用配置
+            val newContext = context.createConfigurationContext(newConfig)
+            // 更新应用资源配置
+            @Suppress("DEPRECATION")
+            resources.updateConfiguration(newConfig, resources.displayMetrics)
+            // 更新应用上下文的资源配置
+            val appContext = context.applicationContext
+            @Suppress("DEPRECATION")
+            appContext.resources.updateConfiguration(newConfig, appContext.resources.displayMetrics)
+        } else {
+            // 旧版本API
+            @Suppress("DEPRECATION")
+            resources.updateConfiguration(configuration, resources.displayMetrics)
+            // 更新应用上下文配置
+            val appContext = context.applicationContext
+            @Suppress("DEPRECATION")
+            appContext.resources.updateConfiguration(configuration, appContext.resources.displayMetrics)
+        }
+        
+        // 验证语言设置是否生效
+        val currentLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            resources.configuration.locales.get(0)
+        } else {
+            @Suppress("DEPRECATION")
+            resources.configuration.locale
+        }
+        android.util.Log.d("LanguageContext", "Language applied successfully. Current locale: $currentLocale")
+    } catch (e: Exception) {
+        android.util.Log.e("LanguageContext", "Failed to apply language to resources: ${e.message}", e)
     }
+}
     
     /**
      * 添加语言改变监听器
@@ -101,20 +126,27 @@ class LanguageContext(
     }
     
     /**
-     * 保存语言偏好设置到本地存储
-     * 使用try-catch确保保存过程不会导致应用崩溃
-     */
-    private fun saveLanguagePreference(language: LanguageConfig) {
-        try {
-            val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-            prefs.edit()
-                .putString("preferred_language", language.code)
-                .apply()
-        } catch (e: Exception) {
-            // 捕获所有异常，确保不会因为保存语言偏好而导致应用崩溃
-            android.util.Log.e("LanguageContext", "Failed to save language preference: ${e.message}", e)
+ * 保存语言偏好设置到本地存储
+ * 使用try-catch确保保存过程不会导致应用崩溃
+ * 使用commit()而不是apply()确保同步保存，以便在应用重启前完成磁盘写入
+ */
+private fun saveLanguagePreference(language: LanguageConfig) {
+    try {
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val success = prefs.edit()
+            .putString("preferred_language", language.code)
+            .commit() // 使用commit()确保同步保存到磁盘
+        
+        if (success) {
+            android.util.Log.d("LanguageContext", "Language preference saved successfully: ${language.code}")
+        } else {
+            android.util.Log.w("LanguageContext", "Failed to save language preference to disk: ${language.code}")
         }
+    } catch (e: Exception) {
+        // 捕获所有异常，确保不会因为保存语言偏好而导致应用崩溃
+        android.util.Log.e("LanguageContext", "Failed to save language preference: ${e.message}", e)
     }
+}
 }
 
 /**

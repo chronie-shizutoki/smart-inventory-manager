@@ -183,7 +183,7 @@ fun AddItemScreen(
             if (isEditingMode) {
                 viewModel.updateItem(item) { success, message ->
                     if (success) {
-                        Toast.makeText(context, stringResource(R.string.add_update) + "：成功", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.add_update) + "：成功", Toast.LENGTH_SHORT).show()
                         onItemUpdated(item)
                     } else {
                         Toast.makeText(context, "更新失败: ${message ?: "未知错误"}", Toast.LENGTH_SHORT).show()
@@ -192,7 +192,7 @@ fun AddItemScreen(
             } else {
                 viewModel.addItem(item) { success, message ->
                     if (success) {
-                        Toast.makeText(context, stringResource(R.string.add_save) + "：成功", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.add_save) + "：成功", Toast.LENGTH_SHORT).show()
                         onItemAdded(item)
 
                         // 重置表单
