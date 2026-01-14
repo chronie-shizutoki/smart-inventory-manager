@@ -200,6 +200,8 @@ fun AddItemScreen(
                     if (success) {
                         Toast.makeText(context, context.getString(R.string.add_update) + "：成功", Toast.LENGTH_SHORT).show()
                         onItemUpdated(item)
+                        // 更新成功后返回上一个页面
+                        onBackPress()
                     } else {
                         Toast.makeText(context, "更新失败: ${message ?: "未知错误"}", Toast.LENGTH_SHORT).show()
                     }
