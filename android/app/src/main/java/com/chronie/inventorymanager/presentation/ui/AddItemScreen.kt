@@ -68,23 +68,9 @@ fun AddItemScreen(
     editingItem: InventoryItem? = null,
     onBackPress: () -> Unit = {}
 ) {
-    // 简化实现 - 只使用editingItem参数
-    var loadedItem by remember { mutableStateOf<InventoryItem?>(editingItem) }
-    
-    // 注意：在实际应用中，应该从ViewModel加载物品数据
-    // 这里我们暂时简化实现，因为在当前环境下viewModel加载遇到问题
-    // 在真实应用中，应该使用类似以下代码：
-    // val viewModel: InventoryViewModel = viewModel()
-    // LaunchedEffect(itemId) {
-    //     if (itemId != null) {
-    //         viewModel.loadInventory() // 确保数据已加载
-    //     }
-    
-    // }
-    // val items = viewModel.uiState.collectAsState().value.items
-    // loadedItem = items.find { it.id == itemId } ?: editingItem
     val context = LocalContext.current
     val viewModel: InventoryViewModel = viewModel()
+    val uiState by viewModel.uiState.collectAsState()
     val isLightTheme = !isSystemInDarkTheme()
     val glassColorScheme = getGlassColors(isLightTheme)
     
@@ -105,14 +91,30 @@ fun AddItemScreen(
         alpha = glassColorScheme.alpha
     )
     
+    // 加载被编辑的物品
+    var loadedItem by remember { mutableStateOf<InventoryItem?>(editingItem) }
+    
+    // 当itemId变化时，从ViewModel中查找并加载对应的物品
+    LaunchedEffect(itemId, uiState.items) {
+        if (itemId != null) {
+            // 如果ViewModel中还没有数据，先加载
+            if (uiState.items.isEmpty()) {
+                viewModel.loadInventory()
+            } else {
+                // 从已加载的数据中查找对应的物品
+                loadedItem = uiState.items.find { it.id == itemId } ?: editingItem
+            }
+        }
+    }
+    
     // 表单状态 - 使用loadedItem作为数据源
-    var itemName by remember { mutableStateOf((loadedItem ?: editingItem)?.name ?: "") }
-    var category by remember { mutableStateOf((loadedItem ?: editingItem)?.category ?: "") }
-    var quantity by remember { mutableStateOf((loadedItem ?: editingItem)?.quantity?.toString() ?: "") }
-    var unit by remember { mutableStateOf((loadedItem ?: editingItem)?.unit ?: "") }
-    var minQuantity by remember { mutableStateOf((loadedItem ?: editingItem)?.minQuantity?.toString() ?: "") }
-    var description by remember { mutableStateOf((loadedItem ?: editingItem)?.description ?: "") }
-    var expiryDate by remember { mutableStateOf((loadedItem ?: editingItem)?.expiryDate?.let { formatDate(it) } ?: "") }
+    var itemName by remember { mutableStateOf(loadedItem?.name ?: "") }
+    var category by remember { mutableStateOf(loadedItem?.category ?: "") }
+    var quantity by remember { mutableStateOf(loadedItem?.quantity?.toString() ?: "") }
+    var unit by remember { mutableStateOf(loadedItem?.unit ?: "") }
+    var minQuantity by remember { mutableStateOf(loadedItem?.minQuantity?.toString() ?: "") }
+    var description by remember { mutableStateOf(loadedItem?.description ?: "") }
+    var expiryDate by remember { mutableStateOf(loadedItem?.expiryDate?.let { formatDate(it) } ?: "") }
     
     // 分类选项 - 使用资源字符串支持国际化
     val categoryOptions = listOf(
@@ -341,14 +343,8 @@ fun AddItemScreen(
                         Box(modifier = Modifier.weight(1f)) {
                             GlassButton(
                                 onClick = {
-                                    // 重置表单
-                                    itemName = ""
-                                    category = ""
-                                    quantity = ""
-                                    unit = ""
-                                    minQuantity = ""
-                                    description = ""
-                                    expiryDate = ""
+                                    // 调用返回函数
+                                    onBackPress()
                                 },
                                 label = stringResource(R.string.add_cancel),
                                 isSecondary = true,

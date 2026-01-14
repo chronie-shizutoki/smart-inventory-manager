@@ -265,12 +265,6 @@ class InventoryViewModel(
         // 在实际实现中，这里会触发导航事件
     }
 
-    /** 查看物品详情 */
-    fun viewItem(item: InventoryItem) {
-        // 这个方法通常会导航到详情页面
-        // 在实际实现中，这里会触发导航事件
-    }
-
     /** 清除错误 */
     fun clearError() {
         _uiState.value = _uiState.value.copy(error = null)

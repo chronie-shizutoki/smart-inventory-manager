@@ -198,13 +198,20 @@ fun SmartInventoryManagerApp() {
                     )
                 }
                 composable("add") {
-                    AddItemScreen()
+                    AddItemScreen(
+                        onBackPress = {
+                            navController.navigateUp()
+                        }
+                    )
                 }
                 // 添加一个新的路由，用于编辑现有物品
                 composable("add/{itemId}") { backStackEntry ->
                     val itemId = backStackEntry.arguments?.getString("itemId")
                     AddItemScreen(
-                        itemId = itemId
+                        itemId = itemId,
+                        onBackPress = {
+                            navController.navigateUp()
+                        }
                     )
                 }
                 composable("purchaselist") {
