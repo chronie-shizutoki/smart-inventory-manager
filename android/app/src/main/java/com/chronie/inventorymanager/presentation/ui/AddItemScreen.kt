@@ -116,6 +116,19 @@ fun AddItemScreen(
     var description by remember { mutableStateOf(loadedItem?.description ?: "") }
     var expiryDate by remember { mutableStateOf(loadedItem?.expiryDate?.let { formatDate(it) } ?: "") }
     
+    // 当loadedItem变化时，更新表单状态
+    LaunchedEffect(loadedItem) {
+        loadedItem?.let {
+            itemName = it.name
+            category = it.category
+            quantity = it.quantity.toString()
+            unit = it.unit
+            minQuantity = it.minQuantity.toString()
+            description = it.description
+            expiryDate = it.expiryDate?.let { date -> formatDate(date) } ?: ""
+        }
+    }
+    
     // 分类选项 - 使用资源字符串支持国际化
     val categoryOptions = listOf(
         stringResource(R.string.categories_food) to "food",
