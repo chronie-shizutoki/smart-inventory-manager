@@ -142,6 +142,8 @@ const app = createApp({
         // 语言选择弹窗（桌面端）
         showLocaleModal: false,
         tempLocale: i18n.global.locale,
+        // 按钮位置，用于弹窗动画
+        btnPosition: { x: 0, y: 0 },
         
         // 表单数据
             form: {
@@ -347,9 +349,52 @@ const app = createApp({
             updateDocumentDirection(this.currentLocale);
         },
         // 打开/关闭语言弹窗
-        openLocaleModal() {
+        openLocaleModal(e) {
+            // 记录按钮位置
+            if (e && e.target) {
+                const rect = e.target.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                
+                // 计算按钮中心坐标
+                const btnCenterX = rect.left + rect.width / 2;
+                const btnCenterY = rect.top + rect.height / 2;
+                
+                // 计算屏幕中心坐标
+                const screenCenterX = windowWidth / 2;
+                const screenCenterY = windowHeight / 2;
+                
+                // 计算按钮位置相对于屏幕中心的偏移量
+                this.btnPosition.x = btnCenterX - screenCenterX;
+                this.btnPosition.y = btnCenterY - screenCenterY;
+            }
+            
             this.tempLocale = this.currentLocale;
             this.showLocaleModal = true;
+        },
+        
+        // 打开移动端菜单
+        openMobileNav(e) {
+            // 记录按钮位置
+            if (e && e.target) {
+                const rect = e.target.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                
+                // 计算按钮中心坐标
+                const btnCenterX = rect.left + rect.width / 2;
+                const btnCenterY = rect.top + rect.height / 2;
+                
+                // 计算屏幕中心坐标
+                const screenCenterX = windowWidth / 2;
+                const screenCenterY = windowHeight / 2;
+                
+                // 计算按钮位置相对于屏幕中心的偏移量
+                this.btnPosition.x = btnCenterX - screenCenterX;
+                this.btnPosition.y = btnCenterY - screenCenterY;
+            }
+            
+            this.showMobileNav = true;
         },
         closeLocaleModal() {
             this.showLocaleModal = false;
@@ -698,7 +743,26 @@ const app = createApp({
 
         // AI记录功能相关方法
         // 打开AI记录模态框
-        openAiRecordModal() {
+        openAiRecordModal(e) {
+            // 记录按钮位置
+            if (e && e.target) {
+                const rect = e.target.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                
+                // 计算按钮中心坐标
+                const btnCenterX = rect.left + rect.width / 2;
+                const btnCenterY = rect.top + rect.height / 2;
+                
+                // 计算屏幕中心坐标
+                const screenCenterX = windowWidth / 2;
+                const screenCenterY = windowHeight / 2;
+                
+                // 计算按钮位置相对于屏幕中心的偏移量
+                this.btnPosition.x = btnCenterX - screenCenterX;
+                this.btnPosition.y = btnCenterY - screenCenterY;
+            }
+            
             // 从localStorage加载保存的API Key
             const savedApiKey = localStorage.getItem('siliconflowApiKey');
             if (savedApiKey) {

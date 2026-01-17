@@ -47,14 +47,14 @@
                 <div class="flex justify-between items-center py-4">
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-boxes text-2xl"></i>
-                        <h1 class="text-xl font-bold cursor-pointer lg:cursor-default" @click="showMobileNav = true">
+                        <h1 class="text-xl font-bold cursor-pointer lg:cursor-default" @click="openMobileNav($event)">
                             {{ $t('app.title') }}
                         </h1>
                     </div>
                     <!-- 桌面端导航 -->
                     <div class="hidden lg:flex items-center space-x-4">
                         <!-- 语言按钮（文/A） -->
-                        <button @click="openLocaleModal" class="p-2 rounded hover:bg-blue-500 transition-colors relative group">
+                        <button @click="openLocaleModal($event)" class="p-2 rounded hover:bg-blue-500 transition-colors relative group">
                             <i class="fas fa-language text-lg"></i>
                             <span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                                 {{ $t('nav.language') }}
@@ -84,7 +84,7 @@
                         </button>
                     </div>
                     <!-- 移动端菜单按钮 -->
-                    <button @click="showMobileNav = true"
+                    <button @click="openMobileNav($event)"
                         class="lg:hidden p-2 rounded hover:bg-blue-500 transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
@@ -93,8 +93,8 @@
         </nav>
 
         <!-- 移动端全屏导航弹窗 -->
-        <transition name="fade">
-            <div v-if="showMobileNav" class="mobile-nav-menu lg:hidden glass-effect" @click.self="showMobileNav = false">
+        <transition name="modal">
+            <div v-if="showMobileNav" class="mobile-nav-menu lg:hidden glass-effect" @click.self="showMobileNav = false" :style="{ '--btn-x': btnPosition.x + 'px', '--btn-y': btnPosition.y + 'px' }">
                 <div class="mobile-nav-content glass-card p-6 rounded-lg m-4">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold text-gray-800">{{ $t('nav.menu') }}</h2>
@@ -417,7 +417,7 @@
                                 <div class="mt-6 space-y-4">
                                     <!-- AI Record, Fetch expense buttons -->
                                     <div class="flex flex-wrap gap-2 justify-start items-stretch" v-if="['en', 'zh-CN', 'zh-TW'].includes(currentLocale)">
-                                        <button type="button" @click="openAiRecordModal"
+                                        <button type="button" @click="openAiRecordModal($event)"
                                             class="flex-1 min-w-[110px] max-w-[180px] px-2 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 glass-button whitespace-normal text-center transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 overflow-hidden flex items-center justify-center"
                                             style="max-height: 44px; line-height: 1.2;">
                                             <i class="fas fa-brain mr-2 text-sm"></i>
@@ -596,8 +596,8 @@
         </main>
 
         <!-- 桌面端语言选择弹窗 -->
-        <transition name="fade">
-            <div v-if="showLocaleModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" @click.self="closeLocaleModal">
+        <transition name="modal">
+            <div v-if="showLocaleModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50" @click.self="closeLocaleModal" :style="{ '--btn-x': btnPosition.x + 'px', '--btn-y': btnPosition.y + 'px' }">
                 <div class="glass-card rounded-xl p-6 w-full max-w-md">
                     <h3 class="text-lg font-semibold mb-4 text-gray-800">{{ $t('nav.language') }}</h3>
                     <glass-select :options="localeOptions" v-model="tempLocale" class="w-full mb-4"></glass-select>
@@ -624,12 +624,13 @@
                     </button>
                 </div>
             </div>
+            </transition>
         </div>
     </transition>
     
     <!-- AI记录模态框 -->
     <transition name="modal">
-        <div v-if="showAiRecordModal" id="ai-record-modal" class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 flex items-center justify-center z-50">
+        <div v-if="showAiRecordModal" id="ai-record-modal" class="fixed inset-0 bg-gradient-to-br from-black/70 to-black/50 flex items-center justify-center z-50" :style="{ '--btn-x': btnPosition.x + 'px', '--btn-y': btnPosition.y + 'px' }">
             <div class="relative w-full max-w-md p-4">
             <button id="close-ai-modal" class="absolute top-2 right-2 text-white bg-red-600/30 hover:bg-red-600/80 rounded-full p-2 z-10 transition-all duration-300 shadow-lg" @click="closeAiRecordModal">
                 <i class="fas fa-times"></i>
@@ -686,6 +687,7 @@
                     </form>
                 </div>
             </div>
+            </transition>
         </div>
     </transition>
     
@@ -748,8 +750,7 @@
                             {{ $t('aiRecord.confirmAdd') }}
                         </button>
                     </div>
-                </div>
-            </div>
+        </div>
         </div>
     </transition>
     
