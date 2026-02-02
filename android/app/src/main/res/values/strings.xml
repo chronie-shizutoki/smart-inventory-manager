@@ -196,5 +196,12 @@
     <string name="purchaselist_suggestedquantity">Suggested Qty</string>
     <string name="purchaselist_totalitems">Items to Purchase</string>
     <string name="purchaselist_unit">Unit</string>
+    <string name="purchaselist_screenshot">Take Screenshot</string>
+    <string name="purchaselist_save_to_gallery">Save to Gallery</string>
+    <string name="purchaselist_share">Share</string>
+    <string name="purchaselist_screenshot_title">Purchase List</string>
+    <string name="purchaselist_screenshot_saved">Screenshot saved to gallery</string>
+    <string name="purchaselist_screenshot_failed">Failed to save screenshot</string>
+    <string name="purchaselist_category">Category</string>
 
 </resources>

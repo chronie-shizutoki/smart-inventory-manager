@@ -7,6 +7,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Cancel
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -14,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +29,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import android.graphics.Bitmap
+import android.widget.Toast
 import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.data.network.InventoryApiService
 import com.chronie.inventorymanager.data.repository.ApiFactory
@@ -33,6 +40,7 @@ import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListViewModel
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListUiState
 import com.chronie.inventorymanager.ui.theme.getGlassColors
 import com.chronie.inventorymanager.utils.CategoryNameConverter
+import com.chronie.inventorymanager.utils.ScreenshotHelper
 import java.text.SimpleDateFormat
 import java.util.*
 import com.smartinventory.models.PurchaseListItem
@@ -105,6 +113,10 @@ fun PurchaseListScreen(
     val purchaseList by viewModel.purchaseList.collectAsState()
     val scope = rememberCoroutineScope()
     
+    var showScreenshotDialog by remember { mutableStateOf(false) }
+    var screenshotBitmap by remember { mutableStateOf<Bitmap?>(null) }
+    var isGeneratingScreenshot by remember { mutableStateOf(false) }
+    
     // 直接在需要的地方使用scope.launch，不再定义单独的函数
     
     // 移除Scaffold，避免额外的布局占位和padding问题
@@ -119,6 +131,31 @@ fun PurchaseListScreen(
                     .padding(horizontal = 16.dp, vertical = 2.dp),
                 horizontalArrangement = Arrangement.End
             ) {
+                IconButton(
+                    onClick = {
+                        if (purchaseList.isNotEmpty()) {
+                            isGeneratingScreenshot = true
+                            scope.launch {
+                                val bitmap = ScreenshotHelper.createLongScreenshot(
+                                    context = context,
+                                    purchaseList = purchaseList,
+                                    title = context.getString(R.string.purchaselist_screenshot_title),
+                                    isLightTheme = isLightTheme
+                                )
+                                screenshotBitmap = bitmap
+                                isGeneratingScreenshot = false
+                                showScreenshotDialog = true
+                            }
+                        }
+                    },
+                    enabled = !isRefreshing && purchaseList.isNotEmpty() && !isGeneratingScreenshot
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Image,
+                        contentDescription = stringResource(R.string.purchaselist_screenshot),
+                        tint = if (isLightTheme) Color.Black else glassColors.text
+                    )
+                }
                 IconButton(
                     onClick = { 
                         scope.launch {
@@ -262,9 +299,113 @@ fun PurchaseListScreen(
                 }
             }
         }
+    
+    if (isGeneratingScreenshot) {
+        AlertDialog(
+            onDismissRequest = { },
+            title = {
+                Text(stringResource(R.string.purchaselist_screenshot))
+            },
+            text = {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    CircularProgressIndicator(
+                        color = glassColors.primary,
+                        modifier = Modifier.size(48.dp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Generating screenshot...",
+                        color = if (isLightTheme) Color.Black else glassColors.text
+                    )
+                }
+            },
+            confirmButton = { }
+        )
+    }
+    
+    if (showScreenshotDialog && screenshotBitmap != null) {
+        AlertDialog(
+            onDismissRequest = { showScreenshotDialog = false },
+            title = {
+                Text(stringResource(R.string.purchaselist_screenshot))
+            },
+            text = {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    androidx.compose.foundation.Image(
+                        bitmap = screenshotBitmap!!.asImageBitmap(),
+                        contentDescription = stringResource(R.string.purchaselist_screenshot),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
+                            .clip(MaterialTheme.shapes.medium)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            },
+            confirmButton = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = {
+                            screenshotBitmap?.let { bitmap ->
+                                val success = ScreenshotHelper.saveBitmapToGallery(context, bitmap)
+                                if (success) {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.purchaselist_screenshot_saved),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.purchaselist_screenshot_failed),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                            showScreenshotDialog = false
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(stringResource(R.string.purchaselist_save_to_gallery))
+                    }
+                    Button(
+                        onClick = {
+                            screenshotBitmap?.let { bitmap ->
+                                ScreenshotHelper.shareBitmap(context, bitmap)
+                            }
+                            showScreenshotDialog = false
+                        },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = glassColors.primary
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Share,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(stringResource(R.string.purchaselist_share))
+                    }
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showScreenshotDialog = false }) {
+                    Text(stringResource(R.string.add_cancel))
+                }
+            }
+        )
+    }
 }
-
-
 
 /**
  * 采购清单项目卡片
