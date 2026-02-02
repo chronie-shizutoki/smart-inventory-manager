@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Error
@@ -16,7 +17,6 @@ import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -610,7 +610,7 @@ private fun FilterSortBar(
                                 .background(glassColors.container.copy(alpha = 0.3f))
         ) {
             Icon(
-                    imageVector = Icons.Filled.Sort,
+                    imageVector = Icons.AutoMirrored.Filled.Sort,
                     contentDescription = null,
                     tint = glassColors.text.copy(alpha = 0.7f),
                     modifier = Modifier.size(18.dp)

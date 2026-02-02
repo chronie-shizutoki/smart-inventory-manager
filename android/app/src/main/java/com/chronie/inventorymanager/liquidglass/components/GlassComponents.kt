@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -705,7 +706,7 @@ fun GlassFilterBar(
                                                 isSelected = selectedCategory == category,
                                                 onSelected = { onCategorySelected(category) },
                                                 icon =
-                                                        if (category.isEmpty()) Icons.Default.List
+                                                        if (category.isEmpty()) Icons.AutoMirrored.Filled.List
                                                         else Icons.Default.Category
                                         )
                                 }
@@ -732,7 +733,7 @@ fun GlassFilterBar(
                                 items(StatusFilter.values().toList()) { filter ->
                                         val icon =
                                                 when (filter) {
-                                                        StatusFilter.ALL -> Icons.Default.List
+                                                        StatusFilter.ALL -> Icons.AutoMirrored.Filled.List
                                                         StatusFilter.NORMAL ->
                                                                 Icons.Default.CheckCircle
                                                         StatusFilter.LOW_STOCK ->

@@ -595,7 +595,7 @@ fun GlassDropdownMenu(
                             )
 
                             if (index < items.lastIndex) {
-                                Divider(
+                                HorizontalDivider(
                                     color = colors.border,
                                     thickness = 0.5.dp,
                                     modifier = Modifier.padding(horizontal = 16.dp)

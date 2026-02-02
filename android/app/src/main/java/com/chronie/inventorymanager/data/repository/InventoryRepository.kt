@@ -8,6 +8,9 @@ import com.smartinventory.models.PurchaseListResponse
 import com.google.gson.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
@@ -215,7 +218,6 @@ object ApiFactory {
         // 自定义Gson解析器，支持ISO 8601日期格式
         val gson = GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-            .setLenient()
             .create()
 
         val retrofit = retrofit2.Retrofit.Builder()
@@ -241,7 +243,7 @@ class MockInventoryApiService : InventoryApiService {
     }
 
     override suspend fun getItem(id: String): Response<SingleItemResponse> {
-        return Response.error(404, okhttp3.ResponseBody.create(null, ""))
+        return Response.error(404, "".toResponseBody(null))
     }
 
     override suspend fun createItem(item: InventoryItem): Response<SingleItemResponse> {
@@ -257,7 +259,7 @@ class MockInventoryApiService : InventoryApiService {
     }
 
     override suspend fun useItem(id: String): Response<SingleItemResponse> {
-        return Response.error(404, okhttp3.ResponseBody.create(null, ""))
+        return Response.error(404, "".toResponseBody(null))
     }
 
     override suspend fun getStatistics(): Response<StatisticsResponse> {

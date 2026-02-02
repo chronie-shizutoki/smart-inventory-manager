@@ -164,7 +164,7 @@ fun ItemActionDialog(
     val isLightTheme = !isSystemInDarkTheme()
     val colors = getGlassColors(isLightTheme)
     
-    AlertDialog(
+    BasicAlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier
             .background(colors.container.copy(alpha = 0.9f), RoundedCornerShape(16.dp))

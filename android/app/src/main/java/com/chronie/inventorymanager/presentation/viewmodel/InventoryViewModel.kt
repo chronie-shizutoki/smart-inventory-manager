@@ -286,10 +286,10 @@ class InventoryViewModel(
                                 true
                             } else {
                                 item.name.contains(searchQuery, ignoreCase = true) ||
-                                        item.description?.contains(
+                                        item.description.contains(
                                                 searchQuery,
                                                 ignoreCase = true
-                                        ) == true
+                                        )
                             }
 
                     // 分类过滤
