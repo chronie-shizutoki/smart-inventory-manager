@@ -159,5 +159,9 @@
     <string name="purchaselist_refresh">பட்டியலைப் புதுப்பிக்கவும்</string>
     <string name="purchaselist_suggestedquantity">பரிந்துரைக்கப்பட்ட அளவு</string>
     <string name="purchaselist_unit">அலகு</string>
+    <string name="purchaselist_share">பகிர்</string>
+    <string name="purchaselist_screenshot">வாங்கும் பட்டியல் ஸ்கிரீன்ஷாட்</string>
+    <string name="purchaselist_screenshot_saved">ஸ்கிரீன்ஷாட் கேலரியில் சேமிக்கப்பட்டது</string>
+    <string name="purchaselist_screenshot_failed">ஸ்கிரீன்ஷாட் சேமிக்க முடியவில்லை</string>
 
 </resources>

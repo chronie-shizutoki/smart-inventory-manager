@@ -158,5 +158,9 @@
     <string name="purchaselist_suggestedquantity">الكمية المقترحة</string>
     <string name="purchaselist_totalitems">العناصر المطلوبة للشراء</string>
     <string name="purchaselist_unit">الوحدة</string>
+    <string name="purchaselist_share">مشاركة</string>
+    <string name="purchaselist_screenshot">لقطة شاشة للقائمة</string>
+    <string name="purchaselist_screenshot_saved">تم حفظ لقطة الشاشة في المعرض</string>
+    <string name="purchaselist_screenshot_failed">فشل في حفظ لقطة الشاشة</string>
 
 </resources>

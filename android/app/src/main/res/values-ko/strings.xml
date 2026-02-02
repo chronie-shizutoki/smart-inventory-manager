@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">권장 구매 수량</string>
     <string name="purchaselist_totalitems">총 구매 품목 수</string>
     <string name="purchaselist_unit">단위</string>
+    <string name="purchaselist_share">공유</string>
+    <string name="purchaselist_screenshot">구매 목록 스크린샷</string>
+    <string name="purchaselist_screenshot_saved">스크린샷이 갤러리에 저장되었습니다</string>
+    <string name="purchaselist_screenshot_failed">스크린샷 저장에 실패했습니다</string>
 
 </resources>

@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">প্রস্তাবিত ক্রয় পরিমাণ</string>
     <string name="purchaselist_totalitems">মোট ক্রয়할 আইটেম</string>
     <string name="purchaselist_unit">একক</string>
+    <string name="purchaselist_share">শেয়ার করুন</string>
+    <string name="purchaselist_screenshot">ক্রয়ের তালিকার স্ক্রিনশট</string>
+    <string name="purchaselist_screenshot_saved">স্ক্রিনশট গ্যালারিতে সংরক্ষিত হয়েছে</string>
+    <string name="purchaselist_screenshot_failed">স্ক্রিনশট সংরক্ষণ করতে ব্যর্থ</string>
 
 </resources>

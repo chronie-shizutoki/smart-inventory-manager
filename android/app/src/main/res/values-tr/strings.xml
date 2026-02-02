@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">Önerilen Miktar</string>
     <string name="purchaselist_totalitems">Satın Alınacak Ürünler</string>
     <string name="purchaselist_unit">Birim</string>
+    <string name="purchaselist_share">Paylaş</string>
+    <string name="purchaselist_screenshot">Alışveriş Listesi Ekran Görüntüsü</string>
+    <string name="purchaselist_screenshot_saved">Ekran görüntüsü galeriye kaydedildi</string>
+    <string name="purchaselist_screenshot_failed">Ekran görüntüsü kaydedilemedi</string>
 
 </resources>

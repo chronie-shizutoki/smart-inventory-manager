@@ -181,5 +181,9 @@
     <string name="purchaselist_suggestedquantity">建议补货量</string>
     <string name="purchaselist_totalitems">待采购物品</string>
     <string name="purchaselist_unit">单位</string>
+    <string name="purchaselist_share">分享</string>
+    <string name="purchaselist_screenshot">采购清单截图</string>
+    <string name="purchaselist_screenshot_saved">截图已保存到相册</string>
+    <string name="purchaselist_screenshot_failed">截图保存失败</string>
 
 </resources>

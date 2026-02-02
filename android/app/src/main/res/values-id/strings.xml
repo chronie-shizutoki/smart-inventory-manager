@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">Jumlah Saran</string>
     <string name="purchaselist_totalitems">Total Item untuk Dibeli</string>
     <string name="purchaselist_unit">Satuan</string>
+    <string name="purchaselist_share">Bagikan</string>
+    <string name="purchaselist_screenshot">Screenshot Daftar Belanja</string>
+    <string name="purchaselist_screenshot_saved">Screenshot disimpan ke galeri</string>
+    <string name="purchaselist_screenshot_failed">Gagal menyimpan screenshot</string>
 
 </resources>

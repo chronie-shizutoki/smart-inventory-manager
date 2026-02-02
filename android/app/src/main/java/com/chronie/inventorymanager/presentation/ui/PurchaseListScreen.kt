@@ -10,9 +10,12 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.Save
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +38,9 @@ import com.chronie.inventorymanager.R
 import com.chronie.inventorymanager.data.network.InventoryApiService
 import com.chronie.inventorymanager.data.repository.ApiFactory
 import com.chronie.inventorymanager.liquidglass.utils.GlassContainer
+import com.chronie.inventorymanager.liquidglass.components.GlassConfirmDialog
+import com.chronie.inventorymanager.liquidglass.utils.GlassButton
+import com.chronie.inventorymanager.liquidglass.utils.GlassOutlinedButton
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListViewModel
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListViewModelFactory
 import com.chronie.inventorymanager.presentation.viewmodel.PurchaseListUiState
@@ -139,7 +145,7 @@ fun PurchaseListScreen(
                                 val bitmap = ScreenshotHelper.createLongScreenshot(
                                     context = context,
                                     purchaseList = purchaseList,
-                                    title = context.getString(R.string.purchaselist_screenshot_title),
+                                    title = context.getString(R.string.nav_purchaselist),
                                     isLightTheme = isLightTheme
                                 )
                                 screenshotBitmap = bitmap
@@ -209,19 +215,14 @@ fun PurchaseListScreen(
                                 textAlign = TextAlign.Center
                             )
                             Spacer(modifier = Modifier.height(16.dp))
-                            Button(
+                            GlassButton(
+                                text = "重试",
                                 onClick = { 
                                     scope.launch {
                                         viewModel.refreshList()
                                     }
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = glassColors.primary,
-                                    contentColor = Color.White
-                                )
-                            ) {
-                                Text("重试")
-                            }
+                                }
+                            )
                         }
                     }
                 }
@@ -301,12 +302,8 @@ fun PurchaseListScreen(
         }
     
     if (isGeneratingScreenshot) {
-        AlertDialog(
-            onDismissRequest = { },
-            title = {
-                Text(stringResource(R.string.purchaselist_screenshot))
-            },
-            text = {
+        GlassConfirmDialog(
+            content = {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(16.dp)
@@ -322,17 +319,18 @@ fun PurchaseListScreen(
                     )
                 }
             },
-            confirmButton = { }
+            confirmText = "",
+            dismissText = "",
+            onConfirmClick = {},
+            onDismissClick = {},
+            isVisible = true
         )
     }
     
     if (showScreenshotDialog && screenshotBitmap != null) {
-        AlertDialog(
-            onDismissRequest = { showScreenshotDialog = false },
-            title = {
-                Text(stringResource(R.string.purchaselist_screenshot))
-            },
-            text = {
+        GlassConfirmDialog(
+            titleRes = R.string.purchaselist_screenshot,
+            content = {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -345,64 +343,54 @@ fun PurchaseListScreen(
                             .clip(MaterialTheme.shapes.medium)
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                }
-            },
-            confirmButton = {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    OutlinedButton(
-                        onClick = {
-                            screenshotBitmap?.let { bitmap ->
-                                val success = ScreenshotHelper.saveBitmapToGallery(context, bitmap)
-                                if (success) {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.purchaselist_screenshot_saved),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        context,
-                                        context.getString(R.string.purchaselist_screenshot_failed),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        GlassOutlinedButton(
+                            text = stringResource(R.string.add_save),
+                            icon = Icons.Default.Save,
+                            onClick = {
+                                screenshotBitmap?.let { bitmap ->
+                                    val success = ScreenshotHelper.saveBitmapToGallery(context, bitmap)
+                                    if (success) {
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.purchaselist_screenshot_saved),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.purchaselist_screenshot_failed),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
-                            }
-                            showScreenshotDialog = false
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(stringResource(R.string.purchaselist_save_to_gallery))
-                    }
-                    Button(
-                        onClick = {
-                            screenshotBitmap?.let { bitmap ->
-                                ScreenshotHelper.shareBitmap(context, bitmap)
-                            }
-                            showScreenshotDialog = false
-                        },
-                        modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = glassColors.primary
+                                showScreenshotDialog = false
+                            },
+                            modifier = Modifier.weight(1f)
                         )
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp)
+                        GlassButton(
+                            text = stringResource(R.string.purchaselist_share),
+                            icon = Icons.Default.Share,
+                            onClick = {
+                                screenshotBitmap?.let { bitmap ->
+                                    ScreenshotHelper.shareBitmap(context, bitmap)
+                                }
+                                showScreenshotDialog = false
+                            },
+                            modifier = Modifier.weight(1f)
                         )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(stringResource(R.string.purchaselist_share))
                     }
                 }
             },
-            dismissButton = {
-                TextButton(onClick = { showScreenshotDialog = false }) {
-                    Text(stringResource(R.string.add_cancel))
-                }
-            }
+            confirmText = "",
+            dismissText = "",
+            onConfirmClick = {},
+            onDismissClick = { showScreenshotDialog = false },
+            isVisible = true,
+            showButtons = false
         )
     }
 }

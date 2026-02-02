@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">Рекомендуемое количество</string>
     <string name="purchaselist_totalitems">Товаров к покупке</string>
     <string name="purchaselist_unit">Единица измерения</string>
+    <string name="purchaselist_share">Поделиться</string>
+    <string name="purchaselist_screenshot">Скриншот списка покупок</string>
+    <string name="purchaselist_screenshot_saved">Скриншот сохранён в галерее</string>
+    <string name="purchaselist_screenshot_failed">Не удалось сохранить скриншот</string>
 
 </resources>

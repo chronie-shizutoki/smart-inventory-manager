@@ -189,7 +189,7 @@ object ScreenshotHelper {
             )
             
             canvas.drawText(
-                context.getString(context.resources.getIdentifier("purchaselist_category", "string", context.packageName)) + ": ${item.category}",
+                context.getString(context.resources.getIdentifier("inventory_category", "string", context.packageName)) + ": ${item.category}",
                 padding,
                 yOffset + 160f,
                 detailPaint

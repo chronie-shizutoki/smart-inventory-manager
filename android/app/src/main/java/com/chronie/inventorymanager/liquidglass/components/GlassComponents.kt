@@ -3,6 +3,7 @@ package com.chronie.inventorymanager.liquidglass.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -799,20 +800,31 @@ fun GlassConfirmDialog(
         onCancel: (() -> Unit)? = null,
         onDismissClick: (() -> Unit)? = null,
         isVisible: Boolean = true,
-        useIconButtons: Boolean = false // 控制是否使用图标按钮
+        useIconButtons: Boolean = false, // 控制是否使用图标按钮
+        showButtons: Boolean = true // 控制是否显示底部按钮
 ) {
         val visible by remember { mutableStateOf(isVisible) }
         
         AnimatedVisibility(
             visible = isVisible,
-            enter = fadeIn(animationSpec = tween(300, easing = FastOutSlowInEasing)) + slideInVertically(
-                       animationSpec = tween(300, easing = FastOutSlowInEasing),
-                       initialOffsetY = { it / 3 }
-                   ),
-            exit = fadeOut(animationSpec = tween(200, easing = FastOutSlowInEasing)) + slideOutVertically(
-                      animationSpec = tween(200, easing = FastOutSlowInEasing),
-                      targetOffsetY = { it / 3 }
-                  )
+            enter = fadeIn(animationSpec = tween(300, easing = FastOutSlowInEasing)) + 
+                    slideInVertically(
+                        animationSpec = tween(300, easing = FastOutSlowInEasing),
+                        initialOffsetY = { it / 3 }
+                    ) +
+                    scaleIn(
+                        animationSpec = tween(300, easing = FastOutSlowInEasing),
+                        initialScale = 0.9f
+                    ),
+            exit = fadeOut(animationSpec = tween(200, easing = FastOutSlowInEasing)) + 
+                   slideOutVertically(
+                       animationSpec = tween(200, easing = FastOutSlowInEasing),
+                       targetOffsetY = { it / 3 }
+                   ) +
+                   scaleOut(
+                       animationSpec = tween(200, easing = FastOutSlowInEasing),
+                       targetScale = 0.9f
+                   )
         ) {
 
         val defaultConfirmText = stringResource(R.string.add_save)
@@ -840,6 +852,10 @@ fun GlassConfirmDialog(
                                         color = Color.Black.copy(alpha = 0.5f),
                                         shape = RoundedCornerShape(16.dp)
                                 )
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null
+                                ) { onDismissClickFinal() }
                                 .padding(32.dp),
                 contentAlignment = Alignment.Center
         ) {
@@ -852,7 +868,11 @@ fun GlassConfirmDialog(
                                                 effects = {}
                                         )
                                         .alpha(colors.alpha)
-                                        .padding(24.dp),
+                                        .padding(24.dp)
+                                        .clickable(
+                                            interactionSource = remember { MutableInteractionSource() },
+                                            indication = null
+                                        ) { },
                         contentAlignment = Alignment.Center
                 ) {
                         Column(
@@ -906,106 +926,108 @@ fun GlassConfirmDialog(
                                         }
                                 }
 
-                                // 按钮区域
-                                Row(
-                                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                        if (useIconButtons) {
-                                                // 取消按钮（×）
-                                                IconButton(
-                                                        onClick = { onDismissClickFinal() },
-                                                        modifier =
-                                                                Modifier.background(
-                                                                                color =
-                                                                                        colors.container,
-                                                                                shape =
-                                                                                        RoundedCornerShape(
-                                                                                                12.dp
-                                                                                        )
-                                                                        )
-                                                                        .padding(8.dp)
-                                                ) {
-                                                        Icon(
-                                                                imageVector = Icons.Default.Close,
-                                                                contentDescription =
-                                                                        finalCancelText,
-                                                                tint = colors.text
-                                                        )
-                                                }
+                                if (showButtons) {
+                                    // 按钮区域
+                                    Row(
+                                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                            if (useIconButtons) {
+                                                    // 取消按钮（×）
+                                                    IconButton(
+                                                            onClick = { onDismissClickFinal() },
+                                                            modifier =
+                                                                    Modifier.background(
+                                                                                    color =
+                                                                                            colors.container,
+                                                                                    shape =
+                                                                                            RoundedCornerShape(
+                                                                                                    12.dp
+                                                                                            )
+                                                                            )
+                                                                            .padding(8.dp)
+                                                    ) {
+                                                            Icon(
+                                                                    imageVector = Icons.Default.Close,
+                                                                    contentDescription =
+                                                                            finalCancelText,
+                                                                    tint = colors.text
+                                                            )
+                                                    }
 
-                                                Spacer(modifier = Modifier.width(16.dp))
+                                                    Spacer(modifier = Modifier.width(16.dp))
 
-                                                // 确认按钮（√）
-                                                IconButton(
-                                                        onClick = { onConfirmClickFinal() },
-                                                        modifier =
-                                                                Modifier.background(
-                                                                                color =
-                                                                                        Color(
-                                                                                                0xFF2196F3
-                                                                                        ),
-                                                                                shape =
-                                                                                        RoundedCornerShape(
-                                                                                                12.dp
-                                                                                        )
-                                                                        )
-                                                                        .padding(8.dp)
-                                                ) {
-                                                        Icon(
-                                                                imageVector = Icons.Default.Check,
-                                                                contentDescription =
-                                                                        finalConfirmText,
-                                                                tint = Color.White
-                                                        )
-                                                }
-                                        } else {
-                                                // 传统文本按钮
-                                                Button(
-                                                        onClick = { onDismissClickFinal() },
-                                                        colors =
-                                                                ButtonDefaults.buttonColors(
-                                                                        containerColor =
-                                                                                colors.container
-                                                                ),
-                                                        shape = RoundedCornerShape(12.dp),
-                                                        modifier = Modifier.weight(1f)
-                                                ) {
-                                                        Text(
-                                                                text =
-                                                                        if (dismissText != null)
-                                                                                dismissText
-                                                                        else finalCancelText,
-                                                                style =
-                                                                        GlassTypography.labelLarge
-                                                                                .copy(
-                                                                                        color =
-                                                                                                colors.text
-                                                                                )
-                                                        )
-                                                }
+                                                    // 确认按钮（√）
+                                                    IconButton(
+                                                            onClick = { onConfirmClickFinal() },
+                                                            modifier =
+                                                                    Modifier.background(
+                                                                                    color =
+                                                                                            Color(
+                                                                                                    0xFF2196F3
+                                                                                            ),
+                                                                                    shape =
+                                                                                            RoundedCornerShape(
+                                                                                                    12.dp
+                                                                                            )
+                                                                            )
+                                                                            .padding(8.dp)
+                                                    ) {
+                                                            Icon(
+                                                                    imageVector = Icons.Default.Check,
+                                                                    contentDescription =
+                                                                            finalConfirmText,
+                                                                    tint = Color.White
+                                                            )
+                                                    }
+                                            } else {
+                                                    // 传统文本按钮
+                                                    Button(
+                                                            onClick = { onDismissClickFinal() },
+                                                            colors =
+                                                                    ButtonDefaults.buttonColors(
+                                                                            containerColor =
+                                                                                    colors.container
+                                                                    ),
+                                                            shape = RoundedCornerShape(12.dp),
+                                                            modifier = Modifier.weight(1f)
+                                                    ) {
+                                                            Text(
+                                                                    text =
+                                                                            if (dismissText != null)
+                                                                                    dismissText
+                                                                            else finalCancelText,
+                                                                    style =
+                                                                            GlassTypography.labelLarge
+                                                                                    .copy(
+                                                                                            color =
+                                                                                                    colors.text
+                                                                                    )
+                                                            )
+                                                    }
 
-                                                Button(
-                                                        onClick = { onConfirmClickFinal() },
-                                                        colors =
-                                                                ButtonDefaults.buttonColors(
-                                                                        containerColor =
-                                                                                Color(0xFF2196F3)
-                                                                ),
-                                                        shape = RoundedCornerShape(12.dp),
-                                                        modifier = Modifier.weight(1f)
-                                                ) {
-                                                        Text(
-                                                                text = finalConfirmText,
-                                                                style =
-                                                                        GlassTypography.labelLarge
-                                                                                .copy(
-                                                                                        color =
-                                                                                                Color.White
-                                                                                )
-                                                        )
-                                                }
-                                        }
+                                                    Button(
+                                                            onClick = { onConfirmClickFinal() },
+                                                            colors =
+                                                                    ButtonDefaults.buttonColors(
+                                                                            containerColor =
+                                                                                    Color(0xFF2196F3)
+                                                                    ),
+                                                            shape = RoundedCornerShape(12.dp),
+                                                            modifier = Modifier.weight(1f)
+                                                    ) {
+                                                            Text(
+                                                                    text = finalConfirmText,
+                                                                    style =
+                                                                            GlassTypography.labelLarge
+                                                                            .copy(
+                                                                                    color =
+                                                                                            Color.White
+                                                                            )
+                                                            )
+                                                    }
+                                            }
+                                    }
                                 }
                         }
                 }

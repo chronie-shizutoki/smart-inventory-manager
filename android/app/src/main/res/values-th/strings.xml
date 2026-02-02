@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">จำนวนที่แนะนำ</string>
     <string name="purchaselist_totalitems">จำนวนรายการที่ต้องซื้อ</string>
     <string name="purchaselist_unit">หน่วย</string>
+    <string name="purchaselist_share">แชร์</string>
+    <string name="purchaselist_screenshot">รายการซื้อ สกรีนช็อต</string>
+    <string name="purchaselist_screenshot_saved">บันทึกสกรีนช็อตลงในแกลเลอรีแล้ว</string>
+    <string name="purchaselist_screenshot_failed">บันทึกสกรีนช็อตไม่สำเร็จ</string>
 
 </resources>

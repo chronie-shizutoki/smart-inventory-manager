@@ -158,5 +158,9 @@
     <string name="purchaselist_suggestedquantity">تجویز کردہ مقدار</string>
     <string name="purchaselist_totalitems">خریدنا ہوں گے (کل آئٹمز)</string>
     <string name="purchaselist_unit">اکائی</string>
+    <string name="purchaselist_share">شیئر کریں</string>
+    <string name="purchaselist_screenshot">خریداری کی فہرست اسکرین شاٹ</string>
+    <string name="purchaselist_screenshot_saved">اسکرین شاٹ گیلری میں محفوظ ہو گیا</string>
+    <string name="purchaselist_screenshot_failed">اسکرین شاٹ محفوظ کرنے میں ناکامی</string>
 
 </resources>

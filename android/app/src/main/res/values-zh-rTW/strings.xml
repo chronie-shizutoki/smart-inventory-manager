@@ -181,5 +181,9 @@
     <string name="purchaselist_suggestedquantity">建議採購量</string>
     <string name="purchaselist_totalitems">待採購物品</string>
     <string name="purchaselist_unit">單位</string>
+    <string name="purchaselist_share">分享</string>
+    <string name="purchaselist_screenshot">採購清單截圖</string>
+    <string name="purchaselist_screenshot_saved">截圖已儲存至相簿</string>
+    <string name="purchaselist_screenshot_failed">截圖儲存失敗</string>
 
 </resources>

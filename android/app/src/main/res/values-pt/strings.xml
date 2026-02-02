@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">Quantidade Sugerida</string>
     <string name="purchaselist_totalitems">Itens para Comprar</string>
     <string name="purchaselist_unit">Unidade</string>
+    <string name="purchaselist_share">Partilhar</string>
+    <string name="purchaselist_screenshot">Captura da lista de compras</string>
+    <string name="purchaselist_screenshot_saved">Captura guardada na galeria</string>
+    <string name="purchaselist_screenshot_failed">Falha ao guardar a captura</string>
 
 </resources>

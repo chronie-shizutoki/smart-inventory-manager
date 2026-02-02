@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">सुझाई गई मात्रा</string>
     <string name="purchaselist_totalitems">खरीदने के लिए आइटम्स</string>
     <string name="purchaselist_unit">यूनिट</string>
+    <string name="purchaselist_share">शेयर करें</string>
+    <string name="purchaselist_screenshot">खरीदारी सूची स्क्रीनशॉट</string>
+    <string name="purchaselist_screenshot_saved">स्क्रीनशॉट गैलरी में सेव हो गया</string>
+    <string name="purchaselist_screenshot_failed">स्क्रीनशॉट सेव करने में विफल</string>
 
 </resources>

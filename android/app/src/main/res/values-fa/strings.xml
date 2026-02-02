@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">مقدار پیشنهادی</string>
     <string name="purchaselist_totalitems">تعداد کل آیتم‌ها</string>
     <string name="purchaselist_unit">واحد</string>
+    <string name="purchaselist_share">اشتراک‌گذاری</string>
+    <string name="purchaselist_screenshot">اسکرین‌شات لیست خرید</string>
+    <string name="purchaselist_screenshot_saved">اسکرین‌شات در گالری ذخیره شد</string>
+    <string name="purchaselist_screenshot_failed">ذخیره اسکرین‌شات با شکست مواجه شد</string>
 
 </resources>

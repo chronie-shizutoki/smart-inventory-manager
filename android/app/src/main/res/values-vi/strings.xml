@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">Đề xuất mua</string>
     <string name="purchaselist_totalitems">Tổng số mặt hàng cần mua</string>
     <string name="purchaselist_unit">Đơn vị</string>
+    <string name="purchaselist_share">Chia sẻ</string>
+    <string name="purchaselist_screenshot">Ảnh chụp danh sách mua hàng</string>
+    <string name="purchaselist_screenshot_saved">Ảnh chụp đã lưu vào thư viện</string>
+    <string name="purchaselist_screenshot_failed">Lưu ảnh chụp thất bại</string>
 
 </resources>

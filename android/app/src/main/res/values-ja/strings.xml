@@ -159,5 +159,9 @@
     <string name="purchaselist_suggestedquantity">推奨購入数量</string>
     <string name="purchaselist_totalitems">購入アイテム数</string>
     <string name="purchaselist_unit">単位</string>
+    <string name="purchaselist_share">共有</string>
+    <string name="purchaselist_screenshot">購入リストのスクリーンショット</string>
+    <string name="purchaselist_screenshot_saved">スクリーンショットをギャラリーに保存しました</string>
+    <string name="purchaselist_screenshot_failed">スクリーンショットの保存に失敗しました</string>
 
 </resources>

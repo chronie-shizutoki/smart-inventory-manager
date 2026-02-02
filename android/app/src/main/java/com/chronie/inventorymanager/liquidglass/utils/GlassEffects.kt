@@ -245,6 +245,69 @@ fun GlassButton(
     }
 }
 
+/** 液态玻璃轮廓按钮 */
+@Composable
+fun GlassOutlinedButton(
+        modifier: Modifier = Modifier,
+        text: String,
+        icon: ImageVector? = null,
+        onClick: () -> Unit,
+        enabled: Boolean = true
+) {
+    val isLightTheme = !isSystemInDarkTheme()
+    val glassColors = getGlassColors(isLightTheme)
+    val buttonColor =
+            if (enabled) {
+                glassColors.primary.copy(alpha = 0.8f)
+            } else {
+                glassColors.textSecondary.copy(alpha = 0.3f)
+            }
+
+    androidx.compose.material3.OutlinedButton(
+            onClick = onClick,
+            modifier =
+                    modifier.clip(RoundedCornerShape(24.dp))
+                            .background(
+                                    brush =
+                                            Brush.linearGradient(
+                                                    colors =
+                                                            listOf(
+                                                                    glassColors.container.copy(alpha = 0.3f),
+                                                                    glassColors.container.copy(alpha = 0.1f)
+                                                            )
+                                            )
+                            )
+                            .border(
+                                    width = 1.dp,
+                                    brush =
+                                            Brush.linearGradient(
+                                                    colors =
+                                                            listOf(
+                                                                    buttonColor,
+                                                                    buttonColor.copy(alpha = 0.5f)
+                                                            )
+                                            ),
+                                    shape = RoundedCornerShape(24.dp)
+                            ),
+            enabled = enabled,
+            colors =
+                    androidx.compose.material3.ButtonDefaults.outlinedButtonColors(
+                            containerColor = Color.Transparent,
+                            contentColor = glassColors.text
+                    )
+    ) {
+        if (icon != null) {
+            Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+        }
+        androidx.compose.material3.Text(text)
+    }
+}
+
 /** 液态玻璃输入框效果 */
 @Composable
 fun GlassTextField(
