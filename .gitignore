@@ -58,4 +58,4 @@ node_modules/
 *.tmp
 *.temp
 
-android/gradle-9.2.1-all.zip
+gradle-*-all.zip

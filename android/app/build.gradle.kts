@@ -2,7 +2,6 @@ import java.util.*
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     // alias(libs.plugins.kotlin.kapt) // 暂时禁用Kapt
     // alias(libs.plugins.hilt.android) // 暂时禁用Hilt
@@ -101,10 +100,10 @@ dependencies {
     // kapt(libs.androidx.room.compiler)
 
     // 网络依赖
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
 
     // 依赖注入 (暂时禁用Hilt)
     // implementation(libs.hilt.android)
@@ -120,7 +119,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
 
     // Coil图片加载
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.7.0")
 
     // 测试依赖
     testImplementation(libs.junit)
@@ -133,6 +132,6 @@ dependencies {
     implementation(libs.androidx.datastore)
 
     // AndroidLiquidGlass毛玻璃效果库
-    implementation("io.github.kyant0:backdrop:1.0.0")
-    implementation("io.github.kyant0:capsule:2.1.1")
+    implementation("io.github.kyant0:backdrop:1.0.5")
+    implementation("io.github.kyant0:capsule:2.1.3")
 }
