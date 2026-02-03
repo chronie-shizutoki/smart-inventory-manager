@@ -1,19 +1,19 @@
-# 国际化翻译字典
+# Internationalization translation dictionary
 def get_translation(language, section, key, **kwargs):
     """
-    获取翻译文本
-    :param language: 语言代码
-    :param section: 部分（alerts或recommendations）
-    :param key: 键名
-    :param kwargs: 格式化参数
-    :return: 翻译后的文本
+    Get the translation text
+    :param language: Language code
+    :param section: Section (alerts or recommendations)
+    :param key: Key name
+    :param kwargs: Formatting parameters
+    :return: Translated text
     """
     try:
-        # 如果指定语言不存在，默认使用英语
+        # If the specified language does not exist, use English by default
         lang = language if language in translations else 'en'
         text = translations[lang][section][key]
-        # 格式化文本
+        # Format the text
         return text.format(**kwargs)
     except (KeyError, ValueError):
-        # 如果找不到翻译，返回键名
+        # If the translation is not found, return the key name
         return key

@@ -8,27 +8,27 @@ from datetime import datetime
 from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
 
-# 设置日志
+# Set up logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 ai_bp = Blueprint('ai', __name__)
 
-# 支持的图片类型
+# Supported image types
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-# 检查文件是否为允许的图片类型
+# Check if the file is an allowed image type
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# 从图片生成库存记录
+# Generate inventory records from images
 @ai_bp.route('/generate-records', methods=['POST'])
 def generate_records():
     try:
         logger.info('Received AI record generation request')
         
-        # 检查请求参数
+        # Check request parameters
         if 'api_key' not in request.form:
             return jsonify({
                 'success': False,
@@ -37,14 +37,14 @@ def generate_records():
         
         api_key = request.form['api_key']
         
-        # 检查是否有文件上传
+        # Check if any images are uploaded
         if 'images' not in request.files:
             return jsonify({
                 'success': False,
                 'message': 'No images provided'
             }), 400
         
-        # 获取上传的所有图片
+        # Get all uploaded images
         images = request.files.getlist('images')
         
         if not images or all(img.filename == '' for img in images):
@@ -53,23 +53,23 @@ def generate_records():
                 'message': 'No valid images provided'
             }), 400
         
-        # 准备图片数据
+        # Prepare image data
         processed_images = []
         for img in images:
             if img and allowed_file(img.filename):
                 filename = secure_filename(img.filename)
                 logger.info(f'Processing image: {filename}')
                 
-                # 保存临时文件
+                # Save temporary file
                 with tempfile.NamedTemporaryFile(delete=False, suffix=f'.{filename.rsplit(".", 1)[1].lower()}') as temp_file:
                     img.save(temp_file)
                     temp_file_path = temp_file.name
                 
-                # 读取图片并转换为base64
+                # Read image and convert to base64
                 with open(temp_file_path, 'rb') as f:
                     img_data = base64.b64encode(f.read()).decode('utf-8')
                 
-                # 清理临时文件
+                # Clean up temporary file
                 os.unlink(temp_file_path)
                 
                 processed_images.append({
@@ -85,18 +85,18 @@ def generate_records():
                 'message': 'No valid images processed'
             }), 400
         
-        # 调用SiliconFlow API进行图片分析
+        # Call SiliconFlow API for image AI analysis
         logger.info(f'Calling SiliconFlow API with {len(processed_images)} images')
         records = analyze_images_with_siliconflow(processed_images, api_key)
         
-        # 处理分析结果
+        # Process analysis results
         if not records:
             return jsonify({
                 'success': False,
                 'message': 'Failed to generate records from images'
             }), 500
         
-        # 返回成功响应
+        # Back success response
         return jsonify({
             'success': True,
             'records': records,
@@ -110,39 +110,46 @@ def generate_records():
             'message': f'Error generating records: {str(e)}'
         }), 500
 
-# 调用SiliconFlow API分析图片
+# Call SiliconFlow API for image AI analysis
 def analyze_images_with_siliconflow(images, api_key):
     try:
-        # 构建请求数据
+        # Build request data
+        current_date = datetime.now()
+        date_str = current_date.strftime('%Y-%m-%d')
+        weekday_map = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
+        weekday_str = weekday_map[current_date.weekday()]
+        
         messages = [{
             'role': 'system', 
-            'content': '''
-你是一个智能库存记录生成器，需要从图片中识别物品并生成库存记录。
+            'content': f'''
+You are an intelligent inventory record generator that needs to identify items from images and generate inventory records.
 
-请分析图片中的所有物品，并按照以下格式输出JSON数据：
-{
+Current date information: Today is {date_str}, {weekday_str}. Use this information to generate realistic expiry dates and ensure dates are in the future.
+
+Please analyze all items in the images and output JSON data in the following format:
+{{
   "records": [
-    {
-      "name": "物品名称",
-      "category": "物品分类",
-      "quantity": 物品数量,
-      "unit": "数量单位",
-      "expiryDate": "过期日期（如果有，格式：YYYY-MM-DD）",
-      "description": "物品描述（可选）"
-    }
+    {{
+      "name": "Item Name",
+      "category": "Item Category",
+      "quantity": Item Quantity,
+      "unit": "Quantity Unit",
+      "expiryDate": "Expiry Date (if any, format: YYYY-MM-DD)",
+      "description": "Item Description (optional)"
+    }}
   ]
-}
+}}
 
-物品分类只能是以下之一：food, medicine, cleaning, personal, household, electronics
+Item Category can only be one of the following: food, medicine, cleaning, personal, household, electronics
 
-请确保输出的JSON格式正确，不要包含任何其他文本。
+Please ensure the output JSON format is correct and does not include any additional text.
 '''
         }, {
             'role': 'user',
-            'content': [{'type': 'text', 'text': '请分析这些图片并生成库存记录。'}]
+            'content': [{'type': 'text', 'text': 'Please analyze these images and generate inventory records.'}]
         }]
         
-        # 添加图片数据
+        # Add image data
         for img in images:
             messages[1]['content'].append({
                 'type': 'image_url',
@@ -151,7 +158,7 @@ def analyze_images_with_siliconflow(images, api_key):
                 }
             })
         
-        # 调用SiliconFlow API
+        # Call SiliconFlow API
         headers = {
             'Authorization': f'Bearer {api_key}',
             'Content-Type': 'application/json'
@@ -164,36 +171,36 @@ def analyze_images_with_siliconflow(images, api_key):
             'temperature': 0.2
         }
         
-        # 使用SiliconFlow的API端点
+        # Call SiliconFlow API
         response = requests.post(
             'https://api.siliconflow.cn/v1/chat/completions',
             headers=headers,
             json=data
         )
         
-        # 检查响应状态
+        # Check response status
         if response.status_code != 200:
             logger.error(f'SiliconFlow API returned non-200 status code: {response.status_code}, response: {response.text}')
             raise Exception(f'SiliconFlow API error: {response.status_code} - {response.text}')
         
-        # 解析响应
+        # Parse response
         result = response.json()
         content = result['choices'][0]['message']['content']
         
-        # 解析JSON结果
+        # Parse JSON result
         parsed_result = json.loads(content)
         records = parsed_result.get('records', [])
         
-        # 验证记录格式
+        # Validate record format
         validated_records = []
         valid_categories = ['food', 'medicine', 'cleaning', 'personal', 'household', 'electronics']
         
         for record in records:
-            # 确保必填字段存在
+            # Check required fields
             if all(k in record for k in ['name', 'category', 'quantity', 'unit']):
-                # 验证分类
+                # Validate category
                 if record['category'] in valid_categories:
-                    # 规范化数据
+                    # Normalize data
                     validated_record = {
                         'name': record['name'].strip(),
                         'category': record['category'],
@@ -202,15 +209,15 @@ def analyze_images_with_siliconflow(images, api_key):
                         'description': record.get('description', '').strip()
                     }
                     
-                    # 处理过期日期
+                    # Handle expiry date
                     expiry_date = record.get('expiryDate')
                     if expiry_date:
                         try:
-                            # 尝试解析日期格式
+                            # Try to parse date format
                             date_obj = datetime.strptime(expiry_date, '%Y-%m-%d')
                             validated_record['expiryDate'] = date_obj.strftime('%Y-%m-%d')
                         except ValueError:
-                            # 如果日期格式不正确，则忽略
+                            # If date format is incorrect, ignore it
                             pass
                     
                     validated_records.append(validated_record)

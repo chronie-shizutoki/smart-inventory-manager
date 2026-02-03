@@ -7,31 +7,31 @@ from src.translations import get_translation
 
 inventory_bp = Blueprint('inventory', __name__)
 
-# 获取所有库存物品
+# Get all inventory items
 @inventory_bp.route('/items', methods=['GET'])
 def get_items():
     try:
-        # 获取查询参数
+        # Get query parameters
         search = request.args.get('search', '')
         category = request.args.get('category', '')
         page = int(request.args.get('page', 1))
         per_page = int(request.args.get('per_page', 50))
         
-        # 构建查询
+        # Build query
         query = InventoryItem.query
         
-        # 搜索过滤
+        # Search filtering
         if search:
             query = query.filter(or_(
                 InventoryItem.name.contains(search),
                 InventoryItem.description.contains(search)
             ))
         
-        # 分类过滤
+        # Category filtering
         if category:
             query = query.filter(InventoryItem.category == category)
         
-        # 分页
+        # Pagination
         items = query.paginate(
             page=page, 
             per_page=per_page, 
@@ -51,7 +51,7 @@ def get_items():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 获取单个库存物品
+# Get a single inventory item
 @inventory_bp.route('/items/<int:item_id>', methods=['GET'])
 def get_item(item_id):
     try:
@@ -63,13 +63,13 @@ def get_item(item_id):
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 创建新的库存物品
+# Create a new inventory item
 @inventory_bp.route('/items', methods=['POST'])
 def create_item():
     try:
         data = request.get_json()
         
-        # 验证必需字段
+        # Validate required fields
         required_fields = ['name', 'category', 'quantity', 'unit']
         for field in required_fields:
             if field not in data or not data[field]:
@@ -78,7 +78,7 @@ def create_item():
                     'error': f'Missing required field: {field}'
                 }), 400
         
-        # 创建新物品
+        # Create new item
         item = InventoryItem.from_dict(data)
         db.session.add(item)
         db.session.commit()
@@ -92,7 +92,7 @@ def create_item():
         db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 更新库存物品
+# Update an inventory item
 @inventory_bp.route('/items/<int:item_id>', methods=['PUT'])
 def update_item(item_id):
     try:
@@ -111,7 +111,7 @@ def update_item(item_id):
         db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 删除库存物品
+# Delete an inventory item
 @inventory_bp.route('/items/<int:item_id>', methods=['DELETE'])
 def delete_item(item_id):
     try:
@@ -128,29 +128,29 @@ def delete_item(item_id):
         db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 获取库存统计
+# Get inventory statistics
 @inventory_bp.route('/stats', methods=['GET'])
 def get_stats():
     try:
         total_items = InventoryItem.query.count()
         
-        # 库存不足的物品
+        # Items with low stock (below minimum quantity)
         low_stock_items = InventoryItem.query.filter(
             InventoryItem.quantity <= InventoryItem.min_quantity
         ).count()
         
-        # 即将过期的物品（7天内）
+        # Items expiring soon (7 days)
         seven_days_later = date.today() + timedelta(days=7)
         expiring_soon_items = InventoryItem.query.filter(
             InventoryItem.expiry_date.between(date.today(), seven_days_later)
         ).count()
         
-        # 已过期的物品
+        # Expired items
         expired_items = InventoryItem.query.filter(
             InventoryItem.expiry_date < date.today()
         ).count()
         
-        # 分类统计
+        # Category statistics
         categories = db.session.query(InventoryItem.category).distinct().count()
         
         return jsonify({
@@ -166,11 +166,11 @@ def get_stats():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-# 获取分类列表
+# Get list of categories
 @inventory_bp.route('/categories', methods=['GET'])
 def get_categories():
     try:
-        # 从库存物品中获取所有使用的分类
+        # Get all distinct categories from inventory items
         categories = db.session.query(InventoryItem.category).distinct().all()
         category_list = [cat[0] for cat in categories]
         
@@ -181,26 +181,24 @@ def get_categories():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-
-
-# 记录物品使用
+# Record item usage
 @inventory_bp.route('/items/<int:item_id>/use', methods=['POST'])
 def record_item_usage(item_id):
     try:
         item = InventoryItem.query.get_or_404(item_id)
         
-        # 检查物品是否有足够库存
+        # Check if item has sufficient stock
         if item.quantity > 0:
-            # 减少物品数量
+            # Decrease item quantity
             item.quantity -= 1
-            # 增加使用计数
+            # Increase usage count
             item.usage_count += 1
-            # 更新最后使用时间
+            # Update last used time
             item.last_used_at = datetime.utcnow()
             
             db.session.commit()
             
-            # 返回不带硬编码中文的成功响应
+            # Return success response without hardcoded text
             return jsonify({
                 'success': True,
                 'message_code': 'itemUsedSuccessfully',
@@ -212,7 +210,7 @@ def record_item_usage(item_id):
                 'data': item.to_dict()
             })
         else:
-            # 返回库存不足错误，不包含硬编码中文
+            # Return insufficient stock error without hardcoded text
             return jsonify({
                 'success': False,
                 'error_code': 'insufficientStock',
@@ -225,19 +223,19 @@ def record_item_usage(item_id):
 
 
 
-# 采购清单生成
+# Generate purchase list for low stock items
 @inventory_bp.route('/items/generate-purchase-list', methods=['GET'])
 def generate_purchase_list():
     try:
-        # 获取所有库存不足的物品
+        # Get all items with low stock (below minimum quantity)
         low_stock_items = InventoryItem.query.filter(
             InventoryItem.quantity <= InventoryItem.min_quantity
         ).all()
 
-        # 构建采购清单
+        # Build purchase list
         purchase_list = []
         for item in low_stock_items:
-            # 计算建议采购数量（最低库存的1.5倍减去当前库存）
+            # Calculate suggested purchase quantity (1.5 times min quantity minus current quantity)
             suggested_quantity = max(1, int(item.min_quantity * 1.5 - item.quantity))
             purchase_list.append({
                 'id': item.id,
@@ -250,7 +248,7 @@ def generate_purchase_list():
                 'lastUsedAt': item.last_used_at.isoformat() if item.last_used_at else None
             })
 
-        # 按分类排序
+        # Sort purchase list by category
         purchase_list.sort(key=lambda x: x['category'])
 
         return jsonify({
@@ -261,7 +259,7 @@ def generate_purchase_list():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-# 批量操作
+# Batch operations for inventory items
 @inventory_bp.route('/items/batch', methods=['POST'])
 def batch_operations():
     try:
@@ -270,7 +268,7 @@ def batch_operations():
         item_ids = data.get('itemIds', [])
         
         if operation == 'delete':
-            # 批量删除
+            # Delete items and associated alerts
             InventoryItem.query.filter(InventoryItem.id.in_(item_ids)).delete(synchronize_session=False)
             SmartAlert.query.filter(SmartAlert.item_id.in_(item_ids)).delete(synchronize_session=False)
             db.session.commit()
@@ -281,7 +279,7 @@ def batch_operations():
             })
         
         elif operation == 'update_category':
-            # 批量更新分类
+            # Batch update categories
             new_category = data.get('newCategory')
             if not new_category:
                 return jsonify({'success': False, 'error': 'New category is required'}), 400
@@ -305,20 +303,20 @@ def batch_operations():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-# 代理外部记账本API请求
+# Proxy requests to external expense tracking API
 @inventory_bp.route('/expenses', methods=['GET'])
 def proxy_expenses():
     try:
-        # 获取所有请求参数
+        # Get all request parameters
         params = request.args.to_dict()
         
-        # 外部记账本API URL
+        # Third-Party Expense Tracking API URL
         external_api_url = 'http://192.168.0.197:3010/api/expenses'
         
-        # 发送请求到外部API，传递所有参数
+        # Send request to external API, passing all parameters
         response = requests.get(external_api_url, params=params)
         
-        # 将外部API的响应返回给前端
+        # Return external API response to frontend
         return jsonify(response.json()), response.status_code
         
     except Exception as e:

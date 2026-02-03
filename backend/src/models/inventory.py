@@ -43,7 +43,7 @@ class InventoryItem(db.Model):
         item.min_quantity = data.get('minQuantity', 0)
         item.usage_count = data.get('usageCount', 0)
         
-        # 处理过期日期
+        # Handle expiry date
         expiry_date_str = data.get('expiryDate')
         if expiry_date_str:
             try:
@@ -51,7 +51,7 @@ class InventoryItem(db.Model):
             except ValueError:
                 item.expiry_date = None
         
-        # 处理最后使用时间
+        # Handle last used time
         last_used_at_str = data.get('lastUsedAt')
         if last_used_at_str:
             try:
@@ -69,11 +69,11 @@ class InventoryItem(db.Model):
         self.unit = data.get('unit', self.unit)
         self.min_quantity = data.get('minQuantity', self.min_quantity)
         
-        # 处理使用频率字段
+        # Handle usage count field
         if 'usageCount' in data:
             self.usage_count = data.get('usageCount', self.usage_count)
         
-        # 处理最后使用时间
+        # Handle last used time
         last_used_at_str = data.get('lastUsedAt')
         if last_used_at_str:
             try:
@@ -81,7 +81,7 @@ class InventoryItem(db.Model):
             except ValueError:
                 pass
         
-        # 处理过期日期
+        # Handle expiry date
         expiry_date_str = data.get('expiryDate')
         if expiry_date_str:
             try:
