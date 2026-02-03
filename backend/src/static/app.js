@@ -763,11 +763,17 @@ const app = createApp({
                 this.btnPosition.y = btnCenterY - screenCenterY;
             }
             
-            // 从localStorage加载保存的API Key
-            const savedApiKey = localStorage.getItem('siliconflowApiKey');
-            if (savedApiKey) {
-                this.aiForm.apiKey = savedApiKey;
-            }
+            // 清除localStorage中可能存储的API Key（安全风险修复）
+            // 安全性修复：Clear text storage of sensitive information 敏感信息的明文存储 #38
+            // Sensitive information that is stored unencrypted is accessible to an attacker
+            // who gains access to the storage. This is particularly important for cookies,
+            // which are stored on the machine of the end-user.
+            // 未加密存储的敏感信息会被攻击者访问，攻击者会获得访问权限。这对于存储在终端用户机器上的
+            // cookies 尤为重要。
+            // 修复方法：移除localStorage中存储的API Key并不再储存
+            // https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scanning/38
+            localStorage.removeItem('siliconflowApiKey');
+            
             this.showAiRecordModal = true;
             // 为关闭按钮添加事件监听
             setTimeout(() => {
@@ -831,9 +837,6 @@ const app = createApp({
                 this.showNotification(this.$t('aiRecord.noImagesSelected'), 'error');
                 return;
             }
-
-            // 保存API Key到localStorage
-            localStorage.setItem('siliconflowApiKey', this.aiForm.apiKey);
 
             // 显示加载通知
             this.showNotification(this.$t('aiRecord.generatingRecords'), 'info');
