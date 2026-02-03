@@ -1354,7 +1354,7 @@ const GlassSelect = {
     <div class="glass-select-wrapper" :class="[disabled ? 'opacity-60 pointer-events-none' : '']">
         <div class="glass-select-trigger glass-effect" tabindex="0" role="combobox" aria-haspopup="listbox" :aria-expanded="isOpen.toString()" @click="toggleDropdown" @keydown="onKeydown">
             <span class="glass-select-value" v-text="selectedLabel || placeholder"></span>
-            <i class="fas fa-chevron-down glass-select-caret"></i>
+            <i class="fas fa-chevron-down glass-select-caret" :class="{ 'is-open': isOpen }"></i>
         </div>
         <transition name="fade">
             <ul v-if="isOpen" class="glass-select-menu glass-card" role="listbox">
