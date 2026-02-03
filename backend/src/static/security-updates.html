@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Updates</title>
+    <link href="./libs/tailwind.min.css" rel="stylesheet">
+    <link href="./libs/all.min.css" rel="stylesheet">
+    <link href="./index.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+            }
+            
+            .text-gray-800 {
+                color: #f0f0f0;
+            }
+            
+            .text-gray-700 {
+                color: #e6e6e6;
+            }
+            
+            .text-gray-600 {
+                color: #cccccc;
+            }
+            
+            .text-gray-500 {
+                color: #a3a3a3;
+            }
+            
+            .bg-white\/30 {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+            
+            .glass-button {
+                color: #e6e6e6;
+            }
+            
+            .glass-button:hover {
+                color: #ffffff;
+            }
+        }
+        
+        .severity-high {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+        }
+        
+        .severity-medium {
+            background: linear-gradient(135deg, #feca57 0%, #ff9f43 100%);
+        }
+        
+        .severity-low {
+            background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);
+        }
+        
+        .update-card {
+            transition: all 0.3s ease;
+        }
+        
+        .update-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+        }
+        
+        .solution-item {
+            transition: all 0.2s ease;
+        }
+        
+        .solution-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body class="text-gray-800">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <div class="glass-card p-8 mb-8 animate-fade-in">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">Security Updates</h1>
+                        <p class="text-gray-600 mt-1">Latest security fixes and improvements</p>
+                    </div>
+                </div>
+                <a href="./index.html" class="glass-button px-6 py-3 rounded-lg font-semibold flex items-center space-x-2">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to App</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <div class="glass-card p-6 update-card animate-fade-in animate-delay-1">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="severity-high text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
+                            <i class="fas fa-exclamation-circle mr-2"></i>HIGH
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">Clear text storage of sensitive information</h2>
+                            <p class="text-sm text-gray-500 mt-1">Issue #38 | 2026-02-04</p>
+                        </div>
+                    </div>
+                    <a href="https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scanning/38" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors">
+                        <i class="fas fa-external-link-alt text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4 mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Description</h3>
+                    <p class="text-gray-700">API keys were being stored in localStorage in plain text, exposing sensitive information to potential attackers.</p>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4 mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2"><i class="fas fa-exclamation-triangle mr-2 text-yellow-600"></i>Affected Users</h3>
+                    <p class="text-gray-700">Users who have used the AI record generator feature</p>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4 mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2"><i class="fas fa-tools mr-2 text-green-600"></i>Fix Applied</h3>
+                    <p class="text-gray-700">Removed localStorage storage of API keys and implemented secure handling of sensitive information</p>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3"><i class="fas fa-check-circle mr-2 text-green-600"></i>Recommended Actions</h3>
+                    <ul class="space-y-2">
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fas fa-check text-green-600 mt-1"></i>
+                            <span class="text-gray-700">Reopen the AI record generator to clear stored data</span>
+                        </li>
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fas fa-check text-green-600 mt-1"></i>
+                            <span class="text-gray-700">Clear browser localStorage for 192.168.0.197:5000</span>
+                        </li>
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fas fa-check text-green-600 mt-1"></i>
+                            <span class="text-gray-700">Or clear all browser data</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 update-card animate-fade-in animate-delay-2">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="severity-medium text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>MEDIUM
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">Information exposure through an exception</h2>
+                            <p class="text-sm text-gray-500 mt-1">Issue #49 | 2026-02-04</p>
+                        </div>
+                    </div>
+                    <a href="https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scanning/49" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors">
+                        <i class="fas fa-external-link-alt text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4 mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Description</h3>
+                    <p class="text-gray-700">Exception messages including stack traces were being exposed to clients, potentially revealing sensitive system information, database structure, and file paths.</p>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4 mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2"><i class="fas fa-tools mr-2 text-green-600"></i>Fix Applied</h3>
+                    <p class="text-gray-700">Implemented server-side logging with detailed error information while returning generic error messages to clients</p>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3"><i class="fas fa-check-circle mr-2 text-green-600"></i>Security Improvements</h3>
+                    <ul class="space-y-2">
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fas fa-shield-alt text-blue-600 mt-1"></i>
+                            <span class="text-gray-700"><strong>Information Hiding:</strong> Clients receive only generic error messages</span>
+                        </li>
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fas fa-database text-blue-600 mt-1"></i>
+                            <span class="text-gray-700"><strong>Complete Logging:</strong> Server logs full exception details with stack traces</span>
+                        </li>
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fas fa-check-double text-blue-600 mt-1"></i>
+                            <span class="text-gray-700"><strong>OWASP Compliant:</strong> Follows OWASP security best practices</span>
+                        </li>
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fas fa-wrench text-blue-600 mt-1"></i>
+                            <span class="text-gray-700"><strong>Easy Maintenance:</strong> Developers can view detailed errors in logs while users see safe messages</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 update-card animate-fade-in animate-delay-3">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="severity-low text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
+                            <i class="fas fa-info-circle mr-2"></i>LOW
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">Workflow does not contain permissions</h2>
+                            <p class="text-sm text-gray-500 mt-1">Issue #20 | 2026-02-04</p>
+                        </div>
+                    </div>
+                    <a href="https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scanning/20" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors">
+                        <i class="fas fa-external-link-alt text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4 mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Description</h3>
+                    <p class="text-gray-700">GitHub Actions workflows were missing explicit permission declarations, potentially granting more permissions than necessary.</p>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4 mb-4">
+                    <h3 class="font-semibold text-gray-800 mb-2"><i class="fas fa-tools mr-2 text-green-600"></i>Fix Applied</h3>
+                    <p class="text-gray-700">Added explicit permission declarations to ensure workflows only use necessary permissions following the principle of least privilege</p>
+                </div>
+                
+                <div class="bg-white/30 rounded-lg p-4">
+                    <h3 class="font-semibold text-gray-800 mb-3"><i class="fas fa-file-code mr-2 text-purple-600"></i>Files Modified</h3>
+                    <ul class="space-y-2">
+                        <li class="solution-item flex items-start space-x-3 p-2 rounded">
+                            <i class="fab fa-github text-purple-600 mt-1"></i>
+                            <span class="text-gray-700"><code>.github/workflows/cloc-stats.yml</code></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-6 mt-8 text-center animate-fade-in animate-delay-3">
+            <div class="flex items-center justify-center space-x-2 text-gray-600">
+                <i class="fas fa-shield-alt text-2xl text-green-600"></i>
+                <span class="text-lg">All security issues have been resolved</span>
+                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+            </div>
+            <p class="text-gray-500 mt-2">Last updated: 2026-02-04</p>
+        </div>
+    </div>
+</body>
+</html>
