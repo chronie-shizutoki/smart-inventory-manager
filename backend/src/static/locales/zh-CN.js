@@ -80,10 +80,10 @@ window.zhCNMessages = {
     aiRecord: {
         title: 'AI记录生成器',
         description: '使用AI从图片快速生成库存记录',
-        apiKey: 'SiliconFlow API密钥',
+        apiKey: '硅基流动 API密钥',
         apiKeyRequired: '请输入API密钥',
         noImagesSelected: '请至少选择一张图片',
-        apiKeyHint: '您可以从SiliconFlow控制台获取API密钥',
+        apiKeyHint: '您可以从硅基流动控制台获取API密钥。\n由于安全风险，不再提供API密钥的存储功能。',
         uploadImages: '上传图片',
         dragDropOrClick: '拖拽文件至此处或点击上传',
         supportedFormats: '支持JPG、PNG、WebP格式（最多10张）',

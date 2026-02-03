@@ -83,7 +83,7 @@ window.zhTWMessages = {
         apiKey: 'SiliconFlow API金鑰',
         apiKeyRequired: '請輸入API金鑰',
         noImagesSelected: '請至少選擇一張圖片',
-        apiKeyHint: '您可以從SiliconFlow控制台取得API金鑰',
+        apiKeyHint: '您可以從SiliconFlow控制台取得API金鑰。\n由於安全風險，不再提供API金鑰的儲存功能。',
         uploadImages: '上傳圖片',
         dragDropOrClick: '拖拽檔案至此處或點擊上傳',
         supportedFormats: '支援JPG、PNG、WebP格式（最多10張）',

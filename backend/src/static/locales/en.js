@@ -83,7 +83,7 @@ window.enMessages = {
         apiKey: 'SiliconFlow API Key',
         apiKeyRequired: 'Please enter API key',
         noImagesSelected: 'Please select at least one image',
-        apiKeyHint: 'You can get your API key from SiliconFlow console',
+        apiKeyHint: 'You can get your API key from SiliconFlow console.\nDue to security risks, we no longer provide API key storage functionality.',
         uploadImages: 'Upload Images',
         dragDropOrClick: 'Drag & drop files or click to upload',
         supportedFormats: 'Supports JPG, PNG, WebP (max 10 images)',
