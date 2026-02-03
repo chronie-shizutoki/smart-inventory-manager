@@ -1,4 +1,4 @@
-安全性更新1：
+安全性更新2026020401：
 - Clear text storage of sensitive information（敏感信息的明文存储） #38   
 https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scanning/38
 修复方法：移除localStorage中存储的API Key并不再储存
@@ -6,7 +6,7 @@ https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scann
 严重程度：高
 解决方案：重新打开AI记录生成器/清理浏览器的localstroge（清理192.168.0.197:5000的数据/清理全部数据/卸载浏览器）
 
-安全性更新2：
+安全性更新2026020402：
 - Information exposure through an exception #49等
 https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scanning/49
 修复方法：原：- 直接将异常信息（包括堆栈跟踪）暴露给客户端，可能泄露敏感的系统信息、数据库结构、文件路径等
@@ -17,3 +17,10 @@ https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scann
 - 完整日志 ：服务器端记录完整的异常信息和堆栈跟踪，便于调试
 - 符合OWASP ：遵循OWASP安全最佳实践，防止信息泄露
 - 便于维护 ：开发者可以通过日志查看详细错误，而用户不会看到敏感信息
+
+安全性更新2026020403：
+- Workflow does not contain permissions #20
+https://github.com/chronie-shizutoki/smart-inventory-manager/security/code-scanning/20
+修复方法：添加权限声明，确保只使用必要权限
+严重程度：低
+解决方案：修改.github\workflows\cloc-stats.yml
