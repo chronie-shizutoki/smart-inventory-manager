@@ -4,6 +4,9 @@ from src.models.inventory import db, InventoryItem, Category
 from datetime import datetime, date, timedelta
 from sqlalchemy import or_
 from src.translations import get_translation
+import logging
+
+logger = logging.getLogger(__name__)
 
 inventory_bp = Blueprint('inventory', __name__)
 
@@ -49,7 +52,8 @@ def get_items():
             }
         })
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in get_items: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 # Get a single inventory item
 @inventory_bp.route('/items/<int:item_id>', methods=['GET'])
@@ -61,7 +65,8 @@ def get_item(item_id):
             'data': item.to_dict()
         })
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in get_item: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 # Create a new inventory item
 @inventory_bp.route('/items', methods=['POST'])
@@ -90,7 +95,8 @@ def create_item():
         }), 201
     except Exception as e:
         db.session.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in create_item: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 # Update an inventory item
 @inventory_bp.route('/items/<int:item_id>', methods=['PUT'])
@@ -109,7 +115,8 @@ def update_item(item_id):
         })
     except Exception as e:
         db.session.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in update_item: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 # Delete an inventory item
 @inventory_bp.route('/items/<int:item_id>', methods=['DELETE'])
@@ -126,7 +133,8 @@ def delete_item(item_id):
         })
     except Exception as e:
         db.session.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in delete_item: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 # Get inventory statistics
 @inventory_bp.route('/stats', methods=['GET'])
@@ -164,7 +172,8 @@ def get_stats():
             }
         })
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in get_stats: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 # Get list of categories
 @inventory_bp.route('/categories', methods=['GET'])
@@ -179,7 +188,8 @@ def get_categories():
             'data': category_list
         })
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in get_categories: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 # Record item usage
 @inventory_bp.route('/items/<int:item_id>/use', methods=['POST'])
@@ -219,7 +229,8 @@ def record_item_usage(item_id):
                     }
             }), 400
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in record_item_usage: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 
 
@@ -256,7 +267,8 @@ def generate_purchase_list():
             'data': purchase_list
         })
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in generate_purchase_list: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 
 # Batch operations for inventory items
@@ -300,7 +312,8 @@ def batch_operations():
             
     except Exception as e:
         db.session.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in batch_operations: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
 
 # Proxy requests to external expense tracking API
@@ -320,5 +333,6 @@ def proxy_expenses():
         return jsonify(response.json()), response.status_code
         
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        logger.error(f'Error in proxy_expenses: {str(e)}', exc_info=True)
+        return jsonify({'success': False, 'error': 'Internal server error'}), 500
 

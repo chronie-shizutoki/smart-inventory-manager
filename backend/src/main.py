@@ -1,6 +1,7 @@
 import os
 import sys
 import psutil
+import logging
 # DON'T CHANGE THIS !!!
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
@@ -10,6 +11,8 @@ from flask_cors import CORS
 from src.models import db
 from src.routes.inventory import inventory_bp
 from src.routes.ai import ai_bp
+
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
 app.config['SECRET_KEY'] = 'asdf#FGSgvasgf$5$WGT'
@@ -74,7 +77,8 @@ def health_check():
             db.session.execute(text('SELECT 1'))
         db_status = 'healthy'
     except Exception as e:
-        db_status = f'error: {str(e)}'
+        logger.error(f'Database health check failed: {str(e)}', exc_info=True)
+        db_status = 'error'
     
     # Get memory usage
     try:
@@ -87,7 +91,8 @@ def health_check():
             'vms_mb': round(memory_info.vms / (1024 * 1024), 2)  # Convert to MB
         }
     except Exception as e:
-        memory_usage = f'error: {str(e)}'
+        logger.error(f'Failed to get memory usage: {str(e)}', exc_info=True)
+        memory_usage = {'error': 'Failed to get memory usage'}
     
     return {
         'status': 'healthy',

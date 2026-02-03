@@ -104,10 +104,10 @@ def generate_records():
         })
         
     except Exception as e:
-        logger.error(f'Error generating AI records: {str(e)}')
+        logger.error(f'Error generating AI records: {str(e)}', exc_info=True)
         return jsonify({
             'success': False,
-            'message': f'Error generating records: {str(e)}'
+            'message': 'Error generating records'
         }), 500
 
 # Call SiliconFlow API for image AI analysis
@@ -225,5 +225,5 @@ Please ensure the output JSON format is correct and does not include any additio
         return validated_records
         
     except Exception as e:
-        logger.error(f'Error calling SiliconFlow API: {str(e)}')
+        logger.error(f'Error calling SiliconFlow API: {str(e)}', exc_info=True)
         raise
