@@ -71,7 +71,6 @@ smart-inventory-manager/
 ├── README.md               # Project description
 ├── todo.md                # Development task list
 ├── backend/                 # Backend source code
-│   └── inventory-api/       # Flask API service
 │       ├── requirements.txt # Python dependencies
 │       ├── venv/           # Python virtual environment
 │       └── src/
@@ -105,7 +104,7 @@ cd smart-inventory-manager
 
 2. **Set up the backend environment**
 ```bash
-cd backend/inventory-api
+cd backend
 # Create a virtual environment
 python -m venv venv
 # Activate the virtual environment
