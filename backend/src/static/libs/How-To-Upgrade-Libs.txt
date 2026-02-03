@@ -1,0 +1,13 @@
+To upgrade these libs, you can visit https://cdnjs.com/libraries to find.
+
+1.Font Awesome Free 2025
+Current version: 7.1.0
+
+2.Tailwind CSS 2022[Too Old]
+Current version: 2.2.19
+
+3.vue-i18n 2025
+Current version: 11.2.8
+
+4.vue 2026
+Current version: 3.5.27
