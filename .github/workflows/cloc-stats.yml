@@ -60,7 +60,7 @@ jobs:
 
       # 将报告保存为artifact，方便下载查看
       - name: Upload CLOC report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: cloc-reports
           path: |
