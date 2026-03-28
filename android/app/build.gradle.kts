@@ -132,6 +132,6 @@ dependencies {
     implementation(libs.androidx.datastore)
 
     // AndroidLiquidGlass毛玻璃效果库
-    implementation("io.github.kyant0:backdrop:1.0.5")
+    implementation("io.github.kyant0:backdrop:1.0.6")
     implementation("io.github.kyant0:capsule:2.1.3")
 }
